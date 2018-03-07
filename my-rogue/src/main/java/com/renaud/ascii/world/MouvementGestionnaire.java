@@ -19,26 +19,24 @@ public class MouvementGestionnaire implements OnEventAction {
 		this.joueur = joueur;
 	}
 
-	public void activate() {
-		goUp();
-		goDown();
-		goRight();
-		goLeft();
-
+	public boolean activate() {
+		boolean u = goUp();
+		boolean d = goDown();
+		boolean r = goRight();
+		boolean l = goLeft();
+		return u || d || r || l;
 	}
 
 	@Override
 	public void mouseMoved(int x, int y, int varx, int vary) {
 		if (varx > 0) {
 			joueur.turnRight();
+		} else if (varx < 0) {
+			joueur.turnLeft();
 		}
-		else
-			if (varx < 0) {
-				joueur.turnLeft();
-			}
 	}
 
-	private void goUp() {
+	private boolean goUp() {
 		boolean go = false;
 		if (goUp) {
 			int next = joueur.getY() - 1;
@@ -52,13 +50,13 @@ public class MouvementGestionnaire implements OnEventAction {
 		}
 		if (go) {
 			joueur.goUp();
+			return true;
 		}
-		else {
-			goUp = false;
-		}
+		goUp = false;
+		return false;
 	}
 
-	private void goDown() {
+	private boolean goDown() {
 		boolean go = false;
 		if (goDown) {
 			int next = joueur.getY() + 1;
@@ -72,13 +70,13 @@ public class MouvementGestionnaire implements OnEventAction {
 		}
 		if (go) {
 			joueur.goDown();
+			return true;
 		}
-		else {
-			goDown = false;
-		}
+		goDown = false;
+		return false;
 	}
 
-	private void goRight() {
+	private boolean goRight() {
 		boolean go = false;
 		if (goRight) {
 			int next = joueur.getX() + 1;
@@ -92,13 +90,13 @@ public class MouvementGestionnaire implements OnEventAction {
 		}
 		if (go) {
 			joueur.goRight();
+			return true;
 		}
-		else {
-			goRight = false;
-		}
+		goRight = false;
+		return false;
 	}
 
-	private void goLeft() {
+	private boolean goLeft() {
 		boolean go = false;
 		if (goLeft) {
 			int next = joueur.getX() - 1;
@@ -112,10 +110,10 @@ public class MouvementGestionnaire implements OnEventAction {
 		}
 		if (go) {
 			joueur.goLeft();
+			return true;
 		}
-		else {
-			goLeft = false;
-		}
+		goLeft = false;
+		return false;
 	}
 
 	@Override

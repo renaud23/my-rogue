@@ -31,7 +31,8 @@ public class SimpleEtage {
 				int y = 1 + rand.nextInt(etage.getHauteur() - hauteur - 1);
 
 				room = new Room(x, y, largeur, hauteur);
-				// done = !rooms.stream().map(r -> r.intersec(ro)).reduce(false, (acc, curr) -> acc || curr);
+				// done = !rooms.stream().map(r -> r.intersec(ro)).reduce(false, (acc, curr) ->
+				// acc || curr);
 				for (Room other : rooms) {
 					if (other.intersec(room)) {
 						done = false;
@@ -53,10 +54,12 @@ public class SimpleEtage {
 		for (int i = Math.min(a.getCenterX(), b.getCenterX()); i <= Math.max(a.getCenterX(), b.getCenterX()); i++) {
 			etage.set(i, a.getCenterY(), Tile.FLOOR);
 			etage.set(i, a.getCenterY() + 1, Tile.FLOOR);
+			etage.set(i, a.getCenterY() - 1, Tile.FLOOR);
 		}
 		for (int j = Math.min(a.getCenterY(), b.getCenterY()); j <= Math.max(a.getCenterY(), b.getCenterY()); j++) {
 			etage.set(b.getCenterX(), j, Tile.FLOOR);
 			etage.set(b.getCenterX() + 1, j, Tile.FLOOR);
+			etage.set(b.getCenterX() - 1, j, Tile.FLOOR);
 		}
 	}
 
@@ -80,20 +83,20 @@ public class SimpleEtage {
 		for (int i = 0; i < taille; i++) {
 			int val = etage.get(i);
 			switch (val) {
-				case Tile.WALL:
-					out.print("#");
-					break;
-				case Tile.FLOOR:
-					out.print(".");
-					break;
-				case Tile.PLAYER:
-					out.print("O");
-					break;
-				case Tile.VIEW:
-					out.print("+");
-					break;
-				default:
-					out.print(" ");
+			case Tile.WALL:
+				out.print("#");
+				break;
+			case Tile.FLOOR:
+				out.print(".");
+				break;
+			case Tile.PLAYER:
+				out.print("O");
+				break;
+			case Tile.VIEW:
+				out.print("+");
+				break;
+			default:
+				out.print(" ");
 			}
 
 			if ((i % etage.getLargeur()) == (etage.getLargeur() - 1)) {

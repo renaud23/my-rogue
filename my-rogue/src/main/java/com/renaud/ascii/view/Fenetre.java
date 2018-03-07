@@ -125,9 +125,9 @@ public class Fenetre implements Iterable<IDrawable> {
 
 	private void drawBackground() {
 		if (background != null) {
-			this.getDrawOperation().drawImage(background, 0, 0, largeur, hauteur, 0, 0, background.getWidth(null), background.getHeight(null));
-		}
-		else {
+			this.getDrawOperation().drawImage(background, 0, 0, largeur, hauteur, 0, 0, background.getWidth(null),
+					background.getHeight(null));
+		} else {
 			this.getDrawOperation().clean();
 		}
 	}

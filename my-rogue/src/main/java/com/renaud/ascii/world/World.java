@@ -10,6 +10,8 @@ import com.renaud.ascii.event.OnEventAction;
 
 public class World implements OnEventAction {
 
+	private boolean playerStepFinished = false;
+
 	private int largeur;
 	private int hauteur;
 
@@ -41,55 +43,78 @@ public class World implements OnEventAction {
 	}
 
 	public void compute() {
-		mouvements.activate();
+		// jeu au tour par tour
+		if (playerStepFinished) {
+			System.out.println("mouvement ennemi");
+			// TODO
+			playerStepFinished = false;
+		} else {
+			if (mouvements.activate()) {
+				playerStepFinished = true;
+			}
+		}
 	}
 
 	@Override
 	public void keyUpPressed() {
-		mouvements.keyUpPressed();
+		if (!playerStepFinished) {
+			playerStepFinished = true;
+			mouvements.keyUpPressed();
+		}
 	}
 
 	@Override
 	public void keyUpReleased() {
+		playerStepFinished = true;
 		mouvements.keyUpReleased();
 	}
 
 	@Override
 	public void keyDownPressed() {
-		mouvements.keyDownPressed();
+		if (!playerStepFinished) {
+			playerStepFinished = true;
+			mouvements.keyDownPressed();
+		}
 
 	}
 
 	@Override
 	public void keyDownReleased() {
+		playerStepFinished = true;
 		mouvements.keyDownReleased();
-
 	}
 
 	@Override
 	public void keyLeftPressed() {
-		mouvements.keyLeftPressed();
+		if (!playerStepFinished) {
+			playerStepFinished = true;
+			mouvements.keyLeftPressed();
+		}
 	}
 
 	@Override
 	public void keyLeftReleaseded() {
+		playerStepFinished = true;
 		mouvements.keyLeftReleaseded();
 	}
 
 	@Override
 	public void keyRightPressed() {
-		mouvements.keyRightPressed();
+		if (!playerStepFinished) {
+			playerStepFinished = true;
+			mouvements.keyRightPressed();
+		}
 	}
 
 	@Override
 	public void keyRightRealesed() {
+		playerStepFinished = true;
 		mouvements.keyRightRealesed();
 	}
 
 	@Override
 	public void mouseMoved(int x, int y, int varx, int vary) {
 		mouvements.mouseMoved(x, y, varx, vary);
-
 	}
 
 	public int getTile(int i, int j) {
