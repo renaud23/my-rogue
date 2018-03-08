@@ -1,9 +1,6 @@
 package com.renaud.ascii.world;
 
-import java.io.PrintStream;
-
 import com.renaud.ascii.dongeon.Etage;
-import com.renaud.ascii.dongeon.SimpleEtage;
 import com.renaud.ascii.dongeon.SmoothEtage;
 import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.event.OnEventAction;
@@ -131,10 +128,6 @@ public class World implements OnEventAction {
 
 	public int getTile(int i) {
 		return etage.get(i);
-	}
-
-	public void print(PrintStream out) {
-		SimpleEtage.print(etage, out);
 	}
 
 	public int getLargeur() {
