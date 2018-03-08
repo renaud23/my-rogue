@@ -59,7 +59,8 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
 	}
 
-	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha) {
+	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
+			double scale, float alpha) {
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
 
 		/** D�sactivation de l'anti-aliasing */
@@ -86,7 +87,8 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
 	}
 
-	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scaleX, double scaleY, float alpha) {
+	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
+			double scaleX, double scaleY, float alpha) {
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
 
 		/** D�sactivation de l'anti-aliasing */
@@ -147,18 +149,25 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		g.dispose();
 	}
 
-	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha, Composite composite) {
+	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
+			double scale, float alpha, Composite composite) {
 
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
 
 		/** D�sactivation de l'anti-aliasing */
-		// gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		// gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+		// gr.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		// RenderingHints.VALUE_ANTIALIAS_ON);
+		// gr.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		// RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 		// /** Demande de rendu rapide */
-		// gr.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-		// gr.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
-		// gr.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
-		// gr.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
+		// gr.setRenderingHint(RenderingHints.KEY_RENDERING,
+		// RenderingHints.VALUE_RENDER_SPEED);
+		// gr.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
+		// RenderingHints.VALUE_COLOR_RENDER_SPEED);
+		// gr.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+		// RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+		// gr.setRenderingHint(RenderingHints.KEY_DITHERING,
+		// RenderingHints.VALUE_DITHER_DISABLE);
 
 		gr.setComposite(composite);
 
@@ -218,8 +227,7 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		gr.fill(s);
 	}
 
-	public void fillCircle(Color color, double x, double y, double rayon,
-		float alpha) {
+	public void fillCircle(Color color, double x, double y, double rayon, float alpha) {
 
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
 		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
@@ -230,8 +238,7 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
 	}
 
-	public void drawLine(Color color, int x1, int y1, int x2, int y2,
-		float alpha) {
+	public void drawLine(Color color, int x1, int y1, int x2, int y2, float alpha) {
 		// TODO Auto-generated method stub
 
 	}
@@ -241,4 +248,5 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		// TODO Auto-generated method stub
 
 	}
+
 }

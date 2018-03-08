@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleEtage {
+public class SimpleLevel {
 
 	private int largeur;
 	private int hauteur;
 	private int nbRooms = 10;
 	private int couloirSize = 1;
 
-	private Etage etage;
+	private Level etage;
 
 	public void setNbRooms(int nbRooms) {
 		this.nbRooms = nbRooms;
@@ -21,10 +21,10 @@ public class SimpleEtage {
 		this.couloirSize = couloirSize;
 	}
 
-	public SimpleEtage(int largeur, int hauteur) {
+	public SimpleLevel(int largeur, int hauteur) {
 		this.largeur = largeur;
 		this.hauteur = hauteur;
-		etage = new Etage(largeur, hauteur);
+		etage = new Level(largeur, hauteur);
 		etage.fill(Tile.WALL);
 	}
 
@@ -61,7 +61,6 @@ public class SimpleEtage {
 			}
 			previous = room;
 		}
-		etage.setRooms(rooms);
 	}
 
 	// public static Point getStartPoint(Etage e) {
@@ -90,7 +89,7 @@ public class SimpleEtage {
 		}
 	}
 
-	private static void fillRoom(Etage etage, Room room) {
+	private static void fillRoom(Level etage, Room room) {
 		for (int i = 0; i < room.getLargeur(); i++) {
 			for (int j = 0; j < room.getHauteur(); j++) {
 				etage.set(room.getX() + i, room.getY() + j, Tile.FLOOR);
@@ -106,19 +105,19 @@ public class SimpleEtage {
 		return new Builder(largeur, hauteur);
 	}
 
-	public Etage getEtage() {
+	public Level getEtage() {
 		return etage;
 	}
 
 	public static class Builder {
 
-		private SimpleEtage e;
+		private SimpleLevel e;
 
 		private Builder(int largeur, int hauteur) {
-			e = new SimpleEtage(largeur, hauteur);
+			e = new SimpleLevel(largeur, hauteur);
 		}
 
-		public Etage build() {
+		public Level build() {
 			e.build();
 			return e.getEtage();
 		}
@@ -135,7 +134,7 @@ public class SimpleEtage {
 	}
 
 	public final static void main(String[] args) {
-		Etage e = SimpleEtage.newInstance(50, 25).setNbRooms(10).setCouloirSize(1).build();
+		Level e = SimpleLevel.newInstance(50, 25).setNbRooms(10).setCouloirSize(1).build();
 		e.print(System.out);
 	}
 }

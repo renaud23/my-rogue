@@ -21,7 +21,8 @@ import java.awt.image.VolatileImage;
 
 public class JImageBuffer implements IDrawOperation {
 
-	private static GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+	private static GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+			.getDefaultConfiguration();
 
 	private VolatileImage image;
 	private int largeur;
@@ -52,6 +53,16 @@ public class JImageBuffer implements IDrawOperation {
 		g.fillRect(0, 0, image.getWidth(), image.getHeight()); // Clears the image.
 	}
 
+	public void transparentClean(Color color, float alpha) {
+		Graphics2D g = image.createGraphics();
+
+		// These commands cause the Graphics2D object to clear to (0,0,0,0).
+		g.setColor(color);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		// g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OUT));
+		g.fillRect(0, 0, image.getWidth(), image.getHeight()); // Clears the image.
+	}
+
 	public void transparentClean(int x, int y, int largeur, int hauteur) {
 		Graphics2D g = image.createGraphics();
 
@@ -68,7 +79,8 @@ public class JImageBuffer implements IDrawOperation {
 		graphics.dispose();
 	}
 
-	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha) {
+	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
+			double scale, float alpha) {
 		Graphics2D gr = this.image.createGraphics();
 
 		/** Dï¿½sactivation de l'anti-aliasing */
@@ -98,7 +110,8 @@ public class JImageBuffer implements IDrawOperation {
 
 	}
 
-	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha, Composite composite) {
+	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
+			double scale, float alpha, Composite composite) {
 
 		Graphics2D gr = this.image.createGraphics();
 
@@ -128,7 +141,8 @@ public class JImageBuffer implements IDrawOperation {
 		gr.dispose();
 	}
 
-	public void drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, Color bgcolor) {
+	public void drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2,
+			Color bgcolor) {
 		Graphics gr = this.image.getGraphics();
 
 		gr.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, bgcolor, null);
@@ -194,7 +208,8 @@ public class JImageBuffer implements IDrawOperation {
 		g.dispose();
 	}
 
-	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scaleX, double scaleY, float alpha) {
+	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
+			double scaleX, double scaleY, float alpha) {
 		Graphics2D gr = this.image.createGraphics();
 
 		/** Dï¿½sactivation de l'anti-aliasing */
@@ -270,8 +285,7 @@ public class JImageBuffer implements IDrawOperation {
 		return this.image;
 	}
 
-	public void fillCircle(Color color, double x, double y, double rayon,
-		float alpha) {
+	public void fillCircle(Color color, double x, double y, double rayon, float alpha) {
 		Graphics2D g = this.image.createGraphics();
 		g.setColor(color);
 
@@ -285,8 +299,7 @@ public class JImageBuffer implements IDrawOperation {
 
 	}
 
-	public void drawLine(Color color, int x1, int y1, int x2, int y2,
-		float alpha) {
+	public void drawLine(Color color, int x1, int y1, int x2, int y2, float alpha) {
 		// TODO Auto-generated method stub
 
 	}

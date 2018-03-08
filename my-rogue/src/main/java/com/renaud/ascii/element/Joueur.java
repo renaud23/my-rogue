@@ -1,5 +1,6 @@
 package com.renaud.ascii.element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.renaud.ascii.figure.Point;
@@ -11,6 +12,8 @@ public class Joueur implements Element {
 	private int y;
 	private ChampVision vision;
 	private World memory; // mémoire du joueur
+
+	private List<Point> lastComputed = new ArrayList<>();
 
 	public Joueur(int wl, int wh) {
 		vision = new ChampVision(this, 20, Math.PI / 2.0);
@@ -59,12 +62,16 @@ public class Joueur implements Element {
 
 	@Override
 	public List<Point> getVisibilityPoints(World world) {
-		List<Point> points = vision.getPoints(world);
-		for (Point p : points) {
+		lastComputed = vision.getPoints(world);
+		for (Point p : lastComputed) {
 			memory.setTile(p.getX(), p.getY(), world.getTile(p.getX(), p.getY()));
 		}
 
-		return points;
+		return lastComputed;
+	}
+
+	public List<Point> getLastVisibilityPoints() {
+		return lastComputed;
 	}
 
 	public int getMemory(int i, int j) {

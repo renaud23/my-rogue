@@ -1,7 +1,8 @@
 package com.renaud.ascii.world;
 
-import com.renaud.ascii.dongeon.Etage;
-import com.renaud.ascii.dongeon.SmoothEtage;
+import com.renaud.ascii.dongeon.Level;
+import com.renaud.ascii.dongeon.SmoothLevel;
+import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.event.OnEventAction;
 import com.renaud.ascii.figure.Point;
@@ -13,7 +14,7 @@ public class World implements OnEventAction {
 	private int largeur;
 	private int hauteur;
 
-	private Etage etage;
+	private Level etage;
 	private Joueur joueur;
 
 	private MouvementGestionnaire mouvements;
@@ -21,15 +22,15 @@ public class World implements OnEventAction {
 	public World(int largeur, int hauteur) {
 		this.largeur = largeur;
 		this.hauteur = hauteur;
-		etage = new Etage(largeur, hauteur);
+		etage = new Level(largeur, hauteur);
 	}
 
 	public World(Joueur joueur, int largeur, int hauteur) {
 		this.largeur = largeur;
 		this.hauteur = hauteur;
 
-		etage = SmoothEtage.newInstance(largeur, hauteur).setNbStep(8).build();
-		Point start = SmoothEtage.getStartPoint(etage);
+		etage = SmoothLevel.newInstance(largeur, hauteur).setNbStep(5).build();
+		Point start = etage.peekRandomOne(Tile.FLOOR);
 		joueur.setX(start.getX());
 		joueur.setY(start.getY());
 
@@ -52,8 +53,7 @@ public class World implements OnEventAction {
 			System.out.println("mouvement ennemi");
 			// TODO
 			playerStepFinished = false;
-		}
-		else {
+		} else {
 			if (mouvements.activate()) {
 				playerStepFinished = true;
 			}

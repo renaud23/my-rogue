@@ -11,9 +11,11 @@ public interface IDrawOperation {
 
 	void clean();
 
-	void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha);
+	void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale,
+			float alpha);
 
-	void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scaleX, double scaleY, float alpha);
+	void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scaleX,
+			double scaleY, float alpha);
 
 	void drawImage(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2);
 
@@ -23,7 +25,8 @@ public interface IDrawOperation {
 
 	void fillCircle(Color color, double x, double y, double rayon, float alpha);
 
-	void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha, Composite composite);
+	void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale,
+			float alpha, Composite composite);
 
 	void drawChar(String ch, int x, int y);
 
@@ -38,4 +41,5 @@ public interface IDrawOperation {
 	void drawPolygone(int[] x, int[] y, BufferedImage img);
 
 	void transparentClean();
+
 }

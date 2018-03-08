@@ -1,16 +1,17 @@
 package com.renaud.ascii.dongeon;
 
 import java.io.PrintStream;
-import java.util.List;
+import java.util.Random;
 
-public class Etage {
+import com.renaud.ascii.figure.Point;
+
+public class Level {
 
 	private int largeur;
 	private int hauteur;
 	private int[] map;
-	private List<Room> rooms;
 
-	public Etage(int largeur, int hauteur) {
+	public Level(int largeur, int hauteur) {
 		this.largeur = largeur;
 		this.hauteur = hauteur;
 		this.map = new int[largeur * hauteur];
@@ -21,6 +22,34 @@ public class Etage {
 		for (int i = 0; i < (largeur * hauteur); i++) {
 			map[i] = value;
 		}
+	}
+
+	public Point peekOne(int what) {
+		for (int i = 0; i < (largeur * hauteur); i++) {
+			if (what == map[i]) {
+				return new Point(i % largeur, i / largeur);
+			}
+		}
+		return null;
+	}
+
+	public Point peekRandomOne(int what) {
+		Random rnd = new Random();
+		int i = 0;
+		while (get(i) != what) {
+			i = rnd.nextInt(largeur * hauteur);
+		}
+
+		return new Point(i % largeur, i / largeur);
+	}
+
+	@Override
+	protected Level clone() {
+		Level l = new Level(largeur, hauteur);
+		for (int i = 0; i < (largeur * hauteur); i++) {
+			l.map[i] = map[i];
+		}
+		return l;
 	}
 
 	public int getLargeur() {
@@ -47,14 +76,6 @@ public class Etage {
 		map[i + j * largeur] = value;
 	}
 
-	public List<Room> getRooms() {
-		return rooms;
-	}
-
-	public void setRooms(List<Room> rooms) {
-		this.rooms = rooms;
-	}
-
 	/*
 	 * 
 	 */
@@ -63,20 +84,20 @@ public class Etage {
 		for (int i = 0; i < taille; i++) {
 			int val = get(i);
 			switch (val) {
-				case Tile.WALL:
-					out.print("#");
-					break;
-				case Tile.FLOOR:
-					out.print(".");
-					break;
-				case Tile.PLAYER:
-					out.print("O");
-					break;
-				case Tile.VIEW:
-					out.print("+");
-					break;
-				default:
-					out.print(" ");
+			case Tile.WALL:
+				out.print("#");
+				break;
+			case Tile.FLOOR:
+				out.print(".");
+				break;
+			case Tile.PLAYER:
+				out.print("O");
+				break;
+			case Tile.VIEW:
+				out.print("+");
+				break;
+			default:
+				out.print(" ");
 			}
 
 			if (i % largeur == (largeur - 1)) {
