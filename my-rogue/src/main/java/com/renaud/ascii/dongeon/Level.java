@@ -36,7 +36,7 @@ public class Level {
 	public Point peekRandomOne(int what) {
 		Random rnd = new Random();
 		int i = 0;
-		while (get(i) != what) {
+		while (getTile(i) != what) {
 			i = rnd.nextInt(largeur * hauteur);
 		}
 
@@ -60,15 +60,15 @@ public class Level {
 		return hauteur;
 	}
 
-	public int get(int i) {
+	public int getTile(int i) {
 		return map[i];
 	}
 
-	public int get(int i, int j) {
+	public int getTile(int i, int j) {
 		return map[i + j * largeur];
 	}
 
-	public void set(int i, int value) {
+	public void setTile(int i, int value) {
 		map[i] = value;
 	}
 
@@ -82,7 +82,7 @@ public class Level {
 	public void print(PrintStream out) {
 		int taille = largeur * hauteur;
 		for (int i = 0; i < taille; i++) {
-			int val = get(i);
+			int val = getTile(i);
 			switch (val) {
 			case Tile.WALL:
 				out.print("#");

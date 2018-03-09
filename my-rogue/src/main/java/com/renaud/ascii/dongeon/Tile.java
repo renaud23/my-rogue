@@ -7,5 +7,6 @@ public class Tile {
 	public final static int WALL = 1;
 	public final static int FLOOR = 2;
 	public final static int PLAYER = 3;
-	public final static int VIEW = 4;
+	public final static int WOLF = 4;
+	public final static int VIEW = 5;
 }

@@ -60,11 +60,10 @@ public class Joueur implements Element {
 		this.y = y;
 	}
 
-	@Override
 	public List<Point> getVisibilityPoints(Level level) {
 		lastComputed = vision.getPoints(level);
 		for (Point p : lastComputed) {
-			memory.set(p.getX(), p.getY(), level.get(p.getX(), p.getY()));
+			memory.set(p.getX(), p.getY(), level.getTile(p.getX(), p.getY()));
 		}
 
 		return lastComputed;
@@ -75,7 +74,13 @@ public class Joueur implements Element {
 	}
 
 	public int getMemory(int i, int j) {
-		return memory.get(i, j);
+		return memory.getTile(i, j);
+	}
+
+	@Override
+	public boolean isIn(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

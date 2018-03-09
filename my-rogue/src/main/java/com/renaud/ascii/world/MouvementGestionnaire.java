@@ -1,6 +1,5 @@
 package com.renaud.ascii.world;
 
-import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.event.OnEventAction;
 
@@ -29,11 +28,7 @@ public class MouvementGestionnaire implements OnEventAction {
 
 	@Override
 	public void mouseMoved(int x, int y, int varx, int vary) {
-		if (varx > 0) {
-			joueur.turnRight();
-		} else if (varx < 0) {
-			joueur.turnLeft();
-		}
+
 	}
 
 	private boolean goUp() {
@@ -41,12 +36,10 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goUp) {
 			int next = joueur.getY() - 1;
 			if (next >= 0) {
-				int tile = world.getTile(joueur.getX(), next);
-				if (tile == Tile.FLOOR) {
+				if (world.canGo(joueur.getX(), next)) {
 					go = true;
 				}
 			}
-
 		}
 		if (go) {
 			joueur.goUp();
@@ -61,12 +54,10 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goDown) {
 			int next = joueur.getY() + 1;
 			if (next < world.getHauteur()) {
-				int tile = world.getTile(joueur.getX(), next);
-				if (tile == Tile.FLOOR) {
+				if (world.canGo(joueur.getX(), next)) {
 					go = true;
 				}
 			}
-
 		}
 		if (go) {
 			joueur.goDown();
@@ -81,8 +72,7 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goRight) {
 			int next = joueur.getX() + 1;
 			if (next < world.getLargeur()) {
-				int tile = world.getTile(next, joueur.getY());
-				if (tile == Tile.FLOOR) {
+				if (world.canGo(next, joueur.getY())) {
 					go = true;
 				}
 			}
@@ -101,8 +91,7 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goLeft) {
 			int next = joueur.getX() - 1;
 			if (next >= 0) {
-				int tile = world.getTile(next, joueur.getY());
-				if (tile == Tile.FLOOR) {
+				if (world.canGo(next, joueur.getY())) {
 					go = true;
 				}
 			}

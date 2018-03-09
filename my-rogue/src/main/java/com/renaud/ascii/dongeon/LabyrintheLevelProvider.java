@@ -18,7 +18,7 @@ public class LabyrintheLevelProvider implements LevelProvider {
 		laby.genere();
 		laby.print(System.out);
 		for (int i = 0; i < (largeur * hauteur); i++) {
-			l.set(i, laby.getPosition(i) == 1 ? Tile.WALL : Tile.FLOOR);
+			l.setTile(i, laby.getPosition(i) == 1 ? Tile.WALL : Tile.FLOOR);
 		}
 	}
 

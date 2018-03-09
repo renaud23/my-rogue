@@ -93,7 +93,7 @@ public class SmoothLevelProvider implements LevelProvider {
 				for (int j = -1; j <= 1; j++) {
 					if (i == 0 && j == 0)
 						continue;
-					if (e2.get(p.getX() + i, p.getY() + j) == Tile.FLOOR) {
+					if (e2.getTile(p.getX() + i, p.getY() + j) == Tile.FLOOR) {
 						pile.push(new Point(p.getX() + i, p.getY() + j));
 					}
 				}
@@ -110,16 +110,16 @@ public class SmoothLevelProvider implements LevelProvider {
 			for (int j = 2; j < (e.getHauteur() - 2); j++) {
 				int nb = 0;
 				// nb += e.get(i, j) != Tile.WALL ? 0 : 1;
-				nb += e.get(i - 1, j) != Tile.WALL ? 0 : 1;
-				nb += e.get(i + 1, j) != Tile.WALL ? 0 : 1;
-				nb += e.get(i, j - 1) != Tile.WALL ? 0 : 1;
-				nb += e.get(i, j + 1) != Tile.WALL ? 0 : 1;
-				nb += e.get(i - 1, j - 1) != Tile.WALL ? 0 : 1;
-				nb += e.get(i + 1, j + 1) != Tile.WALL ? 0 : 1;
-				nb += e.get(i - 1, j + 1) != Tile.WALL ? 0 : 1;
-				nb += e.get(i + 1, j - 1) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i - 1, j) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i + 1, j) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i, j - 1) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i, j + 1) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i - 1, j - 1) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i + 1, j + 1) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i - 1, j + 1) != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i + 1, j - 1) != Tile.WALL ? 0 : 1;
 				// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
-				if (e.get(i, j) == Tile.WALL) {
+				if (e.getTile(i, j) == Tile.WALL) {
 					if (nb >= 4) {
 						e2.set(i, j, Tile.WALL);
 					} else if (nb < 2) {
@@ -165,7 +165,7 @@ public class SmoothLevelProvider implements LevelProvider {
 		while (value == Tile.WALL) {
 			x = 1 + rnd.nextInt(e.getLargeur() - 1);
 			y = 1 + rnd.nextInt(e.getHauteur() - 1);
-			value = e.get(x, y);
+			value = e.getTile(x, y);
 		}
 
 		return new Point(x, y);

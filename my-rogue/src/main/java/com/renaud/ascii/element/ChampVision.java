@@ -39,7 +39,7 @@ public class ChampVision {
 				boolean is = true;
 				for (Point w : seg.getPoints()) {
 					if (!w.equals(p)) {
-						int tile = level.get(w.getX(), w.getY());
+						int tile = level.getTile(w.getX(), w.getY());
 						if (tile == Tile.WALL) {
 
 							is = false;
