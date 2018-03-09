@@ -13,9 +13,9 @@ public class MouvementGestionnaire implements OnEventAction {
 	private boolean goRight = false;
 	private boolean goLeft = false;
 
-	public MouvementGestionnaire(World world, Joueur joueur) {
+	public MouvementGestionnaire(World world) {
 		this.world = world;
-		this.joueur = joueur;
+		this.joueur = world.getJoueur();
 	}
 
 	public boolean activate() {
@@ -36,7 +36,7 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goUp) {
 			int next = joueur.getY() - 1;
 			if (next >= 0) {
-				if (world.canGo(joueur.getX(), next)) {
+				if (world.canGo(joueur, joueur.getX(), next)) {
 					go = true;
 				}
 			}
@@ -54,7 +54,7 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goDown) {
 			int next = joueur.getY() + 1;
 			if (next < world.getHauteur()) {
-				if (world.canGo(joueur.getX(), next)) {
+				if (world.canGo(joueur, joueur.getX(), next)) {
 					go = true;
 				}
 			}
@@ -72,7 +72,7 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goRight) {
 			int next = joueur.getX() + 1;
 			if (next < world.getLargeur()) {
-				if (world.canGo(next, joueur.getY())) {
+				if (world.canGo(joueur, next, joueur.getY())) {
 					go = true;
 				}
 			}
@@ -91,7 +91,7 @@ public class MouvementGestionnaire implements OnEventAction {
 		if (goLeft) {
 			int next = joueur.getX() - 1;
 			if (next >= 0) {
-				if (world.canGo(next, joueur.getY())) {
+				if (world.canGo(joueur, next, joueur.getY())) {
 					go = true;
 				}
 			}

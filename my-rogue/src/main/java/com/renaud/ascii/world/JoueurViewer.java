@@ -3,8 +3,8 @@ package com.renaud.ascii.world;
 import java.awt.Color;
 
 import com.renaud.ascii.dongeon.Tile;
-import com.renaud.ascii.element.monster.Monster;
 import com.renaud.ascii.figure.Point;
+import com.renaud.ascii.monster.element.Monster;
 import com.renaud.ascii.view.DrawOperationAware;
 import com.renaud.ascii.view.IDrawOperation;
 import com.renaud.ascii.view.IDrawable;

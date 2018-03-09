@@ -49,4 +49,9 @@ public class Cercle {
 		this.rayon = rayon;
 	}
 
+	public Cercle(int x, int y, int rayon) {
+		this.centre = new Point(x, y);
+		this.rayon = rayon;
+	}
+
 }

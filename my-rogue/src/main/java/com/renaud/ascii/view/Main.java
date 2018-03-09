@@ -4,8 +4,8 @@ import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.dongeon.SmoothLevelProvider;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Joueur;
-import com.renaud.ascii.element.monster.Wolf;
 import com.renaud.ascii.figure.Point;
+import com.renaud.ascii.monster.element.Wolf;
 import com.renaud.ascii.world.JoueurMapDrawer;
 import com.renaud.ascii.world.JoueurViewer;
 import com.renaud.ascii.world.World;
@@ -21,8 +21,10 @@ public class Main {
 
 		}
 		Level level = SmoothLevelProvider.newInstance(wolrdLargeur, worldHauteur).setNbStep(5).build();
-		// Level level = LabyrintheLevelProvider.newInstance(wolrdLargeur, worldHauteur).build();
-		// Level level = SimpleLevelProvider.newInstance(wolrdLargeur, worldHauteur).setNbRooms(8).setCouloirSize(3).build();
+		// Level level = LabyrintheLevelProvider.newInstance(wolrdLargeur,
+		// worldHauteur).build();
+		// Level level = DoomLevelProvider.newInstance(wolrdLargeur,
+		// worldHauteur).setNbRooms(8).setCouloirSize(3) .build();
 		Joueur joueur = new Joueur(wolrdLargeur, worldHauteur);
 		World world = new World(level, joueur);
 

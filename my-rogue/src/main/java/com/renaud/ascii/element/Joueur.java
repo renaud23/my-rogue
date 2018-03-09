@@ -79,8 +79,7 @@ public class Joueur implements Element {
 
 	@Override
 	public boolean isIn(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+		return x == this.x && y == this.y;
 	}
 
 }

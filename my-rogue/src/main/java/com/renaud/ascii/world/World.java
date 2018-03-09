@@ -9,10 +9,10 @@ import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Element;
 import com.renaud.ascii.element.Joueur;
-import com.renaud.ascii.element.monster.Monster;
 import com.renaud.ascii.event.OnEventAction;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.figure.Segment;
+import com.renaud.ascii.monster.element.Monster;
 
 public class World implements OnEventAction {
 
@@ -24,7 +24,8 @@ public class World implements OnEventAction {
 
 	private MouvementGestionnaire mouvements;
 
-	public World() {}
+	public World() {
+	}
 
 	public World(Level level, Joueur joueur) {
 		this.level = level;
@@ -32,7 +33,7 @@ public class World implements OnEventAction {
 		Point start = level.peekRandomOne(Tile.FLOOR);
 		joueur.setX(start.getX());
 		joueur.setY(start.getY());
-		mouvements = new MouvementGestionnaire(this, joueur);
+		mouvements = new MouvementGestionnaire(this);
 	}
 
 	public void setTile(int i, int j, int value) {
@@ -50,8 +51,7 @@ public class World implements OnEventAction {
 				m.activate(this);
 			}
 			playerStepFinished = false;
-		}
-		else {
+		} else {
 			if (mouvements.activate()) {
 				playerStepFinished = true;
 			}
@@ -121,13 +121,17 @@ public class World implements OnEventAction {
 		return vm;
 	}
 
-	public boolean canGo(int x, int y) {
+	public boolean canGo(Element e, int x, int y) {
 		if (x < 0 || y < 0 || x >= level.getLargeur() || y >= level.getHauteur()) {
 			return false;
 		}
+		// if (e.isIn(x, y))
+		// return false;
 		if (level.getTile(x, y) != Tile.FLOOR) {
 			return false;
 		}
+		if (joueur.isIn(x, y))
+			return false;
 		for (Monster m : monsters) {
 			if (m.isIn(x, y)) {
 				return false;
@@ -137,13 +141,13 @@ public class World implements OnEventAction {
 	}
 
 	public boolean canGo(Element e, int x1, int y1, int x2, int y2) {
-		if (!canGo(x2, y2))
+		if (!canGo(e, x2, y2))
 			return false;
 		Segment seg = new Segment(new Point(x1, y1), new Point(x2, y2));
 
 		for (Point w : seg.getPoints()) {
 			if (!e.isIn(w.getX(), w.getY())) {
-				if (!canGo(w.getX(), w.getY())) {
+				if (!canGo(e, w.getX(), w.getY())) {
 					return false;
 				}
 			}

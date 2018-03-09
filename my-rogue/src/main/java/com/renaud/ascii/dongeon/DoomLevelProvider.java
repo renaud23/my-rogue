@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleLevelProvider {
+public class DoomLevelProvider {
 
 	private int nbRooms = 10;
 	private int couloirSize = 1;
@@ -19,7 +19,7 @@ public class SimpleLevelProvider {
 		this.couloirSize = couloirSize;
 	}
 
-	public SimpleLevelProvider(int largeur, int hauteur) {
+	public DoomLevelProvider(int largeur, int hauteur) {
 
 		etage = new Level(largeur, hauteur);
 		etage.fill(Tile.WALL);
@@ -96,10 +96,10 @@ public class SimpleLevelProvider {
 
 	public static class Builder {
 
-		private SimpleLevelProvider e;
+		private DoomLevelProvider e;
 
 		private Builder(int largeur, int hauteur) {
-			e = new SimpleLevelProvider(largeur, hauteur);
+			e = new DoomLevelProvider(largeur, hauteur);
 		}
 
 		public Level build() {
@@ -119,7 +119,7 @@ public class SimpleLevelProvider {
 	}
 
 	public final static void main(String[] args) {
-		Level e = SimpleLevelProvider.newInstance(50, 25).setNbRooms(10).setCouloirSize(1).build();
+		Level e = DoomLevelProvider.newInstance(50, 25).setNbRooms(10).setCouloirSize(1).build();
 		e.print(System.out);
 	}
 }
