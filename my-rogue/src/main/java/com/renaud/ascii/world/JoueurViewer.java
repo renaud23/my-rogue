@@ -2,6 +2,7 @@ package com.renaud.ascii.world;
 
 import java.awt.Color;
 
+import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.figure.Point;
@@ -15,7 +16,7 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 	private IDrawOperation op;
 	private IDrawOperation buffer;
 
-	private World world;
+	private Level level;
 
 	private int screenLargeur;
 	private int screenHauteur;
@@ -24,8 +25,8 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 	private int largeur;
 	private int hauteur;
 
-	public JoueurViewer(World world, Joueur joueur, int largeur, int hauteur, int screenLargeur, int screenHauteur) {
-		this.world = world;
+	public JoueurViewer(Level level, Joueur joueur, int largeur, int hauteur, int screenLargeur, int screenHauteur) {
+		this.level = level;
 		this.joueur = joueur;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
@@ -49,9 +50,9 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 		int carrSize = Math.min(screenLargeur / largeur, screenHauteur / hauteur);
 
 		int startX = Math.max(0, joueur.getX() - largeur / 2);
-		startX = Math.min(world.getLargeur() - largeur, startX);
+		startX = Math.min(level.getLargeur() - largeur, startX);
 		int startY = Math.max(0, joueur.getY() - hauteur / 2);
-		startY = Math.min(world.getHauteur() - hauteur, startY);
+		startY = Math.min(level.getHauteur() - hauteur, startY);
 
 		for (int i = 0; i < (largeur * hauteur); i++) {
 			int xi = i % largeur;
@@ -72,10 +73,10 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 			buffer.fillRect(col, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
 		}
 
-		for (Point point : joueur.getVisibilityPoints(world)) {
+		for (Point point : joueur.getVisibilityPoints(level)) {
 			int xi = point.getX() - startX;
 			int yi = point.getY() - startY;
-			int value = world.getTile(point.getX(), point.getY());
+			int value = level.get(point.getX(), point.getY());
 			Color col = Color.white;
 
 			switch (value) {
@@ -97,9 +98,9 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 	private void drawPlayer() {
 		int carrSize = Math.min(screenLargeur / largeur, screenHauteur / hauteur);
 		int posX = Math.min(joueur.getX(), largeur / 2);
-		posX = Math.max(posX, largeur - world.getLargeur() + joueur.getX());
+		posX = Math.max(posX, largeur - level.getLargeur() + joueur.getX());
 		int posY = Math.min(joueur.getY(), hauteur / 2);
-		posY = Math.max(posY, hauteur - world.getHauteur() + joueur.getY());
+		posY = Math.max(posY, hauteur - level.getHauteur() + joueur.getY());
 
 		// for (Point point : joueur.getVisibilityPoints(world)) {
 		// int px = point.getX() - joueur.getX() + posX;

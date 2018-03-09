@@ -1,7 +1,6 @@
 package com.renaud.ascii.world;
 
 import com.renaud.ascii.dongeon.Level;
-import com.renaud.ascii.dongeon.SmoothLevel;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.event.OnEventAction;
@@ -11,40 +10,23 @@ public class World implements OnEventAction {
 
 	private boolean playerStepFinished = false;
 
-	private int largeur;
-	private int hauteur;
-
-	private Level etage;
+	private Level level;
 	private Joueur joueur;
 
 	private MouvementGestionnaire mouvements;
 
-	public World(int largeur, int hauteur) {
-		this.largeur = largeur;
-		this.hauteur = hauteur;
-		etage = new Level(largeur, hauteur);
-	}
+	public World() {}
 
-	public World(Joueur joueur, int largeur, int hauteur) {
-		this.largeur = largeur;
-		this.hauteur = hauteur;
-
-		etage = SmoothLevel.newInstance(largeur, hauteur).setNbStep(5).build();
-		Point start = etage.peekRandomOne(Tile.FLOOR);
+	public World(Level level, Joueur joueur) {
+		this.level = level;
+		Point start = level.peekRandomOne(Tile.FLOOR);
 		joueur.setX(start.getX());
 		joueur.setY(start.getY());
-
-		// etage = SimpleEtage.generer(largeur, hauteur);
-		// this.joueur = joueur;
-		// Room room = etage.getRooms().get(0);
-		// joueur.setX(room.getCenterX());
-		// joueur.setY(room.getCenterY());
-
 		mouvements = new MouvementGestionnaire(this, joueur);
 	}
 
 	public void setTile(int i, int j, int value) {
-		etage.set(i, j, value);
+		level.set(i, j, value);
 	}
 
 	public void compute() {
@@ -53,7 +35,8 @@ public class World implements OnEventAction {
 			System.out.println("mouvement ennemi");
 			// TODO
 			playerStepFinished = false;
-		} else {
+		}
+		else {
 			if (mouvements.activate()) {
 				playerStepFinished = true;
 			}
@@ -123,27 +106,19 @@ public class World implements OnEventAction {
 	}
 
 	public int getTile(int i, int j) {
-		return etage.get(i, j);
+		return level.get(i, j);
 	}
 
 	public int getTile(int i) {
-		return etage.get(i);
+		return level.get(i);
 	}
 
 	public int getLargeur() {
-		return largeur;
-	}
-
-	public void setLargeur(int largeur) {
-		this.largeur = largeur;
+		return level.getLargeur();
 	}
 
 	public int getHauteur() {
-		return hauteur;
-	}
-
-	public void setHauteur(int hauteur) {
-		this.hauteur = hauteur;
+		return level.getHauteur();
 	}
 
 	public Joueur getJoueur() {

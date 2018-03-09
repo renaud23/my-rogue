@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleLevel {
+public class SimpleLevelProvider {
 
-	private int largeur;
-	private int hauteur;
 	private int nbRooms = 10;
 	private int couloirSize = 1;
 
@@ -21,9 +19,8 @@ public class SimpleLevel {
 		this.couloirSize = couloirSize;
 	}
 
-	public SimpleLevel(int largeur, int hauteur) {
-		this.largeur = largeur;
-		this.hauteur = hauteur;
+	public SimpleLevelProvider(int largeur, int hauteur) {
+
 		etage = new Level(largeur, hauteur);
 		etage.fill(Tile.WALL);
 	}
@@ -39,14 +36,12 @@ public class SimpleLevel {
 			Room room = null;
 			while (!done) {
 				done = true;
-				int largeur = minL + rand.nextInt((int) (etage.getLargeur() * 0.05));
-				int hauteur = minH + rand.nextInt((int) (etage.getHauteur() * 0.05));
+				int largeur = minL + rand.nextInt((int) (etage.getLargeur() * 0.2));
+				int hauteur = minH + rand.nextInt((int) (etage.getHauteur() * 0.2));
 				int x = 1 + rand.nextInt(etage.getLargeur() - largeur - 1);
 				int y = 1 + rand.nextInt(etage.getHauteur() - hauteur - 1);
 
 				room = new Room(x, y, largeur, hauteur);
-				// done = !rooms.stream().map(r -> r.intersec(ro)).reduce(false, (acc, curr) ->
-				// acc || curr);
 				for (Room other : rooms) {
 					if (other.intersec(room)) {
 						done = false;
@@ -63,28 +58,18 @@ public class SimpleLevel {
 		}
 	}
 
-	// public static Point getStartPoint(Etage e) {
-	// int x = 0, y = 0;
-	// Random rnd = new Random();
-	// int value = Tile.WALL;
-	// while (value == Tile.WALL) {
-	// x = 1 + rnd.nextInt(e.getLargeur() - 1);
-	// y = 1 + rnd.nextInt(e.getHauteur() - 1);
-	// value = e.get(x, y);
-	// }
-	//
-	// return room;
-	// }
-
 	private void connect(Room a, Room b) {
+		Random rnd = new Random();
+		int size = 1 + rnd.nextInt(couloirSize);
+
 		for (int i = Math.min(a.getCenterX(), b.getCenterX()); i <= Math.max(a.getCenterX(), b.getCenterX()); i++) {
-			for (int k = -couloirSize; k < couloirSize; k++) {
-				etage.set(i, a.getCenterY() + k, Tile.FLOOR);
+			for (int k = 0; k < size; k++) {
+				etage.set(i, a.getCenterY() + k - size / 2, Tile.FLOOR);
 			}
 		}
 		for (int j = Math.min(a.getCenterY(), b.getCenterY()); j <= Math.max(a.getCenterY(), b.getCenterY()); j++) {
-			for (int k = -couloirSize; k < couloirSize; k++) {
-				etage.set(b.getCenterX(), j + k, Tile.FLOOR);
+			for (int k = 0; k < size; k++) {
+				etage.set(b.getCenterX() + k - size / 2, j, Tile.FLOOR);
 			}
 		}
 	}
@@ -111,10 +96,10 @@ public class SimpleLevel {
 
 	public static class Builder {
 
-		private SimpleLevel e;
+		private SimpleLevelProvider e;
 
 		private Builder(int largeur, int hauteur) {
-			e = new SimpleLevel(largeur, hauteur);
+			e = new SimpleLevelProvider(largeur, hauteur);
 		}
 
 		public Level build() {
@@ -134,7 +119,7 @@ public class SimpleLevel {
 	}
 
 	public final static void main(String[] args) {
-		Level e = SimpleLevel.newInstance(50, 25).setNbRooms(10).setCouloirSize(1).build();
+		Level e = SimpleLevelProvider.newInstance(50, 25).setNbRooms(10).setCouloirSize(1).build();
 		e.print(System.out);
 	}
 }

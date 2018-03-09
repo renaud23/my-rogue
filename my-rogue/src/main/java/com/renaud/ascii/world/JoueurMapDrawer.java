@@ -17,8 +17,6 @@ public class JoueurMapDrawer implements IDrawable, DrawOperationAware {
 	private Joueur joueur;
 	private int screenX;
 	private int screenY;
-	private int screenLargeur;
-	private int screenHauteur;
 
 	private int carrHeight;
 	private int carrWidth;
@@ -28,8 +26,6 @@ public class JoueurMapDrawer implements IDrawable, DrawOperationAware {
 
 	public JoueurMapDrawer(World world, Joueur joueur, int screenX, int screenY, int screenLargeur, int screenHauteur) {
 		this.world = world;
-		this.screenLargeur = screenLargeur;
-		this.screenHauteur = screenHauteur;
 		this.joueur = joueur;
 		this.screenX = screenX;
 		this.screenY = screenY;
@@ -39,7 +35,7 @@ public class JoueurMapDrawer implements IDrawable, DrawOperationAware {
 
 		buffer = new JImageBuffer(Color.white, screenLargeur, screenHauteur);
 		buffer.transparentClean();
-		buffer.fillRect(Color.BLUE, 0, 0, screenLargeur, screenHauteur, alpha);
+		buffer.fillRect(Color.GREEN, 0, 0, screenLargeur, screenHauteur, alpha);
 
 	}
 
@@ -73,8 +69,7 @@ public class JoueurMapDrawer implements IDrawable, DrawOperationAware {
 			buffer.fillRect(col, p.getX() * carrWidth, p.getY() * carrHeight, carrWidth, carrHeight, 0.5f);
 		}
 
-		buffer.fillRect(Color.yellow, joueur.getX() * carrWidth, joueur.getY() * carrHeight, carrWidth, carrHeight,
-				1.0f);
+		buffer.fillRect(Color.yellow, joueur.getX() * carrWidth, joueur.getY() * carrHeight, carrWidth, carrHeight, 1.0f);
 
 		this.op.drawImage(buffer.getImage(), screenX, screenY, 0, 0, 0, 1.0, alpha);
 	};

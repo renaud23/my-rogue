@@ -6,7 +6,7 @@ import java.util.Stack;
 
 import com.renaud.ascii.figure.Point;
 
-public class SmoothLevel implements LevelProvider {
+public class SmoothLevelProvider implements LevelProvider {
 
 	private int largeur;
 	private int hauteur;
@@ -15,7 +15,7 @@ public class SmoothLevel implements LevelProvider {
 	private int nbStep;
 	private PrintStream out;
 
-	private SmoothLevel(int largeur, int hauteur) {
+	private SmoothLevelProvider(int largeur, int hauteur) {
 		e = new Level(largeur, hauteur);
 		this.largeur = largeur;
 		this.hauteur = hauteur;
@@ -178,10 +178,10 @@ public class SmoothLevel implements LevelProvider {
 
 	public static class Builder {
 
-		SmoothLevel e;
+		SmoothLevelProvider e;
 
 		private Builder(int largeur, int hauteur) {
-			e = new SmoothLevel(largeur, hauteur);
+			e = new SmoothLevelProvider(largeur, hauteur);
 		}
 
 		public Builder setOut(PrintStream out) {
@@ -201,7 +201,7 @@ public class SmoothLevel implements LevelProvider {
 	}
 
 	public final static void main(String[] args) {
-		Level e = SmoothLevel.newInstance(50, 30).setNbStep(6).setOut(System.out).build();
+		Level e = SmoothLevelProvider.newInstance(50, 30).setNbStep(6).setOut(System.out).build();
 		e.print(System.out);
 	}
 }

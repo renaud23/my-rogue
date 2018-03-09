@@ -1,12 +1,12 @@
 package com.renaud.ascii.dongeon;
 
-public class LabyrintheLevel implements LevelProvider {
+public class LabyrintheLevelProvider implements LevelProvider {
 	private Labyrinthe laby;
 	private int largeur;
 	private int hauteur;
 	private Level l;
 
-	private LabyrintheLevel(int largeur, int hauteur) {
+	private LabyrintheLevelProvider(int largeur, int hauteur) {
 		this.largeur = largeur;
 		this.hauteur = hauteur;
 		this.laby = new Labyrinthe(largeur, hauteur);
@@ -32,10 +32,10 @@ public class LabyrintheLevel implements LevelProvider {
 	}
 
 	public static class Builder {
-		private LabyrintheLevel e;
+		private LabyrintheLevelProvider e;
 
 		private Builder(int largeur, int hauteur) {
-			e = new LabyrintheLevel(largeur, hauteur);
+			e = new LabyrintheLevelProvider(largeur, hauteur);
 		}
 
 		public Level build() {
@@ -45,7 +45,7 @@ public class LabyrintheLevel implements LevelProvider {
 	}
 
 	public final static void main(String[] args) {
-		Level e = LabyrintheLevel.newInstance(51, 51).build();
+		Level e = LabyrintheLevelProvider.newInstance(51, 51).build();
 		e.print(System.out);
 	}
 

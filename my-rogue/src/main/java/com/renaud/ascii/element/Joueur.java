@@ -3,21 +3,21 @@ package com.renaud.ascii.element;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.figure.Point;
-import com.renaud.ascii.world.World;
 
 public class Joueur implements Element {
 
 	private int x;
 	private int y;
 	private ChampVision vision;
-	private World memory; // mémoire du joueur
+	private Level memory; // mémoire du joueur
 
 	private List<Point> lastComputed = new ArrayList<>();
 
 	public Joueur(int wl, int wh) {
 		vision = new ChampVision(this, 20, Math.PI / 2.0);
-		memory = new World(wl, wh);
+		memory = new Level(wl, wh);
 	}
 
 	public void turnLeft() {
@@ -61,10 +61,10 @@ public class Joueur implements Element {
 	}
 
 	@Override
-	public List<Point> getVisibilityPoints(World world) {
-		lastComputed = vision.getPoints(world);
+	public List<Point> getVisibilityPoints(Level level) {
+		lastComputed = vision.getPoints(level);
 		for (Point p : lastComputed) {
-			memory.setTile(p.getX(), p.getY(), world.getTile(p.getX(), p.getY()));
+			memory.set(p.getX(), p.getY(), level.get(p.getX(), p.getY()));
 		}
 
 		return lastComputed;
@@ -75,7 +75,7 @@ public class Joueur implements Element {
 	}
 
 	public int getMemory(int i, int j) {
-		return memory.getTile(i, j);
+		return memory.get(i, j);
 	}
 
 }
