@@ -8,4 +8,6 @@ public interface Element {
 
 	public boolean isIn(int x, int y);
 
+	public boolean isJoueur();
+
 }

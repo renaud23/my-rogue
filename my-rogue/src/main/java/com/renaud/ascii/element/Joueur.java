@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.figure.Point;
+import com.renaud.ascii.world.World;
 
 public class Joueur implements Element {
 
@@ -60,10 +61,10 @@ public class Joueur implements Element {
 		this.y = y;
 	}
 
-	public List<Point> getVisibilityPoints(Level level) {
-		lastComputed = vision.getPoints(level);
+	public List<Point> getVisibilityPoints(World world) {
+		lastComputed = vision.getPoints(world);
 		for (Point p : lastComputed) {
-			memory.set(p.getX(), p.getY(), level.getTile(p.getX(), p.getY()));
+			memory.set(p.getX(), p.getY(), world.getTile(p.getX(), p.getY()));
 		}
 
 		return lastComputed;
@@ -80,6 +81,11 @@ public class Joueur implements Element {
 	@Override
 	public boolean isIn(int x, int y) {
 		return x == this.x && y == this.y;
+	}
+
+	@Override
+	public boolean isJoueur() {
+		return true;
 	}
 
 }

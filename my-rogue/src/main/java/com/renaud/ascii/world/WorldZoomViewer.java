@@ -77,7 +77,7 @@ public class WorldZoomViewer implements IDrawable, DrawOperationAware {
 		int posY = Math.min(world.getJoueur().getY(), hauteur / 2);
 		posY = Math.max(posY, hauteur - world.getLevel().getHauteur() + world.getJoueur().getY());
 
-		for (Point point : world.getJoueur().getVisibilityPoints(world.getLevel())) {
+		for (Point point : world.getJoueur().getVisibilityPoints(world)) {
 			int px = point.getX() - world.getJoueur().getX() + posX;
 			int py = point.getY() - world.getJoueur().getY() + posY;
 			buffer.fillRect(Color.BLUE, px * carrSize, py * carrSize, carrSize, carrSize, 1.0f);

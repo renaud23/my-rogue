@@ -1,4 +1,4 @@
-package com.renaud.ascii.monster.element;
+package com.renaud.ascii.monster.comportement;
 
 import com.renaud.ascii.world.World;
 

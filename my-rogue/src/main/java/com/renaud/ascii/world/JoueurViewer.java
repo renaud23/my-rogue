@@ -59,29 +59,29 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 			int value = world.getJoueur().getMemory(xx, yy);
 			Color col = Color.black;
 			switch (value) {
-				case Tile.WALL:
-					col = Color.blue;
-					break;
-				case Tile.FLOOR:
-					col = Color.darkGray;
-					break;
+			case Tile.WALL:
+				col = Color.blue;
+				break;
+			case Tile.FLOOR:
+				col = Color.darkGray;
+				break;
 			}
 			buffer.fillRect(col, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
 		}
 
-		for (Point point : world.getJoueur().getVisibilityPoints(world.getLevel())) {
+		for (Point point : world.getJoueur().getVisibilityPoints(world)) {
 			int xi = point.getX() - startX;
 			int yi = point.getY() - startY;
 			int value = world.getLevel().getTile(point.getX(), point.getY());
 			Color col = Color.white;
 
 			switch (value) {
-				case Tile.WALL:
-					col = Color.cyan;
-					break;
-				case Tile.FLOOR:
-					col = Color.gray;
-					break;
+			case Tile.WALL:
+				col = Color.cyan;
+				break;
+			case Tile.FLOOR:
+				col = Color.gray;
+				break;
 			}
 			buffer.fillRect(col, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
 		}
@@ -94,8 +94,10 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 
 	private void drawMonster(int startX, int startY, int carrSize) {
 		for (Monster m : world.getVisiblesMonsters()) {
-			if (m.getX() >= startX && m.getX() < startX + largeur && m.getY() >= startY && m.getY() < startY + hauteur) {
-				buffer.fillRect(Color.green, (m.getX() - startX) * carrSize, (m.getY() - startY) * carrSize, carrSize, carrSize, 1.0f);
+			if (m.getX() >= startX && m.getX() < startX + largeur && m.getY() >= startY
+					&& m.getY() < startY + hauteur) {
+				buffer.fillRect(Color.green, (m.getX() - startX) * carrSize, (m.getY() - startY) * carrSize, carrSize,
+						carrSize, 1.0f);
 			}
 		}
 	}

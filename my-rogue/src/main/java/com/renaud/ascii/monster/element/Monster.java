@@ -14,4 +14,6 @@ public interface Monster extends Element {
 	public int getDepth();
 
 	public int getSpeed();
+
+	public boolean isOpaque();
 }

@@ -130,10 +130,27 @@ public class World implements OnEventAction {
 		if (level.getTile(x, y) != Tile.FLOOR) {
 			return false;
 		}
-		if (joueur.isIn(x, y))
+		if (joueur.isIn(x, y) && !e.isJoueur())
 			return false;
 		for (Monster m : monsters) {
 			if (m.isIn(x, y)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public boolean canSeeThrough(Element e, int x, int y) {
+		if (x < 0 || y < 0 || x >= level.getLargeur() || y >= level.getHauteur()) {
+			return false;
+		}
+		if (level.getTile(x, y) != Tile.FLOOR) {
+			return false;
+		}
+		if (joueur.isIn(x, y) && !e.isJoueur())
+			return false;
+		for (Monster m : monsters) {
+			if (m.isIn(x, y) && m.isOpaque()) {
 				return false;
 			}
 		}
