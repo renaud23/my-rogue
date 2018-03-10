@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
-import com.renaud.ascii.world.World;
+import com.renaud.ascii.world.MainLoop;
 
 public class Fenetre implements Iterable<IDrawable> {
 
@@ -29,10 +29,10 @@ public class Fenetre implements Iterable<IDrawable> {
 	private List<IDrawable> drawables = new ArrayList<IDrawable>();
 
 	private Image background;
-	private World world;
+	private MainLoop loop;
 
-	public Fenetre(World world, int largeur, int hauteur, String title) {
-		this.world = world;
+	public Fenetre(MainLoop loop, int largeur, int hauteur, String title) {
+		this.loop = loop;
 		this.frame = new JFrame(title);
 		this.frame.setIgnoreRepaint(true);
 		this.frame.setVisible(true);
@@ -103,13 +103,13 @@ public class Fenetre implements Iterable<IDrawable> {
 	public void start() {
 
 		final Fenetre f = this;
-		final World w = this.world;
+		final MainLoop w = this.loop;
 
 		TimerTask task = new TimerTask() {
 
 			@Override
 			public void run() {
-				w.compute();
+				w.activate();
 				f.drawBackground();
 				for (IDrawable drw : f) {
 					if (drw instanceof DrawOperationAware)

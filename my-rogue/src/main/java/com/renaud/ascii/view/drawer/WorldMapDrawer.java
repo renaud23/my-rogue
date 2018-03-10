@@ -1,4 +1,4 @@
-package com.renaud.ascii.world;
+package com.renaud.ascii.view.drawer;
 
 import java.awt.Color;
 
@@ -7,6 +7,7 @@ import com.renaud.ascii.view.DrawOperationAware;
 import com.renaud.ascii.view.IDrawOperation;
 import com.renaud.ascii.view.IDrawable;
 import com.renaud.ascii.view.JImageBuffer;
+import com.renaud.ascii.world.World;
 
 public class WorldMapDrawer implements IDrawable, DrawOperationAware {
 	private World world;

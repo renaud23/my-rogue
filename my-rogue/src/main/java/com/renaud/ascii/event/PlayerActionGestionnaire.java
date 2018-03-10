@@ -1,9 +1,9 @@
-package com.renaud.ascii.world;
+package com.renaud.ascii.event;
 
 import com.renaud.ascii.element.Joueur;
-import com.renaud.ascii.event.OnEventAction;
+import com.renaud.ascii.world.World;
 
-public class MouvementGestionnaire implements OnEventAction {
+public class PlayerActionGestionnaire implements OnEventAction {
 
 	private World world;
 	private Joueur joueur;
@@ -12,10 +12,15 @@ public class MouvementGestionnaire implements OnEventAction {
 	private boolean goDown = false;
 	private boolean goRight = false;
 	private boolean goLeft = false;
+	
+	private OnEventAction mouvements;
+	private OnEventAction weapons;
 
-	public MouvementGestionnaire(World world) {
+	public PlayerActionGestionnaire(World world) {
 		this.world = world;
 		this.joueur = world.getJoueur();
+		mouvements = new PlayerMouvementsGestionnaire(world);
+		weapons = new WeaponGestionnaire(world);
 	}
 
 	public boolean activate() {
@@ -153,6 +158,18 @@ public class MouvementGestionnaire implements OnEventAction {
 	@Override
 	public void keyRightRealesed() {
 		goRight = false;
+	}
+
+	@Override
+	public void spacePressed() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void spaceReleaseded() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

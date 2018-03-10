@@ -25,18 +25,21 @@ public class EventListener implements KeyListener, MouseMotionListener {
 	public void keyPressed(KeyEvent e) {
 		for (OnEventAction l : listeners) {
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					l.keyUpPressed();
-					break;
-				case KeyEvent.VK_DOWN:
-					l.keyDownPressed();
-					break;
-				case KeyEvent.VK_RIGHT:
-					l.keyRightPressed();
-					break;
-				case KeyEvent.VK_LEFT:
-					l.keyLeftPressed();
-					break;
+			case KeyEvent.VK_UP:
+				l.keyUpPressed();
+				break;
+			case KeyEvent.VK_DOWN:
+				l.keyDownPressed();
+				break;
+			case KeyEvent.VK_RIGHT:
+				l.keyRightPressed();
+				break;
+			case KeyEvent.VK_LEFT:
+				l.keyLeftPressed();
+				break;
+			case KeyEvent.VK_SPACE:
+				l.keyLeftPressed();
+				break;
 			}
 		}
 	}
@@ -46,18 +49,18 @@ public class EventListener implements KeyListener, MouseMotionListener {
 		for (OnEventAction l : listeners) {
 
 			switch (e.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					l.keyUpReleased();
-					break;
-				case KeyEvent.VK_DOWN:
-					l.keyDownReleased();
-					break;
-				case KeyEvent.VK_RIGHT:
-					l.keyRightRealesed();
-					break;
-				case KeyEvent.VK_LEFT:
-					l.keyLeftReleaseded();
-					break;
+			case KeyEvent.VK_UP:
+				l.keyUpReleased();
+				break;
+			case KeyEvent.VK_DOWN:
+				l.keyDownReleased();
+				break;
+			case KeyEvent.VK_RIGHT:
+				l.keyRightRealesed();
+				break;
+			case KeyEvent.VK_LEFT:
+				l.keyLeftReleaseded();
+				break;
 			}
 		}
 	}

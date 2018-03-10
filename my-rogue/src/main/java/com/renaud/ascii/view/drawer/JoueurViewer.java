@@ -1,4 +1,4 @@
-package com.renaud.ascii.world;
+package com.renaud.ascii.view.drawer;
 
 import java.awt.Color;
 
@@ -9,6 +9,7 @@ import com.renaud.ascii.view.DrawOperationAware;
 import com.renaud.ascii.view.IDrawOperation;
 import com.renaud.ascii.view.IDrawable;
 import com.renaud.ascii.view.JImageBuffer;
+import com.renaud.ascii.world.World;
 
 public class JoueurViewer implements IDrawable, DrawOperationAware {
 
@@ -93,7 +94,7 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 	}
 
 	private void drawMonster(int startX, int startY, int carrSize) {
-		for (Monster m : world.getVisiblesMonsters()) {
+		for (Monster m : world.getVisiblesMonstersByPlayer()) {
 			if (m.getX() >= startX && m.getX() < startX + largeur && m.getY() >= startY
 					&& m.getY() < startY + hauteur) {
 				buffer.fillRect(Color.green, (m.getX() - startX) * carrSize, (m.getY() - startY) * carrSize, carrSize,

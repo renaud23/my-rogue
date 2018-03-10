@@ -24,7 +24,7 @@ public class GoTo implements Comportement {
 	}
 
 	private void move(World w) {
-		if (!isArrived()) {
+		if (!isFinished()) {
 			for (int h = 0; h < monster.getSpeed(); h++) {
 				int dx = 0;
 				int dy = 0;
@@ -60,7 +60,7 @@ public class GoTo implements Comportement {
 		}
 	}
 
-	public boolean isArrived() {
+	public boolean isFinished() {
 		return monster.getX() == nx && monster.getY() == ny;
 	}
 

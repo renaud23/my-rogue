@@ -5,5 +5,7 @@ import com.renaud.ascii.world.World;
 public interface Comportement {
 	void activate(World world);
 
+	boolean isFinished();
+
 	void reset();
 }

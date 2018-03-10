@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.figure.Point;
+import com.renaud.ascii.weapon.Weapon;
 import com.renaud.ascii.world.World;
 
 public class Joueur implements Element {
 
 	private int x;
 	private int y;
+	private Weapon weapon;
 	private ChampVision vision;
 	private Level memory; // mémoire du joueur
 
@@ -86,6 +88,10 @@ public class Joueur implements Element {
 	@Override
 	public boolean isJoueur() {
 		return true;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
 	}
 
 }

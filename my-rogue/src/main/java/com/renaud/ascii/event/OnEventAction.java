@@ -18,5 +18,10 @@ public interface OnEventAction {
 
 	void keyRightRealesed();
 
+	void spacePressed();
+
+	void spaceReleaseded();
+
 	void mouseMoved(int x, int y, int varx, int vary);
+
 }

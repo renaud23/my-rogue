@@ -4,10 +4,12 @@ import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.dongeon.SmoothLevelProvider;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Joueur;
+import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.monster.element.Wolf;
-import com.renaud.ascii.world.JoueurMapDrawer;
-import com.renaud.ascii.world.JoueurViewer;
+import com.renaud.ascii.view.drawer.JoueurMapDrawer;
+import com.renaud.ascii.view.drawer.JoueurViewer;
+import com.renaud.ascii.world.MainLoop;
 import com.renaud.ascii.world.World;
 
 public class Main {
@@ -37,12 +39,14 @@ public class Main {
 
 		JoueurViewer worldViewer = new JoueurViewer(world, 40, 30, screenLargeur, screenHauteur);
 
-		Fenetre fenetre = new Fenetre(world, screenLargeur, screenHauteur, "Ascii");
+		PlayerActionGestionnaire actions = new PlayerActionGestionnaire(world);
+		MainLoop loop = new MainLoop(world, actions);
+		Fenetre fenetre = new Fenetre(loop, screenLargeur, screenHauteur, "Ascii");
 		fenetre.addDrawable(worldViewer);
 		fenetre.addDrawable(map);
 
 		EventListener kl = new EventListener();
-		kl.addListener(world);
+		kl.addListener(loop);
 		fenetre.addKeyListener(kl);
 		fenetre.addMouseMotionListener(kl);
 		fenetre.start();

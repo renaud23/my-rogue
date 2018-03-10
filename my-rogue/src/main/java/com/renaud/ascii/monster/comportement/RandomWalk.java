@@ -59,11 +59,16 @@ public class RandomWalk implements Comportement {
 	@Override
 	public void activate(World world) {
 		if (monster.getSpeed() > 0) {
-			if (goTo.isArrived()) {
+			if (goTo.isFinished()) {
 				checkNextDir(world);
 			} else {
 				goTo.activate(world);
 			}
 		}
+	}
+
+	@Override
+	public boolean isFinished() {
+		return false;
 	}
 }

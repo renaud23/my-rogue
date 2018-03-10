@@ -1,6 +1,7 @@
 package com.renaud.ascii.monster.element;
 
 import com.renaud.ascii.monster.comportement.Comportement;
+import com.renaud.ascii.monster.comportement.HuntPlayer;
 import com.renaud.ascii.monster.comportement.RandomWalk;
 import com.renaud.ascii.world.World;
 
@@ -10,6 +11,7 @@ public class Wolf implements Monster {
 	int y;
 	int speed = 1;
 	int depth = 15;
+	private boolean isHuting;
 
 	private Comportement walk;
 	private Comportement hunt;
@@ -18,6 +20,7 @@ public class Wolf implements Monster {
 		this.x = x;
 		this.y = y;
 		walk = new RandomWalk(this);
+		hunt = new HuntPlayer(this);
 	}
 
 	@Override
@@ -32,7 +35,19 @@ public class Wolf implements Monster {
 
 	@Override
 	public void activate(World world) {
-		walk.activate(world);
+
+		if (isHuting) {
+			hunt.activate(world);
+		} else {
+			if (world.canSeePlayer(this)) {
+				isHuting = true;
+				hunt.reset();
+				activate(world);
+			} else {
+				walk.activate(world);
+			}
+
+		}
 	}
 
 	@Override

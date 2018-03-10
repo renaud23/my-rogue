@@ -9,12 +9,13 @@ import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Element;
 import com.renaud.ascii.element.Joueur;
-import com.renaud.ascii.event.OnEventAction;
+import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.figure.Segment;
 import com.renaud.ascii.monster.element.Monster;
+import com.renaud.ascii.tools.MathTools;
 
-public class World implements OnEventAction {
+public class World {
 
 	private boolean playerStepFinished = false;
 
@@ -22,7 +23,7 @@ public class World implements OnEventAction {
 	private Joueur joueur;
 	private List<Monster> monsters = new ArrayList<>();
 
-	private MouvementGestionnaire mouvements;
+	private PlayerActionGestionnaire mouvements;
 
 	public World() {
 	}
@@ -33,7 +34,7 @@ public class World implements OnEventAction {
 		Point start = level.peekRandomOne(Tile.FLOOR);
 		joueur.setX(start.getX());
 		joueur.setY(start.getY());
-		mouvements = new MouvementGestionnaire(this);
+		mouvements = new PlayerActionGestionnaire(this);
 	}
 
 	public void setTile(int i, int j, int value) {
@@ -58,52 +59,11 @@ public class World implements OnEventAction {
 		}
 	}
 
-	@Override
-	public void keyUpPressed() {
-		mouvements.keyUpPressed();
-	}
-
-	@Override
-	public void keyRightPressed() {
-		mouvements.keyRightPressed();
-	}
-
-	@Override
-	public void keyDownPressed() {
-		mouvements.keyDownPressed();
-	}
-
-	@Override
-	public void keyLeftPressed() {
-		mouvements.keyLeftPressed();
-	}
-	/* */
-
-	@Override
-	public void keyUpReleased() {
-		mouvements.keyUpReleased();
-	}
-
-	@Override
-	public void keyDownReleased() {
-		mouvements.keyDownReleased();
-	}
-
-	@Override
-	public void keyLeftReleaseded() {
-		mouvements.keyLeftReleaseded();
-	}
-
-	@Override
-	public void keyRightRealesed() {
-		mouvements.keyRightRealesed();
-	}
-
 	public Iterable<Monster> getMonsters() {
 		return monsters;
 	}
 
-	public Iterable<Monster> getVisiblesMonsters() {
+	public Iterable<Monster> getVisiblesMonstersByPlayer() {
 		Set<Monster> vm = new HashSet<>();
 		for (Monster m : monsters) {
 			Segment seg = new Segment(new Point(joueur.getX(), joueur.getY()), new Point(m.getX(), m.getY()));
@@ -125,8 +85,6 @@ public class World implements OnEventAction {
 		if (x < 0 || y < 0 || x >= level.getLargeur() || y >= level.getHauteur()) {
 			return false;
 		}
-		// if (e.isIn(x, y))
-		// return false;
 		if (level.getTile(x, y) != Tile.FLOOR) {
 			return false;
 		}
@@ -147,9 +105,10 @@ public class World implements OnEventAction {
 		if (level.getTile(x, y) != Tile.FLOOR) {
 			return false;
 		}
-		if (joueur.isIn(x, y) && !e.isJoueur())
-			return false;
 		for (Monster m : monsters) {
+			if (e == m) {
+				continue;
+			}
 			if (m.isIn(x, y) && m.isOpaque()) {
 				return false;
 			}
@@ -173,9 +132,20 @@ public class World implements OnEventAction {
 		return true;
 	}
 
-	@Override
-	public void mouseMoved(int x, int y, int varx, int vary) {
-		mouvements.mouseMoved(x, y, varx, vary);
+	public boolean canSeePlayer(Monster m) {
+		Point pm = new Point(m.getX(), m.getY());
+		Point pj = new Point(joueur.getX(), joueur.getY());
+
+		if (MathTools.distance(pm, pj) <= m.getDepth() * m.getDepth()) {
+			Segment seg = new Segment(pm, pj);
+			for (Point p : seg.getPoints()) {
+				if (!canSeeThrough(m, p.getX(), p.getY())) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public int getTile(int i, int j) {
