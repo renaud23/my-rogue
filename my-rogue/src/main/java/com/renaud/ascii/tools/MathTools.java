@@ -11,4 +11,13 @@ public class MathTools {
 
 		return disty + distx;
 	}
+
+	public static int distance(int ax, int ay, int bx, int by) {
+		int distx = ax - bx;
+		distx *= distx;
+		int disty = ay - by;
+		disty *= disty;
+
+		return disty + distx;
+	}
 }

@@ -1,5 +1,5 @@
 package com.renaud.ascii.weapon;
 
-public interface Gun extends Weapon {
+public interface MeleeWeapon extends Weapon {
 	void aim();
 }

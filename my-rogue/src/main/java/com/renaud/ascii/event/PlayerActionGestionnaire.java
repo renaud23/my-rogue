@@ -1,175 +1,106 @@
 package com.renaud.ascii.event;
 
-import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.world.World;
 
 public class PlayerActionGestionnaire implements OnEventAction {
 
-	private World world;
-	private Joueur joueur;
-
-	private boolean goUp = false;
-	private boolean goDown = false;
-	private boolean goRight = false;
-	private boolean goLeft = false;
-	
 	private OnEventAction mouvements;
-	private OnEventAction weapons;
+	private WeaponGestionnaire weapons;
+	private OnEventAction activeManager;
+
+	private boolean aiming;
 
 	public PlayerActionGestionnaire(World world) {
-		this.world = world;
-		this.joueur = world.getJoueur();
 		mouvements = new PlayerMouvementsGestionnaire(world);
 		weapons = new WeaponGestionnaire(world);
-	}
 
-	public boolean activate() {
-		boolean u = goUp();
-		boolean d = goDown();
-		boolean r = goRight();
-		boolean l = goLeft();
-		return u || d || r || l;
+		activeManager = mouvements;
 	}
 
 	@Override
-	public void mouseMoved(int x, int y, int varx, int vary) {
-
-	}
-
-	private boolean goUp() {
-		boolean go = false;
-		if (goUp) {
-			int next = joueur.getY() - 1;
-			if (next >= 0) {
-				if (world.canGo(joueur, joueur.getX(), next)) {
-					go = true;
-				}
+	public boolean activate() {
+		if (aiming) {
+			if (activeManager.isFinished()) {
+				aiming = false;
+				activeManager = mouvements;
+				mouvements.reset();
 			}
 		}
-		if (go) {
-			joueur.goUp();
-			return true;
-		}
-		goUp = false;
-		return false;
-	}
 
-	private boolean goDown() {
-		boolean go = false;
-		if (goDown) {
-			int next = joueur.getY() + 1;
-			if (next < world.getHauteur()) {
-				if (world.canGo(joueur, joueur.getX(), next)) {
-					go = true;
-				}
-			}
-		}
-		if (go) {
-			joueur.goDown();
-			return true;
-		}
-		goDown = false;
-		return false;
-	}
-
-	private boolean goRight() {
-		boolean go = false;
-		if (goRight) {
-			int next = joueur.getX() + 1;
-			if (next < world.getLargeur()) {
-				if (world.canGo(joueur, next, joueur.getY())) {
-					go = true;
-				}
-			}
-
-		}
-		if (go) {
-			joueur.goRight();
-			return true;
-		}
-		goRight = false;
-		return false;
-	}
-
-	private boolean goLeft() {
-		boolean go = false;
-		if (goLeft) {
-			int next = joueur.getX() - 1;
-			if (next >= 0) {
-				if (world.canGo(joueur, next, joueur.getY())) {
-					go = true;
-				}
-			}
-
-		}
-		if (go) {
-			joueur.goLeft();
-			return true;
-		}
-		goLeft = false;
-		return false;
+		return activeManager.activate();
 	}
 
 	@Override
 	public void keyUpPressed() {
-		goUp = true;
-		goDown = false;
-
+		activeManager.keyUpPressed();
 	}
 
 	@Override
 	public void keyUpReleased() {
-		goUp = false;
-
+		activeManager.keyUpReleased();
 	}
 
 	@Override
 	public void keyDownPressed() {
-		goUp = false;
-		goDown = true;
-
+		activeManager.keyDownPressed();
 	}
 
 	@Override
 	public void keyDownReleased() {
-		goDown = false;
-
+		activeManager.keyDownReleased();
 	}
 
 	@Override
 	public void keyLeftPressed() {
-		goLeft = true;
-		goRight = false;
-
+		activeManager.keyLeftPressed();
 	}
 
 	@Override
 	public void keyLeftReleaseded() {
-		goLeft = false;
+		activeManager.keyLeftReleaseded();
 	}
 
 	@Override
 	public void keyRightPressed() {
-		goLeft = false;
-		goRight = true;
-
+		activeManager.keyRightPressed();
 	}
 
 	@Override
 	public void keyRightRealesed() {
-		goRight = false;
+		activeManager.keyRightRealesed();
 	}
 
 	@Override
 	public void spacePressed() {
-		// TODO Auto-generated method stub
+		activeManager.spacePressed();
 
 	}
 
 	@Override
 	public void spaceReleaseded() {
-		// TODO Auto-generated method stub
-
+		if (!aiming) {
+			aiming = true;
+			activeManager = weapons;
+			weapons.reset();
+		} else {
+			activeManager.spaceReleaseded();
+		}
 	}
 
+	@Override
+	public void mouseMoved(int x, int y, int varx, int vary) {
+		activeManager.mouseMoved(x, y, varx, vary);
+	}
+
+	public boolean isAiming() {
+		return aiming;
+	}
+
+	public int getAimX() {
+		return weapons.getAimX();
+	}
+
+	public int getAimY() {
+		return weapons.getAimY();
+	}
 }

@@ -2,26 +2,45 @@ package com.renaud.ascii.event;
 
 public interface OnEventAction {
 
-	void keyUpPressed();
+	default void keyUpPressed() {
+	};
 
-	void keyUpReleased();
+	default void keyUpReleased() {
+	};
 
-	void keyDownPressed();
+	default void keyDownPressed() {
+	};
 
-	void keyDownReleased();
+	default void keyDownReleased() {
+	};
 
-	void keyLeftPressed();
+	default void keyLeftPressed() {
+	};
 
-	void keyLeftReleaseded();
+	default void keyLeftReleaseded() {
+	};
 
-	void keyRightPressed();
+	default void keyRightPressed() {
+	};
 
-	void keyRightRealesed();
+	default void keyRightRealesed() {
+	};
 
-	void spacePressed();
+	default void spacePressed() {
+	};
 
-	void spaceReleaseded();
+	default void spaceReleaseded() {
+	};
 
-	void mouseMoved(int x, int y, int varx, int vary);
+	default void mouseMoved(int x, int y, int varx, int vary) {
+	};
 
+	default void reset() {
+	};
+
+	boolean activate();
+
+	default boolean isFinished() {
+		return true;
+	}
 }

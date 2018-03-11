@@ -12,7 +12,7 @@ public class MainLoop implements OnEventAction {
 
 	private boolean playerStepFinished = false;
 
-	public void activate() {
+	public boolean activate() {
 		// jeu au tour par tour
 		if (playerStepFinished) {
 			for (Monster m : world.getMonsters()) {
@@ -24,6 +24,7 @@ public class MainLoop implements OnEventAction {
 				playerStepFinished = true;
 			}
 		}
+		return false;
 	}
 
 	public MainLoop(World world, PlayerActionGestionnaire actionPlayer) {

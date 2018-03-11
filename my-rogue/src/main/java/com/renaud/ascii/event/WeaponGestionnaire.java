@@ -1,170 +1,100 @@
 package com.renaud.ascii.event;
 
-import com.renaud.ascii.element.Joueur;
+import com.renaud.ascii.weapon.Weapon;
 import com.renaud.ascii.world.World;
 
 public class WeaponGestionnaire implements OnEventAction {
 
-	private World world;
-	private Joueur joueur;
+	World world;
+	Weapon weapon;
+	int aimX;
+	int aimY;
 
-	private boolean goUp = false;
-	private boolean goDown = false;
-	private boolean goRight = false;
-	private boolean goLeft = false;
+	boolean finished;
+	boolean spacePressed;
 
 	public WeaponGestionnaire(World world) {
 		this.world = world;
-		this.joueur = world.getJoueur();
+		this.weapon = world.getJoueur().getWeapon();
+	}
+
+	@Override
+	public void reset() {
+		finished = false;
+		spacePressed = false;
+		aimX = world.getJoueur().getX();
+		aimY = world.getJoueur().getY();
 	}
 
 	public boolean activate() {
-		boolean u = goUp();
-		boolean d = goDown();
-		boolean r = goRight();
-		boolean l = goLeft();
-		return u || d || r || l;
-	}
-
-	@Override
-	public void mouseMoved(int x, int y, int varx, int vary) {
-
-	}
-
-	private boolean goUp() {
-		boolean go = false;
-		if (goUp) {
-			int next = joueur.getY() - 1;
-			if (next >= 0) {
-				if (world.canGo(joueur, joueur.getX(), next)) {
-					go = true;
-				}
-			}
-		}
-		if (go) {
-			joueur.goUp();
+		if (spacePressed) {
+			finished = true;
+			weapon.shoot();
 			return true;
 		}
-		goUp = false;
+		weapon.aim();
+
 		return false;
-	}
-
-	private boolean goDown() {
-		boolean go = false;
-		if (goDown) {
-			int next = joueur.getY() + 1;
-			if (next < world.getHauteur()) {
-				if (world.canGo(joueur, joueur.getX(), next)) {
-					go = true;
-				}
-			}
-		}
-		if (go) {
-			joueur.goDown();
-			return true;
-		}
-		goDown = false;
-		return false;
-	}
-
-	private boolean goRight() {
-		boolean go = false;
-		if (goRight) {
-			int next = joueur.getX() + 1;
-			if (next < world.getLargeur()) {
-				if (world.canGo(joueur, next, joueur.getY())) {
-					go = true;
-				}
-			}
-
-		}
-		if (go) {
-			joueur.goRight();
-			return true;
-		}
-		goRight = false;
-		return false;
-	}
-
-	private boolean goLeft() {
-		boolean go = false;
-		if (goLeft) {
-			int next = joueur.getX() - 1;
-			if (next >= 0) {
-				if (world.canGo(joueur, next, joueur.getY())) {
-					go = true;
-				}
-			}
-
-		}
-		if (go) {
-			joueur.goLeft();
-			return true;
-		}
-		goLeft = false;
-		return false;
-	}
-
-	@Override
-	public void keyUpPressed() {
-		goUp = true;
-		goDown = false;
-
 	}
 
 	@Override
 	public void keyUpReleased() {
-		goUp = false;
-
-	}
-
-	@Override
-	public void keyDownPressed() {
-		goUp = false;
-		goDown = true;
-
+		if (canAimBy(0, -1)) {
+			aimY--;
+		}
 	}
 
 	@Override
 	public void keyDownReleased() {
-		goDown = false;
-
-	}
-
-	@Override
-	public void keyLeftPressed() {
-		goLeft = true;
-		goRight = false;
-
+		if (canAimBy(0, 1)) {
+			aimY++;
+		}
 	}
 
 	@Override
 	public void keyLeftReleaseded() {
-		goLeft = false;
-	}
-
-	@Override
-	public void keyRightPressed() {
-		goLeft = false;
-		goRight = true;
-
+		if (canAimBy(-1, 0)) {
+			aimX--;
+		}
 	}
 
 	@Override
 	public void keyRightRealesed() {
-		goRight = false;
-	}
-
-	@Override
-	public void spacePressed() {
-		// TODO Auto-generated method stub
-
+		if (canAimBy(1, 0)) {
+			aimX++;
+		}
 	}
 
 	@Override
 	public void spaceReleaseded() {
-		// TODO Auto-generated method stub
+		spacePressed = true;
+	}
 
+	@Override
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public int getAimX() {
+		return aimX;
+	}
+
+	public int getAimY() {
+		return aimY;
+	}
+
+	private boolean canAimBy(int dx, int dy) {
+		int nx = aimX + dx;
+		int ny = aimY + dy;
+
+		int varx = Math.abs(nx - world.getJoueur().getX());
+		int vary = Math.abs(ny - world.getJoueur().getY());
+
+		if (varx <= weapon.getDepht() && vary <= weapon.getDepht()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

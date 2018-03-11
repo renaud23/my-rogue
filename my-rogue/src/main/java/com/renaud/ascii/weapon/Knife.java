@@ -1,6 +1,6 @@
 package com.renaud.ascii.weapon;
 
-public class Shotgun implements ThrowingWeapon {
+public class Knife implements MeleeWeapon {
 
 	@Override
 	public void shoot() {
@@ -16,7 +16,7 @@ public class Shotgun implements ThrowingWeapon {
 
 	@Override
 	public int getDepht() {
-		return 20;
+		return 1;
 	}
 
 }

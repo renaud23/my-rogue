@@ -8,7 +8,7 @@ import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.monster.element.Wolf;
 import com.renaud.ascii.view.drawer.JoueurMapDrawer;
-import com.renaud.ascii.view.drawer.JoueurViewer;
+import com.renaud.ascii.view.drawer.JoueurWorldDrawer;
 import com.renaud.ascii.world.MainLoop;
 import com.renaud.ascii.world.World;
 
@@ -37,9 +37,10 @@ public class Main {
 
 		JoueurMapDrawer map = new JoueurMapDrawer(world, joueur, 10, 10, wolrdLargeur, worldHauteur);
 
-		JoueurViewer worldViewer = new JoueurViewer(world, 40, 30, screenLargeur, screenHauteur);
-
 		PlayerActionGestionnaire actions = new PlayerActionGestionnaire(world);
+
+		JoueurWorldDrawer worldViewer = new JoueurWorldDrawer(world, actions, 40, 30, screenLargeur, screenHauteur);
+
 		MainLoop loop = new MainLoop(world, actions);
 		Fenetre fenetre = new Fenetre(loop, screenLargeur, screenHauteur, "Ascii");
 		fenetre.addDrawable(worldViewer);

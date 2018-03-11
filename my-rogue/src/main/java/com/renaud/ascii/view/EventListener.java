@@ -38,7 +38,8 @@ public class EventListener implements KeyListener, MouseMotionListener {
 				l.keyLeftPressed();
 				break;
 			case KeyEvent.VK_SPACE:
-				l.keyLeftPressed();
+				l.spacePressed();
+				;
 				break;
 			}
 		}
@@ -60,6 +61,9 @@ public class EventListener implements KeyListener, MouseMotionListener {
 				break;
 			case KeyEvent.VK_LEFT:
 				l.keyLeftReleaseded();
+				break;
+			case KeyEvent.VK_SPACE:
+				l.spaceReleaseded();
 				break;
 			}
 		}

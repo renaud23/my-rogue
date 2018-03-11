@@ -3,6 +3,7 @@ package com.renaud.ascii.view.drawer;
 import java.awt.Color;
 
 import com.renaud.ascii.dongeon.Tile;
+import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.monster.element.Monster;
 import com.renaud.ascii.view.DrawOperationAware;
@@ -11,7 +12,7 @@ import com.renaud.ascii.view.IDrawable;
 import com.renaud.ascii.view.JImageBuffer;
 import com.renaud.ascii.world.World;
 
-public class JoueurViewer implements IDrawable, DrawOperationAware {
+public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
 
 	private IDrawOperation op;
 	private IDrawOperation buffer;
@@ -20,26 +21,20 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 	private int screenLargeur;
 	private int screenHauteur;
 
+	private PlayerActionDrawer playerActionDrawer;
+
 	private int largeur;
 	private int hauteur;
 
-	public JoueurViewer(World world, int viewLargeur, int viewHauteur, int screenLargeur, int screenHauteur) {
+	public JoueurWorldDrawer(World world, PlayerActionGestionnaire playerAction, int viewLargeur, int viewHauteur,
+			int screenLargeur, int screenHauteur) {
 		this.world = world;
 		this.largeur = viewLargeur;
 		this.hauteur = viewHauteur;
 		this.screenLargeur = screenLargeur;
 		this.screenHauteur = screenHauteur;
 		buffer = new JImageBuffer(Color.white, screenLargeur, screenHauteur);
-	}
-
-	public boolean isChange() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void setChange() {
-		// TODO Auto-generated method stub
-
+		playerActionDrawer = new PlayerActionDrawer(world, playerAction);
 	}
 
 	public void draw() {
@@ -89,6 +84,7 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 
 		drawPlayer();
 		drawMonster(startX, startY, carrSize);
+		playerActionDrawer.draw(startX, startY, carrSize);
 
 		this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
 	}
@@ -116,6 +112,7 @@ public class JoueurViewer implements IDrawable, DrawOperationAware {
 
 	public void setDrawOperation(IDrawOperation op) {
 		this.op = op;
+		playerActionDrawer.setDrawOperation(buffer);
 	}
 
 }

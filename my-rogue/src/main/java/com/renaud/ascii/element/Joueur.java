@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.figure.Point;
+import com.renaud.ascii.weapon.Knife;
 import com.renaud.ascii.weapon.Weapon;
 import com.renaud.ascii.world.World;
 
@@ -21,6 +22,7 @@ public class Joueur implements Element {
 	public Joueur(int wl, int wh) {
 		vision = new ChampVision(this, 20, Math.PI / 2.0);
 		memory = new Level(wl, wh);
+		this.weapon = new Knife();
 	}
 
 	public void turnLeft() {

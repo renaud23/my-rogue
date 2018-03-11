@@ -7,9 +7,12 @@ package com.renaud.ascii.view;
  */
 public interface IDrawable {
 
-	public boolean isChange();
+	default public boolean isChange() {
+		return false;
+	};
 
-	public void setChange();
+	default public void setChange() {
+	};
 
 	public void draw();
 }

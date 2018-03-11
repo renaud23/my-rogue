@@ -18,17 +18,20 @@ public class PlayerMouvementsGestionnaire implements OnEventAction {
 		this.joueur = world.getJoueur();
 	}
 
+	@Override
+	public void reset() {
+		goUp = false;
+		goDown = false;
+		goRight = false;
+		goLeft = false;
+	}
+
 	public boolean activate() {
 		boolean u = goUp();
 		boolean d = goDown();
 		boolean r = goRight();
 		boolean l = goLeft();
 		return u || d || r || l;
-	}
-
-	@Override
-	public void mouseMoved(int x, int y, int varx, int vary) {
-
 	}
 
 	private boolean goUp() {
@@ -153,18 +156,6 @@ public class PlayerMouvementsGestionnaire implements OnEventAction {
 	@Override
 	public void keyRightRealesed() {
 		goRight = false;
-	}
-
-	@Override
-	public void spacePressed() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void spaceReleaseded() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
