@@ -35,6 +35,9 @@ public class EffectsDrawer implements IDrawable, DrawOperationAware {
 			dr.setDrawOperation(op);
 			dr.draw();
 		}
+	}
 
+	public void addEffect(DrawableEffect effect) {
+		this.drawables.add(effect);
 	}
 }
