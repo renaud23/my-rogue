@@ -29,7 +29,7 @@ public class WeaponGestionnaire implements OnEventAction {
 	public boolean activate() {
 		if (spacePressed) {
 			finished = true;
-			weapon.shoot();
+			weapon.shoot(world);
 			return true;
 		}
 
