@@ -1,6 +1,7 @@
 package com.renaud.ascii.world;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,6 +49,10 @@ public class World {
 
 	public void addShoot(Shoot s) {
 		this.shoots.add(s);
+	}
+
+	public void addAllShoot(Collection<Shoot> s) {
+		this.shoots.addAll(s);
 	}
 
 	public List<Shoot> getShoot() {

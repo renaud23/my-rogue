@@ -9,7 +9,9 @@ public class Knife implements MeleeWeapon {
 
 	@Override
 	public List<Shoot> shoot(World world, int x, int y) {
-		return new ArrayList<>();
+		List<Shoot> shoots = new ArrayList<>();
+		shoots.add(new Impact(this, x, y));
+		return shoots;
 	}
 
 	@Override
