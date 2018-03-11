@@ -9,21 +9,22 @@ import com.renaud.ascii.dongeon.Level;
 import com.renaud.ascii.dongeon.Tile;
 import com.renaud.ascii.element.Element;
 import com.renaud.ascii.element.Joueur;
-import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.figure.Segment;
 import com.renaud.ascii.monster.element.Monster;
 import com.renaud.ascii.tools.MathTools;
+import com.renaud.ascii.weapon.Shoot;
 
 public class World {
 
-	private boolean playerStepFinished = false;
+	// private boolean playerStepFinished = false;
 
 	private Level level;
 	private Joueur joueur;
 	private List<Monster> monsters = new ArrayList<>();
+	private List<Shoot> shoots = new ArrayList<>();
 
-	private PlayerActionGestionnaire mouvements;
+	// private PlayerActionGestionnaire mouvements;
 
 	public World() {
 	}
@@ -34,7 +35,7 @@ public class World {
 		Point start = level.peekRandomOne(Tile.FLOOR);
 		joueur.setX(start.getX());
 		joueur.setY(start.getY());
-		mouvements = new PlayerActionGestionnaire(this);
+		// mouvements = new PlayerActionGestionnaire(this);
 	}
 
 	public void setTile(int i, int j, int value) {
@@ -45,18 +46,12 @@ public class World {
 		this.monsters.add(m);
 	}
 
-	public void compute() {
-		// jeu au tour par tour
-		if (playerStepFinished) {
-			for (Monster m : monsters) {
-				m.activate(this);
-			}
-			playerStepFinished = false;
-		} else {
-			if (mouvements.activate()) {
-				playerStepFinished = true;
-			}
-		}
+	public void addShoot(Shoot s) {
+		this.shoots.add(s);
+	}
+
+	public List<Shoot> getShoot() {
+		return shoots;
 	}
 
 	public Iterable<Monster> getMonsters() {

@@ -3,6 +3,7 @@ package com.renaud.ascii.world;
 import com.renaud.ascii.event.OnEventAction;
 import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.monster.element.Monster;
+import com.renaud.ascii.weapon.Shoot;
 
 public class MainLoop implements OnEventAction {
 
@@ -24,6 +25,7 @@ public class MainLoop implements OnEventAction {
 				playerStepFinished = true;
 			}
 		}
+		world.getShoot().removeIf(Shoot::isFinished);
 		return false;
 	}
 

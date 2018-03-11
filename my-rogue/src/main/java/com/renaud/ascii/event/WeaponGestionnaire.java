@@ -1,5 +1,8 @@
 package com.renaud.ascii.event;
 
+import java.util.List;
+
+import com.renaud.ascii.weapon.Shoot;
 import com.renaud.ascii.weapon.Weapon;
 import com.renaud.ascii.world.World;
 
@@ -29,7 +32,9 @@ public class WeaponGestionnaire implements OnEventAction {
 	public boolean activate() {
 		if (spacePressed) {
 			finished = true;
-			weapon.shoot(world);
+			List<Shoot> shoots = weapon.shoot(world, aimX, aimY);
+			// TODO
+			world.getShoot().addAll(shoots);
 			return true;
 		}
 
