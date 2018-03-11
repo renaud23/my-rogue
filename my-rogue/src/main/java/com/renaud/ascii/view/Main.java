@@ -7,6 +7,7 @@ import com.renaud.ascii.element.Joueur;
 import com.renaud.ascii.event.PlayerActionGestionnaire;
 import com.renaud.ascii.figure.Point;
 import com.renaud.ascii.monster.element.Wolf;
+import com.renaud.ascii.view.drawer.EffectsDrawer;
 import com.renaud.ascii.view.drawer.JoueurMapDrawer;
 import com.renaud.ascii.view.drawer.JoueurWorldDrawer;
 import com.renaud.ascii.world.MainLoop;
@@ -45,6 +46,7 @@ public class Main {
 		Fenetre fenetre = new Fenetre(loop, screenLargeur, screenHauteur, "Ascii");
 		fenetre.addDrawable(worldViewer);
 		fenetre.addDrawable(map);
+		fenetre.addDrawable(EffectsDrawer.getInstance());
 
 		EventListener kl = new EventListener();
 		kl.addListener(loop);

@@ -9,12 +9,6 @@ public class Knife implements MeleeWeapon {
 	}
 
 	@Override
-	public void aim() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public int getDepht() {
 		return 1;
 	}

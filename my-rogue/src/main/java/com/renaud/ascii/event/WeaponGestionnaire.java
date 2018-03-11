@@ -32,7 +32,6 @@ public class WeaponGestionnaire implements OnEventAction {
 			weapon.shoot();
 			return true;
 		}
-		weapon.aim();
 
 		return false;
 	}
