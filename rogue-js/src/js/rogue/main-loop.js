@@ -17,7 +17,9 @@ class MainLoop {
       for (let j = 0; j < this.largeurView; j++) {
         map[i * this.largeurView + j] =  TILE.UNKNOW;
         if (this.world.joueur.getMemory()) {
-          map[i * this.largeurView + j] =  this.world.joueur.getMemory().getTile(startX + j, startY + i);
+          const tile = this.world.joueur.getMemory().getTile(startX + j, startY + i);
+          let color =  TILE.UNKNOW.color;
+          map[i * this.largeurView + j] =  {value: tile.value, color };
         }
       }
     }

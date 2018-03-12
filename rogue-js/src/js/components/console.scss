@@ -16,13 +16,13 @@ $size : "24px";
 
 .map-joueur {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-  font-size: 1px;
+  font-size: 3px;
   font-style: normal;
   font-variant: normal;
   font-weight: 800;
-  line-height: 1px;
+  line-height: 3px;
   display: inline-block;
-  padding: 1px 1px;
+  padding: 0px 0px;
 
   background-color: black;
   border: solid orange 1px;
@@ -55,5 +55,10 @@ $size : "24px";
 
 .cyan {
   @extend .tile;
-  color: cyan;
+  color: coral;
+}
+
+.darkgray {
+  @extend .tile;
+  color: #303030;
 }

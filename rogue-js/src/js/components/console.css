@@ -12,17 +12,17 @@
 
 .map-joueur {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-  font-size: 1px;
+  font-size: 3px;
   font-style: normal;
   font-variant: normal;
   font-weight: 800;
-  line-height: 1px;
+  line-height: 3px;
   display: inline-block;
-  padding: 1px 1px;
+  padding: 0px 0px;
   background-color: black;
   border: solid orange 1px; }
 
-.tile, .green, .yellow, .white, .gray, .cyan {
+.tile, .green, .yellow, .white, .gray, .cyan, .darkgray {
   display: inline-block; }
 
 .green {
@@ -38,4 +38,7 @@
   color: gray; }
 
 .cyan {
-  color: cyan; }
+  color: coral; }
+
+.darkgray {
+  color: #303030; }

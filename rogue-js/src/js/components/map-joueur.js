@@ -1,4 +1,5 @@
 import React from "react";
+import * as TILE from "js/rogue"
 import "./console.css";
 
 export default class MapJoueur extends React.Component {
@@ -11,7 +12,8 @@ export default class MapJoueur extends React.Component {
     for (let j = 0; j < joueur.getMemory().getHauteur(); j++) {
       const rowContent = [];
       for (let i = 0; i < joueur.getMemory().getHauteur(); i++) {
-        const tile = joueur.getMemory().getTile(i, j);
+        let tile = joueur.getMemory().getTile(i, j);
+         tile = i == joueur.x && j == joueur.y ? TILE.JOUEUR :tile;
         rowContent.push(
           <span className={tile.color} key={i}>
             {tile.value}
