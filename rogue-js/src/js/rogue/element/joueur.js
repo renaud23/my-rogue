@@ -6,7 +6,7 @@ class Joueur {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.depht = 15;
+    this.depht = 12;
   }
 
   getMemory() {

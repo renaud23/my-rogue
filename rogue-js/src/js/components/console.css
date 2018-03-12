@@ -1,19 +1,29 @@
 .console {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
   font-variant: normal;
   font-weight: 800;
-  line-height: 16px;
+  line-height: 18px;
   display: inline-block;
   padding: 5px 5px;
   background-color: black;
   border: solid orange 1px; }
 
-.tile, .green, .yellow, .white, .gray, .cyan {
+.map-joueur {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-size: 1px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 1px;
   display: inline-block;
-  width: 14px;
-  height: 14px; }
+  padding: 1px 1px;
+  background-color: black;
+  border: solid orange 1px; }
+
+.tile, .green, .yellow, .white, .gray, .cyan {
+  display: inline-block; }
 
 .green {
   color: green; }

@@ -12,7 +12,22 @@
   border: solid orange 1px;
 }
 
+.map-joueur {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-size: 1px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 1px;
+  display: inline-block;
+  padding: 1px 1px;
+
+  background-color: black;
+  border: solid orange 1px;
+}
+
 .tile {
+  display: inline-block;
 }
 
 .green {
