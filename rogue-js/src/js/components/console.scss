@@ -1,0 +1,42 @@
+.console {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-size: 18px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 18px;
+  display: inline-block;
+  padding: 5px 5px;
+
+  background-color: black;
+  border: solid orange 1px;
+}
+
+.tile {
+}
+
+.green {
+  @extend .tile;
+
+  color: green;
+}
+
+.yellow {
+  @extend .tile;
+  color: yellow;
+}
+
+.white {
+  @extend .tile;
+  color: white;
+}
+
+.gray {
+  @extend .tile;
+  color: gray;
+}
+
+.cyan {
+  @extend .tile;
+  color: cyan;
+}
