@@ -55,6 +55,16 @@ $size : "24px";
 
 .cyan {
   @extend .tile;
+  color: cyan;
+}
+
+.orange {
+  @extend .tile;
+  color: orange;
+}
+
+.coral {
+  @extend .tile;
   color: coral;
 }
 

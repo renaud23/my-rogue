@@ -6,7 +6,7 @@ import { createLoop } from "js/rogue";
 import registerServiceWorker from "./registerServiceWorker";
 
 const world = createWorld(60  , 60);
-const renderer = createLoop(world, 30, 15);
+const renderer = createLoop(world, 40, 30);
 
 ReactDOM.render(
   <Controller renderer={renderer} />,
