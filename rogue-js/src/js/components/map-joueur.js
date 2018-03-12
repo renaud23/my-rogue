@@ -2,15 +2,9 @@ import React from "react";
 import "./console.css";
 
 export default class MapJoueur extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { step: 0 };
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
 
-  handleKeyPress(e) {
-    this.setState({ step: this.state.step + 1 });
-  }
+
+
   render() {
     const rows = [];
     const { joueur } = this.props;
@@ -28,7 +22,7 @@ export default class MapJoueur extends React.Component {
     }
 
     return (
-      <div tabIndex="0" className="map-joueur" onKeyPress={this.handleKeyPress}>
+      <div className="map-joueur">
         {rows}
       </div>
     );

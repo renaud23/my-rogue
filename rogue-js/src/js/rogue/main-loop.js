@@ -12,21 +12,20 @@ class MainLoop {
     let startX = Math.max(0, this.world.joueur.x - Math.trunc(this.largeurView / 2));
     startX = Math.min(this.world.getLargeur() - this.largeurView, startX);
     let startY = Math.max(0, this.world.joueur.y - Math.trunc(this.hauteurView / 2));
-    startY = Math.min(this.world.getHauteur() - this.largeurView, startY);
+    startY = Math.min(this.world.getHauteur() - this.hauteurView, startY);
     for (let i = 0; i < this.hauteurView; i++) {
       for (let j = 0; j < this.largeurView; j++) {
-        map[i * this.largeurView + j] = TILE.UNKNOW;
+        map[i * this.largeurView + j] =  TILE.UNKNOW;
         if (this.world.joueur.getMemory()) {
-          map[i * this.largeurView + j] = this.world.joueur.getMemory().getTile(startX + j, startY + i);
+          map[i * this.largeurView + j] =  this.world.joueur.getMemory().getTile(startX + j, startY + i);
         }
       }
     }
 
     let posX = Math.min(this.world.joueur.x, Math.trunc(this.largeurView / 2));
     posX = Math.max(posX, this.largeurView - this.world.getLargeur() + this.world.joueur.x);
-    let posY = Math.min(this.world.joueur.y, Math.trunc(this.hauteurView / 2));
-    posY = Math.max(posY, this.largeurView - this.world.getLargeur() + this.world.joueur.y);
-    map[posY * this.largeurView + posX] = TILE.JOUEUR;
+    let posY = Math.min( this.world.joueur.y, Math.trunc(this.hauteurView / 2));
+    posY = Math.max(posY, this.hauteurView - this.world.getHauteur() + this.world.joueur.y);
 
     const visibility = this.world.joueur.getVisibilityPoints(this.world);
     visibility.forEach(p => {
@@ -65,6 +64,10 @@ class MainLoop {
     this.world.goRight();
   }
   pressSpace() {}
+
+  getWorld(){
+    return this.world;
+  }
 }
 
 export default (world, largeur, hauteur) => {

@@ -1,6 +1,7 @@
 import React from "react";
-
-export default class Console extends React.Component {
+import {Console, MapJoueur} from "js/components"
+//
+export default class Controller extends React.Component {
   constructor(props) {
     super(props);
     this.state = { step: 0 };
@@ -11,7 +12,7 @@ export default class Console extends React.Component {
     switch (e.key) {
       case "z":
         this.props.renderer.pressUp();
-
+        this.setState({ step: this.state.step + 1 });
         break;
       case "s":
         this.props.renderer.pressDown();
@@ -35,7 +36,8 @@ export default class Console extends React.Component {
   render() {
     return (
       <div tabIndex="0" onKeyPress={this.handleKeyPress}>
-        {this.props.children}
+      <Console renderer={this.props.renderer} />
+      <MapJoueur joueur={this.props.renderer.getWorld().joueur} />
       </div>
     );
   }
