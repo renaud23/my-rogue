@@ -1,3 +1,11 @@
+export const getDistance = (ax, ay, bx, by) => {
+  let dx = ax - bx;
+  dx *= dx;
+  let dy = ay - by;
+  dy *= dy;
+  return dx + dy;
+};
+
 export const getCircle = (cx, cy, rayon) => {
   const points = [];
 

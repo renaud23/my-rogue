@@ -3,7 +3,6 @@ import React from "react";
 import "./console.css";
 
 class Console extends React.Component {
-
   render() {
     const { renderer } = this.props;
 
@@ -19,13 +18,13 @@ class Console extends React.Component {
           </span>
         );
       }
-      rows.push(<div key={i}>{rowContent}</div>);
+      rows.push(
+        <div className="row" key={i}>
+          {rowContent}
+        </div>
+      );
     }
-    return (
-      <div className="console" >
-        {rows}
-      </div>
-    );
+    return <div className="console">{rows}</div>;
   }
 }
 

@@ -1,4 +1,4 @@
-$size : "24px";
+$size: 18px;
 .console {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: $size;
@@ -11,9 +11,19 @@ $size : "24px";
 
   background-color: black;
   border: solid orange 1px;
-
 }
 
+.row {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  height: $size;
+  .tile {
+    display: inline-block;
+
+    width: 16px;
+  }
+}
 .map-joueur {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: 3px;
@@ -26,16 +36,15 @@ $size : "24px";
 
   background-color: black;
   border: solid orange 1px;
-}
-
-.tile {
-  display: inline-block;
+  .tile {
+    width: 3px;
+  }
 }
 
 .green {
   @extend .tile;
 
-  color: green;
+  color: #daf7a6;
 }
 
 .yellow {
@@ -50,7 +59,7 @@ $size : "24px";
 
 .gray {
   @extend .tile;
-  color: gray;
+  color: #d0d3d4;
 }
 
 .cyan {
@@ -70,5 +79,10 @@ $size : "24px";
 
 .darkgray {
   @extend .tile;
-  color: #303030;
+  color: #406060;
+}
+
+.brown {
+  @extend .tile;
+  color: #a04000;
 }

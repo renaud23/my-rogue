@@ -1,14 +1,23 @@
 .console {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-  font-size: "24px";
+  font-size: 18px;
   font-style: normal;
   font-variant: normal;
   font-weight: 800;
-  line-height: "24px";
+  line-height: 18px;
   display: inline-block;
   padding: 5px 5px;
   background-color: black;
   border: solid orange 1px; }
+
+.row {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  height: 18px; }
+  .row .tile, .row .green, .row .yellow, .row .white, .row .gray, .row .cyan, .row .orange, .row .coral, .row .darkgray, .row .brown {
+    display: inline-block;
+    width: 16px; }
 
 .map-joueur {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
@@ -21,12 +30,11 @@
   padding: 0px 0px;
   background-color: black;
   border: solid orange 1px; }
-
-.tile, .green, .yellow, .white, .gray, .cyan, .orange, .coral, .darkgray {
-  display: inline-block; }
+  .map-joueur .tile, .map-joueur .green, .map-joueur .yellow, .map-joueur .white, .map-joueur .gray, .map-joueur .cyan, .map-joueur .orange, .map-joueur .coral, .map-joueur .darkgray, .map-joueur .brown {
+    width: 3px; }
 
 .green {
-  color: green; }
+  color: #daf7a6; }
 
 .yellow {
   color: yellow; }
@@ -35,7 +43,7 @@
   color: white; }
 
 .gray {
-  color: gray; }
+  color: #d0d3d4; }
 
 .cyan {
   color: cyan; }
@@ -47,4 +55,7 @@
   color: coral; }
 
 .darkgray {
-  color: #303030; }
+  color: #406060; }
+
+.brown {
+  color: #a04000; }

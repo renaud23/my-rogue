@@ -6,7 +6,7 @@ class Joueur {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.depht = 8;
+    this.depht = 12;
   }
 
   getMemory() {
@@ -19,7 +19,6 @@ class Joueur {
       this.memory = new Dungeon(world.getLargeur(), world.getHauteur());
       this.memory.fill(TILE.UNKNOW);
     }
-    const circles = tools.getCircle(this.x, this.y, this.depht);
     for (let i = -this.depht; i < this.depht; i++) {
       for (let j = -this.depht; j < this.depht; j++) {
         const x = this.x + i;
