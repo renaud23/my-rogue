@@ -24,7 +24,7 @@ class Joueur {
         const x = this.x + i;
         const y = this.y + j;
         if (tools.isInCicle(this.x, this.y, this.depht, x, y)) {
-          if (world.canSee(x, y)) {
+          if (world.canSee(this, x, y)) {
             this.memory.setTile(x, y, world.getTile(x, y));
             points.push({ x, y });
           }
@@ -54,6 +54,14 @@ class Joueur {
   }
   goRight() {
     this.x++;
+  }
+
+  isIn(x, y) {
+    return this.x === x && this.y === y;
+  }
+
+  isPlayer() {
+    return true;
   }
 }
 

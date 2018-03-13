@@ -35,8 +35,7 @@ class World {
     if (this.dungeon.getTile(x, y).value !== TILE.FLOOR.value) {
       return false;
     }
-    // if (this.joueur.isIn(x, y) && !e.isJoueur())
-    // 	return false;
+    if (this.joueur.isIn(x, y) && !e.isPlayer()) return false;
     for (let i = 0; i < this.monsters.length; i++) {
       if (this.monsters[i].isIn(x, y)) {
         return false;
@@ -92,13 +91,14 @@ class World {
     return true;
   }
 
-  canSee(x, y) {
+  canSee(e, x, y) {
     if (x < 0 || y < 0 || x >= this.largeur || y >= this.hauteur) return false;
     let can = true;
+
     tools.getSegment(this.joueur.x, this.joueur.y, x, y).forEach(p => {
       if (x === p.x && y === p.y) {
       } else {
-        if (this.getTile(p.x, p.y).value === TILE.WALL.value) {
+        if (!this.canSeeThrough(e, p.x, p.y)) {
           can = false;
           return;
         }
