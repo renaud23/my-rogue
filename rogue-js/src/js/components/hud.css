@@ -1,2 +1,6 @@
 .hud {
   display: inline-block; }
+  .hud .hud-joueur .lifes .not-dead {
+    color: red; }
+  .hud .hud-joueur .lifes .dead {
+    color: black; }

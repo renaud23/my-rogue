@@ -2,7 +2,22 @@ import React from "react";
 export class JoueurHud extends React.Component {
   render() {
     const { joueur } = this.props;
-    for (let i = 0; i < joueur.life; i++) {}
-    return <div className="hud-joueur">HUD</div>;
+    const lifes = [];
+    for (let i = 0; i < joueur.lifeMax / 10; i++) {
+      let clazz = "dead";
+      if (i < joueur.life / 10) {
+        clazz = "not-dead";
+      }
+      lifes.push(
+        <span className={clazz} key={i}>
+          {String.fromCharCode(0x2764)}
+        </span>
+      );
+    }
+    return (
+      <div className="hud-joueur">
+        <div className="lifes">{lifes}</div>
+      </div>
+    );
   }
 }

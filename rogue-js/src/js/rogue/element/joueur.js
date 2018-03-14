@@ -11,7 +11,10 @@ class Joueur {
     this.aimx = x;
     this.aimy = y;
     this.depht = 12;
-    this.life = 30;
+    this.level = 1;
+    this.xp = 0;
+    this.lifeMax = Joueur.LIFE_MAX;
+    this.life = Joueur.LIFE_MAX;
     this.weapon = createKnife();
   }
 
@@ -95,7 +98,9 @@ class Joueur {
     for (let i = 0; i < world.monsters.length; i++) {
       const monster = world.monsters[i];
       if (monster.isIn(this.aimx, this.aimy)) {
-        monster.life -= this.weapon.damage;
+        monster.life -= this.weapon.damage * this.level;
+        this.xp += monster.xp;
+        this.checkLevel();
         this.bloody(world, this.aimx, this.aimy);
         if (monster.isDead()) {
           world.setTile(this.aimx, this.aimy, TILE.BODY);
@@ -104,11 +109,25 @@ class Joueur {
     }
   }
 
+  checkLevel( ){
+    // for(let i=0;i<20;i++){
+    //   console.log(i, Math.trunc(Math.pow(i, 1.5)) * 20);
+    // }
+    if(this.xp >  Math.trunc(Math.pow(this.level, 1.5)) * 20  ){
+      this.level++;
+      this.xp = 0;
+    }
+  }
+
   bloody(world, x, y) {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
-        const is = Math.random() * 10 > 8;
-        if (is) world.setColor(this.aimx + i, this.aimy + j, "blood");
+        const how = Math.trunc(Math.random() * 100);
+        if (how === 90 && TILE.isWalkable(world.getTile(this.aimx + i, this.aimy + j))) {
+          world.setTile(this.aimx + i, this.aimy + j, TILE.BODY_PART);
+        } else if (how > 80) {
+          world.setColor(this.aimx + i, this.aimy + j, "blood");
+        }
       }
     }
   }
@@ -129,6 +148,8 @@ class Joueur {
     return true;
   }
 }
+
+Joueur.LIFE_MAX = 100;
 
 export default (x, y) => {
   return new Joueur(x, y);

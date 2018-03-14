@@ -1,6 +1,6 @@
 import React from "react";
 import { Console, MapJoueur, JoueurHud } from "js/components";
-import "./hud";
+import "./hud.css";
 //
 export default class Controller extends React.Component {
   constructor(props) {

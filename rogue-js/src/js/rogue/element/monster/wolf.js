@@ -7,8 +7,9 @@ class Wolf {
     this.y = y;
     this.speed = 1;
     this.depht = 8;
-    this.life = 100;
+    this.life = 10;
     this.damage = 10;
+    this.xp = 10;
     this.randomWalk = createRandomWalk(this);
     this.huntPlayer = createHuntPlayer(this);
     this.isHuting = false;
