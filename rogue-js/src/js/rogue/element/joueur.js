@@ -90,7 +90,27 @@ class Joueur {
     }
   }
 
-  shoot() {}
+  shoot(world) {
+    for (let i = 0; i < world.monsters.length; i++) {
+      const monster = world.monsters[i];
+      if (monster.isIn(this.aimx, this.aimy)) {
+        monster.life -= this.weapon.damage;
+        world.setTile(this.aimx, this.aimy, TILE.BODY);
+        if (monster.isDead()) {
+          this.bloody(world, this.aimx, this.aimy);
+        }
+      }
+    }
+  }
+
+  bloody(world, x, y) {
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        const is = Math.random() * 10 > 5;
+        if (is) world.setColor(this.aimx + i, this.aimy + j, "blood");
+      }
+    }
+  }
 
   isIn(x, y) {
     return this.x === x && this.y === y;

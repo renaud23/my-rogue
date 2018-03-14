@@ -14,7 +14,7 @@ class Console extends React.Component {
         const tile = map[j + i * renderer.getLargeur()];
         rowContent.push(
           <span className={tile.color} key={j}>
-            {tile.value}
+            {tile.render}
           </span>
         );
       }

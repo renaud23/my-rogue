@@ -22,7 +22,7 @@ class Rendering {
         if (this.world.joueur.getMemory()) {
           const tile = this.world.joueur.getMemory().getTile(startX + j, startY + i);
           let color = TILE.UNKNOW.color;
-          map[i * this.largeurView + j] = { value: tile.value, color };
+          map[i * this.largeurView + j] = { value: tile.value, color, render: tile.render };
         }
       }
     }

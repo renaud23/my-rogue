@@ -45,7 +45,7 @@ class EventDispatcher {
     } else {
       this.aim = false;
       this.joueur.isAiming = false;
-      this.joueur.shoot();
+      this.joueur.shoot(this.world);
       this.world.activate();
     }
   }

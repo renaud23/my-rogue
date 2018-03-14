@@ -16,13 +16,17 @@ class World {
   activate() {
     // next turn
     this.monsters.forEach(m => {
-      m.activate(this);
+      if (m.isDead()) {
+        this.monsters.splice(this.monsters.indexOf(m), 1);
+      } else {
+        m.activate(this);
+      }
     });
   }
 
   canGo(x, y) {
     if (x < 0 || y < 0 || x >= this.largeur || y >= this.hauteur) return false;
-    if (this.getTile(x, y).value === TILE.WALL.value) return false;
+    if (TILE.isWall(this.getTile(x, y))) return false; //.value === TILE.WALL.value) return false;
     for (let i = 0; i < this.monsters.length; i++) {
       if (this.monsters[i].isIn(x, y)) return false;
     }
@@ -33,7 +37,8 @@ class World {
     if (x < 0 || y < 0 || x >= this.dungeon.getLargeur() || y >= this.dungeon.getHauteur()) {
       return false;
     }
-    if (this.dungeon.getTile(x, y).value !== TILE.FLOOR.value) {
+    if (!TILE.isWalkable(this.dungeon.getTile(x, y))) {
+      //this.dungeon.getTile(x, y).value !== TILE.FLOOR.value) {
       return false;
     }
     if (this.joueur.isIn(x, y) && !e.isPlayer()) return false;
@@ -49,7 +54,8 @@ class World {
     if (x < 0 || y < 0 || x >= this.dungeon.getLargeur() || y >= this.dungeon.getHauteur()) {
       return false;
     }
-    if (this.dungeon.getTile(x, y).value !== TILE.FLOOR.value) {
+    if (!TILE.isWalkable(this.dungeon.getTile(x, y))) {
+      //!== TILE.FLOOR.value) {
       return false;
     }
     for (let i = 0; i < this.monsters.length; i++) {
@@ -139,7 +145,14 @@ class World {
     return this.joueur;
   }
 
-  setTile(i, j, value) {}
+  setTile(i, j, value) {
+    this.dungeon.setTile(i, j, value);
+  }
+
+  setColor(i, j, color) {
+    const tile = this.dungeon.getTile(i, j);
+    this.setTile(i, j, { value: tile.value, color, render: tile.render });
+  }
 
   goUp() {
     if (this.canGo(this.joueur.x, this.joueur.y - 1)) {

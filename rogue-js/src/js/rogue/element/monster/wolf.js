@@ -7,6 +7,7 @@ class Wolf {
     this.y = y;
     this.speed = 1;
     this.depht = 8;
+    this.life = 5;
     this.randomWalk = createRandomWalk(this);
     this.huntPlayer = createHuntPlayer(this);
     this.isHuting = false;
@@ -27,7 +28,7 @@ class Wolf {
   }
 
   isDead() {
-    return false;
+    return this.life <= 0;
   }
 
   isIn(x, y) {
