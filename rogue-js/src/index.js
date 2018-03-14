@@ -1,7 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Controller } from "js/components";
-import { createEventdispatcher, createRenderer, createMonster, createWorld, MONSTER_TYPE } from "js/rogue";
+import {
+  createEventdispatcher,
+  createRenderer,
+  createMonster,
+  createWorld,
+  MONSTER_TYPE
+} from "js/rogue";
 import registerServiceWorker from "./registerServiceWorker";
 
 const world = createWorld(60, 60);
@@ -13,7 +19,12 @@ for (let i = 0; i < 10; i++) {
 }
 
 ReactDOM.render(
-  <Controller event={event} renderer={renderer} joueur={world.joueur} />,
+  <Controller
+    event={event}
+    renderer={renderer}
+    joueur={world.joueur}
+    world={world}
+  />,
   document.getElementById("root")
 );
 registerServiceWorker();

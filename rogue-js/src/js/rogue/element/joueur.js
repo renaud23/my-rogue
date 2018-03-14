@@ -3,6 +3,7 @@ import Dungeon from "./../world/dungeon";
 import * as TILE from "./../world/tile";
 import { createKnife } from "js/rogue/weapon";
 
+let REFRESH = () => {};
 class Joueur {
   constructor(x, y) {
     this.x = x;
@@ -16,6 +17,10 @@ class Joueur {
     this.lifeMax = Joueur.LIFE_MAX;
     this.life = Joueur.LIFE_MAX;
     this.weapon = createKnife();
+  }
+
+  setRefresh(refresh) {
+    REFRESH = refresh;
   }
 
   getMemory() {
@@ -68,29 +73,34 @@ class Joueur {
   resetAim() {
     this.aimx = this.x;
     this.aimy = this.y;
+    REFRESH();
   }
   aimUp() {
     const aimy = this.aimy - 1;
     if (Math.abs(this.y - aimy) <= this.weapon.depht) {
       this.aimy--;
+      REFRESH();
     }
   }
   aimDown() {
     const aimy = this.aimy + 1;
     if (Math.abs(this.y - aimy) <= this.weapon.depht) {
       this.aimy++;
+      REFRESH();
     }
   }
   aimLeft() {
     const aimx = this.aimx - 1;
     if (Math.abs(this.x - aimx) <= this.weapon.depht) {
       this.aimx--;
+      REFRESH();
     }
   }
   aimRight() {
     const aimx = this.aimx + 1;
     if (Math.abs(this.x - aimx) <= this.weapon.depht) {
       this.aimx++;
+      REFRESH();
     }
   }
 
@@ -107,13 +117,14 @@ class Joueur {
         }
       }
     }
+    REFRESH();
   }
 
-  checkLevel( ){
+  checkLevel() {
     // for(let i=0;i<20;i++){
     //   console.log(i, Math.trunc(Math.pow(i, 1.5)) * 20);
     // }
-    if(this.xp >  Math.trunc(Math.pow(this.level, 1.5)) * 20  ){
+    if (this.xp > Math.trunc(Math.pow(this.level, 1.5)) * 20) {
       this.level++;
       this.xp = 0;
     }
@@ -123,7 +134,10 @@ class Joueur {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
         const how = Math.trunc(Math.random() * 100);
-        if (how === 90 && TILE.isWalkable(world.getTile(this.aimx + i, this.aimy + j))) {
+        if (
+          how === 90 &&
+          TILE.isWalkable(world.getTile(this.aimx + i, this.aimy + j))
+        ) {
           world.setTile(this.aimx + i, this.aimy + j, TILE.BODY_PART);
         } else if (how > 80) {
           world.setColor(this.aimx + i, this.aimy + j, "blood");

@@ -21,3 +21,14 @@ export class JoueurHud extends React.Component {
     );
   }
 }
+
+export class WorldHud extends React.Component {
+  render() {
+    const { world } = this.props;
+    return (
+      <div className="hud-world">
+        step:{world.step} action : {world.actions} sur {world.nbActions}
+      </div>
+    );
+  }
+}

@@ -21,7 +21,15 @@ class RandomWalk {
       while (points.length > 0) {
         const p = points.pop();
 
-        if (world.elementCanGoTo(this.monster, this.monster.x, this.monster.y, p.x, p.y)) {
+        if (
+          world.elementCanGoTo(
+            this.monster,
+            this.monster.x,
+            this.monster.y,
+            p.x,
+            p.y
+          )
+        ) {
           find = true;
           dx = p.x;
           dy = p.y;
@@ -41,12 +49,10 @@ class RandomWalk {
   }
 
   activate(world) {
-    if (this.monster.speed > 0) {
-      if (this.goTo.isFinished()) {
-        this.checkNextDir(world);
-      } else {
-        this.goTo.activate(world);
-      }
+    if (this.goTo.isFinished()) {
+      this.checkNextDir(world);
+    } else {
+      this.goTo.activate(world);
     }
   }
 

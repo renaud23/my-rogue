@@ -3,31 +3,50 @@ import createJoueur from "./../element/joueur";
 import * as tools from "js/rogue/tools";
 import * as TILE from "./tile";
 
+let REFRESH = () => {};
 class World {
   constructor(largeur, hauteur) {
     this.win = false;
     this.lose = false;
     this.largeur = largeur;
     this.hauteur = hauteur;
+    this.nbActions = 2;
+    this.actions = this.nbActions;
+    this.step = 1;
     this.monsters = [];
     this.dungeon = smoothDungeon(largeur, hauteur).build();
     const pos = this.dungeon.peekRandomOne(TILE.FLOOR);
     this.joueur = createJoueur(pos.x, pos.y);
   }
 
+  setRefresh(refresh) {
+    REFRESH = refresh;
+  }
+
   activate() {
-    // next turn
     if (!this.win && !this.lose) {
+      this.actions--;
+      // next turn
+      if (this.actions <= 0) {
+        this.step++;
+        this.actions = this.nbActions;
+        this.monsters.forEach(m => {
+          if (!m.isDead()) {
+            m.activate(this);
+          }
+        });
+
+        if (this.joueur.isDead()) {
+          this.lose = true;
+        }
+      }
+      // Purge
       this.monsters.forEach(m => {
         if (m.isDead()) {
           this.monsters.splice(this.monsters.indexOf(m), 1);
-        } else {
-          m.activate(this);
         }
       });
-      if (this.joueur.isDead()) {
-        this.lose = true;
-      }
+      REFRESH();
     }
   }
 
@@ -41,7 +60,12 @@ class World {
   }
 
   elementCanGo(e, x, y) {
-    if (x < 0 || y < 0 || x >= this.dungeon.getLargeur() || y >= this.dungeon.getHauteur()) {
+    if (
+      x < 0 ||
+      y < 0 ||
+      x >= this.dungeon.getLargeur() ||
+      y >= this.dungeon.getHauteur()
+    ) {
       return false;
     }
     if (!TILE.isWalkable(this.dungeon.getTile(x, y))) {
@@ -58,7 +82,12 @@ class World {
   }
 
   canSeeThrough(e, x, y) {
-    if (x < 0 || y < 0 || x >= this.dungeon.getLargeur() || y >= this.dungeon.getHauteur()) {
+    if (
+      x < 0 ||
+      y < 0 ||
+      x >= this.dungeon.getLargeur() ||
+      y >= this.dungeon.getHauteur()
+    ) {
       return false;
     }
     if (!TILE.isWalkable(this.dungeon.getTile(x, y))) {
@@ -77,8 +106,16 @@ class World {
   }
 
   canSeePlayer(monster) {
-    if (tools.getDistance(monster.x, monster.y, this.joueur.x, this.joueur.y) <= monster.depht * monster.depht) {
-      const points = tools.getSegment(monster.x, monster.y, this.joueur.x, this.joueur.y);
+    if (
+      tools.getDistance(monster.x, monster.y, this.joueur.x, this.joueur.y) <=
+      monster.depht * monster.depht
+    ) {
+      const points = tools.getSegment(
+        monster.x,
+        monster.y,
+        this.joueur.x,
+        this.joueur.y
+      );
       for (let i = 0; i < points.length; i++) {
         if (!this.canSeeThrough(monster, this.joueur.x, this.joueur.y)) {
           return false;
