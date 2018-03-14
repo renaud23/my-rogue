@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .console {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: 18px;
   font-style: normal;
   font-variant: normal;
@@ -41,18 +41,21 @@
     /* décalage de 50% de sa propre taille */ }
 
 .map-joueur {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: 3px;
   font-style: normal;
   font-variant: normal;
-  font-weight: 800;
+  font-weight: 200;
   line-height: 3px;
   display: inline-block;
-  padding: 0px 0px;
+  padding: 5px 5px;
   background-color: black;
   border: solid orange 1px; }
   .map-joueur .tile, .map-joueur .green, .map-joueur .yellow, .map-joueur .white, .map-joueur .gray, .map-joueur .cyan, .map-joueur .orange, .map-joueur .coral, .map-joueur .darkgray, .map-joueur .blood, .map-joueur .brown {
-    width: 3px; }
+    height: 3px;
+    width: 3px;
+    display: inline-block;
+    text-align: center; }
 
 .green {
   color: #daf7a6; }

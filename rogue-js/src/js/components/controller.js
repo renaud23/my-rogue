@@ -1,5 +1,12 @@
 import React from "react";
-import { Console, MapJoueur, JoueurHud, WorldHud } from "js/components";
+import {
+  Console,
+  MapJoueur,
+  JoueurHud,
+  WorldHud,
+  Journal
+} from "js/components";
+import { journal } from "js/rogue";
 import "./hud.css";
 //
 export default class Controller extends React.Component {
@@ -52,6 +59,7 @@ export default class Controller extends React.Component {
           <JoueurHud joueur={this.props.joueur} />
           <MapJoueur joueur={this.props.joueur} />
         </div>
+        <Journal journal={journal} />
       </div>
     );
   }

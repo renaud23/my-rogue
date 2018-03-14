@@ -3,10 +3,6 @@ import React from "react";
 import "./console.css";
 
 class Console extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { renderer } = this.props;
 

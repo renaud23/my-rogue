@@ -2,6 +2,7 @@ import smoothDungeon from "./smooth-dungeon";
 import createJoueur from "./../element/joueur";
 import * as tools from "js/rogue/tools";
 import * as TILE from "./tile";
+import { journal } from "js/rogue";
 
 let REFRESH = () => {};
 class World {
@@ -21,6 +22,9 @@ class World {
 
   setRefresh(refresh) {
     REFRESH = refresh;
+    journal.addRow(
+      "Hooo ma tête ! mais où sui-je et d'où peut venir cette odeur infecte !"
+    );
   }
 
   activate() {
@@ -33,6 +37,7 @@ class World {
         this.monsters.forEach(m => {
           if (!m.isDead()) {
             m.activate(this);
+            REFRESH();
           }
         });
 

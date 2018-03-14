@@ -1,6 +1,7 @@
 $size: 18px;
 .console {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter",
+    "Lucida Typewriter", monospace;
   font-size: $size;
   font-style: normal;
   font-variant: normal;
@@ -43,20 +44,26 @@ $size: 18px;
     transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
   }
 }
+
+$sizeMap: 3px;
 .map-joueur {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-  font-size: 3px;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter",
+    "Lucida Typewriter", monospace;
+  font-size: $sizeMap;
   font-style: normal;
   font-variant: normal;
-  font-weight: 800;
-  line-height: 3px;
+  font-weight: 200;
+  line-height: $sizeMap;
   display: inline-block;
-  padding: 0px 0px;
+  padding: 5px 5px;
 
   background-color: black;
   border: solid orange 1px;
   .tile {
-    width: 3px;
+    height: $sizeMap;
+    width: $sizeMap;
+    display: inline-block;
+    text-align: center;
   }
 }
 
