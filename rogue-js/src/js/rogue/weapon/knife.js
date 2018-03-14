@@ -1,7 +1,7 @@
 class Knife {
   constructor() {
     this.depht = 1;
-    this.damage = 10;
+    this.damage = 5;
   }
   shoot(wolrd) {}
 }

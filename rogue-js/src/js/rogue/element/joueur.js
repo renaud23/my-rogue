@@ -11,6 +11,7 @@ class Joueur {
     this.aimx = x;
     this.aimy = y;
     this.depht = 12;
+    this.life = 30;
     this.weapon = createKnife();
   }
 
@@ -95,9 +96,9 @@ class Joueur {
       const monster = world.monsters[i];
       if (monster.isIn(this.aimx, this.aimy)) {
         monster.life -= this.weapon.damage;
-        world.setTile(this.aimx, this.aimy, TILE.BODY);
+        this.bloody(world, this.aimx, this.aimy);
         if (monster.isDead()) {
-          this.bloody(world, this.aimx, this.aimy);
+          world.setTile(this.aimx, this.aimy, TILE.BODY);
         }
       }
     }
@@ -106,7 +107,7 @@ class Joueur {
   bloody(world, x, y) {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
-        const is = Math.random() * 10 > 5;
+        const is = Math.random() * 10 > 8;
         if (is) world.setColor(this.aimx + i, this.aimy + j, "blood");
       }
     }
@@ -114,6 +115,14 @@ class Joueur {
 
   isIn(x, y) {
     return this.x === x && this.y === y;
+  }
+
+  injure(how) {
+    this.life -= how;
+  }
+
+  isDead() {
+    return this.life < 0;
   }
 
   isPlayer() {

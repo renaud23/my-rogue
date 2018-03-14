@@ -5,6 +5,8 @@ import * as TILE from "./tile";
 
 class World {
   constructor(largeur, hauteur) {
+    this.win = false;
+    this.lose = false;
     this.largeur = largeur;
     this.hauteur = hauteur;
     this.monsters = [];
@@ -15,13 +17,18 @@ class World {
 
   activate() {
     // next turn
-    this.monsters.forEach(m => {
-      if (m.isDead()) {
-        this.monsters.splice(this.monsters.indexOf(m), 1);
-      } else {
-        m.activate(this);
+    if (!this.win && !this.lose) {
+      this.monsters.forEach(m => {
+        if (m.isDead()) {
+          this.monsters.splice(this.monsters.indexOf(m), 1);
+        } else {
+          m.activate(this);
+        }
+      });
+      if (this.joueur.isDead()) {
+        this.lose = true;
       }
-    });
+    }
   }
 
   canGo(x, y) {

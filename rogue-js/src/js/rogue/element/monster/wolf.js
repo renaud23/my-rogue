@@ -7,7 +7,8 @@ class Wolf {
     this.y = y;
     this.speed = 1;
     this.depht = 8;
-    this.life = 5;
+    this.life = 100;
+    this.damage = 10;
     this.randomWalk = createRandomWalk(this);
     this.huntPlayer = createHuntPlayer(this);
     this.isHuting = false;
@@ -15,7 +16,11 @@ class Wolf {
 
   activate(world) {
     if (this.isHuting) {
-      this.huntPlayer.activate(world);
+      if (Math.abs(this.x - world.joueur.x) <= 1 && Math.abs(this.y - world.joueur.y) <= 1) {
+        world.joueur.injure(this.damage);
+      } else {
+        this.huntPlayer.activate(world);
+      }
     } else {
       if (world.canSeePlayer(this)) {
         this.isHuting = true;

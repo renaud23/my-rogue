@@ -5,6 +5,10 @@ class EventDispatcher {
     this.aim = false;
   }
 
+  gameIsFinished() {
+    return this.world.lose || this.world.win;
+  }
+
   pressUp() {
     if (!this.aim) {
       this.world.goUp();

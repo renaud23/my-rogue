@@ -12,5 +12,8 @@ for (let i = 0; i < 10; i++) {
   world.addMonster(createMonster(MONSTER_TYPE.WOLF, s.x, s.y));
 }
 
-ReactDOM.render(<Controller event={event} renderer={renderer} />, document.getElementById("root"));
+ReactDOM.render(
+  <Controller event={event} renderer={renderer} joueur={world.joueur} />,
+  document.getElementById("root")
+);
 registerServiceWorker();

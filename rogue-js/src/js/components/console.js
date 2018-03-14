@@ -24,7 +24,19 @@ class Console extends React.Component {
         </div>
       );
     }
-    return <div className="console">{rows}</div>;
+
+    if (renderer.isLose()) {
+      return (
+        <div>
+          <div className="console">{rows}</div>
+          <div className="loose">
+            <div className="texte">PERDU GROS NAZE !!!</div>
+          </div>
+        </div>
+      );
+    } else {
+      return <div className="console">{rows}</div>;
+    }
   }
 }
 

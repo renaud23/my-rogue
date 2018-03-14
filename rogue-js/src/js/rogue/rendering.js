@@ -7,6 +7,14 @@ class Rendering {
     this.hauteurView = hauteurView;
   }
 
+  isWin() {
+    return this.world.win;
+  }
+
+  isLose() {
+    return this.world.lose;
+  }
+
   getWorld() {
     return this.world;
   }
