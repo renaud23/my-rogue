@@ -15,8 +15,9 @@
   border: 0;
   margin: 0;
   height: 18px; }
-  .row .tile, .row .green, .row .yellow, .row .white, .row .gray, .row .cyan, .row .orange, .row .coral, .row .darkgray, .row .brown {
+  .row .tile, .row .green, .row .yellow, .row .white, .row .gray, .row .cyan, .row .orange, .row .coral, .row .darkgray, .row .red, .row .brown {
     display: inline-block;
+    text-align: center;
     width: 16px; }
 
 .map-joueur {
@@ -30,7 +31,7 @@
   padding: 0px 0px;
   background-color: black;
   border: solid orange 1px; }
-  .map-joueur .tile, .map-joueur .green, .map-joueur .yellow, .map-joueur .white, .map-joueur .gray, .map-joueur .cyan, .map-joueur .orange, .map-joueur .coral, .map-joueur .darkgray, .map-joueur .brown {
+  .map-joueur .tile, .map-joueur .green, .map-joueur .yellow, .map-joueur .white, .map-joueur .gray, .map-joueur .cyan, .map-joueur .orange, .map-joueur .coral, .map-joueur .darkgray, .map-joueur .red, .map-joueur .brown {
     width: 3px; }
 
 .green {
@@ -56,6 +57,9 @@
 
 .darkgray {
   color: #406060; }
+
+.red {
+  color: #aa4040; }
 
 .brown {
   color: #a04000; }

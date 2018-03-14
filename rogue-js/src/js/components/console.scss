@@ -20,7 +20,7 @@ $size: 18px;
   height: $size;
   .tile {
     display: inline-block;
-
+    text-align: center;
     width: 16px;
   }
 }
@@ -80,6 +80,11 @@ $size: 18px;
 .darkgray {
   @extend .tile;
   color: #406060;
+}
+
+.red {
+  @extend .tile;
+  color: #aa4040;
 }
 
 .brown {

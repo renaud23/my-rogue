@@ -14,6 +14,7 @@ class World {
   }
 
   activate() {
+    // next turn
     this.monsters.forEach(m => {
       m.activate(this);
     });
@@ -163,6 +164,11 @@ class World {
       this.joueur.goRight();
       this.activate();
     }
+  }
+
+  shoot() {
+    console.log("shoot !");
+    this.activate();
   }
 }
 

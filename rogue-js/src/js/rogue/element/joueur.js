@@ -1,12 +1,17 @@
 import * as tools from "js/rogue/tools";
 import Dungeon from "./../world/dungeon";
 import * as TILE from "./../world/tile";
+import { createKnife } from "js/rogue/weapon";
 
 class Joueur {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.isAiming = false;
+    this.aimx = x;
+    this.aimy = y;
     this.depht = 12;
+    this.weapon = createKnife();
   }
 
   getMemory() {
@@ -55,6 +60,37 @@ class Joueur {
   goRight() {
     this.x++;
   }
+
+  resetAim() {
+    this.aimx = this.x;
+    this.aimy = this.y;
+  }
+  aimUp() {
+    const aimy = this.aimy - 1;
+    if (Math.abs(this.y - aimy) <= this.weapon.depht) {
+      this.aimy--;
+    }
+  }
+  aimDown() {
+    const aimy = this.aimy + 1;
+    if (Math.abs(this.y - aimy) <= this.weapon.depht) {
+      this.aimy++;
+    }
+  }
+  aimLeft() {
+    const aimx = this.aimx - 1;
+    if (Math.abs(this.x - aimx) <= this.weapon.depht) {
+      this.aimx--;
+    }
+  }
+  aimRight() {
+    const aimx = this.aimx + 1;
+    if (Math.abs(this.x - aimx) <= this.weapon.depht) {
+      this.aimx++;
+    }
+  }
+
+  shoot() {}
 
   isIn(x, y) {
     return this.x === x && this.y === y;

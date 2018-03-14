@@ -59,6 +59,15 @@ class Rendering {
       }
     }
 
+    // aim
+    if (this.world.joueur.isAiming) {
+      const xi = this.world.joueur.aimx - startX;
+      const yi = this.world.joueur.aimy - startY;
+      if (xi >= 0 && yi >= 0 && xi < this.largeurView && yi < this.hauteurView) {
+        map[yi * this.largeurView + xi] = TILE.AIM;
+      }
+    }
+
     return map;
   }
 

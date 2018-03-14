@@ -1,22 +1,54 @@
 class EventDispatcher {
   constructor(world) {
     this.world = world;
+    this.joueur = world.joueur;
+    this.aim = false;
   }
 
   pressUp() {
-    this.world.goUp();
+    if (!this.aim) {
+      this.world.goUp();
+    } else {
+      this.world.joueur.aimUp();
+    }
   }
 
   pressDown() {
-    this.world.goDown();
+    if (!this.aim) {
+      this.world.goDown();
+    } else {
+      this.world.joueur.aimDown();
+    }
   }
+
   pressLeft() {
-    this.world.goLeft();
+    if (!this.aim) {
+      this.world.goLeft();
+    } else {
+      this.world.joueur.aimLeft();
+    }
   }
+
   pressRight() {
-    this.world.goRight();
+    if (!this.aim) {
+      this.world.goRight();
+    } else {
+      this.world.joueur.aimRight();
+    }
   }
-  pressSpace() {}
+
+  pressSpace() {
+    if (!this.aim) {
+      this.aim = true;
+      this.joueur.isAiming = true;
+      this.joueur.resetAim();
+    } else {
+      this.aim = false;
+      this.joueur.isAiming = false;
+      this.joueur.shoot();
+      this.world.activate();
+    }
+  }
 }
 
 export default world => new EventDispatcher(world);
