@@ -5,6 +5,7 @@ import * as TILE from "./tile";
 import { journal } from "js/rogue";
 
 let REFRESH = () => {};
+
 class World {
   constructor(largeur, hauteur) {
     this.win = false;
@@ -15,6 +16,7 @@ class World {
     this.actions = this.nbActions;
     this.step = 1;
     this.monsters = [];
+    this.projectiles = [];
     this.dungeon = smoothDungeon(largeur, hauteur).build();
     const pos = this.dungeon.peekRandomOne(TILE.FLOOR);
     this.joueur = createJoueur(pos.x, pos.y);
@@ -30,10 +32,23 @@ class World {
     this.activate();
   }
 
+  addProjectile(projectile) {
+    this.projectiles.push(projectile);
+  }
+
   activate() {
     if (!this.win && !this.lose) {
       this.actions--;
       // next turn
+      for (let i = 0; i < this.projectiles.length; i++) {
+        const projectile = this.projectiles[i];
+        if (projectile.isFinished()) {
+          this.projectiles.splice(this.projectiles.indexOf(projectile), 1);
+        } else {
+          projectile.activate(this);
+        }
+      }
+
       if (this.actions <= 0) {
         this.step++;
         this.actions = this.nbActions;
@@ -60,11 +75,24 @@ class World {
 
   canGo(x, y) {
     if (x < 0 || y < 0 || x >= this.largeur || y >= this.hauteur) return false;
-    if (TILE.isWall(this.getTile(x, y))) return false; //.value === TILE.WALL.value) return false;
+    if (TILE.isWall(this.getTile(x, y))) return false;
     for (let i = 0; i < this.monsters.length; i++) {
       if (this.monsters[i].isIn(x, y)) return false;
     }
     return true;
+  }
+
+  getElement(x, y) {
+    if (x < 0 || y < 0 || x >= this.largeur || y >= this.hauteur) return null;
+    if (this.joueur.isIn(x, y)) {
+      return this.joueur;
+    }
+    for (let j = 0; j < this.monsters.length; j++) {
+      if (this.monsters[j].isIn(x, y)) {
+        return this.monsters[j];
+      }
+    }
+    return null;
   }
 
   elementCanGo(e, x, y) {
@@ -213,10 +241,10 @@ class World {
     }
   }
 
-  shoot() {
-    console.log("shoot !");
-    this.activate();
-  }
+  // shoot() {
+  //   console.log("shoot !");
+  //   this.activate();
+  // }
 }
 
 export const createWorld = (largeur, hauteur) => new World(largeur, hauteur);

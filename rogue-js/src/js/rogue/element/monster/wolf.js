@@ -5,11 +5,11 @@ class Wolf {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.speed = 2;
+    this.speed = 3;
     this.depht = 8;
     this.life = 10;
-    this.damage = 10;
-    this.xp = 10;
+    this.damage = 5;
+    this.xp = 2;
     this.randomWalk = createRandomWalk(this);
     this.huntPlayer = createHuntPlayer(this);
     this.isHuting = false;
@@ -18,10 +18,7 @@ class Wolf {
   activate(world) {
     for (let step = 0; step < this.speed; step++) {
       if (this.isHuting) {
-        if (
-          Math.abs(this.x - world.joueur.x) <= 1 &&
-          Math.abs(this.y - world.joueur.y) <= 1
-        ) {
+        if (Math.abs(this.x - world.joueur.x) <= 1 && Math.abs(this.y - world.joueur.y) <= 1) {
           world.joueur.injure(this.damage);
         } else {
           this.huntPlayer.activate(world);
@@ -55,7 +52,7 @@ class Wolf {
   }
 
   isOpaque() {
-    return true;
+    return false;
   }
 }
 

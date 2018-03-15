@@ -16,7 +16,7 @@ export default class Journal extends React.Component {
   }
 
   render() {
-    const rows = this.state.journal.map((r, i) => <span key={i}>{r}</span>);
+    const rows = this.state.journal.map((r, i) => <div key={i}>{r}</div>);
     return <div className="journal">{rows}</div>;
   }
 }

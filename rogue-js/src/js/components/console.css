@@ -1,6 +1,6 @@
 @charset "UTF-8";
 .console {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: 18px;
   font-style: normal;
   font-variant: normal;
@@ -16,7 +16,7 @@
   border: 0;
   margin: 0;
   height: 18px; }
-  .row .tile, .row .green, .row .yellow, .row .white, .row .gray, .row .cyan, .row .orange, .row .coral, .row .darkgray, .row .blood, .row .brown {
+  .row .tile, .row .green, .row .yellow, .row .white, .row .gray, .row .cyan, .row .orange, .row .coral, .row .darkgray, .row .blood, .row .blue, .row .brown {
     display: inline-block;
     text-align: center;
     width: 16px; }
@@ -41,7 +41,7 @@
     /* décalage de 50% de sa propre taille */ }
 
 .map-joueur {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: 3px;
   font-style: normal;
   font-variant: normal;
@@ -51,7 +51,7 @@
   padding: 5px 5px;
   background-color: black;
   border: solid orange 1px; }
-  .map-joueur .tile, .map-joueur .green, .map-joueur .yellow, .map-joueur .white, .map-joueur .gray, .map-joueur .cyan, .map-joueur .orange, .map-joueur .coral, .map-joueur .darkgray, .map-joueur .blood, .map-joueur .brown {
+  .map-joueur .tile, .map-joueur .green, .map-joueur .yellow, .map-joueur .white, .map-joueur .gray, .map-joueur .cyan, .map-joueur .orange, .map-joueur .coral, .map-joueur .darkgray, .map-joueur .blood, .map-joueur .blue, .map-joueur .brown {
     height: 3px;
     width: 3px;
     display: inline-block;
@@ -83,6 +83,9 @@
 
 .blood {
   color: #aa4040; }
+
+.blue {
+  color: blue; }
 
 .brown {
   color: #a04000; }

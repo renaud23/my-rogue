@@ -109,10 +109,10 @@ class Joueur {
       const monster = world.monsters[i];
       if (monster.isIn(this.aimx, this.aimy)) {
         monster.life -= this.weapon.damage * this.level;
-        this.xp += monster.xp;
-        this.checkLevel();
         this.bloody(world, this.aimx, this.aimy);
         if (monster.isDead()) {
+          this.xp += monster.xp;
+          this.checkLevel();
           world.setTile(this.aimx, this.aimy, TILE.BODY);
         }
       }
@@ -127,7 +127,7 @@ class Joueur {
     }
   }
 
-  howForNextLevel(){
+  howForNextLevel() {
     return Math.trunc(Math.pow(this.level, 1.5)) * 20;
   }
 
@@ -135,10 +135,7 @@ class Joueur {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
         const how = Math.trunc(Math.random() * 100);
-        if (
-          how === 90 &&
-          TILE.isWalkable(world.getTile(this.aimx + i, this.aimy + j))
-        ) {
+        if (how === 90 && TILE.isWalkable(world.getTile(this.aimx + i, this.aimy + j))) {
           world.setTile(this.aimx + i, this.aimy + j, TILE.BODY_PART);
         } else if (how > 80) {
           world.setColor(this.aimx + i, this.aimy + j, "blood");

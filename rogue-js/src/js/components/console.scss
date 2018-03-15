@@ -1,7 +1,6 @@
 $size: 18px;
 .console {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter",
-    "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: $size;
   font-style: normal;
   font-variant: normal;
@@ -47,8 +46,7 @@ $size: 18px;
 
 $sizeMap: 3px;
 .map-joueur {
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter",
-    "Lucida Typewriter", monospace;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
   font-size: $sizeMap;
   font-style: normal;
   font-variant: normal;
@@ -111,6 +109,11 @@ $sizeMap: 3px;
 .blood {
   @extend .tile;
   color: #aa4040;
+}
+
+.blue {
+  @extend .tile;
+  color: blue;
 }
 
 .brown {

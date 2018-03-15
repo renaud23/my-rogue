@@ -67,6 +67,19 @@ class Rendering {
       }
     }
 
+    // projectiles
+    for (let i = 0; i < this.world.projectiles.length; i++) {
+      const proj = this.world.projectiles[i];
+      if (!proj.isFinished()) {
+        let xi = posX + proj.x - this.world.joueur.x;
+        let yi = posY + proj.y - this.world.joueur.y;
+
+        if (xi >= 0 && yi >= 0 && xi < this.largeurView && yi < this.hauteurView) {
+          map[yi * this.largeurView + xi] = proj.getTile();
+        }
+      }
+    }
+
     // aim
     if (this.world.joueur.isAiming) {
       const xi = this.world.joueur.aimx - startX;

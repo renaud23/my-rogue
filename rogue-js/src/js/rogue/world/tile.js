@@ -11,6 +11,9 @@ export const BODY = tile("@", "blood", "@");
 export const BODY_PART = tile("@", "blood", "~");
 
 export const WOLF = tile("W", "brown", "W");
+export const GHOUL = tile("G", "blue", "G");
+
+export const FIRE_BALL = tile("*", "yellow", "*");
 
 export const isWalkable = tile => {
   return tile.value === BODY.value || tile.value === FLOOR.value;
