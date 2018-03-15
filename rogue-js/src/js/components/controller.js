@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Console,
-  MapJoueur,
-  JoueurHud,
-  WorldHud,
-  Journal
-} from "js/components";
+import { Console, MapJoueur, JoueurHud, WorldHud, Journal } from "js/components";
 import { journal } from "js/rogue";
 import "./hud.css";
 //
@@ -28,23 +22,23 @@ export default class Controller extends React.Component {
       switch (e.key) {
         case "z":
           this.props.event.pressUp();
-          // this.setState({ step: this.state.step + 1 });
           break;
         case "s":
           this.props.event.pressDown();
-          // this.setState({ step: this.state.step + 1 });
           break;
         case "q":
           this.props.event.pressLeft();
-          // this.setState({ step: this.state.step + 1 });
           break;
         case "d":
           this.props.event.pressRight();
-          // this.setState({ step: this.state.step + 1 });
           break;
         case " ":
           this.props.event.pressSpace();
-          // this.setState({ step: this.state.step + 1 });
+          break;
+
+        case "W":
+        case "w":
+          this.props.event.nextStep();
           break;
         default:
       }

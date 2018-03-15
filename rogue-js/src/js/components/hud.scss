@@ -10,4 +10,21 @@
       }
     }
   }
+
+  .progression {
+    display: inline-block;
+    height: 10px;
+    .todo {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: black;
+    }
+    .done {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: yellow;
+    }
+  }
 }

@@ -121,13 +121,14 @@ class Joueur {
   }
 
   checkLevel() {
-    // for(let i=0;i<20;i++){
-    //   console.log(i, Math.trunc(Math.pow(i, 1.5)) * 20);
-    // }
-    if (this.xp > Math.trunc(Math.pow(this.level, 1.5)) * 20) {
+    if (this.xp > this.howForNextLevel()) {
       this.level++;
       this.xp = 0;
     }
+  }
+
+  howForNextLevel(){
+    return Math.trunc(Math.pow(this.level, 1.5)) * 20;
   }
 
   bloody(world, x, y) {

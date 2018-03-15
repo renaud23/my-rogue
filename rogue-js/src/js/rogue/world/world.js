@@ -22,9 +22,12 @@ class World {
 
   setRefresh(refresh) {
     REFRESH = refresh;
-    journal.addRow(
-      "Hooo ma tête ! mais où sui-je et d'où peut venir cette odeur infecte !"
-    );
+    journal.addRow("Hooo ma tête ! mais où sui-je et d'où peut venir cette odeur infecte !");
+  }
+
+  goNextStep() {
+    this.actions = 0;
+    this.activate();
   }
 
   activate() {
@@ -65,12 +68,7 @@ class World {
   }
 
   elementCanGo(e, x, y) {
-    if (
-      x < 0 ||
-      y < 0 ||
-      x >= this.dungeon.getLargeur() ||
-      y >= this.dungeon.getHauteur()
-    ) {
+    if (x < 0 || y < 0 || x >= this.dungeon.getLargeur() || y >= this.dungeon.getHauteur()) {
       return false;
     }
     if (!TILE.isWalkable(this.dungeon.getTile(x, y))) {
@@ -87,12 +85,7 @@ class World {
   }
 
   canSeeThrough(e, x, y) {
-    if (
-      x < 0 ||
-      y < 0 ||
-      x >= this.dungeon.getLargeur() ||
-      y >= this.dungeon.getHauteur()
-    ) {
+    if (x < 0 || y < 0 || x >= this.dungeon.getLargeur() || y >= this.dungeon.getHauteur()) {
       return false;
     }
     if (!TILE.isWalkable(this.dungeon.getTile(x, y))) {
@@ -111,16 +104,8 @@ class World {
   }
 
   canSeePlayer(monster) {
-    if (
-      tools.getDistance(monster.x, monster.y, this.joueur.x, this.joueur.y) <=
-      monster.depht * monster.depht
-    ) {
-      const points = tools.getSegment(
-        monster.x,
-        monster.y,
-        this.joueur.x,
-        this.joueur.y
-      );
+    if (tools.getDistance(monster.x, monster.y, this.joueur.x, this.joueur.y) <= monster.depht * monster.depht) {
+      const points = tools.getSegment(monster.x, monster.y, this.joueur.x, this.joueur.y);
       for (let i = 0; i < points.length; i++) {
         if (!this.canSeeThrough(monster, this.joueur.x, this.joueur.y)) {
           return false;

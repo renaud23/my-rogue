@@ -3,13 +3,24 @@ class EventDispatcher {
     this.world = world;
     this.joueur = world.joueur;
     this.aim = false;
+    this.nextAsk = false;
   }
 
   gameIsFinished() {
     return this.world.lose || this.world.win;
   }
 
+  nextStep() {
+    if (!this.nextAsk) {
+      this.nextAsk = true;
+    } else {
+      this.nextAsk = false;
+      this.world.goNextStep();
+    }
+  }
+
   pressUp() {
+    this.nextAsk = false;
     if (!this.aim) {
       this.world.goUp();
     } else {
@@ -18,6 +29,7 @@ class EventDispatcher {
   }
 
   pressDown() {
+    this.nextAsk = false;
     if (!this.aim) {
       this.world.goDown();
     } else {
@@ -26,6 +38,7 @@ class EventDispatcher {
   }
 
   pressLeft() {
+    this.nextAsk = false;
     if (!this.aim) {
       this.world.goLeft();
     } else {
@@ -34,6 +47,7 @@ class EventDispatcher {
   }
 
   pressRight() {
+    this.nextAsk = false;
     if (!this.aim) {
       this.world.goRight();
     } else {
@@ -42,6 +56,7 @@ class EventDispatcher {
   }
 
   pressSpace() {
+    this.nextAsk = false;
     if (!this.aim) {
       this.aim = true;
       this.joueur.isAiming = true;

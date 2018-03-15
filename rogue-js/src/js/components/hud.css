@@ -4,3 +4,16 @@
     color: red; }
   .hud .hud-joueur .lifes .dead {
     color: black; }
+  .hud .progression {
+    display: inline-block;
+    height: 10px; }
+    .hud .progression .todo {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: black; }
+    .hud .progression .done {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: yellow; }
