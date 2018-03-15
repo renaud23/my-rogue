@@ -1,0 +1,18 @@
+.journal {
+  display: block;
+  height: 200px;
+  overflow-y: scroll;
+
+  background-color: black;
+  .red {
+    color: red;
+  }
+
+  .black {
+    color: black;
+  }
+
+  .white {
+    color: white;
+  }
+}

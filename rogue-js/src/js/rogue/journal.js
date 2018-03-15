@@ -11,7 +11,7 @@ class Journal {
   getJournal() {
     return this.journal;
   }
-  addRow(row) {
+  addRow(row, color = "black") {
     this.journal.push(row);
     REFRESH();
   }

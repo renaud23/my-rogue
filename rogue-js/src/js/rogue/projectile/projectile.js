@@ -8,7 +8,9 @@ class Projectile {
     this.y = y;
     this.speed = 2;
     this.depht = 8;
+    this.damage = 0;
     this.finished = false;
+    this.message = { message: "Un projectile vous percute.", color: "red" };
 
     this.pente = (cibley - y) / Math.max(1, ciblex - x);
     this.varx = (ciblex - x) / Math.max(1, Math.abs(ciblex - x));
@@ -29,7 +31,8 @@ class Projectile {
         if (element !== null) {
           this.finished = true;
           if (element.isPlayer()) {
-            journal.addRow("Une boule de feu vous percute. brulant...");
+            element.injure(this.damage);
+            journal.addRow(this.message);
           }
         } else if (!TILE.isWalkable(world.getTile(p.x, p.y))) {
           this.finished = true;
@@ -54,6 +57,10 @@ class Projectile {
 
 export default params => (x, y, ciblex, cibley) => {
   const projectile = new Projectile(x, y, ciblex, cibley);
-  // projectile.speed = params.speed ? params.speed : 2;
+  projectile.speed = params.speed ? params.speed : 2;
+  projectile.depht = params.depht ? params.depht : 5;
+  projectile.damage = params.damage ? params.damage : 5;
+  projectile.message = params.message ? params.message : { message: "Un projectile vous percute.", color: "red" };
+
   return projectile;
 };

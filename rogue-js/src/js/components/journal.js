@@ -1,4 +1,5 @@
 import React from "react";
+import "./journal.css";
 
 export default class Journal extends React.Component {
   constructor(props) {
@@ -16,7 +17,11 @@ export default class Journal extends React.Component {
   }
 
   render() {
-    const rows = this.state.journal.map((r, i) => <div key={i}>{r}</div>);
+    const rows = this.state.journal.map((r, i) => (
+      <div className={r.color} key={i}>
+        {r.message}
+      </div>
+    ));
     return <div className="journal">{rows}</div>;
   }
 }

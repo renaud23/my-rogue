@@ -24,7 +24,10 @@ class World {
 
   setRefresh(refresh) {
     REFRESH = refresh;
-    journal.addRow("Hooo ma tête ! mais où sui-je et d'où peut venir cette odeur infecte !");
+    journal.addRow({
+      message: "Hooo ma tête ! mais où suis-je ? D'où vient cette odeur abjecte !",
+      color: "white"
+    });
   }
 
   goNextStep() {

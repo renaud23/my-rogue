@@ -18,6 +18,7 @@ export default class Controller extends React.Component {
   }
 
   handleKeyPress(e) {
+    e.preventDefault();
     if (!this.props.event.gameIsFinished()) {
       switch (e.key) {
         case "z":
