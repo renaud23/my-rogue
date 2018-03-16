@@ -4,10 +4,10 @@ import com.renaud.rogue.event.KeyboardEvent;
 
 public class MainSequence implements RogueSequence, KeyboardEvent {
 
-	private GameSequence game;
+	private Game game;
 	private RogueSequence currentSequence;
 
-	public MainSequence(GameSequence game) {
+	public MainSequence(Game game) {
 		this.game = game;
 		this.currentSequence = this.game;
 	}

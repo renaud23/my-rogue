@@ -2,7 +2,7 @@ package com.renaud.rogue.drawer;
 
 import java.awt.Color;
 
-import com.renaud.rogue.game.GameSequence;
+import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.DrawOperationAware;
 import com.renaud.rogue.view.IDrawOperation;
@@ -13,7 +13,7 @@ import com.renaud.rogue.world.Tile;
 public class MinimapDrawer implements IDrawable, DrawOperationAware {
 
 	private float alpha = 0.8f;
-	private GameSequence game;
+	private Game game;
 	private int screenX;
 	private int screenY;
 
@@ -23,7 +23,7 @@ public class MinimapDrawer implements IDrawable, DrawOperationAware {
 	private IDrawOperation op;
 	private IDrawOperation buffer;
 
-	public MinimapDrawer(GameSequence game, int screenX, int screenY, int screenLargeur, int screenHauteur) {
+	public MinimapDrawer(Game game, int screenX, int screenY, int screenLargeur, int screenHauteur) {
 		this.game = game;
 		this.screenX = screenX;
 		this.screenY = screenY;
