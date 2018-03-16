@@ -1,16 +1,14 @@
 package com.renaud.rogue.game;
 
-import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.event.KeyboardEvent;
-import com.renaud.rogue.world.World;
 
 public class MainSequence implements RogueSequence, KeyboardEvent {
 
-	private Game game;
+	private GameSequence game;
 	private RogueSequence currentSequence;
 
-	public MainSequence(World world, Joueur joueur) {
-		this.game = new Game(world, joueur);
+	public MainSequence(GameSequence game) {
+		this.game = game;
 		this.currentSequence = this.game;
 	}
 

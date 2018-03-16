@@ -4,7 +4,7 @@ import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.event.KeyboardEvent;
 import com.renaud.rogue.world.World;
 
-public class Game implements RogueSequence, KeyboardEvent {
+public class GameSequence implements RogueSequence, KeyboardEvent {
 
 	private World world;
 	private Joueur joueur;
@@ -12,7 +12,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	private int actionsMax = 2;
 	private int step;
 
-	public Game(World world, Joueur joueur) {
+	public GameSequence(World world, Joueur joueur) {
 		this.world = world;
 		this.joueur = joueur;
 		this.actions = this.actionsMax;
@@ -41,22 +41,38 @@ public class Game implements RogueSequence, KeyboardEvent {
 
 	@Override
 	public void keyUpPressed() {
-		actions--;
+		if (world.getTile(joueur.getX(), joueur.getY() - 1).canWalkOn()) {
+			world.setElement(joueur.getX(), joueur.getY(), null);
+			joueur.goUp();
+			actions--;
+		}
 	}
 
 	@Override
 	public void keyDownPressed() {
-		actions--;
+		if (world.getTile(joueur.getX(), joueur.getY() + 1).canWalkOn()) {
+			world.setElement(joueur.getX(), joueur.getY(), null);
+			joueur.goDown();
+			actions--;
+		}
 	}
 
 	@Override
 	public void keyLeftPressed() {
-		actions--;
+		if (world.getTile(joueur.getX() - 1, joueur.getY()).canWalkOn()) {
+			world.setElement(joueur.getX(), joueur.getY(), null);
+			joueur.goLeft();
+			actions--;
+		}
 	}
 
 	@Override
 	public void keyRightPressed() {
-		actions--;
+		if (world.getTile(joueur.getX() + 1, joueur.getY()).canWalkOn()) {
+			world.setElement(joueur.getX(), joueur.getY(), null);
+			joueur.goRight();
+			actions--;
+		}
 	}
 
 	@Override

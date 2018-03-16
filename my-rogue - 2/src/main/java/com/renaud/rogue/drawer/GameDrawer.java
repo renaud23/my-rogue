@@ -2,31 +2,27 @@ package com.renaud.rogue.drawer;
 
 import java.awt.Color;
 
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.drawer.MainDrawer.Draw;
+import com.renaud.rogue.game.GameSequence;
 import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.view.DrawOperationAware;
 import com.renaud.rogue.view.IDrawOperation;
-import com.renaud.rogue.view.IDrawable;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.world.Tile;
-import com.renaud.rogue.world.World;
 
-public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
+public class GameDrawer implements Draw {
 
 	private IDrawOperation op;
 	private IDrawOperation buffer;
 
-	private World world;
 	private int screenLargeur;
 	private int screenHauteur;
 
 	private int largeur;
 	private int hauteur;
 
-	private Game game;
+	private GameSequence game;
 
-	public JoueurWorldDrawer(Game game, int viewLargeur, int viewHauteur,
-		int screenLargeur, int screenHauteur) {
+	public GameDrawer(GameSequence game, int viewLargeur, int viewHauteur, int screenLargeur, int screenHauteur) {
 		this.game = game;
 		this.largeur = viewLargeur;
 		this.hauteur = viewHauteur;
@@ -38,7 +34,6 @@ public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
 	public void draw() {
 		buffer.fillRect(Color.RED, 0, 0, screenLargeur, screenHauteur, 1.0f);
 		int carrSize = Math.min(screenLargeur / largeur, screenHauteur / hauteur);
-
 		int startX = Math.max(0, game.getJoueur().getX() - largeur / 2);
 		startX = Math.min(game.getWorld().getWidth() - largeur, startX);
 		int startY = Math.max(0, game.getJoueur().getY() - hauteur / 2);
@@ -51,19 +46,12 @@ public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
 			int yy = startY + yi;
 
 			Tile tile = game.getJoueur().getMemory(xx, yy);
-			// Color col = Color.black;
-			// switch (value) {
-			// case Tile.WALL:
-			// col = Color.blue;
-			// break;
-			// case Tile.FLOOR:
-			// col = Color.darkGray;
-			// break;
-			// }
+			StringBuilder bld = new StringBuilder();
+			bld.append(tile.getTile());
 
-			StringBuilder bld = new StringBuilder(tile.getTile());
-			buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize, carrSize, new Color(tile.getColor()));
-			// buffer.fillRect(col, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
+			buffer.fillRect(Color.black, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
+			buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize + carrSize, carrSize,
+					new Color(tile.getColor()));
 		}
 
 		for (Point point : game.getJoueur().getVisibilityPoints(game)) {
@@ -71,8 +59,12 @@ public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
 			int yi = point.getY() - startY;
 			Tile tile = game.getWorld().getTile(point.getX(), point.getY());
 
-			StringBuilder bld = new StringBuilder(tile.getTile());
-			buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize, carrSize, new Color(tile.getColor()));
+			StringBuilder bld = new StringBuilder();
+			bld.append(tile.getTile());
+
+			buffer.fillRect(Color.black, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
+			buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize + carrSize, carrSize,
+					new Color(tile.getColor()));
 		}
 
 		drawPlayer();
@@ -83,8 +75,10 @@ public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
 
 	// private void drawMonster(int startX, int startY, int carrSize) {
 	// for (Monster m : world.getVisiblesMonstersByPlayer()) {
-	// if (m.getX() >= startX && m.getX() < startX + largeur && m.getY() >= startY && m.getY() < startY + hauteur) {
-	// buffer.fillRect(Color.green, (m.getX() - startX) * carrSize, (m.getY() - startY) * carrSize, carrSize, carrSize, 1.0f);
+	// if (m.getX() >= startX && m.getX() < startX + largeur && m.getY() >= startY
+	// && m.getY() < startY + hauteur) {
+	// buffer.fillRect(Color.green, (m.getX() - startX) * carrSize, (m.getY() -
+	// startY) * carrSize, carrSize, carrSize, 1.0f);
 	// }
 	// }
 	// }
@@ -96,8 +90,12 @@ public class JoueurWorldDrawer implements IDrawable, DrawOperationAware {
 		int posY = Math.min(game.getJoueur().getY(), hauteur / 2);
 		posY = Math.max(posY, hauteur - game.getWorld().getHeight() + game.getJoueur().getY());
 
-		buffer.drawChar("O", posX * carrSize, posY * carrSize, carrSize, Color.yellow);
-		// buffer.fillCircle(Color.yellow, posX * carrSize, posY * carrSize, carrSize / 2, 1.0f);
+		StringBuilder bld = new StringBuilder();
+		bld.append("O");
+
+		buffer.fillRect(Color.black, posX * carrSize, posY * carrSize, carrSize, carrSize, 1.0f);
+		buffer.drawChar(bld.toString(), posX * carrSize + carrSize / 2, posY * carrSize + carrSize, carrSize,
+				Color.white);
 
 	}
 

@@ -25,8 +25,9 @@ public class Dungeon {
 		for (int i = 0; i < size; i++) {
 			if (type == Tile.WALL) {
 				tiles[i] = Tile.Factory.getWall();
-			}
-			else {
+			} else if (type == Tile.UNKNOW) {
+				tiles[i] = Tile.Factory.getUnknow();
+			} else {
 				if (type == Tile.FLOOR) {
 					tiles[i] = Tile.Factory.getFloor();
 				}

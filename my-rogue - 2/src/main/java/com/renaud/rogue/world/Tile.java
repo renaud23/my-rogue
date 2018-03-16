@@ -29,6 +29,10 @@ public class Tile {
 		return this.code == FLOOR && (element == null ? true : !element.isOpaque());
 	}
 
+	public boolean canWalkOn() {
+		return this.code == FLOOR && (element == null ? true : !element.isOpaque());
+	}
+
 	public boolean isEmpty() {
 		return element == null;
 	}
@@ -64,11 +68,11 @@ public class Tile {
 		}
 
 		public static Tile getWall() {
-			return new Tile(WALL, 'X', 0x505050);
+			return new Tile(WALL, 'X', 0xAAAAAA);
 		}
 
 		public static Tile getFloor() {
-			return new Tile(FLOOR, '.', 0x505050);
+			return new Tile(FLOOR, '.', 0x009900);
 		}
 
 		public static Tile getPlayer() {

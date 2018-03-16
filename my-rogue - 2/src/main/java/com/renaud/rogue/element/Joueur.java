@@ -3,7 +3,7 @@ package com.renaud.rogue.element;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.game.GameSequence;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.world.Dungeon;
@@ -16,6 +16,7 @@ public class Joueur implements Element {
 	private int depht;
 	private int x;
 	private int y;
+	private Set<Point> lastComputed = new HashSet<>();
 
 	public Joueur(int x, int y, int worldWidth, int worldHeight) {
 		this.x = x;
@@ -37,8 +38,9 @@ public class Joueur implements Element {
 		return y;
 	}
 
-	public Set<Point> getVisibilityPoints(Game game) {
-		Set<Point> points = new HashSet<>();
+	public Set<Point> getVisibilityPoints(GameSequence game) {
+
+		lastComputed.clear();
 		for (int i = -depht; i <= depht; i++) {
 			for (int j = -depht; j <= depht; j++) {
 				int xi = this.x - i;
@@ -59,16 +61,41 @@ public class Joueur implements Element {
 
 					}
 					if (visible) {
-						points.add(new Point(xi, yi));
+						lastComputed.add(new Point(xi, yi));
+						memory.setTile(xi, yi, game.getWorld().getTile(xi, yi));
 					}
 				}
 			}
 		}
-		return points;
+		return lastComputed;
+	}
+
+	public Set<Point> getLastComputed() {
+		return lastComputed;
 	}
 
 	public Tile getMemory(int x, int y) {
-		return null;
+		return memory.getTile(x, y);
+	}
+
+	public Dungeon getMemory() {
+		return memory;
+	}
+
+	public void goUp() {
+		y--;
+	}
+
+	public void goDown() {
+		y++;
+	}
+
+	public void goRight() {
+		x++;
+	}
+
+	public void goLeft() {
+		x--;
 	}
 
 	@Override
@@ -96,7 +123,7 @@ public class Joueur implements Element {
 		w.print(System.out);
 		System.out.println();
 
-		Set<Point> points = j.getVisibilityPoints(new Game(w, j));
+		Set<Point> points = j.getVisibilityPoints(new GameSequence(w, j));
 		points.forEach(p -> {
 			w.setElement(p.x, p.y, new Blank(p.x, p.y));
 		});
