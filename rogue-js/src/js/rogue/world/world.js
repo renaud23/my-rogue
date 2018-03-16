@@ -6,6 +6,11 @@ import { journal } from "js/rogue";
 
 let REFRESH = () => {};
 
+const sleep = milliSeconds => {
+  var startTime = new Date().getTime();
+  while (new Date().getTime() < startTime + milliSeconds);
+};
+
 class World {
   constructor(largeur, hauteur) {
     this.win = false;
@@ -42,7 +47,7 @@ class World {
   activate() {
     if (!this.win && !this.lose) {
       this.actions--;
-      // next turn
+
       for (let i = 0; i < this.projectiles.length; i++) {
         const projectile = this.projectiles[i];
         if (projectile.isFinished()) {
@@ -52,13 +57,13 @@ class World {
         }
       }
 
+      // next turn
       if (this.actions <= 0) {
         this.step++;
         this.actions = this.nbActions;
         this.monsters.forEach(m => {
           if (!m.isDead()) {
             m.activate(this);
-            REFRESH();
           }
         });
 

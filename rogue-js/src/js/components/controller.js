@@ -18,7 +18,9 @@ export default class Controller extends React.Component {
   }
 
   refresh() {
-    this.setState({ mouvements: this.state.mouvements + 1 });
+    setTimeout(() => {
+      this.setState({ mouvements: this.state.mouvements + 1 });
+    }, 100);
   }
 
   keyFunction(e) {
