@@ -1,72 +1,52 @@
+import EventDispatcherWorld from "./dispatcher-world";
+import EventDispatcherInventory from "./dispatcher-inventory";
+
 class EventDispatcher {
   constructor(world) {
     this.world = world;
-    this.joueur = world.joueur;
-    this.aim = false;
-    this.nextAsk = false;
+    this.dispatcherWorld = new EventDispatcherWorld(world);
+    this.dispatcherInventory = new EventDispatcherInventory(world);
+    this.currentDispatcher = this.dispatcherWorld;
   }
 
   gameIsFinished() {
-    return this.world.lose || this.world.win;
+    return this.dispatcherWorld.gameIsFinished();
   }
 
   nextStep() {
-    if (!this.nextAsk) {
-      this.nextAsk = true;
-    } else {
-      this.nextAsk = false;
-      this.world.goNextStep();
-    }
+    this.dispatcherWorld.nextStep();
   }
 
   pressUp() {
-    this.nextAsk = false;
-    if (!this.aim) {
-      this.world.goUp();
-    } else {
-      this.world.joueur.aimUp();
-    }
+    this.dispatcherWorld.pressUp();
   }
 
   pressDown() {
-    this.nextAsk = false;
-    if (!this.aim) {
-      this.world.goDown();
-    } else {
-      this.world.joueur.aimDown();
-    }
+    this.dispatcherWorld.pressDown();
   }
 
   pressLeft() {
-    this.nextAsk = false;
-    if (!this.aim) {
-      this.world.goLeft();
-    } else {
-      this.world.joueur.aimLeft();
-    }
+    this.dispatcherWorld.pressLeft();
   }
 
   pressRight() {
-    this.nextAsk = false;
-    if (!this.aim) {
-      this.world.goRight();
-    } else {
-      this.world.joueur.aimRight();
-    }
+    this.dispatcherWorld.pressRight();
   }
 
   pressSpace() {
-    this.nextAsk = false;
-    if (!this.aim) {
-      this.aim = true;
-      this.joueur.isAiming = true;
-      this.joueur.resetAim();
-    } else {
-      this.aim = false;
-      this.joueur.isAiming = false;
-      this.joueur.shoot(this.world);
-      this.world.activate();
-    }
+    this.dispatcherWorld.pressSpace();
+  }
+
+  pressEscape() {
+    this.dispatcherWorld.pressEscape();
+  }
+
+  dispatchWorld() {
+    this.currentDispatcher = this.dispatcherWorld;
+  }
+
+  dispatchInventory() {
+    this.currentDispatcher = this.dispatcherInventory;
   }
 }
 
