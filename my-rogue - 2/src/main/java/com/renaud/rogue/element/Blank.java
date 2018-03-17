@@ -4,37 +4,32 @@ import com.renaud.rogue.world.Tile;
 
 public class Blank implements Element {
 
-	private int x;
-	private int y;
+    private int x;
+    private int y;
 
-	public Blank(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
+    public Blank(int x, int y) {
+	this.x = x;
+	this.y = y;
+    }
 
-	@Override
-	public int getX() {
-		return x;
-	}
+    @Override
+    public int getX() {
+	return x;
+    }
 
-	@Override
-	public int getY() {
-		return y;
-	}
+    @Override
+    public int getY() {
+	return y;
+    }
 
-	@Override
-	public int getDepht() {
-		return 0;
-	}
+    @Override
+    public Tile getTile() {
+	return Tile.Factory.getUnknow();
+    }
 
-	@Override
-	public Tile getTile() {
-		return Tile.Factory.getUnknow();
-	}
-
-	@Override
-	public boolean isOpaque() {
-		return false;
-	}
+    @Override
+    public boolean isOpaque() {
+	return false;
+    }
 
 }

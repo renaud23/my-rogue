@@ -98,7 +98,6 @@ public class Joueur implements Element {
 	x--;
     }
 
-    @Override
     public int getDepht() {
 	return depht;
     }

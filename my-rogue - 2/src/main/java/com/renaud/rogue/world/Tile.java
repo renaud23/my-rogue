@@ -31,7 +31,7 @@ public class Tile {
     }
 
     public boolean canWalkOn() {
-	return this.code == FLOOR && (element == null ? true : !element.isOpaque());
+	return this.code == FLOOR && element == null;
     }
 
     public boolean isEmpty() {

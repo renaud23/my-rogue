@@ -1,8 +1,8 @@
-package com.renaud.rogue.monster;
+package com.renaud.rogue.element.monster;
 
-import com.renaud.rogue.comportement.Comportement;
-import com.renaud.rogue.comportement.HuntPlayer;
-import com.renaud.rogue.comportement.RandomWalk;
+import com.renaud.rogue.element.comportement.Comportement;
+import com.renaud.rogue.element.comportement.HuntPlayer;
+import com.renaud.rogue.element.comportement.RandomWalk;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.world.Tile;
 
@@ -10,10 +10,11 @@ public class Wolf implements Monster {
 
     int x;
     int y;
-    int step = 2;
-    int depth = 15;
+    int actions = 3;
+    int actionsMax = 3;
+    int depth = 10;
     int life = 10;
-    private boolean isHuting;
+    private boolean isHuting = false;
 
     private Comportement walk;
     private Comportement hunt;
@@ -27,9 +28,14 @@ public class Wolf implements Monster {
 
     @Override
     public void activate(Game game) {
-
-	if (isHuting) {
+	actions--;
+	if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
+	    // System.out.println("byte");
+	} else if (isHuting) {
 	    hunt.activate(game);
+	    if (hunt.isFinished()) {
+		isHuting = false;
+	    }
 	} else {
 	    if (game.getWorld().canSee(this, game.getJoueur())) {
 		isHuting = true;
@@ -78,24 +84,27 @@ public class Wolf implements Monster {
     }
 
     @Override
-    public int getStep() {
-	return step;
-    }
-
-    @Override
     public boolean isDead() {
 	return life <= 0;
     }
 
     @Override
     public void startTurn() {
-	// TODO Auto-generated method stub
-
+	actions = actionsMax;
     }
 
     @Override
     public boolean turnIsEnd() {
-	// TODO Auto-generated method stub
-	return false;
+	return actions <= 0 || isDead();
     }
+
+    // @Override
+    // public int getActionsLeft() {
+    // return actions;
+    // }
+    //
+    // @Override
+    // public int getActionsMax() {
+    // return actionsMax;
+    // }
 }

@@ -1,4 +1,4 @@
-package com.renaud.rogue.monster;
+package com.renaud.rogue.element.monster;
 
 import com.renaud.rogue.element.PNJ;
 

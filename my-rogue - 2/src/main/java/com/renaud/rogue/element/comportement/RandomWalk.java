@@ -1,12 +1,12 @@
-package com.renaud.rogue.comportement;
+package com.renaud.rogue.element.comportement;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import com.renaud.rogue.element.monster.Monster;
 import com.renaud.rogue.game.Game;
-import com.renaud.rogue.monster.Monster;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.world.World;
@@ -34,7 +34,6 @@ public class RandomWalk implements Comportement {
 	while (!find) {
 	    List<Point> points = new ArrayList<>(MathTools.getCercle(monster.getX(), monster.getY(), ray));
 	    Collections.shuffle(points, new Random());
-
 	    while (!points.isEmpty()) {
 		Point p = points.remove(0);
 		if (world.canGo(monster.getX(), monster.getY(), p.getX(), p.getY())) {
@@ -48,6 +47,8 @@ public class RandomWalk implements Comportement {
 		ray--;
 	    }
 	}
+	// System.out.println(monster.getX() + " " + monster.getY() + " " + dx + " " +
+	// dy);
 	goTo.reset(dx, dy);
     }
 
@@ -59,13 +60,14 @@ public class RandomWalk implements Comportement {
 
     @Override
     public void activate(Game game) {
-	if (monster.getStep() > 0) {
-	    if (goTo.isFinished()) {
-		checkNextDir(game.getWorld());
-	    } else {
-		goTo.activate(game);
-	    }
+	// if (!monster.turnIsEnd()) {
+	if (goTo.isFinished()) {
+	    checkNextDir(game.getWorld());
+	    this.activate(game);
+	} else {
+	    goTo.activate(game);
 	}
+	// }
     }
 
     @Override

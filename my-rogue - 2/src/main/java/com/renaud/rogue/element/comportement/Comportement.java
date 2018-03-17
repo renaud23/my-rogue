@@ -1,4 +1,4 @@
-package com.renaud.rogue.comportement;
+package com.renaud.rogue.element.comportement;
 
 import com.renaud.rogue.game.Game;
 

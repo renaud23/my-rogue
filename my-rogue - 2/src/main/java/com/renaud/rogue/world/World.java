@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Set;
 
 import com.renaud.rogue.element.Element;
+import com.renaud.rogue.element.PNJ;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 
@@ -55,6 +56,9 @@ public class World {
     public boolean canGo(int ax, int ay, int bx, int by) {
 	Set<Point> points = MathTools.getSegment(ax, ay, bx, by);
 	for (Point p : points) {
+	    if (p.x < 0 || p.y < 0 || p.x >= getWidth() || p.y >= getHeight()) {
+		continue;
+	    }
 	    if ((p.x == ax && p.y == ay) || (p.x == bx && p.y == by)) {
 		continue;
 	    }
@@ -65,11 +69,14 @@ public class World {
 	return true;
     }
 
-    public boolean canSee(Element element, Element cible) {
-	Set<Point> points = MathTools.getSegment(element.getX(), element.getY(), cible.getX(), cible.getY());
+    public boolean canSee(PNJ pnj, Element cible) {
+	int dist = MathTools.distance(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
+	dist *= dist;
+	if (dist > pnj.getDepht() * pnj.getDepht())
+	    return false;
+	Set<Point> points = MathTools.getSegment(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
 	for (Point p : points) {
-	    if ((p.x == element.getDepht() && p.y == element.getY())
-		    || (p.x == cible.getDepht() && p.y == cible.getY())) {
+	    if ((p.x == pnj.getX() && p.y == pnj.getY()) || (p.x == cible.getX() && p.y == cible.getY())) {
 		continue;
 	    }
 	    if (!this.getTile(p.x, p.y).canSeeThrought()) {

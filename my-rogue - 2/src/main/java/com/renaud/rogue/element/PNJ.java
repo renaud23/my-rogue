@@ -2,8 +2,7 @@ package com.renaud.rogue.element;
 
 import com.renaud.rogue.game.Game;
 
-public interface PNJ extends Element {
-    int getStep();
+public interface PNJ extends Element, TurnPlay {
 
     void addX(int dx);
 
@@ -13,7 +12,6 @@ public interface PNJ extends Element {
 
     boolean isDead();
 
-    void startTurn();
+    int getDepht();
 
-    boolean turnIsEnd();
 }

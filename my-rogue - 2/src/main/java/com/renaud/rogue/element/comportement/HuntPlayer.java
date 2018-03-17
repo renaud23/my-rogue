@@ -1,7 +1,7 @@
-package com.renaud.rogue.comportement;
+package com.renaud.rogue.element.comportement;
 
+import com.renaud.rogue.element.monster.Monster;
 import com.renaud.rogue.game.Game;
-import com.renaud.rogue.monster.Monster;
 
 public class HuntPlayer implements Comportement {
 
@@ -24,7 +24,6 @@ public class HuntPlayer implements Comportement {
 	}
 
 	goTo.activate(game);
-
     }
 
     @Override
