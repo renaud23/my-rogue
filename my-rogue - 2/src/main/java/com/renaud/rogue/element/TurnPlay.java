@@ -1,11 +1,12 @@
 package com.renaud.rogue.element;
 
+import com.renaud.rogue.game.Game;
+
 public interface TurnPlay {
     void startTurn();
 
     boolean turnIsEnd();
 
-    // int getActionsLeft();
-    //
-    // int getActionsMax();
+    void activate(Game game);
+
 }

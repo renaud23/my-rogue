@@ -1,7 +1,7 @@
 package com.renaud.rogue.world;
 
 import java.io.PrintStream;
-import java.util.Set;
+import java.util.List;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.PNJ;
@@ -35,6 +35,8 @@ public class World {
     }
 
     public Tile getTile(int i, int j) {
+	if (i < 0 || j < 0 || i >= getWidth() || j >= getHeight())
+	    return null;
 	return dungeon.getTile(i, j);
     }
 
@@ -54,7 +56,7 @@ public class World {
     }
 
     public boolean canGo(int ax, int ay, int bx, int by) {
-	Set<Point> points = MathTools.getSegment(ax, ay, bx, by);
+	List<Point> points = MathTools.getSegment(ax, ay, bx, by);
 	for (Point p : points) {
 	    if (p.x < 0 || p.y < 0 || p.x >= getWidth() || p.y >= getHeight()) {
 		continue;
@@ -71,10 +73,9 @@ public class World {
 
     public boolean canSee(PNJ pnj, Element cible) {
 	int dist = MathTools.distance(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
-	dist *= dist;
 	if (dist > pnj.getDepht() * pnj.getDepht())
 	    return false;
-	Set<Point> points = MathTools.getSegment(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
+	List<Point> points = MathTools.getSegment(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
 	for (Point p : points) {
 	    if ((p.x == pnj.getX() && p.y == pnj.getY()) || (p.x == cible.getX() && p.y == cible.getY())) {
 		continue;

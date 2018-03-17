@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import com.renaud.rogue.element.monster.Monster;
+import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;

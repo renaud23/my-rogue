@@ -1,5 +1,6 @@
 package com.renaud.rogue.element.monster;
 
+import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.element.comportement.Comportement;
 import com.renaud.rogue.element.comportement.HuntPlayer;
 import com.renaud.rogue.element.comportement.RandomWalk;
@@ -44,7 +45,6 @@ public class Wolf implements Monster {
 	    } else {
 		walk.activate(game);
 	    }
-
 	}
     }
 
@@ -70,7 +70,7 @@ public class Wolf implements Monster {
 
     @Override
     public boolean isOpaque() {
-	return true;
+	return false;
     }
 
     @Override

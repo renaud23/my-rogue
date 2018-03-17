@@ -1,6 +1,8 @@
 package com.renaud.rogue.tools;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MathTools {
@@ -23,8 +25,8 @@ public class MathTools {
 	return disty + distx;
     }
 
-    public static Set<Point> getSegment(int ax, int ay, int bx, int by) {
-	Set<Point> points = new HashSet<>();
+    public static List<Point> getSegment(int ax, int ay, int bx, int by) {
+	List<Point> points = new ArrayList<>();
 	int dx, dy, i, xinc, yinc, cumul, x, y;
 	x = ax;
 	y = ay;

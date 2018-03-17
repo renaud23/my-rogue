@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.element.monster.Monster;
-import com.renaud.rogue.element.monster.Wolf;
+import com.renaud.rogue.element.Monster;
+import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.world.World;
@@ -18,6 +18,9 @@ public class Game implements RogueSequence, KeyboardEvent {
     private int actionsMax = 2;
     private int step;
     private List<Monster> monsters = new ArrayList<>();
+    private List<Projectile> projectiles = new ArrayList<>();
+
+    private boolean playChange;
 
     public Game(World world, Joueur joueur) {
 	this.world = world;
@@ -25,9 +28,9 @@ public class Game implements RogueSequence, KeyboardEvent {
 	this.actions = this.actionsMax;
 	this.world.setElement(joueur.getX(), joueur.getY(), this.joueur);
 
-	for (int i = 0; i < 12; i++) {
+	for (int i = 0; i < 10; i++) {
 	    Point start = world.peekEmptyPlace();
-	    Monster monster = new Wolf(start.x, start.y);
+	    Monster monster = Monster.Factory.createGhool(start.x, start.y);// new Wolf(start.x, start.y);
 	    monsters.add(monster);
 	    world.setElement(start.x, start.y, monster);
 	}
@@ -43,25 +46,42 @@ public class Game implements RogueSequence, KeyboardEvent {
 
     @Override
     public void activate() {
-	if (actions == 0) {
-	    // next turn
-	    this.actions = this.actionsMax;
-	    this.step++;
-
+	if (playChange) {
+	    playChange = false;
+	    projectiles.removeIf(m -> m.isEnd());
+	    projectiles.forEach(m -> {
+		m.startTurn();
+	    });
 	    monsters.removeIf(m -> m.isDead());
 	    monsters.forEach(m -> {
 		m.startTurn();
 	    });
-
 	    boolean turnIsFinished = false;
 	    while (!turnIsFinished) {
 		turnIsFinished = true;
-		for (Monster monster : monsters) {
-		    if (!monster.turnIsEnd()) {
+
+		for (Projectile proj : projectiles) {
+		    if (!proj.turnIsEnd()) {
 			turnIsFinished = false;
-			monster.activate(this);
+			proj.activate(this);
 		    }
 		}
+
+		if (actions <= 0) {
+		    // next turn
+		    for (Monster monster : monsters) {
+			if (!monster.turnIsEnd()) {
+			    turnIsFinished = false;
+			    monster.activate(this);
+			}
+		    }
+		}
+	    }
+
+	    if (actions <= 0) {
+		// next turn
+		this.actions = this.actionsMax;
+		this.step++;
 	    }
 	}
     }
@@ -73,6 +93,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	    joueur.goUp();
 	    world.setElement(joueur.getX(), joueur.getY(), joueur);
 	    actions--;
+	    playChange = true;
 	}
     }
 
@@ -83,6 +104,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	    joueur.goDown();
 	    world.setElement(joueur.getX(), joueur.getY(), joueur);
 	    actions--;
+	    playChange = true;
 	}
     }
 
@@ -93,6 +115,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	    joueur.goLeft();
 	    world.setElement(joueur.getX(), joueur.getY(), joueur);
 	    actions--;
+	    playChange = true;
 	}
     }
 
@@ -103,6 +126,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	    joueur.goRight();
 	    world.setElement(joueur.getX(), joueur.getY(), joueur);
 	    actions--;
+	    playChange = true;
 	}
     }
 
@@ -125,6 +149,10 @@ public class Game implements RogueSequence, KeyboardEvent {
 
     public List<Monster> getMonsters() {
 	return monsters;
+    }
+
+    public void addProjectile(Projectile p) {
+	this.projectiles.add(p);
     }
 
 }

@@ -32,7 +32,7 @@ public class GameDrawer implements Draw {
     }
 
     public void draw() {
-	buffer.fillRect(Color.RED, 0, 0, screenLargeur, screenHauteur, 1.0f);
+	buffer.fillRect(Color.black, 0, 0, screenLargeur, screenHauteur, 1.0f);
 	int carrSize = Math.min(screenLargeur / largeur, screenHauteur / hauteur);
 	int startX = Math.max(0, game.getJoueur().getX() - largeur / 2);
 	startX = Math.min(game.getWorld().getWidth() - largeur, startX);
@@ -50,9 +50,14 @@ public class GameDrawer implements Draw {
 	    StringBuilder bld = new StringBuilder();
 	    bld.append(tile.getTile());
 
-	    buffer.fillRect(Color.black, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
-	    buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize + carrSize, carrSize,
-		    new Color(0x505050));
+	    Color color = new Color(tile.getColor());
+	    // Color color2 = new Color(color.getRed(),color.getGreen(),color.getBlue());
+	    buffer.fillRect(color, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.5f);
+	    // buffer.fillRect(Color.black, xi * carrSize, yi * carrSize, carrSize,
+	    // carrSize, 1.0f);
+	    // buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize +
+	    // carrSize, carrSize,
+	    // new Color(0x505050));
 	}
 
 	for (Point point : game.getJoueur().getVisibilityPoints(game)) {
@@ -66,41 +71,15 @@ public class GameDrawer implements Draw {
 	    StringBuilder bld = new StringBuilder();
 	    bld.append(tile.getTile());
 
-	    buffer.fillRect(Color.black, xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
-	    buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize + carrSize, carrSize,
-		    new Color(tile.getColor()));
+	    buffer.fillRect(new Color(tile.getColor()), xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
+	    // buffer.fillRect(Color.black, xi * carrSize + 1, yi * carrSize, carrSize - 1,
+	    // carrSize, 1.0f);
+	    // buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize +
+	    // carrSize, carrSize,
+	    // new Color(tile.getColor()));
 	}
 
-	drawPlayer();
-	// drawMonster(startX, startY, carrSize);
-
 	this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
-    }
-
-    // private void drawMonster(int startX, int startY, int carrSize) {
-    // for (Monster m : world.getVisiblesMonstersByPlayer()) {
-    // if (m.getX() >= startX && m.getX() < startX + largeur && m.getY() >= startY
-    // && m.getY() < startY + hauteur) {
-    // buffer.fillRect(Color.green, (m.getX() - startX) * carrSize, (m.getY() -
-    // startY) * carrSize, carrSize, carrSize, 1.0f);
-    // }
-    // }
-    // }
-
-    private void drawPlayer() {
-	int carrSize = Math.min(screenLargeur / largeur, screenHauteur / hauteur);
-	int posX = Math.min(game.getJoueur().getX(), largeur / 2);
-	posX = Math.max(posX, largeur - game.getWorld().getWidth() + game.getJoueur().getX());
-	int posY = Math.min(game.getJoueur().getY(), hauteur / 2);
-	posY = Math.max(posY, hauteur - game.getWorld().getHeight() + game.getJoueur().getY());
-
-	StringBuilder bld = new StringBuilder();
-	bld.append("O");
-
-	buffer.fillRect(Color.black, posX * carrSize, posY * carrSize, carrSize, carrSize, 1.0f);
-	buffer.drawChar(bld.toString(), posX * carrSize + carrSize / 2, posY * carrSize + carrSize, carrSize,
-		Color.white);
-
     }
 
     public void setDrawOperation(IDrawOperation op) {
