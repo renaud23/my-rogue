@@ -66,7 +66,7 @@ public class Shooter implements Monster {
 			this.fireBall = Projectile.Factory.createFireball(xi, yi, game.getJoueur().getX(),
 				game.getJoueur().getY());
 			game.addProjectile(this.fireBall);
-			game.getWorld().getTile(this.x + dx, this.y + dy).setElement(fireBall);
+
 			this.fireBall.activate(game);
 		    }
 		}
@@ -132,59 +132,13 @@ public class Shooter implements Monster {
     public boolean turnIsEnd() {
 	return actions <= 0;
     }
-    // constructor(x, y) {
-    // this.life = 10;
-    // this.damage = 10;
-    // this.xp = 10;
-    // this.tile = null;
-    // this.fireBall = null;
-    //
 
-    // }
-    //
-    // activate(world) {
-    // if (this.fireBall !== null && this.fireBall.isFinished()) {
-    // this.fireBall = null;
-    // }
-    // //
-    // for (let step = 0; step < this.speed; step++) {
-    // const distToPlayer = tools.getDistance(this.x, this.y, world.joueur.x,
-    // world.joueur.y);
-    // if (this.hasSeenPlayer) {
-    // if (distToPlayer > this.depht * this.depht) {
-    // this.hasSeenPlayer = false;
-    // } else if (distToPlayer <= this.dephtOfFire * this.dephtOfFire) {
-    // if (world.canSeePlayer(this) && this.fireBall === null) {
-    // let dx = (world.joueur.x - this.x) / Math.max(1, Math.abs(world.joueur.x -
-    // this.x));
-    // let dy = (world.joueur.y - this.y) / Math.max(1, Math.abs(world.joueur.y -
-    // this.y));
-    // this.fireBall = createFireBall(this.x + dx, this.y + dy, world.joueur.x,
-    // world.joueur.y);
-    // world.addProjectile(this.fireBall);
-    // this.fireBall.activate(world);
-    // }
-    // } else {
-    // if (world.joueur.x !== this.nx || world.joueur.y !== this.ny) {
-    // if (world.canSeePlayer(this)) {
-    // this.nx = world.joueur.x;
-    // this.ny = world.joueur.y;
-    // this.goTo.reset(this.nx, this.ny);
-    // }
-    // }
-    // this.goTo.activate(world);
-    // }
-    // } else {
-    // if (distToPlayer <= this.depht * this.depht) {
-    // if (world.canSeePlayer(this)) {
-    // this.hasSeenPlayer = true;
-    // this.nx = world.joueur.x;
-    // this.ny = world.joueur.y;
-    // this.goTo.reset(this.nx, this.ny);
-    // }
-    // }
-    // }
-    // } // for
-    // }
+    public void setX(int x) {
+	this.x = x;
+    }
+
+    public void setY(int y) {
+	this.y = y;
+    }
 
 }

@@ -82,22 +82,6 @@ public class Joueur implements Element {
 	return memory;
     }
 
-    public void goUp() {
-	y--;
-    }
-
-    public void goDown() {
-	y++;
-    }
-
-    public void goRight() {
-	x++;
-    }
-
-    public void goLeft() {
-	x--;
-    }
-
     public int getDepht() {
 	return depht;
     }
@@ -112,6 +96,16 @@ public class Joueur implements Element {
 	return false;
     }
 
+    @Override
+    public void setX(int x) {
+	this.x = x;
+    }
+
+    @Override
+    public void setY(int y) {
+	this.y = y;
+    }
+
     public static void main(String[] args) {
 	int lar = 30;
 	int hau = 20;
@@ -121,14 +115,14 @@ public class Joueur implements Element {
 
 	w.print(System.out);
 	System.out.println();
-
-	Set<Point> points = j.getVisibilityPoints(new Game(w, j));
-	points.forEach(p -> {
-	    w.setElement(p.x, p.y, new Blank(p.x, p.y));
-	});
-	w.setElement(start.x, start.y, j);
-
-	w.print(System.out);
+	//
+	// Set<Point> points = j.getVisibilityPoints(new Game(w, j));
+	// points.forEach(p -> {
+	// w.setElement(p.x, p.y, new Blank(p.x, p.y));
+	// });
+	// w.setElement(start.x, start.y, j);
+	//
+	// w.print(System.out);
     }
 
 }

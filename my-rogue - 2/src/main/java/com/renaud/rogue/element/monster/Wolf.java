@@ -98,13 +98,12 @@ public class Wolf implements Monster {
 	return actions <= 0 || isDead();
     }
 
-    // @Override
-    // public int getActionsLeft() {
-    // return actions;
-    // }
-    //
-    // @Override
-    // public int getActionsMax() {
-    // return actionsMax;
-    // }
+    public void setX(int x) {
+	this.x = x;
+    }
+
+    public void setY(int y) {
+	this.y = y;
+    }
+
 }

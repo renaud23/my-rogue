@@ -80,7 +80,7 @@ public class Tile {
 	}
 
 	public static Tile getPlayer() {
-	    return new Tile(PLAYER, 'O', 0xEEEE00);
+	    return new Tile(PLAYER, '@', 0xEEEE00);
 	}
 
 	public static Tile getWolf() {

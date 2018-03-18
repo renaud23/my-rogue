@@ -8,6 +8,10 @@ public interface Element {
 
     int getY();
 
+    void setX(int x);
+
+    void setY(int y);
+
     Tile getTile();
 
     boolean isOpaque();

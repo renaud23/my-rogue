@@ -19,6 +19,7 @@ public class GameDrawer implements Draw {
 
     private int largeur;
     private int hauteur;
+    private int size;
 
     private Game game;
 
@@ -26,6 +27,7 @@ public class GameDrawer implements Draw {
 	this.game = game;
 	this.largeur = viewLargeur;
 	this.hauteur = viewHauteur;
+	this.size = largeur * hauteur;
 	this.screenLargeur = screenLargeur;
 	this.screenHauteur = screenHauteur;
 	buffer = new JImageBuffer(Color.white, screenLargeur, screenHauteur);
@@ -39,44 +41,31 @@ public class GameDrawer implements Draw {
 	int startY = Math.max(0, game.getJoueur().getY() - hauteur / 2);
 	startY = Math.min(game.getWorld().getHeight() - hauteur, startY);
 
-	for (int i = 0; i < (largeur * hauteur); i++) {
+	Bloc[] tiles = new Bloc[size];
+	for (int i = 0; i < size; i++) {
 	    int xi = i % largeur;
 	    int yi = i / largeur;
-	    int xx = startX + xi;
-	    int yy = startY + yi;
-
-	    Tile tile = game.getJoueur().getMemory(xx, yy);
-
-	    StringBuilder bld = new StringBuilder();
-	    bld.append(tile.getTile());
-
-	    Color color = new Color(tile.getColor());
-	    // Color color2 = new Color(color.getRed(),color.getGreen(),color.getBlue());
-	    buffer.fillRect(color, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.5f);
-	    // buffer.fillRect(Color.black, xi * carrSize, yi * carrSize, carrSize,
-	    // carrSize, 1.0f);
-	    // buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize +
-	    // carrSize, carrSize,
-	    // new Color(0x505050));
+	    Tile tileMemory = game.getJoueur().getMemory(startX + xi, startY + yi);
+	    tiles[i] = new Bloc(xi, yi, tileMemory, new Color(tileMemory.getColor()), 0.5f);
 	}
 
 	for (Point point : game.getJoueur().getVisibilityPoints(game)) {
 	    int xi = point.getX() - startX;
 	    int yi = point.getY() - startY;
 	    Tile tile = game.getWorld().getTile(point.getX(), point.getY());
-	    if (!tile.isEmpty()) {
-		tile = tile.getElement().getTile();
+	    tiles[xi + yi * largeur] = new Bloc(xi, yi, tile, new Color(tile.getColor()), 1.f);
+	}
+
+	for (int i = 0; i < tiles.length; i++) {
+	    Bloc bloc = tiles[i];
+	    buffer.fillRect(bloc.color, bloc.x * carrSize, bloc.y * carrSize, carrSize, carrSize, bloc.alpha);
+	    if (bloc.tile.getElement() != null) {
+		StringBuilder bld = new StringBuilder();
+		bld.append(bloc.tile.getElement().getTile().getTile());
+		buffer.drawChar(bld.toString(), bloc.x * carrSize, bloc.y * carrSize + carrSize / 2, carrSize,
+			new Color(bloc.tile.getElement().getTile().getColor()));
+
 	    }
-
-	    StringBuilder bld = new StringBuilder();
-	    bld.append(tile.getTile());
-
-	    buffer.fillRect(new Color(tile.getColor()), xi * carrSize, yi * carrSize, carrSize, carrSize, 1.0f);
-	    // buffer.fillRect(Color.black, xi * carrSize + 1, yi * carrSize, carrSize - 1,
-	    // carrSize, 1.0f);
-	    // buffer.drawChar(bld.toString(), xi * carrSize + carrSize / 2, yi * carrSize +
-	    // carrSize, carrSize,
-	    // new Color(tile.getColor()));
 	}
 
 	this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
@@ -84,6 +73,23 @@ public class GameDrawer implements Draw {
 
     public void setDrawOperation(IDrawOperation op) {
 	this.op = op;
+    }
+
+    public static class Bloc {
+	public int x;
+	public int y;
+	public Tile tile;
+	public Color color;
+	public float alpha;
+
+	public Bloc(int x, int y, Tile tile, Color color, float alpha) {
+	    this.x = x;
+	    this.y = y;
+	    this.tile = tile;
+	    this.color = color;
+	    this.alpha = alpha;
+	}
+
     }
 
 }

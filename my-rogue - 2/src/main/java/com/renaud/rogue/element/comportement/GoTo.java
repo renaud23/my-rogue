@@ -52,10 +52,11 @@ public class GoTo implements Comportement {
 	    if (dx == 0 && dy == 0) {
 		// TODO
 	    } else {
-		game.getWorld().setElement(monster.getX(), monster.getY(), null);
-		monster.addX(dx);
-		monster.addY(dy);
-		game.getWorld().setElement(monster.getX(), monster.getY(), monster);
+		// game .setElement(monster.getX(), monster.getY(), null);
+		// monster.addX(dx);
+		// monster.addY(dy);
+		// game.getWorld().setElement(monster.getX(), monster.getY(), monster);
+		game.moveTo(monster, monster.getX() + dx, monster.getY() + dy);
 		already.add(new Point(monster.getX(), monster.getY()));
 	    }
 	    // }

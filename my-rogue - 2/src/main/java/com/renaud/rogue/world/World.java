@@ -44,8 +44,14 @@ public class World {
 	return dungeon.getTile(i);
     }
 
-    public void setElement(int i, int j, Element element) {
-	this.dungeon.getTile(i, j).setElement(element);
+    public void setElement(Element element, int i, int j) {
+	if (this.dungeon.getTile(i, j).isEmpty()) {
+	    this.dungeon.getTile(i, j).setElement(element);
+	}
+    }
+
+    public void removeElement(int i, int j) {
+	this.dungeon.getTile(i, j).setElement(null);
     }
 
     public boolean canGo(int x, int y) {

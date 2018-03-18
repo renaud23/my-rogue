@@ -32,4 +32,16 @@ public class Blank implements Element {
 	return false;
     }
 
+    @Override
+    public void setX(int x) {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setY(int y) {
+	// TODO Auto-generated method stub
+
+    }
+
 }

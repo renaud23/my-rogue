@@ -3,6 +3,7 @@ package com.renaud.rogue.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.element.projectile.Projectile;
@@ -26,13 +27,13 @@ public class Game implements RogueSequence, KeyboardEvent {
 	this.world = world;
 	this.joueur = joueur;
 	this.actions = this.actionsMax;
-	this.world.setElement(joueur.getX(), joueur.getY(), this.joueur);
+	setElement(this.joueur);
 
 	for (int i = 0; i < 10; i++) {
 	    Point start = world.peekEmptyPlace();
 	    Monster monster = Monster.Factory.createGhool(start.x, start.y);// new Wolf(start.x, start.y);
 	    monsters.add(monster);
-	    world.setElement(start.x, start.y, monster);
+	    setElement(monster);
 	}
     }
 
@@ -89,9 +90,7 @@ public class Game implements RogueSequence, KeyboardEvent {
     @Override
     public void keyUpPressed() {
 	if (world.getTile(joueur.getX(), joueur.getY() - 1).canWalkOn()) {
-	    world.setElement(joueur.getX(), joueur.getY(), null);
-	    joueur.goUp();
-	    world.setElement(joueur.getX(), joueur.getY(), joueur);
+	    moveTo(joueur, joueur.getX(), joueur.getY() - 1);
 	    actions--;
 	    playChange = true;
 	}
@@ -100,9 +99,7 @@ public class Game implements RogueSequence, KeyboardEvent {
     @Override
     public void keyDownPressed() {
 	if (world.getTile(joueur.getX(), joueur.getY() + 1).canWalkOn()) {
-	    world.setElement(joueur.getX(), joueur.getY(), null);
-	    joueur.goDown();
-	    world.setElement(joueur.getX(), joueur.getY(), joueur);
+	    moveTo(joueur, joueur.getX(), joueur.getY() + 1);
 	    actions--;
 	    playChange = true;
 	}
@@ -111,9 +108,7 @@ public class Game implements RogueSequence, KeyboardEvent {
     @Override
     public void keyLeftPressed() {
 	if (world.getTile(joueur.getX() - 1, joueur.getY()).canWalkOn()) {
-	    world.setElement(joueur.getX(), joueur.getY(), null);
-	    joueur.goLeft();
-	    world.setElement(joueur.getX(), joueur.getY(), joueur);
+	    moveTo(joueur, joueur.getX() - 1, joueur.getY());
 	    actions--;
 	    playChange = true;
 	}
@@ -122,9 +117,7 @@ public class Game implements RogueSequence, KeyboardEvent {
     @Override
     public void keyRightPressed() {
 	if (world.getTile(joueur.getX() + 1, joueur.getY()).canWalkOn()) {
-	    world.setElement(joueur.getX(), joueur.getY(), null);
-	    joueur.goRight();
-	    world.setElement(joueur.getX(), joueur.getY(), joueur);
+	    moveTo(joueur, joueur.getX() + 1, joueur.getY());
 	    actions--;
 	    playChange = true;
 	}
@@ -133,6 +126,21 @@ public class Game implements RogueSequence, KeyboardEvent {
     @Override
     public void spacePressed() {
 	actions--;
+    }
+
+    public void moveTo(Element element, int x, int y) {
+	this.removeElement(element);
+	element.setX(x);
+	element.setY(y);
+	this.world.setElement(element, x, y);
+    }
+
+    public void removeElement(Element element) {
+	this.world.removeElement(element.getX(), element.getY());
+    }
+
+    public void setElement(Element element) {
+	this.world.setElement(element, element.getX(), element.getY());
     }
 
     public int getActions() {
@@ -153,6 +161,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 
     public void addProjectile(Projectile p) {
 	this.projectiles.add(p);
+	this.setElement(p);
     }
 
 }

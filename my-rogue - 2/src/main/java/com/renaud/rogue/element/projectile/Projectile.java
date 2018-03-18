@@ -1,5 +1,6 @@
 package com.renaud.rogue.element.projectile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.renaud.rogue.element.Element;
@@ -37,16 +38,17 @@ public class Projectile implements Element, TurnPlay {
     public void init() {
 	double pente = (cibley - y) / Math.max(1, ciblex - x);
 	int varx = (ciblex - x) / Math.max(1, Math.abs(ciblex - x));
-
 	int nx = this.x + Math.round(varx * this.depht);
-	int ny = (int) (this.y + Math.round(pente * this.depht));
-	// TODO optimiser cette merde
+	int ny = this.y + (int) Math.round(pente * this.depht);
+
 	this.segment = MathTools.getSegment(this.x, this.y, nx, ny);
 	this.segment.remove(0);
-	for (int i = 0; i < this.segment.size(); i++) {
-	    if (i > this.depht) {
-		segment.remove(this.depht);
+	if (this.segment.size() > depht) {
+	    List<Point> tt = new ArrayList<>();
+	    for (int i = 0; i < depht; i++) {
+		tt.add(segment.get(i));
 	    }
+	    segment = tt;
 	}
     }
 
@@ -64,7 +66,7 @@ public class Projectile implements Element, TurnPlay {
     public void activate(Game game) {
 	actions--;
 
-	game.getWorld().getTile(x, y).setElement(null);
+	game.removeElement(this);
 	for (int i = 0; i < this.speed; i++) {
 	    if (this.segment.size() > 0) {
 		Point p = this.segment.remove(0);
@@ -92,7 +94,7 @@ public class Projectile implements Element, TurnPlay {
 	    }
 	}
 	if (!finished) {
-	    game.getWorld().getTile(this.x, this.y).setElement(this);
+	    game.setElement(this);
 	}
     }
 
@@ -120,6 +122,14 @@ public class Projectile implements Element, TurnPlay {
     @Override
     public boolean isOpaque() {
 	return opaque;
+    }
+
+    public void setX(int x) {
+	this.x = x;
+    }
+
+    public void setY(int y) {
+	this.y = y;
     }
 
     /* */
