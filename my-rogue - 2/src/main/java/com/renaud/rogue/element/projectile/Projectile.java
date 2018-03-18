@@ -65,8 +65,12 @@ public class Projectile implements Element, TurnPlay {
     @Override
     public void activate(Game game) {
 	actions--;
-
-	game.removeElement(this);
+	Tile tile = game.getWorld().getTile(x, y);
+	if (!tile.isEmpty()) {
+	    finished = true;
+	    tile.getElement().injured(this);
+	    return;
+	}
 	for (int i = 0; i < this.speed; i++) {
 	    if (this.segment.size() > 0) {
 		Point p = this.segment.remove(0);
@@ -92,9 +96,6 @@ public class Projectile implements Element, TurnPlay {
 	    } else {
 		this.finished = true;
 	    }
-	}
-	if (!finished) {
-	    game.setElement(this);
 	}
     }
 
@@ -137,14 +138,20 @@ public class Projectile implements Element, TurnPlay {
     public static class Factory {
 	public static Projectile createFireball(int x, int y, int ciblex, int cibley) {
 	    Projectile p = new Projectile(x, y, ciblex, cibley);
-	    p.actionsMax = 1;
-	    p.depht = 8;
+	    p.actionsMax = 2;
+	    p.depht = 12;
 	    p.speed = 1;
 	    p.opaque = false;
 	    p.tile = Tile.Factory.getFireball();
 	    p.init();
 	    return p;
 	}
+    }
+
+    @Override
+    public void injured(Projectile projectile) {
+	System.out.println("fireball fireball");
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.renaud.rogue.element;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
@@ -123,6 +124,12 @@ public class Joueur implements Element {
 	// w.setElement(start.x, start.y, j);
 	//
 	// w.print(System.out);
+    }
+
+    @Override
+    public void injured(Projectile projectile) {
+	System.out.println("joueur fireball");
+
     }
 
 }

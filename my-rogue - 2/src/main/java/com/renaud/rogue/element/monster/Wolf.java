@@ -4,6 +4,7 @@ import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.element.comportement.Comportement;
 import com.renaud.rogue.element.comportement.HuntPlayer;
 import com.renaud.rogue.element.comportement.RandomWalk;
+import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.world.Tile;
 
@@ -104,6 +105,12 @@ public class Wolf implements Monster {
 
     public void setY(int y) {
 	this.y = y;
+    }
+
+    @Override
+    public void injured(Projectile projectile) {
+	System.out.println("fireball->wolf");
+
     }
 
 }

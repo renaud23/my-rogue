@@ -1,5 +1,6 @@
 package com.renaud.rogue.element;
 
+import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.world.Tile;
 
 public class Blank implements Element {
@@ -40,6 +41,12 @@ public class Blank implements Element {
 
     @Override
     public void setY(int y) {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void injured(Projectile projectile) {
 	// TODO Auto-generated method stub
 
     }

@@ -3,6 +3,7 @@ package com.renaud.rogue.drawer;
 import java.awt.Color;
 
 import com.renaud.rogue.drawer.MainDrawer.Draw;
+import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.IDrawOperation;
@@ -54,6 +55,7 @@ public class GameDrawer implements Draw {
 	    int yi = point.getY() - startY;
 	    Tile tile = game.getWorld().getTile(point.getX(), point.getY());
 	    tiles[xi + yi * largeur] = new Bloc(xi, yi, tile, new Color(tile.getColor()), 1.f);
+
 	}
 
 	for (int i = 0; i < tiles.length; i++) {
@@ -66,6 +68,15 @@ public class GameDrawer implements Draw {
 			new Color(bloc.tile.getElement().getTile().getColor()));
 
 	    }
+	}
+
+	for (Projectile proj : game.getProjectiles()) {
+	    int xi = proj.getX() - startX;
+	    int yi = proj.getY() - startY;
+	    StringBuilder bld = new StringBuilder();
+	    bld.append(proj.getTile().getTile());
+	    buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize + carrSize / 2, carrSize,
+		    new Color(proj.getTile().getColor()));
 	}
 
 	this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);

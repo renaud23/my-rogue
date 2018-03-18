@@ -1,5 +1,6 @@
 package com.renaud.rogue.element;
 
+import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.world.Tile;
 
 public interface Element {
@@ -15,5 +16,7 @@ public interface Element {
     Tile getTile();
 
     boolean isOpaque();
+
+    void injured(Projectile projectile);
 
 }

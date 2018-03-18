@@ -159,9 +159,12 @@ public class Game implements RogueSequence, KeyboardEvent {
 	return monsters;
     }
 
+    public List<Projectile> getProjectiles() {
+	return projectiles;
+    }
+
     public void addProjectile(Projectile p) {
 	this.projectiles.add(p);
-	this.setElement(p);
     }
 
 }
