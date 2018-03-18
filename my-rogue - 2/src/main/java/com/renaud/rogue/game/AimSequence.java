@@ -2,44 +2,42 @@ package com.renaud.rogue.game;
 
 import com.renaud.rogue.event.KeyboardEvent;
 
-public class MainSequence implements RogueSequence, KeyboardEvent {
+public class AimSequence implements RogueSequence, KeyboardEvent {
 
     private Game game;
-    private RogueSequence currentSequence;
 
-    public MainSequence(Game game) {
+    public AimSequence(Game game) {
 	this.game = game;
-	this.currentSequence = this.game;
     }
 
     @Override
     public void activate() {
-	currentSequence.activate();
+
     }
 
     @Override
     public void keyUpPressed() {
-	currentSequence.keyUpPressed();
+	game.getJoueur().aimUp();
     }
 
     @Override
     public void keyDownPressed() {
-	currentSequence.keyDownPressed();
+	game.getJoueur().aimDown();
     }
 
     @Override
     public void keyLeftPressed() {
-	currentSequence.keyLeftPressed();
+	game.getJoueur().aimLeft();
     }
 
     @Override
     public void keyRightPressed() {
-	currentSequence.keyRightPressed();
+	game.getJoueur().aimRight();
     }
 
     @Override
     public void spacePressed() {
-	currentSequence.spacePressed();
+
     }
 
 }

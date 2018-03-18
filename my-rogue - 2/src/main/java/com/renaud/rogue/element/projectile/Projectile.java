@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Joueur;
+import com.renaud.rogue.element.Living;
 import com.renaud.rogue.element.TurnPlay;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.MathTools;
@@ -68,7 +69,8 @@ public class Projectile implements Element, TurnPlay {
 	Tile tile = game.getWorld().getTile(x, y);
 	if (!tile.isEmpty()) {
 	    finished = true;
-	    tile.getElement().injured(this);
+	    if (tile.getElement() instanceof Living)
+		((Living) tile.getElement()).injured(this);
 	    return;
 	}
 	for (int i = 0; i < this.speed; i++) {
@@ -146,12 +148,6 @@ public class Projectile implements Element, TurnPlay {
 	    p.init();
 	    return p;
 	}
-    }
-
-    @Override
-    public void injured(Projectile projectile) {
-	System.out.println("fireball fireball");
-
     }
 
 }

@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 import com.renaud.rogue.element.Element;
-import com.renaud.rogue.element.PNJ;
+import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 
@@ -77,7 +77,7 @@ public class World {
 	return true;
     }
 
-    public boolean canSee(PNJ pnj, Element cible) {
+    public boolean canSee(Monster pnj, Element cible) {
 	int dist = MathTools.distance(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
 	if (dist > pnj.getDepht() * pnj.getDepht())
 	    return false;

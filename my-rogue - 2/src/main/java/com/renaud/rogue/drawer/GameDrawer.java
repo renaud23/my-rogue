@@ -1,8 +1,11 @@
 package com.renaud.rogue.drawer;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.renaud.rogue.drawer.MainDrawer.Draw;
+import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.Point;
@@ -42,6 +45,8 @@ public class GameDrawer implements Draw {
 	int startY = Math.max(0, game.getJoueur().getY() - hauteur / 2);
 	startY = Math.min(game.getWorld().getHeight() - hauteur, startY);
 
+	List<Element> elements = new ArrayList<>();
+	List<Projectile> projectiles = new ArrayList<>();
 	Bloc[] tiles = new Bloc[size];
 	for (int i = 0; i < size; i++) {
 	    int xi = i % largeur;
@@ -55,22 +60,31 @@ public class GameDrawer implements Draw {
 	    int yi = point.getY() - startY;
 	    Tile tile = game.getWorld().getTile(point.getX(), point.getY());
 	    tiles[xi + yi * largeur] = new Bloc(xi, yi, tile, new Color(tile.getColor()), 1.f);
-
+	    if (!tile.isEmpty()) {
+		elements.add(tile.getElement());
+	    } else
+		for (Projectile proj : game.getProjectiles()) {
+		    if (proj.getX() == point.getX() && proj.getY() == point.getY()) {
+			projectiles.add(proj);
+		    }
+		}
 	}
 
 	for (int i = 0; i < tiles.length; i++) {
 	    Bloc bloc = tiles[i];
 	    buffer.fillRect(bloc.color, bloc.x * carrSize, bloc.y * carrSize, carrSize, carrSize, bloc.alpha);
-	    if (bloc.tile.getElement() != null) {
-		StringBuilder bld = new StringBuilder();
-		bld.append(bloc.tile.getElement().getTile().getTile());
-		buffer.drawChar(bld.toString(), bloc.x * carrSize, bloc.y * carrSize + carrSize / 2, carrSize,
-			new Color(bloc.tile.getElement().getTile().getColor()));
-
-	    }
 	}
 
-	for (Projectile proj : game.getProjectiles()) {
+	for (Element element : elements) {
+	    int xi = element.getX() - startX;
+	    int yi = element.getY() - startY;
+	    StringBuilder bld = new StringBuilder();
+	    bld.append(element.getTile().getTile());
+	    buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize + carrSize, carrSize - 1,
+		    new Color(element.getTile().getColor()));
+	}
+
+	for (Projectile proj : projectiles) {
 	    int xi = proj.getX() - startX;
 	    int yi = proj.getY() - startY;
 	    StringBuilder bld = new StringBuilder();
@@ -79,7 +93,14 @@ public class GameDrawer implements Draw {
 		    new Color(proj.getTile().getColor()));
 	}
 
+	if (game.isAiming()) {
+	    int xi = game.getJoueur().getAimx() - startX;
+	    int yi = game.getJoueur().getAimy() - startY;
+	    buffer.fillRect(Color.red, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.5f);
+	}
+
 	this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
+
     }
 
     public void setDrawOperation(IDrawOperation op) {

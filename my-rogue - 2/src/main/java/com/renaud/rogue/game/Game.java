@@ -6,6 +6,7 @@ import java.util.List;
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.element.Monster;
+import com.renaud.rogue.element.monster.Wolf;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
 import com.renaud.rogue.tools.Point;
@@ -13,25 +14,35 @@ import com.renaud.rogue.world.World;
 
 public class Game implements RogueSequence, KeyboardEvent {
 
+    private boolean aim;
     private World world;
     private Joueur joueur;
-    private int actions;
-    private int actionsMax = 2;
-    private int step;
+
     private List<Monster> monsters = new ArrayList<>();
     private List<Projectile> projectiles = new ArrayList<>();
 
-    private boolean playChange;
+    private PlaySequence playSequence;
+    private AimSequence aimSequence;
+    private RogueSequence currentSequence;
 
     public Game(World world, Joueur joueur) {
 	this.world = world;
 	this.joueur = joueur;
-	this.actions = this.actionsMax;
 	setElement(this.joueur);
+
+	this.playSequence = new PlaySequence(this);
+	this.aimSequence = new AimSequence(this);
+	this.currentSequence = this.playSequence;
 
 	for (int i = 0; i < 10; i++) {
 	    Point start = world.peekEmptyPlace();
 	    Monster monster = Monster.Factory.createGhool(start.x, start.y);// new Wolf(start.x, start.y);
+	    monsters.add(monster);
+	    setElement(monster);
+	}
+	for (int i = 0; i < 10; i++) {
+	    Point start = world.peekEmptyPlace();
+	    Monster monster = new Wolf(start.x, start.y);
 	    monsters.add(monster);
 	    setElement(monster);
 	}
@@ -47,85 +58,39 @@ public class Game implements RogueSequence, KeyboardEvent {
 
     @Override
     public void activate() {
-	if (playChange) {
-	    playChange = false;
-	    projectiles.removeIf(m -> m.isEnd());
-	    projectiles.forEach(m -> {
-		m.startTurn();
-	    });
-	    monsters.removeIf(m -> m.isDead());
-	    monsters.forEach(m -> {
-		m.startTurn();
-	    });
-	    boolean turnIsFinished = false;
-	    while (!turnIsFinished) {
-		turnIsFinished = true;
-
-		for (Projectile proj : projectiles) {
-		    if (!proj.turnIsEnd()) {
-			turnIsFinished = false;
-			proj.activate(this);
-		    }
-		}
-
-		if (actions <= 0) {
-		    // next turn
-		    for (Monster monster : monsters) {
-			if (!monster.turnIsEnd()) {
-			    turnIsFinished = false;
-			    monster.activate(this);
-			}
-		    }
-		}
-	    }
-
-	    if (actions <= 0) {
-		// next turn
-		this.actions = this.actionsMax;
-		this.step++;
-	    }
-	}
+	this.playSequence.activate();
     }
 
     @Override
     public void keyUpPressed() {
-	if (world.getTile(joueur.getX(), joueur.getY() - 1).canWalkOn()) {
-	    moveTo(joueur, joueur.getX(), joueur.getY() - 1);
-	    actions--;
-	    playChange = true;
-	}
+	this.currentSequence.keyUpPressed();
     }
 
     @Override
     public void keyDownPressed() {
-	if (world.getTile(joueur.getX(), joueur.getY() + 1).canWalkOn()) {
-	    moveTo(joueur, joueur.getX(), joueur.getY() + 1);
-	    actions--;
-	    playChange = true;
-	}
+	this.currentSequence.keyDownPressed();
     }
 
     @Override
     public void keyLeftPressed() {
-	if (world.getTile(joueur.getX() - 1, joueur.getY()).canWalkOn()) {
-	    moveTo(joueur, joueur.getX() - 1, joueur.getY());
-	    actions--;
-	    playChange = true;
-	}
+	this.currentSequence.keyLeftPressed();
     }
 
     @Override
     public void keyRightPressed() {
-	if (world.getTile(joueur.getX() + 1, joueur.getY()).canWalkOn()) {
-	    moveTo(joueur, joueur.getX() + 1, joueur.getY());
-	    actions--;
-	    playChange = true;
-	}
+	this.currentSequence.keyRightPressed();
     }
 
     @Override
     public void spacePressed() {
-	actions--;
+	if (!aim) {
+	    aim = true;
+	    this.joueur.resetAim();
+	    this.currentSequence = aimSequence;
+	} else {
+	    aim = false;
+	    this.currentSequence = playSequence;
+	}
     }
 
     public void moveTo(Element element, int x, int y) {
@@ -144,15 +109,15 @@ public class Game implements RogueSequence, KeyboardEvent {
     }
 
     public int getActions() {
-	return actions;
+	return this.playSequence.getActions();
     }
 
     public int getActionsMax() {
-	return actionsMax;
+	return this.playSequence.getActionsMax();
     }
 
     public int getStep() {
-	return step;
+	return this.playSequence.getStep();
     }
 
     public List<Monster> getMonsters() {
@@ -165,6 +130,10 @@ public class Game implements RogueSequence, KeyboardEvent {
 
     public void addProjectile(Projectile p) {
 	this.projectiles.add(p);
+    }
+
+    public boolean isAiming() {
+	return aim;
     }
 
 }

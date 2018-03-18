@@ -59,16 +59,11 @@ public class Shooter implements Monster {
 			    / Math.max(1, Math.abs(game.getJoueur().getY() - this.y));
 		    int xi = this.x + dx;
 		    int yi = this.y + dy;
-		    Tile tile = game.getWorld().getTile(xi, yi);
-		    if (tile.getElement() != null) {
-			tile.getElement().injured(Projectile.Factory.createFireball(xi, yi, game.getJoueur().getX(),
-				game.getJoueur().getY()));
-		    } else {
-			this.fireBall = Projectile.Factory.createFireball(xi, yi, game.getJoueur().getX(),
-				game.getJoueur().getY());
-			game.addProjectile(this.fireBall);
-			// this.fireBall.activate(game);
-		    }
+
+		    this.fireBall = Projectile.Factory.createFireball(xi, yi, game.getJoueur().getX(),
+			    game.getJoueur().getY());
+		    game.addProjectile(this.fireBall);
+
 		}
 	    } else {
 		if (game.getJoueur().getX() != this.nx || game.getJoueur().getY() != this.ny) {
@@ -144,6 +139,12 @@ public class Shooter implements Monster {
     @Override
     public void injured(Projectile projectile) {
 	System.out.println("projectile-->shooter");
+
+    }
+
+    @Override
+    public void injured(Monster projectile) {
+	// TODO Auto-generated method stub
 
     }
 

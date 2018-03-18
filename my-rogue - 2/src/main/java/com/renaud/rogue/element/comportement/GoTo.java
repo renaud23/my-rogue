@@ -4,20 +4,20 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import com.renaud.rogue.element.PNJ;
+import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.Point;
 
 public class GoTo implements Comportement {
 
-    PNJ monster;
+    Monster monster;
 
     Random r = new Random();
     public int nx;
     public int ny;
     Set<Point> already = new HashSet<>();
 
-    public GoTo(PNJ monster, int nx, int ny) {
+    public GoTo(Monster monster, int nx, int ny) {
 	this.monster = monster;
 	this.nx = nx;
 	this.ny = ny;

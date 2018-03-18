@@ -7,16 +7,20 @@ import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.weapon.Knife;
+import com.renaud.rogue.weapon.Weapon;
 import com.renaud.rogue.world.Dungeon;
 import com.renaud.rogue.world.Tile;
-import com.renaud.rogue.world.World;
 
-public class Joueur implements Element {
+public class Joueur implements Living {
 
     private final static Tile tile = Tile.Factory.getPlayer();
     private int depht;
     private int x;
     private int y;
+    private int aimx;
+    private int aimy;
+    private Weapon weapon;
     private Set<Point> lastComputed = new HashSet<>();
 
     public Joueur(int x, int y, int worldWidth, int worldHeight) {
@@ -25,6 +29,7 @@ public class Joueur implements Element {
 	this.depht = 12;
 	this.memory = new Dungeon(worldWidth, worldHeight);
 	this.memory.fill(Tile.UNKNOW);
+	this.weapon = new Knife();
     }
 
     private Dungeon memory;
@@ -71,6 +76,39 @@ public class Joueur implements Element {
 	return lastComputed;
     }
 
+    public void shoot(Game game) {
+
+    }
+
+    public void resetAim() {
+	this.aimx = x;
+	this.aimy = y;
+    }
+
+    public void aimUp() {
+	if (Math.abs(y - aimy + 1) <= weapon.getDepht()) {
+	    aimy--;
+	}
+    }
+
+    public void aimDown() {
+	if (Math.abs(y - aimy - 1) <= weapon.getDepht()) {
+	    aimy++;
+	}
+    }
+
+    public void aimLeft() {
+	if (Math.abs(x - aimx + 1) <= weapon.getDepht()) {
+	    aimx--;
+	}
+    }
+
+    public void aimRight() {
+	if (Math.abs(x - aimx - 1) <= weapon.getDepht()) {
+	    aimx++;
+	}
+    }
+
     public Set<Point> getLastComputed() {
 	return lastComputed;
     }
@@ -107,29 +145,29 @@ public class Joueur implements Element {
 	this.y = y;
     }
 
-    public static void main(String[] args) {
-	int lar = 30;
-	int hau = 20;
-	World w = new World(lar, hau);
-	Point start = w.peekEmptyPlace();
-	Joueur j = new Joueur(start.x, start.y, lar, hau);
-
-	w.print(System.out);
-	System.out.println();
-	//
-	// Set<Point> points = j.getVisibilityPoints(new Game(w, j));
-	// points.forEach(p -> {
-	// w.setElement(p.x, p.y, new Blank(p.x, p.y));
-	// });
-	// w.setElement(start.x, start.y, j);
-	//
-	// w.print(System.out);
-    }
-
     @Override
     public void injured(Projectile projectile) {
 	System.out.println("joueur fireball");
 
+    }
+
+    public void injured(Monster projectile) {
+	System.out.println("joueur fireball");
+
+    }
+
+    @Override
+    public boolean isDead() {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    public int getAimx() {
+	return aimx;
+    }
+
+    public int getAimy() {
+	return aimy;
     }
 
 }

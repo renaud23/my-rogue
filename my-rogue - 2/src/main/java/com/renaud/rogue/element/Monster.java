@@ -2,7 +2,14 @@ package com.renaud.rogue.element;
 
 import com.renaud.rogue.element.monster.Shooter;
 
-public interface Monster extends PNJ {
+public interface Monster extends Living, TurnPlay {
+
+    void addX(int dx);
+
+    void addY(int dy);
+
+    int getDepht();
+
     public static class Factory {
 	public static Monster createGhool(int x, int y) {
 	    Shooter m = new Shooter(x, y);

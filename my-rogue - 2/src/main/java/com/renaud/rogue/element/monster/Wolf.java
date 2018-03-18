@@ -113,4 +113,10 @@ public class Wolf implements Monster {
 
     }
 
+    @Override
+    public void injured(Monster projectile) {
+	// TODO Auto-generated method stub
+
+    }
+
 }
