@@ -21,8 +21,10 @@ import java.awt.image.VolatileImage;
 
 public class JImageBuffer implements IDrawOperation {
 
-	private static GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-			.getDefaultConfiguration();
+	private static GraphicsConfiguration gc = GraphicsEnvironment
+		.getLocalGraphicsEnvironment()
+		.getDefaultScreenDevice()
+		.getDefaultConfiguration();
 
 	private VolatileImage image;
 	private int largeur;
@@ -80,7 +82,7 @@ public class JImageBuffer implements IDrawOperation {
 	}
 
 	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
-			double scale, float alpha) {
+		double scale, float alpha) {
 		Graphics2D gr = this.image.createGraphics();
 
 		/** Dï¿½sactivation de l'anti-aliasing */
@@ -111,7 +113,7 @@ public class JImageBuffer implements IDrawOperation {
 	}
 
 	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
-			double scale, float alpha, Composite composite) {
+		double scale, float alpha, Composite composite) {
 
 		Graphics2D gr = this.image.createGraphics();
 
@@ -142,7 +144,7 @@ public class JImageBuffer implements IDrawOperation {
 	}
 
 	public void drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2,
-			Color bgcolor) {
+		Color bgcolor) {
 		Graphics gr = this.image.getGraphics();
 
 		gr.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, bgcolor, null);
@@ -209,7 +211,7 @@ public class JImageBuffer implements IDrawOperation {
 	}
 
 	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta,
-			double scaleX, double scaleY, float alpha) {
+		double scaleX, double scaleY, float alpha) {
 		Graphics2D gr = this.image.createGraphics();
 
 		/** Dï¿½sactivation de l'anti-aliasing */
@@ -321,7 +323,7 @@ public class JImageBuffer implements IDrawOperation {
 
 	public void drawChar(String ch, int x, int y, int size) {
 		Graphics2D g = this.image.createGraphics();
-		g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, size));
+		g.setFont(new Font("Courier New", Font.PLAIN, size));
 
 		g.drawString(ch, x, y);
 	}

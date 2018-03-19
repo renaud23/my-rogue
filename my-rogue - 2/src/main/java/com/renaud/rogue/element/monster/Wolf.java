@@ -10,113 +10,122 @@ import com.renaud.rogue.world.Tile;
 
 public class Wolf implements Monster {
 
-    int x;
-    int y;
-    int actions = 3;
-    int actionsMax = 3;
-    int depth = 10;
-    int life = 10;
-    private boolean isHuting = false;
+	int x;
+	int y;
+	int actions = 3;
+	int actionsMax = 3;
+	int depth = 10;
+	int life = 10;
+	private boolean isHuting = false;
 
-    private Comportement walk;
-    private Comportement hunt;
+	private Comportement walk;
+	private Comportement hunt;
 
-    public Wolf(int x, int y) {
-	this.x = x;
-	this.y = y;
-	walk = new RandomWalk(this);
-	hunt = new HuntPlayer(this);
-    }
-
-    @Override
-    public void activate(Game game) {
-	actions--;
-	if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
-	    // System.out.println("byte");
-	} else if (isHuting) {
-	    hunt.activate(game);
-	    if (hunt.isFinished()) {
-		isHuting = false;
-	    }
-	} else {
-	    if (game.getWorld().canSee(this, game.getJoueur())) {
-		isHuting = true;
-		hunt.reset();
-		activate(game);
-	    } else {
-		walk.activate(game);
-	    }
+	public Wolf(int x, int y) {
+		this.x = x;
+		this.y = y;
+		walk = new RandomWalk(this);
+		hunt = new HuntPlayer(this);
 	}
-    }
 
-    @Override
-    public int getX() {
-	return x;
-    }
+	@Override
+	public void activate(Game game) {
+		actions--;
+		if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
+			game.getJoueur().injured(this);
+		}
+		else
+			if (isHuting) {
+				hunt.activate(game);
+				if (hunt.isFinished()) {
+					isHuting = false;
+				}
+			}
+			else {
+				if (game.getWorld().canSee(this, game.getJoueur())) {
+					isHuting = true;
+					hunt.reset();
+					activate(game);
+				}
+				else {
+					walk.activate(game);
+				}
+			}
+	}
 
-    @Override
-    public int getY() {
-	return y;
-    }
+	@Override
+	public int getX() {
+		return x;
+	}
 
-    @Override
-    public void addX(int dx) {
-	x += dx;
-    }
+	@Override
+	public int getY() {
+		return y;
+	}
 
-    @Override
-    public void addY(int dy) {
-	y += dy;
-    }
+	@Override
+	public void addX(int dx) {
+		x += dx;
+	}
 
-    @Override
-    public boolean isOpaque() {
-	return false;
-    }
+	@Override
+	public void addY(int dy) {
+		y += dy;
+	}
 
-    @Override
-    public int getDepht() {
-	return depth;
-    }
+	@Override
+	public boolean isOpaque() {
+		return false;
+	}
 
-    @Override
-    public Tile getTile() {
-	return Tile.Factory.getWolf();
-    }
+	@Override
+	public int getDepht() {
+		return depth;
+	}
 
-    @Override
-    public boolean isDead() {
-	return life <= 0;
-    }
+	@Override
+	public Tile getTile() {
+		return Tile.Factory.getWolf();
+	}
 
-    @Override
-    public void startTurn() {
-	actions = actionsMax;
-    }
+	@Override
+	public boolean isDead() {
+		return life <= 0;
+	}
 
-    @Override
-    public boolean turnIsEnd() {
-	return actions <= 0 || isDead();
-    }
+	@Override
+	public void startTurn() {
+		actions = actionsMax;
+	}
 
-    public void setX(int x) {
-	this.x = x;
-    }
+	@Override
+	public boolean turnIsEnd() {
+		return actions <= 0 || isDead();
+	}
 
-    public void setY(int y) {
-	this.y = y;
-    }
+	public void setX(int x) {
+		this.x = x;
+	}
 
-    @Override
-    public void injured(Projectile projectile) {
-	System.out.println("fireball->wolf");
+	public void setY(int y) {
+		this.y = y;
+	}
 
-    }
+	@Override
+	public void injured(Projectile projectile) {
+		System.out.println("fireball->wolf");
 
-    @Override
-    public void injured(Monster projectile) {
-	// TODO Auto-generated method stub
+	}
 
-    }
+	@Override
+	public void injured(Monster projectile) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getName() {
+		return "Wolf";
+	}
 
 }
