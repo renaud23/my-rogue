@@ -52,9 +52,11 @@ public class Game implements RogueSequence, KeyboardEvent {
 			monsters.add(monster);
 			setElement(monster);
 		}
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 30; i++) {
 			Point start = world.peekEmptyPlace();
-			this.addLightSource(new TorcheFixe(start.x, start.y));
+			TorcheFixe torche = new TorcheFixe(start.x, start.y);
+			this.addLightSource(torche);
+			this.setElement(torche);
 		}
 		this.addLightSource(new Torche(joueur));
 	}

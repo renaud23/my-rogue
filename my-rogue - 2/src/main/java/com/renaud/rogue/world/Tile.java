@@ -8,11 +8,13 @@ public class Tile {
 	public final static long WALL = 1l;
 	public final static long FLOOR = 2l;
 
-	public final static long PLAYER = 103l;
-	public final static long WOLF = 104l;
-	public final static long GHOUL = 105l;
+	public final static long PLAYER = 101l;
+	public final static long WOLF = 102l;
+	public final static long GHOUL = 103l;
 
-	public final static long FIREBALL = 1005l;
+	public final static long FIREBALL = 1001l;
+
+	public final static long TORCHE = 10001l;
 
 	private long code;
 	private char tile;
@@ -97,7 +99,7 @@ public class Tile {
 		}
 
 		public static Tile getWolf() {
-			return new Tile(WOLF, 'W', 0x865300);
+			return new Tile(WOLF, 'W', 0xAA0000);
 		}
 
 		public static Tile getGhoul() {
@@ -106,6 +108,10 @@ public class Tile {
 
 		public static Tile getFireball() {
 			return new Tile(FIREBALL, '*', 0xAAAA00);
+		}
+
+		public static Tile getTorche() {
+			return new Tile(TORCHE, 'i', 0xEE0000);
 		}
 	}
 

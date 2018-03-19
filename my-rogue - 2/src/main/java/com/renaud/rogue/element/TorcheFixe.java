@@ -1,24 +1,34 @@
 package com.renaud.rogue.element;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import com.renaud.rogue.game.Game;
+import com.renaud.rogue.tools.Chrono;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.world.Light;
+import com.renaud.rogue.world.Tile;
 
-public class TorcheFixe implements LightSource {
+public class TorcheFixe implements LightSource, Element {
 
 	private int x;
 	private int y;
 
+	private Chrono chrono;
+	private Random rand = new Random();
+	private int dephtMax = 8;
+	private int dephtMin = 5;
+	private int dephtVar = 1;
 	private int depht = 8;
+
 	private Set<Point> visibility;
 
 	public TorcheFixe(int x, int y) {
 		this.x = x;
 		this.y = y;
+		this.chrono = new Chrono(350l);
 	}
 
 	private void init(Game game) {
@@ -50,11 +60,30 @@ public class TorcheFixe implements LightSource {
 		}
 	}
 
+	private void change() {
+		if (chrono.isEllapsed()) {
+			depht += dephtVar;
+			visibility = null;
+			if (rand.nextBoolean()) {
+				dephtVar *= -1;
+			}
+			if (depht == dephtMax) {
+				dephtVar = -1;
+			}
+			else
+				if (depht == dephtMin) {
+					dephtVar = 1;
+				}
+
+		}
+	}
+
 	@Override
 	public void illumine(Game game) {
 		if (visibility == null) {
 			init(game);
 		}
+
 		for (Point p : visibility) {
 			int dist = MathTools.distance(p.x, p.y, x, y);
 			float cube = depht * depht;
@@ -62,9 +91,9 @@ public class TorcheFixe implements LightSource {
 				float how = cube / (cube + dist);
 				Light li = game.getWorld().getTile(p.x, p.y).getLight();
 
-				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.3f));
-				float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.3f));
-				float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.3f));
+				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.6f));
+				float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.1f));
+				float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
 				game
 					.getWorld()
 					.getTile(p.x, p.y)
@@ -72,7 +101,33 @@ public class TorcheFixe implements LightSource {
 
 			}
 		}
+		change();
+	}
 
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	@Override
+	public Tile getTile() {
+		return Tile.Factory.getTorche();
+	}
+
+	@Override
+	public boolean isOpaque() {
+		return false;
 	}
 
 }

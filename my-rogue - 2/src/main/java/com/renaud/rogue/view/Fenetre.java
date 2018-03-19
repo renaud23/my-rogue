@@ -117,7 +117,7 @@ public class Fenetre implements Iterable<IDrawable> {
 			}
 		};
 
-		this.timer.schedule(task, 0, 10);
+		this.timer.schedule(task, 0, 100);
 	}
 
 	private void drawBackground() {

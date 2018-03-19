@@ -17,8 +17,8 @@ public class Main {
 		int screenHauteur = 600;
 		int wolrdLargeur = 100;
 		int worldHauteur = 100;
-		int viewLargeur = 60;
-		int viewHauteur = 40;
+		int viewLargeur = 80;
+		int viewHauteur = 60;
 
 		World world = new World(wolrdLargeur, worldHauteur);
 		Point start = world.peekEmptyPlace();
@@ -31,7 +31,7 @@ public class Main {
 		Fenetre fenetre = new Fenetre(mainSequence, screenLargeur, screenHauteur, "Ascii");
 		fenetre.addKeyListener(listener);
 		fenetre.addDrawable(new MainDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur));
-		fenetre.addDrawable(new MinimapDrawer(game, 10, 10, 80, 80));
+		fenetre.addDrawable(new MinimapDrawer(game, 10, 10, 100, 100));
 
 		fenetre.start();
 	}
