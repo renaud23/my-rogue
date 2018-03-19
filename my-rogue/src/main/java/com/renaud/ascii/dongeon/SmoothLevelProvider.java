@@ -62,6 +62,15 @@ public class SmoothLevelProvider implements LevelProvider {
 			// previous = center;
 		}
 	}
+	
+	public Point peekFirs(int what) {
+		for (int i = 0; i < size; i++) {
+			if (what == map[i]) {
+				return new Point(i % largeur, i / largeur);
+			}
+		}
+		return null;
+	}
 
 	private void connect(Level ll, Point a, Point b) {
 		int couloirSize = 1;

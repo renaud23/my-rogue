@@ -1,6 +1,12 @@
 package com.renaud.rogue.world;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import com.renaud.rogue.tools.Point;
 
 public class SmoothLevelProvider {
 
@@ -32,6 +38,57 @@ public class SmoothLevelProvider {
 		for (int i = 0; i < nbStep; i++) {
 			carve();
 		}
+		List<Point> centers = findCenter();
+		System.out.println(centers);
+	}
+
+	private List<Point> findCenter() {
+		List<Point> centers = new ArrayList<>();
+		Dungeon e2 = e.clone();
+		Point start = peekFirstFloor(e2);
+
+		while (start != null) {
+			List<Point> todo = new ArrayList<>();
+			Set<Integer> visited = new HashSet<>();
+			todo.add(start);
+			int cx = 0, cy = 0, nb = 0;
+			while (!todo.isEmpty()) {
+				Point p = todo.remove(0);
+
+				for (int i = -1; i <= 1; i++) {
+					for (int j = -1; j <= 1; j++) {
+						if (i == 0 && j == 0) {
+							e2.setTile(p.x, p.y, Tile.Factory.getGhoul());
+							nb++;
+							cx += p.x;
+							cy += p.y;
+						}
+						else
+							if (e2.getTile(p.x + i, p.y + j).getCode() == Tile.FLOOR) {
+
+								e2.setTile(p.x + i, p.y + j, Tile.Factory.getGhoul());
+								todo.add(new Point(p.x + i, p.y + j));
+							}
+					}
+				}
+
+			}
+			cx /= nb;
+			cy /= nb;
+			centers.add(new Point(cx, cy));
+			start = peekFirstFloor(e2);
+		}
+
+		return centers;
+
+	}
+
+	private Point peekFirstFloor(Dungeon d) {
+		for (int i = 0; i < d.getSize(); i++) {
+			if (d.getTile(i).getCode() == Tile.FLOOR)
+				return new Point(i % d.getWidth(), i / d.getHeight());
+		}
+		return null;
 	}
 
 	private void carve() {
@@ -105,7 +162,7 @@ public class SmoothLevelProvider {
 	}
 
 	public final static void main(String[] args) {
-		Dungeon e = SmoothLevelProvider.newInstance(80, 60).setNbStep(6).build();
+		Dungeon e = SmoothLevelProvider.newInstance(40, 40).setNbStep(6).build();
 		e.print(System.out);
 	}
 }
