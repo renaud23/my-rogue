@@ -13,121 +13,116 @@ import com.renaud.rogue.world.Tile;
 
 public class TorcheFixe implements LightSource, Element {
 
-	private int x;
-	private int y;
+    private int x;
+    private int y;
 
-	private Chrono chrono;
-	private Random rand = new Random();
-	private int dephtMax = 8;
-	private int dephtMin = 5;
-	private int dephtVar = 1;
-	private int depht = 8;
+    private Chrono chrono;
+    private Random rand = new Random();
+    private int dephtMax = 8;
+    private int dephtMin = 5;
+    private int dephtVar = 1;
+    private int depht = 8;
 
-	private Set<Point> visibility;
+    private Set<Point> visibility;
 
-	public TorcheFixe(int x, int y) {
-		this.x = x;
-		this.y = y;
-		this.chrono = new Chrono(350l);
-	}
+    public TorcheFixe(int x, int y) {
+	this.x = x;
+	this.y = y;
+	this.chrono = new Chrono(350l);
+    }
 
-	private void init(Game game) {
-		visibility = new HashSet<>();
-		for (int i = -depht; i <= depht; i++) {
-			for (int j = -depht; j <= depht; j++) {
-				int xi = this.x - i;
-				int yi = this.y - j;
-				if (xi < 0 || yi < 0 || xi >= game.getWorld().getWidth() || yi >= game.getWorld().getHeight()) {
-					continue;
-				}
-				if (MathTools.distance(xi, yi, this.x, this.y) < this.depht * this.depht) {
-					boolean visible = true;
-					for (Point p : MathTools.getSegment(x, y, xi, yi)) {
-						if (p.x == xi && p.y == yi) {
-							continue;
-						}
-
-						if (!game.getWorld().getTile(p.x, p.y).canSeeThrought()) {
-							visible = false;
-						}
-
-					}
-					if (visible) {
-						visibility.add(new Point(xi, yi));
-					}
-				}
-			}
+    private void init(Game game) {
+	visibility = new HashSet<>();
+	for (int i = -depht; i <= depht; i++) {
+	    for (int j = -depht; j <= depht; j++) {
+		int xi = this.x - i;
+		int yi = this.y - j;
+		if (xi < 0 || yi < 0 || xi >= game.getWorld().getWidth() || yi >= game.getWorld().getHeight()) {
+		    continue;
 		}
-	}
-
-	private void change() {
-		if (chrono.isEllapsed()) {
-			depht += dephtVar;
-			visibility = null;
-			if (rand.nextBoolean()) {
-				dephtVar *= -1;
+		if (MathTools.distance(xi, yi, this.x, this.y) < this.depht * this.depht) {
+		    boolean visible = true;
+		    for (Point p : MathTools.getSegment(x, y, xi, yi)) {
+			if (p.x == xi && p.y == yi) {
+			    continue;
 			}
-			if (depht == dephtMax) {
-				dephtVar = -1;
+
+			if (!game.getWorld().getTile(p.x, p.y).canSeeThrought()) {
+			    visible = false;
 			}
-			else
-				if (depht == dephtMin) {
-					dephtVar = 1;
-				}
 
+		    }
+		    if (visible) {
+			visibility.add(new Point(xi, yi));
+		    }
 		}
+	    }
+	}
+    }
+
+    private void change() {
+	if (chrono.isEllapsed()) {
+	    depht += dephtVar;
+	    visibility = null;
+	    if (rand.nextBoolean()) {
+		dephtVar *= -1;
+	    }
+	    if (depht == dephtMax) {
+		dephtVar = -1;
+	    } else if (depht == dephtMin) {
+		dephtVar = 1;
+	    }
+
+	}
+    }
+
+    @Override
+    public void illumine(Game game) {
+	if (visibility == null) {
+	    init(game);
 	}
 
-	@Override
-	public void illumine(Game game) {
-		if (visibility == null) {
-			init(game);
-		}
+	for (Point p : visibility) {
+	    int dist = MathTools.distance(p.x, p.y, x, y);
+	    float cube = depht * depht;
+	    if (dist < cube) {
+		float how = cube / (cube + dist);
+		Light li = game.getWorld().getTile(p.x, p.y).getLight();
 
-		for (Point p : visibility) {
-			int dist = MathTools.distance(p.x, p.y, x, y);
-			float cube = depht * depht;
-			if (dist < cube) {
-				float how = cube / (cube + dist);
-				Light li = game.getWorld().getTile(p.x, p.y).getLight();
+		float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.6f));
+		float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.1f));
+		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
+		game.getWorld().getTile(p.x, p.y).setLight(new Light(r, g, b));
 
-				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.6f));
-				float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.1f));
-				float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
-				game
-					.getWorld()
-					.getTile(p.x, p.y)
-					.setLight(new Light(r, g, b));
-
-			}
-		}
-		change();
+	    }
 	}
+	change();
+    }
 
-	public int getX() {
-		return x;
-	}
+    public int getX() {
+	return x;
+    }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public void setX(int x) {
+	this.x = x;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public int getY() {
+	return y;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+    public void setY(int y) {
+	this.y = y;
+    }
 
-	@Override
-	public Tile getTile() {
-		return Tile.Factory.getTorche();
-	}
+    @Override
+    public Tile getTile() {
+	return Tile.Factory.getTorche();
+    }
 
-	@Override
-	public boolean isOpaque() {
-		return false;
-	}
+    @Override
+    public boolean isOpaque() {
+	return false;
+    }
 
 }
