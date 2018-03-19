@@ -53,34 +53,36 @@ public class Shooter implements Monster {
 			int distToPlayer = MathTools.distance(this.x, this.y, game.getJoueur().getX(), game.getJoueur().getY());
 			if (!game.getWorld().canSee(this, game.getJoueur())) {
 				this.hasSeenPlayer = false;
-			} else if (meleeDamage && Math.abs(this.x - game.getJoueur().getX()) <= 1
-					&& Math.abs(this.y - game.getJoueur().getY()) <= 1) {
-				game.getJoueur().injured(this);
-			} else if (distToPlayer <= this.dephtOfFire * this.dephtOfFire) {
-				if (game.getWorld().canSee(this, game.getJoueur()) && this.fireBall == null) {
-					int dx = (game.getJoueur().getX() - this.x)
-							/ Math.max(1, Math.abs(game.getJoueur().getX() - this.x));
-					int dy = (game.getJoueur().getY() - this.y)
-							/ Math.max(1, Math.abs(game.getJoueur().getY() - this.y));
-					int xi = this.x + dx;
-					int yi = this.y + dy;
-
-					this.fireBall = Projectile.Factory.createFireball(xi, yi, game.getJoueur().getX(),
-							game.getJoueur().getY());
-					game.addProjectile(this.fireBall);
-
-				}
-			} else {
-				if (game.getJoueur().getX() != this.nx || game.getJoueur().getY() != this.ny) {
-					if (game.getWorld().canSee(this, game.getJoueur())) {
-						this.nx = game.getJoueur().getX();
-						this.ny = game.getJoueur().getY();
-						this.goTo.reset(this.nx, this.ny);
-					}
-				}
-				this.goTo.activate(game);
 			}
-		} else {
+			else
+				if (meleeDamage && Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
+					game.getJoueur().injured(this);
+				}
+				else
+					if (distToPlayer <= this.dephtOfFire * this.dephtOfFire) {
+						if (game.getWorld().canSee(this, game.getJoueur()) && this.fireBall == null) {
+							int dx = (game.getJoueur().getX() - this.x) / Math.max(1, Math.abs(game.getJoueur().getX() - this.x));
+							int dy = (game.getJoueur().getY() - this.y) / Math.max(1, Math.abs(game.getJoueur().getY() - this.y));
+							int xi = this.x + dx;
+							int yi = this.y + dy;
+
+							this.fireBall = Projectile.Factory.createFireball(xi, yi, game.getJoueur().getX(), game.getJoueur().getY());
+							game.addProjectile(this.fireBall);
+
+						}
+					}
+					else {
+						if (game.getJoueur().getX() != this.nx || game.getJoueur().getY() != this.ny) {
+							if (game.getWorld().canSee(this, game.getJoueur())) {
+								this.nx = game.getJoueur().getX();
+								this.ny = game.getJoueur().getY();
+								this.goTo.reset(this.nx, this.ny);
+							}
+						}
+						this.goTo.activate(game);
+					}
+		}
+		else {
 			if (game.getWorld().canSee(this, game.getJoueur())) {
 				this.hasSeenPlayer = true;
 				this.nx = game.getJoueur().getX();
@@ -142,13 +144,7 @@ public class Shooter implements Monster {
 	}
 
 	@Override
-	public void injured(Projectile projectile) {
-		System.out.println("projectile-->shooter");
-
-	}
-
-	@Override
-	public void injured(Monster projectile) {
+	public void injured(Game game, Monster projectile) {
 		// TODO Auto-generated method stub
 
 	}

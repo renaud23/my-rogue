@@ -6,13 +6,23 @@ import java.util.Set;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.weapon.Weapon;
 
 public interface Living extends Element {
+
 	boolean isDead();
 
-	void injured(Projectile projectile);
+	default void winXp(int xp) {};
 
-	void injured(Monster projectile);
+	default int getLevel() {
+		return 1;
+	}
+
+	default void injured(Game game, Projectile projectile) {};
+
+	default void injured(Game game, Monster projectile) {};
+
+	default void injured(Game game, Weapon weapon) {};
 
 	default Set<Point> getVisibilityPoints(Game game) {
 		return new HashSet<>();

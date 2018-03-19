@@ -1,21 +1,13 @@
 package com.renaud.rogue.element.monster;
 
-import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.element.comportement.Comportement;
 import com.renaud.rogue.element.comportement.HuntPlayer;
 import com.renaud.rogue.element.comportement.RandomWalk;
-import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.world.Tile;
 
-public class Wolf implements Monster {
+public class Wolf extends AbstractMonster {
 
-	int x;
-	int y;
-	int actions = 3;
-	int actionsMax = 3;
-	int depth = 10;
-	int life = 10;
 	private boolean isHuting = false;
 
 	private Comportement walk;
@@ -26,6 +18,13 @@ public class Wolf implements Monster {
 		this.y = y;
 		walk = new RandomWalk(this);
 		hunt = new HuntPlayer(this);
+
+		actionsMax = 3;
+		depth = 10;
+		level = 1;
+		life = 10;
+		xp = 2;
+		meleeDamage = 5;
 	}
 
 	@Override
@@ -54,73 +53,8 @@ public class Wolf implements Monster {
 	}
 
 	@Override
-	public int getX() {
-		return x;
-	}
-
-	@Override
-	public int getY() {
-		return y;
-	}
-
-	@Override
-	public void addX(int dx) {
-		x += dx;
-	}
-
-	@Override
-	public void addY(int dy) {
-		y += dy;
-	}
-
-	@Override
-	public boolean isOpaque() {
-		return false;
-	}
-
-	@Override
-	public int getDepht() {
-		return depth;
-	}
-
-	@Override
 	public Tile getTile() {
 		return Tile.Factory.getWolf();
-	}
-
-	@Override
-	public boolean isDead() {
-		return life <= 0;
-	}
-
-	@Override
-	public void startTurn() {
-		actions = actionsMax;
-	}
-
-	@Override
-	public boolean turnIsEnd() {
-		return actions <= 0 || isDead();
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	@Override
-	public void injured(Projectile projectile) {
-		System.out.println("fireball->wolf");
-
-	}
-
-	@Override
-	public void injured(Monster projectile) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override

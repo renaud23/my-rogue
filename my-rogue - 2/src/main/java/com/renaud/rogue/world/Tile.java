@@ -113,6 +113,7 @@ public class Tile {
 		public static Tile getTorche() {
 			return new Tile(TORCHE, 'i', 0xEE0000);
 		}
+
 	}
 
 }

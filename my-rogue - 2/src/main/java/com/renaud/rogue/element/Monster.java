@@ -12,6 +12,10 @@ public interface Monster extends Living, TurnPlay {
 
 	String getName();
 
+	default int getMeleeDamage() {
+		return 0;
+	}
+
 	public static class Factory {
 
 		public static Monster createGhool(int x, int y) {

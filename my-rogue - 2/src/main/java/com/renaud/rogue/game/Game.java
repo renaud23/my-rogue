@@ -2,6 +2,7 @@ package com.renaud.rogue.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Joueur;
@@ -14,11 +15,12 @@ import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.world.Light;
+import com.renaud.rogue.world.Tile;
 import com.renaud.rogue.world.World;
 
 public class Game implements RogueSequence, KeyboardEvent {
 
-	private boolean aim;
+	private boolean aimToShoot;
 	private World world;
 	private Joueur joueur;
 
@@ -46,7 +48,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 			monsters.add(monster);
 			setElement(monster);
 		}
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 			Point start = world.peekEmptyPlace();
 			Monster monster = new Wolf(start.x, start.y);
 			monsters.add(monster);
@@ -106,14 +108,15 @@ public class Game implements RogueSequence, KeyboardEvent {
 
 	@Override
 	public void spacePressed() {
-		if (!aim) {
-			aim = true;
+		if (!aimToShoot) {
+			aimToShoot = true;
 			this.joueur.resetAim();
 			this.currentSequence = aimSequence;
 		}
 		else {
-			aim = false;
+			aimToShoot = false;
 			this.currentSequence = playSequence;
+			this.joueur.getWeapon().shoot(this, this.joueur.getAimx(), joueur.getAimy());
 		}
 	}
 
@@ -152,12 +155,26 @@ public class Game implements RogueSequence, KeyboardEvent {
 		return projectiles;
 	}
 
+	public boolean isAiming() {
+		return aimToShoot;
+	}
+	/* */
+
 	public void addProjectile(Projectile p) {
 		this.projectiles.add(p);
 	}
 
-	public boolean isAiming() {
-		return aim;
+	public void addMonster(Monster monster) {
+		Tile tile = this.world.getTile(monster.getX(), monster.getY());
+		if (tile.isEmpty()) {
+			this.monsters.add(monster);
+			tile.setElement(monster);
+		}
+	}
+
+	public void removeMonster(Monster monster) {
+		this.monsters.remove(monster);
+		this.removeElement(monster);
 	}
 
 	public void addLightSource(LightSource ls) {
@@ -166,6 +183,20 @@ public class Game implements RogueSequence, KeyboardEvent {
 
 	public void removeLightSource(LightSource ls) {
 		this.lightSources.remove(ls);
+	}
+
+	public void bloodify(int x, int y) {
+		Random rand = new Random();
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if (rand.nextInt(10) > 7 || (i == 0 && j == 0)) {
+					Tile tile = this.world.getTile(x + i, y + j);
+					tile.setColor(0x8A0707);
+				}
+			}
+		}
+
+		// this.world.setTile(x, y, Tile.Factory.getBlood(tile));
 	}
 
 }

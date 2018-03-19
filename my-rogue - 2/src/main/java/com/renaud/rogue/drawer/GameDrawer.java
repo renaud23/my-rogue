@@ -80,6 +80,11 @@ public class GameDrawer implements Draw {
 		for (int i = 0; i < tiles.length; i++) {
 			Bloc bloc = tiles[i];
 			buffer.fillRect(bloc.color, bloc.x * carrSize, bloc.y * carrSize, carrSize, carrSize, bloc.alpha);
+			// if(bloc.tile.getCode() == Tile.CORPSE){
+			// StringBuilder bld = new StringBuilder();
+			// bld.append(bloc.tile.getTile());
+			// buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1, getColor(element.getTile()));
+			// }
 		}
 
 		for (Element element : elements) {

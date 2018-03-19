@@ -23,13 +23,17 @@ public class Joueur implements Living {
 	private Weapon weapon;
 	private Set<Point> lastComputed = new HashSet<>();
 
+	int life = 100;
+	int xp = 0;
+	int level = 1;
+
 	public Joueur(int x, int y, int worldWidth, int worldHeight) {
 		this.x = x;
 		this.y = y;
 		this.depht = 12;
 		this.memory = new Dungeon(worldWidth, worldHeight);
 		this.memory.fill(Tile.UNKNOW);
-		this.weapon = new Knife();
+		this.weapon = new Knife(this);
 	}
 
 	private Dungeon memory;
@@ -78,10 +82,6 @@ public class Joueur implements Living {
 			}
 		}
 		return lastComputed;
-	}
-
-	public void shoot(Game game) {
-
 	}
 
 	public void resetAim() {
@@ -150,20 +150,19 @@ public class Joueur implements Living {
 	}
 
 	@Override
-	public void injured(Projectile projectile) {
-		System.out.println("joueur fireball");
+	public void injured(Game game, Projectile projectile) {
+		System.out.println("Vous êtes atteind par ...");
 
 	}
 
 	public void injured(Monster monster) {
-		System.out.println("Player injured by " + monster.getName());
-
+		System.out.println("Vous êtes attaqué par " + monster.getName());
+		this.life -= monster.getMeleeDamage();
 	}
 
 	@Override
 	public boolean isDead() {
-		// TODO Auto-generated method stub
-		return false;
+		return life <= 0;
 	}
 
 	public int getAimx() {
@@ -172,6 +171,14 @@ public class Joueur implements Living {
 
 	public int getAimy() {
 		return aimy;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
 	}
 
 }

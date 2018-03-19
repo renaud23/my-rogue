@@ -44,6 +44,12 @@ public class World {
 		return dungeon.getTile(i, j);
 	}
 
+	public void setTile(int i, int j, Tile tile) {
+		if (i < 0 || j < 0 || i >= getWidth() || j >= getHeight())
+			return;
+		this.dungeon.setTile(i, j, tile);
+	}
+
 	public Tile getTile(int i) {
 		return dungeon.getTile(i);
 	}
@@ -103,7 +109,8 @@ public class World {
 			Tile tile = dungeon.getTile(i);
 			if (tile.isEmpty()) {
 				out.print(tile.getTile());
-			} else {
+			}
+			else {
 				out.print(tile.getElement().getTile().getTile());
 			}
 
