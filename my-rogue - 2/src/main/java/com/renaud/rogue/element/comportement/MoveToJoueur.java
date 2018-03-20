@@ -5,11 +5,11 @@ import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 
-public class GoToJoueur implements Comportement {
+public class MoveToJoueur implements Comportement {
 
     private Element l;
 
-    public GoToJoueur(Element l) {
+    public MoveToJoueur(Element l) {
 	this.l = l;
     }
 

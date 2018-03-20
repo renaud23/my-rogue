@@ -1,5 +1,8 @@
 package com.renaud.rogue.tools;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Point {
 
 	@Override
@@ -49,6 +52,17 @@ public class Point {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public final static void main(String[] args) {
+		Point p1 = new Point(5, 4);
+		Point p2 = new Point(5, 4);
+		System.out.println(p1.equals(p2));
+
+		Set<Point> tas = new HashSet<>();
+		tas.add(p1);
+		tas.add(p2);
+		System.out.println(tas);
 	}
 
 }

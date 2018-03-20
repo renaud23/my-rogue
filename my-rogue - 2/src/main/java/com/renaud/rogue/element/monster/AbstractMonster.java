@@ -12,7 +12,7 @@ public abstract class AbstractMonster implements Monster {
 	protected int actions = 3;
 
 	public int actionsMax = 3;
-	public int depth = 10;
+	public int depht = 10;
 	public int level = 1;
 	public int life = 10;
 	public int xp = 2;
@@ -68,7 +68,7 @@ public abstract class AbstractMonster implements Monster {
 
 	@Override
 	public int getDepht() {
-		return depth;
+		return depht;
 	}
 
 	@Override

@@ -1,19 +1,19 @@
 package com.renaud.rogue.element.monster;
 
 import com.renaud.rogue.element.comportement.Comportement;
-import com.renaud.rogue.element.comportement.GoToJoueur;
+import com.renaud.rogue.element.comportement.MoveToJoueur;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.world.Tile;
 
 public class Wolf extends AbstractMonster {
-    private Comportement moveToPlayer = new GoToJoueur(this);
+    private Comportement moveToPlayer = new MoveToJoueur(this);
 
     public Wolf(int x, int y) {
 	this.x = x;
 	this.y = y;
 
 	actionsMax = 3;
-	depth = 10;
+	depht = 10;
 	level = 1;
 	life = 10;
 	xp = 2;

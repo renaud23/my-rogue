@@ -87,7 +87,7 @@ public class Tile {
 		}
 
 		public static Tile getWall() {
-			return new Tile(WALL, 'X', 0x707070);
+			return new Tile(WALL, 'X', 0x909090);
 		}
 
 		public static Tile getFloor() {
