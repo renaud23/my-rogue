@@ -36,6 +36,7 @@ public class ImageBuilder {
 	    int h = image.getHeight(null);
 	    int t = h * l;
 	    int[] data = new int[t];
+	    int[] neo = new int[sl * sh];
 
 	    PixelGrabber pg = new PixelGrabber(image, 0, 0, l, h, data, 0, l);
 	    try {
@@ -45,10 +46,13 @@ public class ImageBuilder {
 			int coord = (sy + j) * l + sx + i;
 
 			int pix = data[coord];
-			System.out.println(pix + " ,");
+			neo[i + j * sl] = pix;
+			System.out.print(pix + " ,");
+
 		    }
+		    System.out.println();
 		}
-		return data;
+		return neo;
 	    } catch (InterruptedException e) {
 		throw new RejectedExecutionException("Impossible de lire les pixels de l'image.", e);
 	    }
@@ -59,8 +63,8 @@ public class ImageBuilder {
     }
 
     public static void main(String[] args) {
-	int largeur = 50;
-	int hauteur = 50;
+	int largeur = 16;
+	int hauteur = 16;
 	SimpleImageLoader loader = new SimpleImageLoader();
 	Image image = loader.getImage("E:\\workspace\\my-rogue\\my-rogue - 2\\src\\main\\resources\\img\\Player0.png");
 
