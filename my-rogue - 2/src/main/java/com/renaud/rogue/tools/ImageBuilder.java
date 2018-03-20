@@ -1,12 +1,36 @@
 package com.renaud.rogue.tools;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.RejectedExecutionException;
+
+import javax.imageio.ImageIO;
 
 public class ImageBuilder {
 
-    public static void loadImage(Image image, int sx, int sy, int sl, int sh) {
+    public static void test(int[] pixels, int largeur, int hauteur) {
+	BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
+
+	for (int i = 0; i < largeur; i++) {
+	    for (int j = 0; j < hauteur; j++) {
+		//
+		image.setRGB(i, j, pixels[i + j * largeur]);
+	    }
+	}
+
+	File outputfile = new File("e:/saved.png");
+	try {
+	    ImageIO.write(image, "png", outputfile);
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
+
+    public static int[] loadImage(Image image, int sx, int sy, int sl, int sh) {
 	if (image != null) {
 	    int l = image.getWidth(null);
 	    int h = image.getHeight(null);
@@ -21,26 +45,27 @@ public class ImageBuilder {
 			int coord = (sy + j) * l + sx + i;
 
 			int pix = data[coord];
+			System.out.println(pix + " ,");
 		    }
 		}
-
-		// for (int i = 0; i < t; i++) {
-		// System.out.println(data[i]);
-		//
-		// }
-
+		return data;
 	    } catch (InterruptedException e) {
 		throw new RejectedExecutionException("Impossible de lire les pixels de l'image.", e);
 	    }
 
 	}
+
+	return null;
     }
 
     public static void main(String[] args) {
+	int largeur = 50;
+	int hauteur = 50;
 	SimpleImageLoader loader = new SimpleImageLoader();
 	Image image = loader.getImage("E:\\workspace\\my-rogue\\my-rogue - 2\\src\\main\\resources\\img\\Player0.png");
 
-	ImageBuilder.loadImage(image, 31, 47, 16, 16);
+	int[] pix = ImageBuilder.loadImage(image, 0, 0, largeur, hauteur);
+	ImageBuilder.test(pix, largeur, hauteur);
     }
 
 }

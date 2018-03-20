@@ -90,6 +90,7 @@ public class GameDrawer implements Draw {
 	    bld.append(element.getTile().getTile());
 	    buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1,
 		    getColor(element.getTile()));
+
 	}
 
 	for (Projectile proj : projectiles) {
