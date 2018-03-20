@@ -8,8 +8,8 @@ import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.element.LightSource;
 import com.renaud.rogue.element.Monster;
-import com.renaud.rogue.element.Torche;
-import com.renaud.rogue.element.TorcheFixe;
+import com.renaud.rogue.element.light.Torche;
+import com.renaud.rogue.element.light.TorcheFixe;
 import com.renaud.rogue.element.monster.Wolf;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
@@ -75,6 +75,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 		for (int i = 0; i < this.world.getSize(); i++) {
 			this.world.getTile(i).setLight(Light.DARK);
 		}
+		lightSources.removeIf(l -> l.isEnd());
 		for (LightSource ls : lightSources) {
 			ls.illumine(this);
 		}
@@ -175,6 +176,10 @@ public class Game implements RogueSequence, KeyboardEvent {
 	public void removeMonster(Monster monster) {
 		this.monsters.remove(monster);
 		this.removeElement(monster);
+	}
+
+	public List<LightSource> getLightSources() {
+		return lightSources;
 	}
 
 	public void addLightSource(LightSource ls) {

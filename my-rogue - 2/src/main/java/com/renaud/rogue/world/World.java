@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Monster;
-import com.renaud.rogue.element.TorcheFixe;
+import com.renaud.rogue.element.light.TorcheFixe;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 

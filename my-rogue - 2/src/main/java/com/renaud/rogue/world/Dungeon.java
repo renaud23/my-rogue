@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.renaud.rogue.element.TorcheFixe;
+import com.renaud.rogue.element.light.TorcheFixe;
 import com.renaud.rogue.tools.Point;
 
 public class Dungeon {

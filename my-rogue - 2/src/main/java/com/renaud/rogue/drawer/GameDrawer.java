@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.renaud.rogue.drawer.MainDrawer.Draw;
 import com.renaud.rogue.element.Element;
+import com.renaud.rogue.element.LightSource;
+import com.renaud.rogue.element.light.Explosion;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.Point;
@@ -65,8 +67,7 @@ public class GameDrawer implements Draw {
 					tiles[si] = new Bloc(xi, yi, tile, getColor(tile), 1.0f);
 					if (!tile.isEmpty()) {
 						elements.add(tile.getElement());
-					}
-					else {
+					} else {
 						for (Projectile proj : game.getProjectiles()) {
 							if (proj.getX() == point.getX() && proj.getY() == point.getY()) {
 								projectiles.add(proj);
@@ -80,11 +81,6 @@ public class GameDrawer implements Draw {
 		for (int i = 0; i < tiles.length; i++) {
 			Bloc bloc = tiles[i];
 			buffer.fillRect(bloc.color, bloc.x * carrSize, bloc.y * carrSize, carrSize, carrSize, bloc.alpha);
-			// if(bloc.tile.getCode() == Tile.CORPSE){
-			// StringBuilder bld = new StringBuilder();
-			// bld.append(bloc.tile.getTile());
-			// buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1, getColor(element.getTile()));
-			// }
 		}
 
 		for (Element element : elements) {
@@ -101,6 +97,15 @@ public class GameDrawer implements Draw {
 			StringBuilder bld = new StringBuilder();
 			bld.append(proj.getTile().getTile());
 			buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize + carrSize - 2, carrSize + 1, getColor(proj.getTile()));
+		}
+
+		for (LightSource ls : game.getLightSources()) {
+			if (ls instanceof Explosion) {
+				int xi = ((Explosion) ls).getX() - startX;
+				int yi = ((Explosion) ls).getY() - startY;
+				buffer.fillRect(Color.red, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.5f);
+
+			}
 		}
 
 		if (game.isAiming()) {
