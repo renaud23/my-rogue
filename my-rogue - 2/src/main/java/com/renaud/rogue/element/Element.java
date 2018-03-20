@@ -8,12 +8,18 @@ public interface Element {
 
     int getY();
 
-    void setX(int x);
+    default void setX(int x) {
+    };
 
-    void setY(int y);
+    default void setY(int y) {
+    };
 
-    Tile getTile();
+    default Tile getTile() {
+	return null;
+    };
 
-    boolean isOpaque();
+    default boolean isOpaque() {
+	return false;
+    };
 
 }

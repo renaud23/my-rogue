@@ -12,27 +12,29 @@ import com.renaud.rogue.world.World;
 
 public class Main {
 
-	public final static void main(String[] args) {
-		int screenLargeur = 800;
-		int screenHauteur = 600;
-		int wolrdLargeur = 60;
-		int worldHauteur = 60;
-		int viewLargeur = 40;
-		int viewHauteur = 30;
+    public final static void main(String[] args) {
 
-		World world = new World(wolrdLargeur, worldHauteur);
-		Point start = world.peekEmptyPlace();
-		Joueur joueur = new Joueur(start.x, start.y, wolrdLargeur, worldHauteur);
-		Game game = new Game(world, joueur);
+	int wolrdLargeur = 60;
+	int worldHauteur = 60;
+	int viewLargeur = 40;
+	int viewHauteur = 30;
+	int tileSize = 16;
+	int screenLargeur = 40 * tileSize;
+	int screenHauteur = 30 * tileSize;
 
-		RogueSequence mainSequence = new MainSequence(game);
-		EventListener listener = new EventListener(mainSequence);
+	World world = new World(wolrdLargeur, worldHauteur);
+	Point start = world.peekEmptyPlace();
+	Joueur joueur = new Joueur(start.x, start.y, wolrdLargeur, worldHauteur);
+	Game game = new Game(world, joueur);
 
-		Fenetre fenetre = new Fenetre(mainSequence, screenLargeur, screenHauteur, "Ascii");
-		fenetre.addKeyListener(listener);
-		fenetre.addDrawable(new MainDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur));
-		fenetre.addDrawable(new MinimapDrawer(game, 10, 10, 100, 100));
+	RogueSequence mainSequence = new MainSequence(game);
+	EventListener listener = new EventListener(mainSequence);
 
-		fenetre.start();
-	}
+	Fenetre fenetre = new Fenetre(mainSequence, screenLargeur, screenHauteur, "Ascii");
+	fenetre.addKeyListener(listener);
+	fenetre.addDrawable(new MainDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur));
+	fenetre.addDrawable(new MinimapDrawer(game, 10, 10, 80, 60));
+
+	fenetre.start();
+    }
 }
