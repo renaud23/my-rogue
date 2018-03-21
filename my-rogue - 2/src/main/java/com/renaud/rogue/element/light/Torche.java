@@ -14,8 +14,8 @@ public class Torche implements LightSource {
 
     private Living element;
     private Random rand = new Random();
-    private int dephtMax = 8;
-    private int dephtMin = 6;
+    private int dephtMax = 10;
+    private int dephtMin = 8;
     private int dephtVar = 1;
     private int depht = 6;
     private Chrono chrono;

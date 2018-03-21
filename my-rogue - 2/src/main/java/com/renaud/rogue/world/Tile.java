@@ -109,7 +109,7 @@ public class Tile {
 	}
 
 	public static Tile getFloor() {
-	    return new Tile(FLOOR, '.', 0x404040);
+	    return new Tile(FLOOR, '.', 0x505050);
 	}
 
 	public static Tile getPlayer() {

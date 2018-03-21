@@ -55,7 +55,7 @@ public class GameDrawer implements Draw {
 	    int xi = i % largeur;
 	    int yi = i / largeur;
 	    Tile tileMemory = game.getJoueur().getMemory(startX + xi, startY + yi);
-	    tiles[i] = new Bloc(xi, yi, tileMemory, new Color(tileMemory.getColor()), 0.3f);
+	    tiles[i] = new Bloc(xi, yi, tileMemory, new Color(tileMemory.getColor()), 0.1f);
 	}
 
 	for (Point point : game.getJoueur().getVisibilityPoints(game)) {
@@ -94,7 +94,10 @@ public class GameDrawer implements Draw {
 	    StringBuilder bld = new StringBuilder();
 	    Tile tile = element.getTile();
 	    if (tile.getTile() != null) {
-		buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, 1.0f);
+		Tile ground = game.getWorld().getTile(element.getX(), element.getY());
+		buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0,
+			ground.getLight().getAlpha());
+
 	    } else {
 		bld.append(tile.getCharCode());
 		buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1,

@@ -21,7 +21,7 @@ public class TorcheFixe implements LightSource, Element {
     private Chrono chrono;
     private Random rand = new Random();
     private int dephtMax = 10;
-    private int dephtMin = 5;
+    private int dephtMin = 8;
     private int dephtVar = 1;
     private int depht = 8;
     private Tile tile = Tile.Factory.getTorche();
@@ -94,7 +94,7 @@ public class TorcheFixe implements LightSource, Element {
 
 		float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.4f));
 		float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.4f));
-		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.4f));
+		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
 		game.getWorld().getTile(p.x, p.y).setLight(new Light(r, g, b));
 
 	    }
