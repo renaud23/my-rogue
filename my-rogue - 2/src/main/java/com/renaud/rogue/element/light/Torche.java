@@ -49,9 +49,9 @@ public class Torche implements LightSource {
 		float how = cube / (cube + dist);
 		Light li = game.getWorld().getTile(p.x, p.y).getLight();
 
-		float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.8f));
+		float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.5f));
 		float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.4f));
-		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.2f));
+		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.4f));
 		game.getWorld().getTile(p.x, p.y).setLight(new Light(r, g, b));
 	    }
 	}

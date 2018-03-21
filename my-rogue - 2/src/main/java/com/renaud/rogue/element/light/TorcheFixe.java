@@ -20,7 +20,7 @@ public class TorcheFixe implements LightSource, Element {
 
     private Chrono chrono;
     private Random rand = new Random();
-    private int dephtMax = 8;
+    private int dephtMax = 10;
     private int dephtMin = 5;
     private int dephtVar = 1;
     private int depht = 8;
@@ -92,9 +92,9 @@ public class TorcheFixe implements LightSource, Element {
 		float how = cube / (cube + dist);
 		Light li = game.getWorld().getTile(p.x, p.y).getLight();
 
-		float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.6f));
-		float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.2f));
-		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
+		float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.4f));
+		float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.3f));
+		float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.2f));
 		game.getWorld().getTile(p.x, p.y).setLight(new Light(r, g, b));
 
 	    }
