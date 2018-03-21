@@ -1,4 +1,4 @@
-package com.renaud.rogue.drawer.sprite;
+package com.renaud.rogue.drawer.tile;
 
 public class GhoulTile extends RogueTileBuilder {
 

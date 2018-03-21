@@ -9,47 +9,48 @@ import com.renaud.rogue.world.Tile;
 
 public class Shooter extends AbstractMonster {
 
-	private Comportement moveToPlayer = new MoveToJoueur(this);
-	private Comportement fireballShoot = new ShootFireball(this);
+    private Comportement moveToPlayer = new MoveToJoueur(this);
+    private Comportement fireballShoot = new ShootFireball(this);
+    private Tile tile = Tile.Factory.getGhoul();
 
-	public int dephtOfFire;
+    public int dephtOfFire;
 
-	public String name = "Monster";
-	public boolean isMeleeAttaque;
+    public String name = "Monster";
+    public boolean isMeleeAttaque;
 
-	public Shooter(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
+    public Shooter(int x, int y) {
+	this.x = x;
+	this.y = y;
+    }
 
-	@Override
-	public void activate(Game game) {
-		actions--;
-		if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
-			if (isMeleeAttaque) {
-				game.getJoueur().injured(this);
-			}
-		} else if (game.getWorld().canSee(this, game.getJoueur())) {
-			int dist = MathTools.distance(x, y, game.getJoueur().getX(), game.getJoueur().getY());
-			if (dist < dephtOfFire * dephtOfFire) {
-				if (fireballShoot.isFinished()) {
-					fireballShoot.activate(game);
-				}
-			} else {
-				moveToPlayer.activate(game);
-			}
+    @Override
+    public void activate(Game game) {
+	actions--;
+	if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
+	    if (isMeleeAttaque) {
+		game.getJoueur().injured(this);
+	    }
+	} else if (game.getWorld().canSee(this, game.getJoueur())) {
+	    int dist = MathTools.distance(x, y, game.getJoueur().getX(), game.getJoueur().getY());
+	    if (dist < dephtOfFire * dephtOfFire) {
+		if (fireballShoot.isFinished()) {
+		    fireballShoot.activate(game);
 		}
-
+	    } else {
+		moveToPlayer.activate(game);
+	    }
 	}
 
-	@Override
-	public Tile getTile() {
-		return Tile.Factory.getGhoul();
-	}
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public Tile getTile() {
+	return tile;
+    }
+
+    @Override
+    public String getName() {
+	return name;
+    }
 
 }

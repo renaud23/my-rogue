@@ -7,6 +7,7 @@ import com.renaud.rogue.world.Tile;
 
 public class Wolf extends AbstractMonster {
     private Comportement moveToPlayer = new MoveToJoueur(this);
+    private Tile tile = Tile.Factory.getWolf();
 
     public Wolf(int x, int y) {
 	this.x = x;
@@ -35,7 +36,7 @@ public class Wolf extends AbstractMonster {
 
     @Override
     public Tile getTile() {
-	return Tile.Factory.getWolf();
+	return tile;
     }
 
     @Override

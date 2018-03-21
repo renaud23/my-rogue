@@ -1,5 +1,6 @@
 package com.renaud.rogue.element.light;
 
+import com.renaud.rogue.drawer.sprite.ExplosionSprite;
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.LightSource;
 import com.renaud.rogue.game.Game;
@@ -8,7 +9,7 @@ import com.renaud.rogue.tools.Chrono;
 public class Explosion implements LightSource, Element {
 
     private Chrono timeOfLife;
-    private Chrono speed;
+    private ExplosionSprite sprite = new ExplosionSprite();
 
     private int x;
     private int y;
@@ -27,23 +28,6 @@ public class Explosion implements LightSource, Element {
 	this.y = y;
 
 	timeOfLife = new Chrono(450);
-	speed = new Chrono(10);
-    }
-
-    @Override
-    public void illumine(Game game) {
-	if (speed.isEllapsed()) {
-	    rayon += 2;
-	    alpha *= 0.5f;
-
-	    float r = (color >> 16) & 0xFF;
-	    float g = (color >> 8) & 0xFF;
-	    float b = (color >> 0) & 0xFF;
-	    int ri = (int) (r * 1.0f);
-	    int gi = (int) Math.min(1.0f, g * 1.5f);
-	    int bi = (int) (b * 1.0f);
-	    color = (ri << 16) | (gi << 8) | (bi << 0);
-	}
     }
 
     @Override
@@ -67,6 +51,18 @@ public class Explosion implements LightSource, Element {
 
     public int getColor() {
 	return color;
+    }
+
+    public ExplosionSprite getSprite() {
+	return sprite;
+    }
+
+    public void setSprite(ExplosionSprite sprite) {
+	this.sprite = sprite;
+    }
+
+    @Override
+    public void illumine(Game game) {
     }
 
 }
