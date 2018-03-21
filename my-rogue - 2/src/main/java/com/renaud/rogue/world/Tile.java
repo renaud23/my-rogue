@@ -1,5 +1,9 @@
 package com.renaud.rogue.world;
 
+import com.renaud.rogue.drawer.sprite.GhoulTile;
+import com.renaud.rogue.drawer.sprite.HeroTile;
+import com.renaud.rogue.drawer.sprite.RogueTile;
+import com.renaud.rogue.drawer.sprite.WolfTile;
 import com.renaud.rogue.element.Element;
 
 public class Tile {
@@ -17,19 +21,27 @@ public class Tile {
 	public final static long TORCHE = 10001l;
 
 	private long code;
-	private char tile;
+	private char charCode;
 	private int color;
 	private Element element;
 	private Light light = new Light(1.0f, 1.0f, 0.5f);
+	private RogueTile tile;
 
 	public Tile clone() {
-		return new Tile(code, tile, color);
+		return new Tile(code, charCode, color);
 	}
 
 	private Tile(long code, char tile, int color) {
 		this.code = code;
-		this.tile = tile;
+		this.charCode = tile;
 		this.color = color;
+	}
+
+	private Tile(long code, char charCode, int color, RogueTile tile) {
+		this.code = code;
+		this.charCode = charCode;
+		this.color = color;
+		this.tile = tile;
 	}
 
 	public boolean isLighted() {
@@ -52,8 +64,8 @@ public class Tile {
 		return code;
 	}
 
-	public char getTile() {
-		return tile;
+	public char getCharCode() {
+		return charCode;
 	}
 
 	public int getColor() {
@@ -80,6 +92,10 @@ public class Tile {
 		this.light = light;
 	}
 
+	public RogueTile getTile() {
+		return tile;
+	}
+
 	public static class Factory {
 
 		public static Tile getUnknow() {
@@ -95,15 +111,15 @@ public class Tile {
 		}
 
 		public static Tile getPlayer() {
-			return new Tile(PLAYER, '@', 0xEEEE00);
+			return new Tile(PLAYER, '@', 0xEEEE00, new HeroTile());
 		}
 
 		public static Tile getWolf() {
-			return new Tile(WOLF, 'W', 0xAA0000);
+			return new Tile(WOLF, 'W', 0xAA0000, new WolfTile());
 		}
 
 		public static Tile getGhoul() {
-			return new Tile(GHOUL, 'G', 0x0000AA);
+			return new Tile(GHOUL, 'G', 0x0000AA, new GhoulTile());
 		}
 
 		public static Tile getFireball() {

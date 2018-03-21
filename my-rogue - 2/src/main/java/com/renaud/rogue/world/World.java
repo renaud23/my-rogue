@@ -113,9 +113,9 @@ public class World {
 		for (int i = 0; i < size; i++) {
 			Tile tile = dungeon.getTile(i);
 			if (tile.isEmpty()) {
-				out.print(tile.getTile());
+				out.print(tile.getCharCode());
 			} else {
-				out.print(tile.getElement().getTile().getTile());
+				out.print(tile.getElement().getTile().getCharCode());
 			}
 
 			if ((i % width) == (width - 1)) {

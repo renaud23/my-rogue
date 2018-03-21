@@ -65,7 +65,7 @@ public class Dungeon {
 	public void print(PrintStream out) {
 
 		for (int i = 0; i < size; i++) {
-			out.print(tiles[i].getTile());
+			out.print(tiles[i].getCharCode());
 
 			if ((i % width) == (width - 1)) {
 				out.println();

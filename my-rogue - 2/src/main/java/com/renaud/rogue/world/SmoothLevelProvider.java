@@ -144,11 +144,13 @@ public class SmoothLevelProvider {
 							n++;
 							continue;
 						}
-						Point p = new Point(curr.x + i, curr.y + j);
-						if (e2.getTile(p.x, p.y).getCode() == Tile.FLOOR && !visited.contains(p)) {
-							stack.push(p);
-							visited.add(p);
-							e2.setTile(p.x, p.y, Tile.Factory.getWall());
+						if (i != 0 && j != 0) {
+							Point p = new Point(curr.x + i, curr.y + j);
+							if (e2.getTile(p.x, p.y).getCode() == Tile.FLOOR && !visited.contains(p)) {
+								stack.push(p);
+								visited.add(p);
+								e2.setTile(p.x, p.y, Tile.Factory.getWall());
+							}
 						}
 					}
 				}
