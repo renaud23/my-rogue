@@ -20,8 +20,10 @@ public class World {
 	this.width = width;
 	this.height = height;
 	this.size = this.width * this.height;
-	this.dungeon = SmoothLevelProvider.newInstance(width, height).setNbStep(5).carve().connectAllRoom().lighting()
-		.build();
+	this.dungeon = SmoothLevelProvider.newInstance(width, height).setNbStep(5).carve().lighting()
+		.buildEscapeRoom(10, 10).build();
+
+	this.dungeon.print(System.out);
     }
 
     public Point peekEmptyPlace() {

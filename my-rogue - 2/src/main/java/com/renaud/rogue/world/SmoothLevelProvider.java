@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.tools.Rectangle;
 import com.renaud.rogue.world.Dungeon.Crowler;
@@ -41,7 +42,7 @@ public class SmoothLevelProvider {
 
     }
 
-    public void connectAllRoom() {
+    private List<List<Point>> getAllRooms() {
 	Dungeon e2 = e.clone();
 
 	Point start = peekFirstFloor(e2);
@@ -53,6 +54,10 @@ public class SmoothLevelProvider {
 	    start = peekFirstFloor(e2);
 	}
 
+	return rooms;
+    }
+
+    private void fillSmallest(List<List<Point>> rooms) {
 	int largedSize = -1;
 	List<Point> best = null;
 	for (List<Point> room : rooms) {
@@ -69,7 +74,11 @@ public class SmoothLevelProvider {
 		}
 	    }
 	}
+    }
 
+    public void fillSmallest() {
+	List<List<Point>> rooms = getAllRooms();
+	fillSmallest(rooms);
     }
 
     private void lighting() {
@@ -160,15 +169,56 @@ public class SmoothLevelProvider {
 	int posX = rnd.nextInt(e.getWidth() - largeur - 1) + 1;
 	int posY = rnd.nextInt(e.getHeight() - hauteur - 1) + 1;
 
+	List<Point> exit = new ArrayList<>();
+	List<Point> walls = new ArrayList<>();
 	for (int i = 0; i < largeur; i++) {
 	    for (int j = 0; j < hauteur; j++) {
 		if (i == 0 || i == largeur - 1 || j == 0 || j == hauteur - 1) {
 		    e.setTile(posX + i, posY + j, Tile.Factory.getWall());
+		    walls.add(new Point(posX + i, posY + j));
 		} else {
 		    e.setTile(posX + i, posY + j, Tile.Factory.getFloor());
+		    exit.add(new Point(posX + i, posY + j));
 		}
 	    }
 	}
+	List<List<Point>> rooms = getAllRooms();
+
+	for (List<Point> room : rooms) {
+	    if (room.containsAll(exit)) {
+		exit = room;
+	    }
+	}
+	rooms.remove(exit);
+	fillSmallest(rooms);
+	//
+	rooms = getAllRooms();
+	List<Point> curr = rooms.remove(0);
+	Point ba = null, bb = null;
+	int min = Integer.MAX_VALUE;
+	while (!rooms.isEmpty()) {
+	    List<Point> next = rooms.remove(0);
+	    for (Point a : curr) {
+		for (Point b : next) {
+		    int dist = MathTools.distance(a, b);
+		    if (dist < min) {
+			min = dist;
+			ba = a;
+			bb = b;
+		    }
+		}
+	    }
+	}
+	// e.setTile(ba.x, ba.y, Tile.Factory.getTorche());
+	// e.setTile(bb.x, bb.y, Tile.Factory.getTorche());
+
+	int dx = (ba.x + bb.x) / 2;
+	int dy = (ba.y + bb.y) / 2;
+	// TODO
+	e.setExitRoom(exit);
+	e.setExitDoorLocation(new Point(dx, dy));
+	e.setTile(dx, dy, Tile.Factory.getFloor());
+
     }
 
     /* ******************************* */
@@ -189,8 +239,8 @@ public class SmoothLevelProvider {
 	    return this;
 	}
 
-	public Builder connectAllRoom() {
-	    e.connectAllRoom();
+	public Builder fillSmallest() {
+	    e.fillSmallest();
 	    return this;
 	}
 
@@ -216,7 +266,7 @@ public class SmoothLevelProvider {
     }
 
     public final static void main(String[] args) {
-	Dungeon e = SmoothLevelProvider.newInstance(40, 30).setNbStep(4).carve().connectAllRoom().build();
+	Dungeon e = SmoothLevelProvider.newInstance(80, 60).setNbStep(4).carve().buildEscapeRoom(8, 8).build();
 	e.print(System.out);
     }
 
@@ -239,4 +289,5 @@ public class SmoothLevelProvider {
 	    return room;
 	}
     }
+
 }

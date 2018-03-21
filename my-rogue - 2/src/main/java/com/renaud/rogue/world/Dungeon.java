@@ -19,6 +19,9 @@ public class Dungeon {
     private Tile[] tiles;
     private List<TorcheFixe> torches = new ArrayList<>();
 
+    private List<Point> exitRoom;
+    private Point exitDoorLocation;
+
     // TODO liste items
 
     public Dungeon(int width, int height) {
@@ -151,6 +154,22 @@ public class Dungeon {
 
     public static interface Crowler {
 	void crowl(int x, int y);
+    }
+
+    public List<Point> getExitRoom() {
+	return exitRoom;
+    }
+
+    public void setExitRoom(List<Point> exitRoom) {
+	this.exitRoom = exitRoom;
+    }
+
+    public Point getExitDoorLocation() {
+	return exitDoorLocation;
+    }
+
+    public void setExitDoorLocation(Point exitDoorLocation) {
+	this.exitDoorLocation = exitDoorLocation;
     }
 
 }
