@@ -18,9 +18,13 @@ public interface KeyboardEvent {
 
 	default void keyRightRealesed() {};
 
-	default void spacePressed() {};
+	default void rankedWeaponPressed() {};
 
-	default void spaceReleaseded() {};
+	default void rankedWeaponReleaseded() {};
+
+	default void meleeWeaponPressed() {};
+
+	default void meleeWeaponReleaseded() {};
 
 	default void mouseMoved(int x, int y, int varx, int vary) {};
 

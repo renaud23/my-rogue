@@ -1,9 +1,12 @@
 package com.renaud.rogue.weapon;
 
+import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.element.Living;
 import com.renaud.rogue.game.Game;
 
 public interface Weapon {
+
+	boolean canAim(Joueur joueur, int x, int y);
 
 	Living getUser();
 

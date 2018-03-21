@@ -19,17 +19,23 @@ public class Knife implements Weapon {
 		return 1;
 	}
 
+	public boolean canAim(Joueur joueur, int x, int y) {
+		int dx = Math.abs(x - joueur.getX());
+		int dy = Math.abs(y - joueur.getY());
+		if (dx <= 1 && dy <= 1)
+			return true;
+		return false;
+	}
+
 	@Override
 	public void shoot(Game game, int aimx, int aimy) {
 		Tile tile = game.getWorld().getTile(aimx, aimy);
 		if (!tile.isEmpty()) {
 			if (tile.getElement() instanceof Joueur) {
 				System.out.println("vous vous infligé un sépuku rituel !");
+			} else if (tile.getElement() instanceof Living) {
+				((Living) tile.getElement()).injured(game, this);
 			}
-			else
-				if (tile.getElement() instanceof Living) {
-					((Living) tile.getElement()).injured(game, this);
-				}
 		}
 	}
 

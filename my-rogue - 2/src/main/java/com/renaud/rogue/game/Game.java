@@ -14,13 +14,15 @@ import com.renaud.rogue.element.monster.Wolf;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
 import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.weapon.Weapon;
 import com.renaud.rogue.world.Light;
 import com.renaud.rogue.world.Tile;
 import com.renaud.rogue.world.World;
 
 public class Game implements RogueSequence, KeyboardEvent {
 
-	private boolean aimToShoot;
+	private boolean shoot;
+	private boolean weaponAiming;
 	private World world;
 	private Joueur joueur;
 
@@ -84,6 +86,10 @@ public class Game implements RogueSequence, KeyboardEvent {
 	@Override
 	public void activate() {
 		this.illumine();
+		if (shoot) {
+			shoot = false;
+			this.joueur.shoot(this);
+		}
 		this.playSequence.activate();
 	}
 
@@ -108,16 +114,23 @@ public class Game implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void spacePressed() {
-		if (!aimToShoot) {
-			aimToShoot = true;
+	public void rankedWeaponPressed() {
+		if (!weaponAiming) {
+			weaponAiming = true;
 			this.joueur.resetAim();
 			this.currentSequence = aimSequence;
 		} else {
-			aimToShoot = false;
+			weaponAiming = false;
+			shoot = true;
 			this.currentSequence = playSequence;
-			this.joueur.getWeapon().shoot(this, this.joueur.getAimx(), joueur.getAimy());
-			playSequence.spacePressed();
+			playSequence.rankedWeaponPressed();
+		}
+	}
+
+	@Override
+	public void meleeWeaponPressed() {
+		if (!weaponAiming) {
+			joueur.switchWeapon();
 		}
 	}
 
@@ -157,7 +170,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	}
 
 	public boolean isAiming() {
-		return aimToShoot;
+		return weaponAiming;
 	}
 	/* */
 
@@ -213,6 +226,10 @@ public class Game implements RogueSequence, KeyboardEvent {
 				}
 			}
 		}
+	}
+
+	public Weapon getActiveWeapon() {
+		return joueur.getActiveWeapon();
 	}
 
 }

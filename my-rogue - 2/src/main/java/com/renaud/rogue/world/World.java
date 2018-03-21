@@ -88,6 +88,12 @@ public class World {
 		return true;
 	}
 
+	public boolean isInWorld(int x, int y) {
+		if (x < 0 || y < 0 || x >= getWidth() || y >= getHeight())
+			return false;
+		return true;
+	}
+
 	public boolean canSee(Monster pnj, Element cible) {
 		int dist = MathTools.distance(pnj.getX(), pnj.getY(), cible.getX(), cible.getY());
 		if (dist > pnj.getDepht() * pnj.getDepht())

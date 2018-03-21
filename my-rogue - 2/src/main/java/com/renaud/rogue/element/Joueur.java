@@ -7,6 +7,7 @@ import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.weapon.Gun;
 import com.renaud.rogue.weapon.Knife;
 import com.renaud.rogue.weapon.Weapon;
 import com.renaud.rogue.world.Dungeon;
@@ -20,7 +21,9 @@ public class Joueur implements Living {
 	private int y;
 	private int aimx;
 	private int aimy;
-	private Weapon weapon;
+	private Weapon rankedWeapon;
+	private Weapon meleeWeapon;
+	private Weapon activeWeapon;
 	private Set<Point> lastComputed = new HashSet<>();
 
 	int life = 100;
@@ -33,10 +36,24 @@ public class Joueur implements Living {
 		this.depht = 12;
 		this.memory = new Dungeon(worldWidth, worldHeight);
 		this.memory.fill(Tile.UNKNOW);
-		this.weapon = new Knife(this);
+		this.rankedWeapon = new Gun(this);
+		this.meleeWeapon = new Knife(this);
+		this.activeWeapon = this.meleeWeapon;
 	}
 
 	private Dungeon memory;
+
+	public void switchWeapon() {
+		if (activeWeapon == meleeWeapon) {
+			activeWeapon = rankedWeapon;
+		} else {
+			activeWeapon = meleeWeapon;
+		}
+	}
+
+	public void shoot(Game game) {
+		this.activeWeapon.shoot(game, aimx, aimy);
+	}
 
 	@Override
 	public int getX() {
@@ -90,25 +107,25 @@ public class Joueur implements Living {
 	}
 
 	public void aimUp() {
-		if (Math.abs(y - aimy + 1) <= weapon.getDepht()) {
+		if (activeWeapon.canAim(this, aimx, aimy - 1)) {
 			aimy--;
 		}
 	}
 
 	public void aimDown() {
-		if (Math.abs(y - aimy - 1) <= weapon.getDepht()) {
+		if (activeWeapon.canAim(this, aimx, aimy + 1)) {
 			aimy++;
 		}
 	}
 
 	public void aimLeft() {
-		if (Math.abs(x - aimx + 1) <= weapon.getDepht()) {
+		if (activeWeapon.canAim(this, aimx - 1, aimy)) {
 			aimx--;
 		}
 	}
 
 	public void aimRight() {
-		if (Math.abs(x - aimx - 1) <= weapon.getDepht()) {
+		if (activeWeapon.canAim(this, aimx + 1, aimy)) {
 			aimx++;
 		}
 	}
@@ -173,12 +190,8 @@ public class Joueur implements Living {
 		return aimy;
 	}
 
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
-	}
-
-	public Weapon getWeapon() {
-		return weapon;
+	public Weapon getActiveWeapon() {
+		return activeWeapon;
 	}
 
 }

@@ -10,6 +10,7 @@ import com.renaud.rogue.element.LightSource;
 import com.renaud.rogue.element.light.Explosion;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
+import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
@@ -83,6 +84,10 @@ public class GameDrawer implements Draw {
 			buffer.fillRect(bloc.color, bloc.x * carrSize, bloc.y * carrSize, carrSize, carrSize, bloc.alpha);
 		}
 
+		if (game.isAiming()) {
+			drawAiming(startX, startY, carrSize);
+		}
+
 		for (Element element : elements) {
 			int xi = element.getX() - startX;
 			int yi = element.getY() - startY;
@@ -117,14 +122,34 @@ public class GameDrawer implements Draw {
 			}
 		}
 
-		if (game.isAiming()) {
-			int xi = game.getJoueur().getAimx() - startX;
-			int yi = game.getJoueur().getAimy() - startY;
-			buffer.fillRect(Color.red, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.5f);
-		}
-
 		this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
 
+	}
+
+	private void drawAiming(int startX, int startY, int carrSize) {
+		int wd = game.getActiveWeapon().getDepht();
+		int wd2 = wd;
+		wd2 *= wd;
+		for (int i = -wd; i <= wd; i++) {
+			for (int j = -wd; j <= wd; j++) {
+				int dist = MathTools.distance(game.getJoueur().getX(), game.getJoueur().getY(), game.getJoueur().getX() + i, game.getJoueur().getY() + j);
+				if (dist < wd2) {
+					int xi = game.getJoueur().getX() + i - startX;
+					int yi = game.getJoueur().getY() + j - startY;
+					buffer.fillRect(Color.green, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.2f);
+				}
+			}
+		}
+
+		for (Point p : MathTools.getSegment(game.getJoueur().getX(), game.getJoueur().getY(), game.getJoueur().getAimx(), game.getJoueur().getAimy())) {
+			int xi = p.x - startX;
+			int yi = p.y - startY;
+			// if (p.x == game.getJoueur().getX() && p.y == game.getJoueur().getY())
+			// continue;
+			buffer.fillRect(Color.red, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.2f);
+			if (p.x == game.getJoueur().getAimx() && p.y == game.getJoueur().getAimy())
+				buffer.drawRect(Color.yellow, xi * carrSize, yi * carrSize, carrSize, carrSize);
+		}
 	}
 
 	private Color getColor(Tile tile) {
