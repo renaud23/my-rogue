@@ -43,8 +43,8 @@ public class MainSequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void meleeWeaponPressed() {
-		currentSequence.meleeWeaponPressed();
+	public void switchWeaponPressed() {
+		currentSequence.switchWeaponPressed();
 	}
 
 }

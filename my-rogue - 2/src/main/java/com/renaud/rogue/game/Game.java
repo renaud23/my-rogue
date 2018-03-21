@@ -128,10 +128,8 @@ public class Game implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void meleeWeaponPressed() {
-		if (!weaponAiming) {
-			joueur.switchWeapon();
-		}
+	public void switchWeaponPressed() {
+		this.currentSequence.switchWeaponPressed();
 	}
 
 	public void moveTo(Element element, int x, int y) {

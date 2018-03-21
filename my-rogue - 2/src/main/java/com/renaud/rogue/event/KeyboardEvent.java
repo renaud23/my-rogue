@@ -22,7 +22,7 @@ public interface KeyboardEvent {
 
 	default void rankedWeaponReleaseded() {};
 
-	default void meleeWeaponPressed() {};
+	default void switchWeaponPressed() {};
 
 	default void meleeWeaponReleaseded() {};
 

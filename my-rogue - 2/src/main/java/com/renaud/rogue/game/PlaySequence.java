@@ -113,4 +113,11 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 		return step;
 	}
 
+	@Override
+	public void switchWeaponPressed() {
+		actions--;
+		playChange = true;
+		game.getJoueur().switchWeapon();
+	}
+
 }
