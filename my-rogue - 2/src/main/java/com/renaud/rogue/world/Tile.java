@@ -3,13 +3,7 @@ package com.renaud.rogue.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.renaud.rogue.drawer.sprite.HeroSprite;
-import com.renaud.rogue.drawer.sprite.TorcheSprite;
-import com.renaud.rogue.drawer.tile.FireballTile;
-import com.renaud.rogue.drawer.tile.GhoulTile;
-import com.renaud.rogue.drawer.tile.HeroTile;
 import com.renaud.rogue.drawer.tile.RogueTile;
-import com.renaud.rogue.drawer.tile.WolfTile;
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.inventaire.Item;
 
@@ -19,13 +13,13 @@ public class Tile {
 	public final static long WALL = 1l;
 	public final static long FLOOR = 2l;
 
-	public final static long PLAYER = 101l;
-	public final static long WOLF = 102l;
-	public final static long GHOUL = 103l;
+	// public final static long PLAYER = 101l;
+	// public final static long WOLF = 102l;
+	// public final static long GHOUL = 103l;
 
-	public final static long FIREBALL = 1001l;
+	// public final static long FIREBALL = 1001l;
 
-	public final static long TORCHE = 10001l;
+	// public final static long TORCHE = 10001l;
 	public final static long DOOR = 10002l;
 
 	private long code;
@@ -64,6 +58,14 @@ public class Tile {
 
 	public List<Item> getItem() {
 		return items;
+	}
+
+	public boolean hasItem() {
+		return !items.isEmpty();
+	}
+
+	public Item getLastItem() {
+		return items.get(items.size() - 1);
 	}
 
 	public boolean isLighted() {
@@ -148,29 +150,29 @@ public class Tile {
 			return new Tile(FLOOR, '.', 0x505050);
 		}
 
-		public static Tile createPlayerStand() {
-			return new Tile(PLAYER, '@', 0xEEEE00, new HeroTile());
-		}
+		// public static Tile createPlayerStand() {
+		// return new Tile(PLAYER, '@', 0xEEEE00, new HeroTile());
+		// }
 
-		public static Tile createPlayerDown() {
-			return new Tile(PLAYER, '@', 0xEEEE00, new HeroSprite());
-		}
+		// public static Tile createPlayerDown() {
+		// return new Tile(PLAYER, '@', 0xEEEE00, new HeroSprite());
+		// }
 
-		public static Tile getWolf() {
-			return new Tile(WOLF, 'W', 0xAA0000, new WolfTile());
-		}
+		// public static Tile getWolf() {
+		// return new Tile(WOLF, 'W', 0xAA0000, new WolfTile());
+		// }
 
-		public static Tile getGhoul() {
-			return new Tile(GHOUL, 'G', 0x0000AA, new GhoulTile());
-		}
+		// public static Tile getGhoul() {
+		// return new Tile(GHOUL, 'G', 0x0000AA, new GhoulTile());
+		// }
 
-		public static Tile getFireball() {
-			return new Tile(FIREBALL, '*', 0xAAAA00, new FireballTile());
-		}
+		// public static Tile getFireball() {
+		// return new Tile(FIREBALL, '*', 0xAAAA00, new FireballTile());
+		// }
 
-		public static Tile getTorche() {
-			return new Tile(TORCHE, 'i', 0xEE0000, new TorcheSprite());
-		}
+		// public static Tile getTorche() {
+		// return new Tile(TORCHE, 'i', 0xEE0000, new TorcheSprite());
+		// }
 
 		public static Tile createDoor() {
 			return new TileDoor(DOOR, 'D', 0xEE2050);

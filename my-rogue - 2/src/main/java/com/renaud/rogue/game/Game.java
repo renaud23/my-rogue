@@ -13,6 +13,7 @@ import com.renaud.rogue.element.light.TorcheFixe;
 import com.renaud.rogue.element.monster.Wolf;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
+import com.renaud.rogue.inventaire.GunAmmo;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.weapon.NoWeapon;
 import com.renaud.rogue.weapon.Weapon;
@@ -58,6 +59,11 @@ public class Game implements RogueSequence, KeyboardEvent {
 			Monster monster = new Wolf(start.x, start.y);
 			monsters.add(monster);
 			setElement(monster);
+		}
+
+		for (int i = 0; i < 15; i++) {
+			Point start = world.peekEmptyPlace();
+			world.getTile(start.x, start.y).addItem(new GunAmmo());
 		}
 
 		for (TorcheFixe torche : world.getTorches()) {

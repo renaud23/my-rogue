@@ -3,8 +3,6 @@ package com.renaud.rogue.element;
 
 import com.renaud.rogue.drawer.sprite.HeroSprite;
 import com.renaud.rogue.drawer.sprite.TorcheSprite;
-import com.renaud.rogue.drawer.tile.DoorClosedTile;
-import com.renaud.rogue.drawer.tile.DoorOpenedTile;
 import com.renaud.rogue.drawer.tile.FireballTile;
 import com.renaud.rogue.drawer.tile.GhoulTile;
 import com.renaud.rogue.drawer.tile.RogueTile;
@@ -21,6 +19,11 @@ public class TileElement {
 	public TileElement(char charCode, int color, RogueTile tile) {
 		this.charCode = charCode;
 		this.tile = tile;
+		this.color = color;
+	}
+
+	public TileElement(char charCode, int color) {
+		this.charCode = charCode;
 		this.color = color;
 	}
 
@@ -46,13 +49,17 @@ public class TileElement {
 			return new TileElement('i', 0xEE0000, new TorcheSprite());
 		}
 
-		public static TileElement createClosedDoor() {
-			return new TileElement('D', 0xEE2050, new DoorClosedTile());
+		public static TileElement getGunAmmo() {
+			return new TileElement('u', 0xEE0000);
 		}
 
-		public static TileElement createOpenedDoor() {
-			return new TileElement('|', 0xEE2050, new DoorOpenedTile());
-		}
+		// public static TileElement createClosedDoor() {
+		// return new TileElement('D', 0xEE2050, new DoorClosedTile());
+		// }
+		//
+		// public static TileElement createOpenedDoor() {
+		// return new TileElement('|', 0xEE2050, new DoorOpenedTile());
+		// }
 
 	}
 

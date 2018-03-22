@@ -11,6 +11,7 @@ import com.renaud.rogue.element.TileElement;
 import com.renaud.rogue.element.light.Explosion;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
+import com.renaud.rogue.inventaire.Item;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.IDrawOperation;
@@ -56,7 +57,7 @@ public class GameDrawer implements Draw {
 			int xi = i % largeur;
 			int yi = i / largeur;
 			Tile tileMemory = game.getJoueur().getMemory(startX + xi, startY + yi);
-			tiles[i] = new Bloc(xi, yi, tileMemory, new Color(tileMemory.getColor()), 0.1f);
+			tiles[i] = new Bloc(xi, yi, tileMemory, new Color(tileMemory.getColor()), 0.2f);
 		}
 
 		for (Point point : game.getJoueur().getVisibilityPoints(game)) {
@@ -87,6 +88,9 @@ public class GameDrawer implements Draw {
 			buffer.fillRect(bloc.color, bloc.x * carrSize, bloc.y * carrSize, carrSize, carrSize, bloc.alpha);
 			if (bloc.tile.getTile() != null) {
 				buffer.drawImage(bloc.tile.getTile().getImage(), bloc.x * carrSize, bloc.y * carrSize, 0, 0, 0, 1.0, bloc.tile.getLight().getAlpha());
+			}
+			if (bloc.tile.hasItem()) {
+				Item item = bloc.tile.getLastItem();
 			}
 		}
 
