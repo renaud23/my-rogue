@@ -1,16 +1,19 @@
 package com.renaud.rogue.world;
 
-import com.renaud.rogue.drawer.tile.DoorTileImg;
+import com.renaud.rogue.drawer.tile.DoorClosedTile;
+import com.renaud.rogue.drawer.tile.DoorOpenedTile;
 import com.renaud.rogue.drawer.tile.RogueTile;
+import com.renaud.rogue.game.Game;
 
-public class TileDoor extends Tile {
+public class TileDoor extends Tile implements Activable {
 
-	private static RogueTile doorTile = new DoorTileImg();
+	private static RogueTile openDoorTile = new DoorOpenedTile();
+	private static RogueTile closeDoorTile = new DoorClosedTile();
 	private boolean closed = true;
 	private boolean locked = false;
 
 	public TileDoor(long code, char tile, int color) {
-		super(code, tile, color, doorTile);
+		super(code, tile, color, openDoorTile);
 	}
 
 	public boolean isClose() {
@@ -39,5 +42,15 @@ public class TileDoor extends Tile {
 
 	public void lock() {
 		locked = true;
+	}
+
+	@Override
+	public void activate(Game game, int x, int y) {
+		this.closed = !closed;
+	}
+
+	@Override
+	public RogueTile getTile() {
+		return closed ? closeDoorTile : openDoorTile;
 	}
 }

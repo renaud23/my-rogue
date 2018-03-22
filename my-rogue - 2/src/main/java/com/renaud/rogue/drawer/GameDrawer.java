@@ -139,7 +139,7 @@ public class GameDrawer implements Draw {
 	}
 
 	private void drawAiming(int startX, int startY, int carrSize) {
-		int wd = game.getActiveWeapon().getDepht();
+		int wd = game.getJoueur().getAimingDepht();
 		int wd2 = wd;
 		wd2 *= wd;
 		for (int i = -wd; i <= wd; i++) {

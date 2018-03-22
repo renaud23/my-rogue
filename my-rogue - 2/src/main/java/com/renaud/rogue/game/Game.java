@@ -22,7 +22,9 @@ import com.renaud.rogue.world.World;
 public class Game implements RogueSequence, KeyboardEvent {
 
 	private boolean shoot;
+	private boolean activate;
 	private boolean weaponAiming;
+	private boolean activateAiming;
 	private World world;
 	private Joueur joueur;
 
@@ -89,6 +91,9 @@ public class Game implements RogueSequence, KeyboardEvent {
 		if (shoot) {
 			shoot = false;
 			this.joueur.shoot(this);
+		} else if (activate) {
+			activate = false;
+			this.joueur.activate(this);
 		}
 		this.playSequence.activate();
 	}
@@ -114,10 +119,24 @@ public class Game implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
+	public void activatePressed() {
+
+		if (!activateAiming) {
+			activateAiming = true;
+			this.joueur.resetAimingForActivate();
+			this.currentSequence = aimSequence;
+		}
+	}
+
+	@Override
 	public void rankedWeaponPressed() {
-		if (!weaponAiming) {
+		if (activateAiming) {
+			activateAiming = false;
+			this.currentSequence = playSequence;
+			activate = true;
+		} else if (!weaponAiming) {
 			weaponAiming = true;
-			this.joueur.resetAim();
+			this.joueur.resetAimingForShoot();
 			this.currentSequence = aimSequence;
 		} else {
 			weaponAiming = false;
@@ -168,7 +187,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	}
 
 	public boolean isAiming() {
-		return weaponAiming;
+		return weaponAiming || activateAiming;
 	}
 	/* */
 

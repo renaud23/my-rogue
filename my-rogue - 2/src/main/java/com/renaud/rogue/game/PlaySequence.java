@@ -120,4 +120,9 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 		game.getJoueur().switchWeapon();
 	}
 
+	@Override
+	public void activatePressed() {
+		System.out.println("activate");
+	}
+
 }

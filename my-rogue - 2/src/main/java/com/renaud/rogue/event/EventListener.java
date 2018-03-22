@@ -37,6 +37,9 @@ public class EventListener implements KeyListener, MouseMotionListener {
 			case KeyEvent.VK_T:
 				keyboard.switchWeaponPressed();
 				break;
+			case KeyEvent.VK_E:
+				keyboard.activatePressed();
+				break;
 		}
 	}
 

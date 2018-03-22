@@ -4,12 +4,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.renaud.rogue.element.projectile.Projectile;
+import com.renaud.rogue.game.ActivateAiming;
+import com.renaud.rogue.game.AimingAction;
 import com.renaud.rogue.game.Game;
+import com.renaud.rogue.game.ShootingAiming;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.weapon.Gun;
 import com.renaud.rogue.weapon.Knife;
 import com.renaud.rogue.weapon.Weapon;
+import com.renaud.rogue.world.Activable;
 import com.renaud.rogue.world.Tile;
 import com.renaud.rogue.world.dungeon.Dungeon;
 
@@ -25,6 +29,8 @@ public class Joueur implements Living {
 	private Weapon meleeWeapon;
 	private Weapon activeWeapon;
 	private Set<Point> lastComputed = new HashSet<>();
+
+	private AimingAction aiming;
 
 	int life = 100;
 	int xp = 0;
@@ -53,6 +59,13 @@ public class Joueur implements Living {
 
 	public void shoot(Game game) {
 		this.activeWeapon.shoot(game, aimx, aimy);
+	}
+
+	public void activate(Game game) {
+		Tile tile = game.getWorld().getTile(aimx, aimy);
+		if (tile instanceof Activable) {
+			((Activable) tile).activate(game, aimx, aimy);
+		}
 	}
 
 	@Override
@@ -101,33 +114,32 @@ public class Joueur implements Living {
 		return lastComputed;
 	}
 
-	public void resetAim() {
+	public void resetAimingForShoot() {
 		this.aimx = x;
 		this.aimy = y;
+		this.aiming = new ShootingAiming(this, this.activeWeapon);
+	}
+
+	public void resetAimingForActivate() {
+		this.aimx = x;
+		this.aimy = y;
+		this.aiming = new ActivateAiming(this);
 	}
 
 	public void aimUp() {
-		if (activeWeapon.canAim(this, aimx, aimy - 1)) {
-			aimy--;
-		}
+		this.aiming.aimUp();
 	}
 
 	public void aimDown() {
-		if (activeWeapon.canAim(this, aimx, aimy + 1)) {
-			aimy++;
-		}
+		this.aiming.aimDown();
 	}
 
 	public void aimLeft() {
-		if (activeWeapon.canAim(this, aimx - 1, aimy)) {
-			aimx--;
-		}
+		this.aiming.aimLeft();
 	}
 
 	public void aimRight() {
-		if (activeWeapon.canAim(this, aimx + 1, aimy)) {
-			aimx++;
-		}
+		this.aiming.aimRight();
 	}
 
 	public Set<Point> getLastComputed() {
@@ -190,8 +202,20 @@ public class Joueur implements Living {
 		return aimy;
 	}
 
+	public void setAimx(int aimx) {
+		this.aimx = aimx;
+	}
+
+	public void setAimy(int aimy) {
+		this.aimy = aimy;
+	}
+
 	public Weapon getActiveWeapon() {
 		return activeWeapon;
+	}
+
+	public int getAimingDepht() {
+		return this.activeWeapon.getDepht();
 	}
 
 }

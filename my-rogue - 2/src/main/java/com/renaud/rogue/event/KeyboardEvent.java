@@ -24,7 +24,7 @@ public interface KeyboardEvent {
 
 	default void switchWeaponPressed() {};
 
-	default void meleeWeaponReleaseded() {};
+	default void activatePressed() {};
 
 	default void mouseMoved(int x, int y, int varx, int vary) {};
 

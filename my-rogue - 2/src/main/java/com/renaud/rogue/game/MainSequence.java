@@ -47,4 +47,9 @@ public class MainSequence implements RogueSequence, KeyboardEvent {
 		currentSequence.switchWeaponPressed();
 	}
 
+	@Override
+	public void activatePressed() {
+		currentSequence.activatePressed();
+	}
+
 }
