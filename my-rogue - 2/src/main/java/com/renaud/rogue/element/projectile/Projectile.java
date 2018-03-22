@@ -61,8 +61,8 @@ public class Projectile implements Element, TurnPlay {
 		finished = true;
 		game.addLightSource(new Explosion(next.x, next.y));
 		Tile tile = game.getWorld().getTile(next.x, next.y);
-		if (!tile.isEmpty() && tile.getElement() instanceof Living) {
-		    ((Living) tile.getElement()).injured(game, this);
+		if (!tile.isEmpty() && tile.getOccupant() instanceof Living) {
+		    ((Living) tile.getOccupant()).injured(game, this);
 		}
 	    }
 	} else {

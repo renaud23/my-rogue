@@ -31,10 +31,10 @@ public class Knife implements Weapon {
 	public void shoot(Game game, int aimx, int aimy) {
 		Tile tile = game.getWorld().getTile(aimx, aimy);
 		if (!tile.isEmpty()) {
-			if (tile.getElement() instanceof Joueur) {
+			if (tile.getOccupant() instanceof Joueur) {
 				System.out.println("vous vous infligé un sépuku rituel !");
-			} else if (tile.getElement() instanceof Living) {
-				((Living) tile.getElement()).injured(game, this);
+			} else if (tile.getOccupant() instanceof Living) {
+				((Living) tile.getOccupant()).injured(game, this);
 			}
 		}
 	}

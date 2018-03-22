@@ -10,8 +10,8 @@ import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.weapon.Gun;
 import com.renaud.rogue.weapon.Knife;
 import com.renaud.rogue.weapon.Weapon;
-import com.renaud.rogue.world.Dungeon;
 import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.world.dungeon.Dungeon;
 
 public class Joueur implements Living {
 

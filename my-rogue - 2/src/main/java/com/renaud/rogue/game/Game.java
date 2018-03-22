@@ -44,13 +44,13 @@ public class Game implements RogueSequence, KeyboardEvent {
 		this.currentSequence = this.playSequence;
 
 		// for dev
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 2; i++) {
 			Point start = world.peekEmptyPlace();
 			Monster monster = Monster.Factory.createGhool(start.x, start.y);
 			monsters.add(monster);
 			setElement(monster);
 		}
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 5; i++) {
 			Point start = world.peekEmptyPlace();
 			Monster monster = new Wolf(start.x, start.y);
 			monsters.add(monster);
@@ -61,7 +61,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 			this.addLightSource(torche);
 			this.setElement(torche);
 		}
-
+		world.print(System.out, true);
 		this.addLightSource(new Torche(joueur));
 	}
 
@@ -180,7 +180,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 		Tile tile = this.world.getTile(monster.getX(), monster.getY());
 		if (tile.isEmpty()) {
 			this.monsters.add(monster);
-			tile.setElement(monster);
+			tile.setOccupant(monster);
 		}
 	}
 

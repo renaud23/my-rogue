@@ -31,8 +31,8 @@ public class Gun implements RankedWeapon {
 			Tile tile = game.getWorld().getTile(p.x, p.y);
 			if (!tile.isEmpty()) {
 				game.addLightSource(new Explosion(p.x, p.y));
-				if (tile.getElement() instanceof Living) {
-					((Living) tile.getElement()).injured(game, this);
+				if (tile.getOccupant() instanceof Living) {
+					((Living) tile.getOccupant()).injured(game, this);
 				}
 				break;
 			} else if (!game.getWorld().canGo(p.x, p.y)) {
