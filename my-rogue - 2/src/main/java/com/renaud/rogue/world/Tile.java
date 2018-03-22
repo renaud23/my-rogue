@@ -11,6 +11,7 @@ import com.renaud.rogue.drawer.tile.HeroTile;
 import com.renaud.rogue.drawer.tile.RogueTile;
 import com.renaud.rogue.drawer.tile.WolfTile;
 import com.renaud.rogue.element.Element;
+import com.renaud.rogue.inventaire.Item;
 
 public class Tile {
 
@@ -34,12 +35,13 @@ public class Tile {
 	private List<Element> objects = new ArrayList<>();
 	private Light light = new Light(1.0f, 1.0f, 0.5f);
 	private RogueTile tile;
+	private List<Item> items = new ArrayList<>();
 
 	public Tile clone() {
 		return new Tile(code, charCode, color);
 	}
 
-	protected Tile(long code, char tile, int color) {
+	public Tile(long code, char tile, int color) {
 		this.code = code;
 		this.charCode = tile;
 		this.color = color;
@@ -50,6 +52,18 @@ public class Tile {
 		this.charCode = charCode;
 		this.color = color;
 		this.tile = tile;
+	}
+
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
+	public void removeItem(Item item) {
+		items.remove(items);
+	}
+
+	public List<Item> getItem() {
+		return items;
 	}
 
 	public boolean isLighted() {

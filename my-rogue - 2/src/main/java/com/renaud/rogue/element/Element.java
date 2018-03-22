@@ -1,25 +1,21 @@
 package com.renaud.rogue.element;
 
-import com.renaud.rogue.world.Tile;
-
 public interface Element {
 
-    int getX();
+	int getX();
 
-    int getY();
+	int getY();
 
-    default void setX(int x) {
-    };
+	default void setX(int x) {};
 
-    default void setY(int y) {
-    };
+	default void setY(int y) {};
 
-    default Tile getTile() {
-	return null;
-    };
+	default TileElement getTile() {
+		return null;
+	};
 
-    default boolean isOpaque() {
-	return false;
-    };
+	default boolean isOpaque() {
+		return false;
+	};
 
 }

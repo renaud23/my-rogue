@@ -8,6 +8,7 @@ import com.renaud.rogue.game.ActivateAiming;
 import com.renaud.rogue.game.AimingAction;
 import com.renaud.rogue.game.Game;
 import com.renaud.rogue.game.ShootingAiming;
+import com.renaud.rogue.inventaire.Inventaire;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.weapon.Knife;
@@ -19,13 +20,15 @@ import com.renaud.rogue.world.dungeon.Dungeon;
 
 public class Joueur implements Living {
 
-	private final static Tile tile = Tile.Factory.createPlayerDown();
+	private final static TileElement tile = TileElement.Factory.createPlayer();
 
 	private int depht;
 	private int x;
 	private int y;
 	private int aimx;
 	private int aimy;
+
+	private Inventaire inventaire;
 
 	private Weapon rankedWeapon;
 	private Weapon meleeWeapon;
@@ -48,6 +51,8 @@ public class Joueur implements Living {
 		this.rankedWeapon = new NoWeapon();
 		this.meleeWeapon = new Knife(this);
 		this.activeWeapon = this.meleeWeapon;
+
+		this.inventaire = new Inventaire();
 	}
 
 	private Dungeon memory;
@@ -162,7 +167,7 @@ public class Joueur implements Living {
 	}
 
 	@Override
-	public Tile getTile() {
+	public TileElement getTile() {
 		return tile;
 	}
 
@@ -240,6 +245,10 @@ public class Joueur implements Living {
 
 	public void setMaxLife(int maxLife) {
 		this.maxLife = maxLife;
+	}
+
+	public Inventaire getInventaire() {
+		return inventaire;
 	}
 
 }

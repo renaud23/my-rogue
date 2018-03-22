@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.Living;
+import com.renaud.rogue.element.TileElement;
 import com.renaud.rogue.element.TurnPlay;
 import com.renaud.rogue.element.light.Explosion;
 import com.renaud.rogue.game.Game;
@@ -24,7 +25,7 @@ public class Projectile implements Element, TurnPlay {
 	public int speed;
 	public boolean opaque;
 	public String name = "projectile";
-	public Tile tile;
+	public TileElement tile;
 
 	private int actions;
 	private int actionsMax;
@@ -91,7 +92,7 @@ public class Projectile implements Element, TurnPlay {
 	}
 
 	@Override
-	public Tile getTile() {
+	public TileElement getTile() {
 		return tile;
 	}
 
@@ -120,7 +121,7 @@ public class Projectile implements Element, TurnPlay {
 			p.opaque = false;
 			p.damage = 5;
 			p.name = "fireball";
-			p.tile = Tile.Factory.getFireball();
+			p.tile = TileElement.Factory.getFireball();
 			p.init();
 			return p;
 		}

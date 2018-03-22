@@ -7,6 +7,7 @@ import java.util.List;
 import com.renaud.rogue.drawer.MainDrawer.Draw;
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.LightSource;
+import com.renaud.rogue.element.TileElement;
 import com.renaud.rogue.element.light.Explosion;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.game.Game;
@@ -97,14 +98,14 @@ public class GameDrawer implements Draw {
 			int xi = element.getX() - startX;
 			int yi = element.getY() - startY;
 			StringBuilder bld = new StringBuilder();
-			Tile tile = element.getTile();
+			TileElement tile = element.getTile();
 			if (tile.getTile() != null) {
 				Tile ground = game.getWorld().getTile(element.getX(), element.getY());
 				buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, ground.getLight().getAlpha());
 
 			} else {
 				bld.append(tile.getCharCode());
-				buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1, getColor(element.getTile()));
+				buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1, new Color(tile.getColor()));
 			}
 
 		}
@@ -114,13 +115,13 @@ public class GameDrawer implements Draw {
 				continue;
 			int xi = proj.getX() - startX;
 			int yi = proj.getY() - startY;
-			Tile tile = proj.getTile();
+			TileElement tile = proj.getTile();
 			if (tile.getTile() != null) {
 				buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, 1.0f);
 			} else {
 				StringBuilder bld = new StringBuilder();
 				bld.append(proj.getTile().getCharCode());
-				buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize + carrSize - 2, carrSize + 1, getColor(proj.getTile()));
+				buffer.drawChar(bld.toString(), xi * carrSize, yi * carrSize + carrSize - 2, carrSize + 1, new Color(tile.getColor()));
 			}
 		}
 
