@@ -148,7 +148,7 @@ public class GameDrawer implements Draw {
 				if (dist < wd2) {
 					int xi = game.getJoueur().getX() + i - startX;
 					int yi = game.getJoueur().getY() + j - startY;
-					buffer.fillRect(Color.green, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.2f);
+					buffer.fillRect(Color.green, xi * carrSize, yi * carrSize, carrSize, carrSize, 0.1f);
 				}
 			}
 		}

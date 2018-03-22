@@ -4,12 +4,31 @@ import com.renaud.rogue.event.KeyboardEvent;
 
 public class MainSequence implements RogueSequence, KeyboardEvent {
 
+	private boolean onPlay;
+	private boolean onInventaire;
+
 	private Game game;
+	private InventaireSequence inventaire;
 	private RogueSequence currentSequence;
 
-	public MainSequence(Game game) {
+	public MainSequence(Game game, InventaireSequence inventaire) {
 		this.game = game;
+		this.inventaire = inventaire;
+		this.onPlay = true;
 		this.currentSequence = this.game;
+	}
+
+	@Override
+	public void inventairePressed() {
+		if (onPlay) {
+			onPlay = false;
+			onInventaire = true;
+			currentSequence = inventaire;
+		} else if (onInventaire) {
+			onPlay = true;
+			onInventaire = false;
+			currentSequence = game;
+		}
 	}
 
 	@Override
@@ -38,8 +57,8 @@ public class MainSequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void rankedWeaponPressed() {
-		currentSequence.rankedWeaponPressed();
+	public void weaponPressed() {
+		currentSequence.weaponPressed();
 	}
 
 	@Override
@@ -50,6 +69,14 @@ public class MainSequence implements RogueSequence, KeyboardEvent {
 	@Override
 	public void activatePressed() {
 		currentSequence.activatePressed();
+	}
+
+	public boolean isOnPlay() {
+		return onPlay;
+	}
+
+	public boolean isOnInventaire() {
+		return onInventaire;
 	}
 
 }

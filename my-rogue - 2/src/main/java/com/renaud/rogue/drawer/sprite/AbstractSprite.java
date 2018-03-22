@@ -15,10 +15,12 @@ public abstract class AbstractSprite implements RogueTile {
 	private int current;
 	private int width;
 	private int height;
+	private boolean finished;
 
 	public AbstractSprite(int length, int largeur, int hauteur) {
 		this.length = length;
 		this.speed = new Chrono(getSpeed());
+
 		this.width = largeur;
 		this.height = hauteur;
 	}
@@ -53,6 +55,7 @@ public abstract class AbstractSprite implements RogueTile {
 	@Override
 	public Image getImage() {
 		if (speed.isEllapsed()) {
+			finished = true;
 			current++;
 			if (current == length) {
 				current = 0;
@@ -68,6 +71,10 @@ public abstract class AbstractSprite implements RogueTile {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public boolean isEnd() {
+		return finished;
 	}
 
 }

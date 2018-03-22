@@ -14,6 +14,7 @@ import com.renaud.rogue.element.monster.Wolf;
 import com.renaud.rogue.element.projectile.Projectile;
 import com.renaud.rogue.event.KeyboardEvent;
 import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.weapon.NoWeapon;
 import com.renaud.rogue.weapon.Weapon;
 import com.renaud.rogue.world.Light;
 import com.renaud.rogue.world.Tile;
@@ -129,7 +130,9 @@ public class Game implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void rankedWeaponPressed() {
+	public void weaponPressed() {
+		if (joueur.getActiveWeapon() instanceof NoWeapon)
+			return;
 		if (activateAiming) {
 			activateAiming = false;
 			this.currentSequence = playSequence;
@@ -142,7 +145,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 			weaponAiming = false;
 			shoot = true;
 			this.currentSequence = playSequence;
-			playSequence.rankedWeaponPressed();
+			playSequence.weaponPressed();
 		}
 	}
 

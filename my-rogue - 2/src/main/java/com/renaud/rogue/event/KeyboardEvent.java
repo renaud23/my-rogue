@@ -18,11 +18,13 @@ public interface KeyboardEvent {
 
 	default void keyRightRealesed() {};
 
-	default void rankedWeaponPressed() {};
+	default void weaponPressed() {};
 
-	default void rankedWeaponReleaseded() {};
+	default void weaponReleaseded() {};
 
 	default void switchWeaponPressed() {};
+
+	default void inventairePressed() {};
 
 	default void activatePressed() {};
 

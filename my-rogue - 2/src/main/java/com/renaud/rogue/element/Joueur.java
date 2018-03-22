@@ -10,8 +10,8 @@ import com.renaud.rogue.game.Game;
 import com.renaud.rogue.game.ShootingAiming;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.weapon.Gun;
 import com.renaud.rogue.weapon.Knife;
+import com.renaud.rogue.weapon.NoWeapon;
 import com.renaud.rogue.weapon.Weapon;
 import com.renaud.rogue.world.Activable;
 import com.renaud.rogue.world.Tile;
@@ -19,12 +19,14 @@ import com.renaud.rogue.world.dungeon.Dungeon;
 
 public class Joueur implements Living {
 
-	private final static Tile tile = Tile.Factory.getPlayer();
+	private final static Tile tile = Tile.Factory.createPlayerDown();
+
 	private int depht;
 	private int x;
 	private int y;
 	private int aimx;
 	private int aimy;
+
 	private Weapon rankedWeapon;
 	private Weapon meleeWeapon;
 	private Weapon activeWeapon;
@@ -33,6 +35,7 @@ public class Joueur implements Living {
 	private AimingAction aiming;
 
 	int life = 100;
+	int maxLife = 100;
 	int xp = 0;
 	int level = 1;
 
@@ -42,7 +45,7 @@ public class Joueur implements Living {
 		this.depht = 12;
 		this.memory = new Dungeon(worldWidth, worldHeight);
 		this.memory.fill(Tile.UNKNOW);
-		this.rankedWeapon = new Gun(this);
+		this.rankedWeapon = new NoWeapon();
 		this.meleeWeapon = new Knife(this);
 		this.activeWeapon = this.meleeWeapon;
 	}
@@ -180,13 +183,18 @@ public class Joueur implements Living {
 
 	@Override
 	public void injured(Game game, Projectile projectile) {
-		System.out.println("Vous êtes atteind par ...");
-
+		System.out.println("Vous êtes atteind par " + projectile.name);
+		this.life -= projectile.damage;
 	}
 
 	public void injured(Monster monster) {
 		System.out.println("Vous êtes attaqué par " + monster.getName());
 		this.life -= monster.getMeleeDamage();
+	}
+
+	@Override
+	public void injured(Game game, Weapon weapon) {
+
 	}
 
 	@Override
@@ -216,6 +224,22 @@ public class Joueur implements Living {
 
 	public int getAimingDepht() {
 		return this.activeWeapon.getDepht();
+	}
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public int getMaxLife() {
+		return maxLife;
+	}
+
+	public void setMaxLife(int maxLife) {
+		this.maxLife = maxLife;
 	}
 
 }

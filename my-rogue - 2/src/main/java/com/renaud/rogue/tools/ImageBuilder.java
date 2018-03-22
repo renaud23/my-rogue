@@ -66,9 +66,9 @@ public class ImageBuilder {
 		int largeur = 16;
 		int hauteur = 16;
 		SimpleImageLoader loader = new SimpleImageLoader();
-		Image image = loader.getImage("C:/Users/kqhlz2/workspace_js/my-rogue/my-rogue - 2/src/main/resources/img/door-closed.png");
+		Image image = loader.getImage("C:/Users/kqhlz2/workspace_js/my-rogue/my-rogue - 2/src/main/resources/img/door.png");
 
-		int[] pix = ImageBuilder.loadImage(image, 0, 0, largeur, hauteur);
+		int[] pix = ImageBuilder.loadImage(image, 16, 0, largeur, hauteur);
 
 		for (int i = 0; i < pix.length; i++) {
 			System.out.print(pix[i] + " ,");

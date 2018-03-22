@@ -96,7 +96,7 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void rankedWeaponPressed() {
+	public void weaponPressed() {
 		actions--;
 		playChange = true;
 	}

@@ -60,16 +60,16 @@ public class SpriteBuilder {
 	public static void main(String[] args) {
 		SimpleImageLoader loader = new SimpleImageLoader();
 		Image image = loader
-			.getImage("C:/Users/kqhlz2/workspace_js/my-rogue/my-rogue - 2/src/main/resources/img/explosions.png");
+			.getImage("C:/Users/kqhlz2/workspace_js/my-rogue/my-rogue - 2/src/main/resources/img/template.png");
 
-		Point[] points = new Point[8];
-		for (int i = 0; i < 8; i++) {
-			points[i] = new Point(193 + i * 16, 0);
+		Point[] points = new Point[4];
+		for (int i = 0; i < 4; i++) {
+			points[i] = new Point(0 + i * 16, 0);
 		}
 
 		SpriteBuilder sp = new SpriteBuilder(image, points, 16, 16, 1.0);
 		sp.genere();
-		sp.print(System.out, "ExplosionSprite");
+		sp.print(System.out, "HeroSprite");
 	}
 
 }

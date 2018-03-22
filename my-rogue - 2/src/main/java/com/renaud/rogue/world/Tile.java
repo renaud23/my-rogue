@@ -3,6 +3,7 @@ package com.renaud.rogue.world;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.renaud.rogue.drawer.sprite.HeroSprite;
 import com.renaud.rogue.drawer.sprite.TorcheSprite;
 import com.renaud.rogue.drawer.tile.FireballTile;
 import com.renaud.rogue.drawer.tile.GhoulTile;
@@ -133,8 +134,12 @@ public class Tile {
 			return new Tile(FLOOR, '.', 0x505050);
 		}
 
-		public static Tile getPlayer() {
+		public static Tile createPlayerStand() {
 			return new Tile(PLAYER, '@', 0xEEEE00, new HeroTile());
+		}
+
+		public static Tile createPlayerDown() {
+			return new Tile(PLAYER, '@', 0xEEEE00, new HeroSprite());
 		}
 
 		public static Tile getWolf() {
