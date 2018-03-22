@@ -9,9 +9,12 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Transparency;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -19,7 +22,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 
-public class JImageBuffer implements IDrawOperation {
+import com.renaud.rogue.view.console.DrawTexteOperation;
+
+public class JImageBuffer implements IDrawOperation, DrawTexteOperation {
 
     private static GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 	    .getDefaultConfiguration();
@@ -320,9 +325,25 @@ public class JImageBuffer implements IDrawOperation {
 
     }
 
+    public Rectangle getBound(String str, Font font, int x, int y) {
+	Graphics2D g = this.image.createGraphics();
+	g.setFont(font);
+	FontRenderContext frc = g.getFontRenderContext();
+	GlyphVector gv = g.getFont().createGlyphVector(frc, str);
+	return gv.getPixelBounds(null, x, y);
+    }
+
+    public void drawChar(String ch, int x, int y, Font font, Color color) {
+	Graphics2D g = this.image.createGraphics();
+	g.setFont(font);
+	g.setColor(color);
+
+	g.drawString(ch, x, y);
+    }
+
     public void drawChar(String ch, int x, int y, int size) {
 	Graphics2D g = this.image.createGraphics();
-	g.setFont(new Font("Courier New", Font.PLAIN, size));
+	g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, size));
 
 	g.drawString(ch, x, y);
     }

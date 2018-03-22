@@ -11,71 +11,69 @@ import javax.imageio.ImageIO;
 
 public class ImageBuilder {
 
-	public static void test(int[] pixels, int largeur, int hauteur) {
-		BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
+    public static void test(int[] pixels, int largeur, int hauteur) {
+	BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
 
-		for (int i = 0; i < largeur; i++) {
-			for (int j = 0; j < hauteur; j++) {
-				//
-				image.setRGB(i, j, pixels[i + j * largeur]);
-			}
-		}
-
-		File outputfile = new File("d:/saved.png");
-		try {
-			ImageIO.write(image, "png", outputfile);
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	for (int i = 0; i < largeur; i++) {
+	    for (int j = 0; j < hauteur; j++) {
+		//
+		image.setRGB(i, j, pixels[i + j * largeur]);
+	    }
 	}
 
-	public static int[] loadImage(Image image, int sx, int sy, int sl, int sh) {
-		if (image != null) {
-			int l = image.getWidth(null);
-			int h = image.getHeight(null);
-			int t = h * l;
-			int[] data = new int[t];
-			int[] neo = new int[sl * sh];
+	File outputfile = new File("e:/saved.png");
+	try {
+	    ImageIO.write(image, "png", outputfile);
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    }
 
-			PixelGrabber pg = new PixelGrabber(image, 0, 0, l, h, data, 0, l);
-			try {
-				pg.grabPixels();
-				for (int i = 0; i < sh; i++) {
-					for (int j = 0; j < sl; j++) {
-						int coord = (sy + i) * l + sx + j;
+    public static int[] loadImage(Image image, int sx, int sy, int sl, int sh) {
+	if (image != null) {
+	    int l = image.getWidth(null);
+	    int h = image.getHeight(null);
+	    int t = h * l;
+	    int[] data = new int[t];
+	    int[] neo = new int[sl * sh];
 
-						int pix = data[coord];
-						neo[j + i * sl] = pix;
+	    PixelGrabber pg = new PixelGrabber(image, 0, 0, l, h, data, 0, l);
+	    try {
+		pg.grabPixels();
+		for (int i = 0; i < sh; i++) {
+		    for (int j = 0; j < sl; j++) {
+			int coord = (sy + i) * l + sx + j;
 
-					}
-				}
-				return neo;
-			}
-			catch (InterruptedException e) {
-				throw new RejectedExecutionException("Impossible de lire les pixels de l'image.", e);
-			}
+			int pix = data[coord];
+			neo[j + i * sl] = pix;
 
+		    }
 		}
+		return neo;
+	    } catch (InterruptedException e) {
+		throw new RejectedExecutionException("Impossible de lire les pixels de l'image.", e);
+	    }
 
-		return null;
 	}
 
-	public static void main(String[] args) {
-		int largeur = 16;
-		int hauteur = 16;
-		SimpleImageLoader loader = new SimpleImageLoader();
-		Image image = loader.getImage("C:/Users/kqhlz2/workspace_js/my-rogue/my-rogue - 2/src/main/resources/img/door.png");
+	return null;
+    }
 
-		int[] pix = ImageBuilder.loadImage(image, 16, 0, largeur, hauteur);
+    public static void main(String[] args) {
+	int largeur = 16;
+	int hauteur = 16;
+	SimpleImageLoader loader = new SimpleImageLoader();
+	Image image = loader.getImage("E:\\workspace\\my-rogue\\my-rogue - 2\\src\\main\\resources\\img\\pack.png");
 
-		for (int i = 0; i < pix.length; i++) {
-			System.out.print(pix[i] + " ,");
-			if (i % 16 == 15)
-				System.out.println();
-		}
-		ImageBuilder.test(pix, largeur, hauteur);
+	int[] pix = ImageBuilder.loadImage(image, 52, 0, largeur, hauteur);
+
+	for (int i = 0; i < pix.length; i++) {
+	    System.out.print(pix[i] + " ,");
+	    if (i % 16 == 15)
+		System.out.println();
 	}
+	ImageBuilder.test(pix, largeur, hauteur);
+    }
 
 }

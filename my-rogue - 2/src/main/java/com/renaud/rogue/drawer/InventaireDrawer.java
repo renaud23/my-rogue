@@ -1,31 +1,43 @@
 package com.renaud.rogue.drawer;
 
+import java.awt.Color;
+
 import com.renaud.rogue.drawer.MainDrawer.Draw;
 import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.view.IDrawOperation;
+import com.renaud.rogue.view.JImageBuffer;
+import com.renaud.rogue.view.console.Console;
 
 public class InventaireDrawer implements Draw {
 
-	private Joueur joueur;
-	private int screenLargeur;
-	private int screenHauteur;
+    private IDrawOperation op;
+    private IDrawOperation buffer;
 
-	public InventaireDrawer(Joueur joueur, int screenLargeur, int screenHauteur) {
-		this.joueur = joueur;
-		this.screenLargeur = screenLargeur;
-		this.screenHauteur = screenHauteur;
-	}
+    private Joueur joueur;
+    private int screenLargeur;
+    private int screenHauteur;
+    private Console console = new Console(400, 200);
 
-	@Override
-	public void draw() {
-		// TODO Auto-generated method stub
+    public InventaireDrawer(Joueur joueur, int screenLargeur, int screenHauteur) {
+	this.joueur = joueur;
+	this.screenLargeur = screenLargeur;
+	this.screenHauteur = screenHauteur;
 
-	}
+	buffer = new JImageBuffer(Color.white, screenLargeur, screenHauteur);
+    }
 
-	@Override
-	public void setDrawOperation(IDrawOperation op) {
-		// TODO Auto-generated method stub
+    @Override
+    public void draw() {
+	buffer.fillRect(Color.black, 0, 0, screenLargeur, screenHauteur, 1.0f);
 
-	}
+	buffer.drawImage(console.getImage(), 20, 20, 0, 0, 0, 1.0, 1.0, 1.0f);
+
+	this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
+    }
+
+    @Override
+    public void setDrawOperation(IDrawOperation op) {
+	this.op = op;
+    }
 
 }

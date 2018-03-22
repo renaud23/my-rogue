@@ -4,10 +4,20 @@ import com.renaud.rogue.element.TileElement;
 
 public class GunAmmo implements Item {
 
-	private TileElement tile;
+    private int ammunitions = 12;
 
-	public TileElement getTile() {
-		return tile;
-	}
+    private TileElement tile = TileElement.Factory.createGunAmmo();
+
+    public TileElement getTile() {
+	return tile;
+    }
+
+    public int getAmmunitions() {
+	return ammunitions;
+    }
+
+    public void setAmmunitions(int ammunitions) {
+	this.ammunitions = ammunitions;
+    }
 
 }

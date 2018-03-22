@@ -12,7 +12,7 @@ public class Light {
     }
 
     public float getAlpha() {
-	return (pr + pg + pb) / 3;
+	return (pr + pg + pb) / 3.0f;
     }
 
     public static final Light DARK = new Light(0, 0, 0);

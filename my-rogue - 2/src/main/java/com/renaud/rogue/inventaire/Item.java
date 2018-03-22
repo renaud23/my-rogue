@@ -1,5 +1,7 @@
 package com.renaud.rogue.inventaire;
 
-public interface Item {
+import com.renaud.rogue.element.TileElement;
 
+public interface Item {
+    TileElement getTile();
 }
