@@ -1,4 +1,4 @@
-package com.renaud.rogue.drawer;
+package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 

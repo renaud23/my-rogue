@@ -3,9 +3,9 @@ package com.renaud.rogue.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.renaud.rogue.drawer.tile.RogueTile;
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.inventaire.Item;
+import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public class Tile {
 

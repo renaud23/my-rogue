@@ -1,4 +1,4 @@
-package com.renaud.rogue.drawer.tile;
+package com.renaud.rogue.view.drawer.tile;
 
 import java.awt.Color;
 import java.awt.Image;

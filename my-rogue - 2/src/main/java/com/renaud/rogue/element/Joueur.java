@@ -11,6 +11,7 @@ import com.renaud.rogue.game.ShootingAiming;
 import com.renaud.rogue.inventaire.Inventaire;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.weapon.Knife;
 import com.renaud.rogue.weapon.NoWeapon;
 import com.renaud.rogue.weapon.Weapon;
@@ -188,12 +189,12 @@ public class Joueur implements Living {
 
 	@Override
 	public void injured(Game game, Projectile projectile) {
-		System.out.println("Vous êtes atteind par " + projectile.name);
+		GameConsoleDrawer.addLine("Vous êtes atteind par " + projectile.name, 0xff0000);
 		this.life -= projectile.damage;
 	}
 
 	public void injured(Monster monster) {
-		System.out.println("Vous êtes attaqué par " + monster.getName());
+		GameConsoleDrawer.addLine("Vous êtes attaqué par " + monster.getName(), 0xff0000);
 		this.life -= monster.getMeleeDamage();
 	}
 

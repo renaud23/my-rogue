@@ -1,15 +1,15 @@
-package com.renaud.rogue.drawer;
+package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 
-import com.renaud.rogue.drawer.MainDrawer.Draw;
-import com.renaud.rogue.drawer.tile.HeartEmpty;
-import com.renaud.rogue.drawer.tile.HeartFull;
-import com.renaud.rogue.drawer.tile.HeartMid;
-import com.renaud.rogue.drawer.tile.RogueTile;
 import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
+import com.renaud.rogue.view.drawer.MainDrawer.Draw;
+import com.renaud.rogue.view.drawer.tile.HeartEmpty;
+import com.renaud.rogue.view.drawer.tile.HeartFull;
+import com.renaud.rogue.view.drawer.tile.HeartMid;
+import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public class HudDrawer implements Draw {
 

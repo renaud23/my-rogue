@@ -1,12 +1,12 @@
-package com.renaud.rogue.drawer.sprite;
+package com.renaud.rogue.view.drawer.sprite;
 
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import com.renaud.rogue.drawer.tile.RogueTile;
 import com.renaud.rogue.tools.Chrono;
 import com.renaud.rogue.view.JImageBuffer;
+import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public abstract class AbstractSprite implements RogueTile {
 

@@ -1,9 +1,9 @@
 package com.renaud.rogue.world;
 
-import com.renaud.rogue.drawer.tile.DoorClosedTile;
-import com.renaud.rogue.drawer.tile.DoorOpenedTile;
-import com.renaud.rogue.drawer.tile.RogueTile;
 import com.renaud.rogue.game.Game;
+import com.renaud.rogue.view.drawer.tile.DoorClosedTile;
+import com.renaud.rogue.view.drawer.tile.DoorOpenedTile;
+import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public class TileDoor extends Tile implements Activable {
 

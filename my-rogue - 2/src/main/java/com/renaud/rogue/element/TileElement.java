@@ -1,14 +1,14 @@
 
 package com.renaud.rogue.element;
 
-import com.renaud.rogue.drawer.sprite.HeroSprite;
-import com.renaud.rogue.drawer.sprite.TorcheSprite;
-import com.renaud.rogue.drawer.tile.FireballTile;
-import com.renaud.rogue.drawer.tile.GhoulTile;
-import com.renaud.rogue.drawer.tile.GunAmmoTile;
-import com.renaud.rogue.drawer.tile.GunTile;
-import com.renaud.rogue.drawer.tile.RogueTile;
-import com.renaud.rogue.drawer.tile.WolfTile;
+import com.renaud.rogue.view.drawer.sprite.HeroSprite;
+import com.renaud.rogue.view.drawer.sprite.TorcheSprite;
+import com.renaud.rogue.view.drawer.tile.FireballTile;
+import com.renaud.rogue.view.drawer.tile.GhoulTile;
+import com.renaud.rogue.view.drawer.tile.GunAmmoTile;
+import com.renaud.rogue.view.drawer.tile.GunTile;
+import com.renaud.rogue.view.drawer.tile.RogueTile;
+import com.renaud.rogue.view.drawer.tile.WolfTile;
 
 public class TileElement {
 

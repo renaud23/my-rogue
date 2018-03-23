@@ -1,8 +1,8 @@
-package com.renaud.rogue.drawer.sprite;
+package com.renaud.rogue.view.drawer.sprite;
 
 import java.awt.Image;
 
-import com.renaud.rogue.drawer.tile.RogueTile;
+import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public class Sprite implements RogueTile {
 
