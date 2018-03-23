@@ -4,7 +4,7 @@ import com.renaud.rogue.element.TileElement;
 import com.renaud.rogue.element.comportement.Comportement;
 import com.renaud.rogue.element.comportement.MoveToJoueur;
 import com.renaud.rogue.element.comportement.ShootFireball;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.tools.MathTools;
 
 public class Shooter extends AbstractMonster {

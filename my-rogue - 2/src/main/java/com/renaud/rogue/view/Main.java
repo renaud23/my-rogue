@@ -2,9 +2,9 @@ package com.renaud.rogue.view;
 
 import com.renaud.rogue.element.Joueur;
 import com.renaud.rogue.event.EventListener;
-import com.renaud.rogue.game.Game;
-import com.renaud.rogue.game.InventaireSequence;
-import com.renaud.rogue.game.MainSequence;
+import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.sequence.InventaireSequence;
+import com.renaud.rogue.sequence.MainSequence;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.GameDrawer;
@@ -38,7 +38,9 @@ public class Main {
 		Point start = world.peekEmptyPlace();
 		Joueur joueur = new Joueur(start.x, start.y, wolrdLargeur, worldHauteur);
 		Game game = new Game(world, joueur);
-		InventaireSequence inventaire = new InventaireSequence(game);
+
+		InventaireDrawer inventaireDrawer = new InventaireDrawer(joueur, screenLargeur, screenHauteur);
+		InventaireSequence inventaire = new InventaireSequence(game, inventaireDrawer);
 
 		MainSequence mainSequence = new MainSequence(game, inventaire);
 		EventListener listener = new EventListener(mainSequence);
@@ -51,7 +53,6 @@ public class Main {
 		MinimapDrawer minimapDrawer = new MinimapDrawer(game, screenLargeur, hudHauteur - mapHauteur, mapLargeur, mapHauteur);
 		GameConsoleDrawer consoleDrawer = new GameConsoleDrawer(0, screenHauteur, consoleWidth, consoleHeight);
 		PlayingDrawer playingDrawer = new PlayingDrawer(gameDrawer, hudDrawer, minimapDrawer, consoleDrawer);
-		InventaireDrawer inventaireDrawer = new InventaireDrawer(joueur, screenLargeur, screenHauteur);
 
 		MainDrawer mainDrawer = new MainDrawer(playingDrawer, inventaireDrawer, mainSequence);
 		fenetre.addDrawable(mainDrawer);

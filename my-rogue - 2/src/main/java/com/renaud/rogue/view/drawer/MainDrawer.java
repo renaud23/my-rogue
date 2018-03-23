@@ -1,6 +1,6 @@
 package com.renaud.rogue.view.drawer;
 
-import com.renaud.rogue.game.MainSequence;
+import com.renaud.rogue.sequence.MainSequence;
 import com.renaud.rogue.view.DrawOperationAware;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.IDrawable;

@@ -2,7 +2,7 @@ package com.renaud.rogue.element.monster;
 
 import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.weapon.Weapon;
 

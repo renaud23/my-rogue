@@ -1,4 +1,4 @@
-package com.renaud.rogue.game;
+package com.renaud.rogue.sequence;
 
 public interface AimingAction {
 

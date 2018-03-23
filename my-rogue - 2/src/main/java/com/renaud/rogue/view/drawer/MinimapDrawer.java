@@ -2,7 +2,7 @@ package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.DrawOperationAware;
 import com.renaud.rogue.view.IDrawOperation;

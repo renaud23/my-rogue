@@ -7,7 +7,7 @@ import java.util.Set;
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.LightSource;
 import com.renaud.rogue.element.TileElement;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.tools.Chrono;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;

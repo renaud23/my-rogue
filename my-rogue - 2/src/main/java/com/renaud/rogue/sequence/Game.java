@@ -1,4 +1,4 @@
-package com.renaud.rogue.game;
+package com.renaud.rogue.sequence;
 
 import java.util.ArrayList;
 import java.util.List;

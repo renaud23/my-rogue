@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.weapon.Weapon;
 

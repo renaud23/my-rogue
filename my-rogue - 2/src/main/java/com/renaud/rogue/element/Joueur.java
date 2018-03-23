@@ -4,11 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.game.ActivateAiming;
-import com.renaud.rogue.game.AimingAction;
-import com.renaud.rogue.game.Game;
-import com.renaud.rogue.game.ShootingAiming;
 import com.renaud.rogue.inventaire.Inventaire;
+import com.renaud.rogue.sequence.ActivateAiming;
+import com.renaud.rogue.sequence.AimingAction;
+import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.sequence.ShootingAiming;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;

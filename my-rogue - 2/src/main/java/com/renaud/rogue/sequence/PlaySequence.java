@@ -1,4 +1,4 @@
-package com.renaud.rogue.game;
+package com.renaud.rogue.sequence;
 
 import com.renaud.rogue.element.Monster;
 import com.renaud.rogue.element.projectile.Projectile;

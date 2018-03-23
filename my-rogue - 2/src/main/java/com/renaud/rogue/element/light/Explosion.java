@@ -2,7 +2,7 @@ package com.renaud.rogue.element.light;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.LightSource;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.tools.Chrono;
 import com.renaud.rogue.view.drawer.sprite.ExplosionSprite;
 

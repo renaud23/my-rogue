@@ -2,7 +2,7 @@ package com.renaud.rogue.element.comportement;
 
 import com.renaud.rogue.element.Element;
 import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 
 public class ShootFireball implements Comportement {
 

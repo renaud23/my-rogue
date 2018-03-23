@@ -1,6 +1,6 @@
 package com.renaud.rogue.element;
 
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 
 public interface TurnPlay {
     void startTurn();

@@ -1,7 +1,7 @@
 package com.renaud.rogue.element.comportement;
 
 import com.renaud.rogue.element.Element;
-import com.renaud.rogue.game.Game;
+import com.renaud.rogue.sequence.Game;
 import com.renaud.rogue.tools.MathTools;
 import com.renaud.rogue.tools.Point;
 
