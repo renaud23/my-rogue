@@ -38,10 +38,13 @@ public class Game implements RogueSequence, ActionEvent {
     private PlaySequence playSequence;
     private AimSequence aimSequence;
     private RogueSequence currentSequence;
+    private LootSequence lootSequence;
+    private boolean onLoot;
 
     public Game(World world, Joueur joueur) {
 	this.world = world;
 	this.joueur = joueur;
+	// this.lootSequence = lootSequence;
 	setElement(this.joueur);
 
 	this.playSequence = new PlaySequence(this);
@@ -107,6 +110,8 @@ public class Game implements RogueSequence, ActionEvent {
 	} else if (activate) {
 	    activate = false;
 	    this.joueur.activate(this);
+	} else if (onLoot) {
+	    currentSequence = lootSequence;
 	}
 	this.playSequence.activate();
     }
@@ -133,7 +138,6 @@ public class Game implements RogueSequence, ActionEvent {
 
     @Override
     public void activateAction() {
-
 	if (!activateAiming) {
 	    activateAiming = true;
 	    this.joueur.resetAimingForActivate();
@@ -262,6 +266,14 @@ public class Game implements RogueSequence, ActionEvent {
 
     public Weapon getActiveWeapon() {
 	return joueur.getActiveWeapon();
+    }
+
+    public boolean isOnLoot() {
+	return onLoot;
+    }
+
+    public boolean setOnLoot(boolean onLoot) {
+	return this.onLoot = onLoot;
     }
 
 }

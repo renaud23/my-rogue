@@ -1,28 +1,32 @@
 package com.renaud.rogue.view.drawer.menu;
 
-import java.awt.Color;
-import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.view.DrawOperationAware;
-import com.renaud.rogue.view.IDrawOperation;
-import com.renaud.rogue.view.IDrawable;
+import com.renaud.rogue.game.tools.Rectangle;
 
-public class Layout implements IDrawable, ActionEvent, DrawOperationAware {
+public class Layout implements ActionEvent, Iterable<Layout> {
 
     private List<Layout> children = new ArrayList<>();
     private Layout parent;
     private Layout activeChild;
     private Layout openedChild;
+    protected int color = 0xFF0000;
     private boolean actif;
+    protected boolean changed = true;
 
-    protected IDrawOperation op;
     private Rectangle rectangle;
 
     public Layout(int x, int y, int largeur, int hauteur) {
 	rectangle = new Rectangle(x, y, largeur, hauteur);
+	parent = null;
+    }
+
+    public Layout(int color, int x, int y, int largeur, int hauteur) {
+	rectangle = new Rectangle(x, y, largeur, hauteur);
+	this.color = color;
 	parent = null;
     }
 
@@ -31,16 +35,10 @@ public class Layout implements IDrawable, ActionEvent, DrawOperationAware {
 	this.parent = parent;
     }
 
-    @Override
-    public void draw() {
-	this.op.fillRect(Color.red, rectangle.x, rectangle.y, rectangle.width, rectangle.height, 1.0f);
-	this.op.drawRect(actif ? Color.yellow : Color.black, rectangle.x, rectangle.y, rectangle.width,
-		rectangle.height);
-
-	if (!isLeaf()) {
-	    children.forEach(l -> l.draw());
-	}
-
+    public Layout(int color, int x, int y, int largeur, int hauteur, Layout parent) {
+	rectangle = new Rectangle(x, y, largeur, hauteur);
+	this.parent = parent;
+	this.color = color;
     }
 
     public boolean isLeaf() {
@@ -204,11 +202,6 @@ public class Layout implements IDrawable, ActionEvent, DrawOperationAware {
 	}
     }
 
-    @Override
-    public void setDrawOperation(IDrawOperation op) {
-	this.op = op;
-    }
-
     public void addChild(Layout child) {
 	this.children.add(child);
     }
@@ -227,6 +220,47 @@ public class Layout implements IDrawable, ActionEvent, DrawOperationAware {
 	}
 	witch.actif = true;
 	return witch;
+    }
+
+    public boolean isChanged() {
+	return changed;
+    }
+
+    public void setChanged(boolean changed) {
+	this.changed = changed;
+    }
+
+    @Override
+    public Iterator<Layout> iterator() {
+	return children.iterator();
+    }
+
+    public boolean isActif() {
+	return actif;
+    }
+
+    public int getX() {
+	return rectangle.x;
+    }
+
+    public int getY() {
+	return rectangle.y;
+    }
+
+    public int getWidth() {
+	return rectangle.width;
+    }
+
+    public int getHeight() {
+	return rectangle.height;
+    }
+
+    public int getColor() {
+	return color;
+    }
+
+    public void setColor(int color) {
+	this.color = color;
     }
 
 }

@@ -12,6 +12,7 @@ public class ItemInventory extends Layout {
 	super(pixelx, pixely, largeur, hauteur, parent);
 	this.i = i;
 	this.j = j;
+	this.color = 0x000050;
     }
 
     public void setItem(Item item) {

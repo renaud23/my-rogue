@@ -48,7 +48,7 @@ public class TileDungeon {
 	items.remove(item);
     }
 
-    public List<Item> getItem() {
+    public List<Item> getItems() {
 	return items;
     }
 
