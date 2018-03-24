@@ -17,7 +17,6 @@ import com.renaud.rogue.game.inventaire.GunAmmo;
 import com.renaud.rogue.game.layout.LootLayout;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Gun;
-import com.renaud.rogue.game.weapon.NoWeapon;
 import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.game.world.Light;
 import com.renaud.rogue.game.world.TileDungeon;
@@ -49,8 +48,8 @@ public class Game implements RogueSequence, ActionEvent {
 	setElement(this.joueur);
 
 	this.playSequence = new PlayingSequence(this);
-	this.aimSequence = new AimSequence(this);
-	this.lootSequence = new LootSequence(lootLayout);
+	// this.aimSequence = new AimSequence(this);
+	this.lootSequence = new LootSequence(this, lootLayout);
 
 	this.currentSequence = this.playSequence;
 
@@ -94,7 +93,7 @@ public class Game implements RogueSequence, ActionEvent {
 	return joueur;
     }
 
-    private void illumine() {
+    public void illumine() {
 	for (int i = 0; i < this.world.getSize(); i++) {
 	    this.world.getTile(i).setLight(Light.DARK);
 	}
@@ -104,23 +103,26 @@ public class Game implements RogueSequence, ActionEvent {
 	}
     }
 
+    /* activate sequence */
+
     @Override
     public void activate() {
-	this.illumine();
-	if (shoot) {
-	    shoot = false;
-	    this.joueur.shoot(this);
-
-	} else if (activate) {
-	    activate = false;
-	    this.joueur.activate(this);
-	}
-	if (onLoot) {
-	    currentSequence = lootSequence;
-	    this.lootSequence.activate();
-	} else {
-	    this.playSequence.activate();
-	}
+	this.currentSequence.activate();
+	// this.illumine();
+	// if (shoot) {
+	// shoot = false;
+	// this.joueur.shoot(this);
+	//
+	// } else if (activate) {
+	// activate = false;
+	// this.joueur.activate(this);
+	// }
+	// if (onLoot) {
+	// currentSequence = lootSequence;
+	// this.lootSequence.activate();
+	// } else {
+	// this.playSequence.activate();
+	// }
     }
 
     /* Action Event */
@@ -147,35 +149,37 @@ public class Game implements RogueSequence, ActionEvent {
 
     @Override
     public void activateAction() {
-	if (!activateAiming) {
-	    activateAiming = true;
-	    this.joueur.resetAimingForActivate();
-	    this.currentSequence = aimSequence;
-	}
+	this.currentSequence.activateAction();
+	// if (!activateAiming) {
+	// activateAiming = true;
+	// this.joueur.resetAimingForActivate();
+	// this.currentSequence = aimSequence;
+	// }
     }
 
     @Override
     public void weaponAction() {
-	if (onLoot) {
-	    this.currentSequence.weaponAction();
-	} else {
-	    if (joueur.getActiveWeapon() instanceof NoWeapon)
-		return;
-	    if (activateAiming) {
-		activateAiming = false;
-		this.currentSequence = playSequence;
-		activate = true;
-	    } else if (!weaponAiming) {
-		weaponAiming = true;
-		this.joueur.resetAimingForShoot();
-		this.currentSequence = aimSequence;
-	    } else {
-		weaponAiming = false;
-		shoot = true;
-		this.currentSequence = playSequence;
-		playSequence.weaponAction();
-	    }
-	}
+	this.currentSequence.weaponAction();
+	// if (onLoot) {
+	// this.currentSequence.weaponAction();
+	// } else {
+	// if (joueur.getActiveWeapon() instanceof NoWeapon)
+	// return;
+	// if (activateAiming) {
+	// activateAiming = false;
+	// this.currentSequence = playSequence;
+	// activate = true;
+	// } else if (!weaponAiming) {
+	// weaponAiming = true;
+	// this.joueur.resetAimingForShoot();
+	// this.currentSequence = aimSequence;
+	// } else {
+	// weaponAiming = false;
+	// shoot = true;
+	// this.currentSequence = playSequence;
+	// playSequence.weaponAction();
+	// }
+	// }
     }
 
     @Override
@@ -185,10 +189,6 @@ public class Game implements RogueSequence, ActionEvent {
 
     @Override
     public void annulerAction() {
-	if (onLoot) {
-	    // onLoot = false;
-	    // currentSequence = playSequence;
-	}
 	this.currentSequence.annulerAction();
     }
 
@@ -234,7 +234,7 @@ public class Game implements RogueSequence, ActionEvent {
     }
 
     public boolean isAiming() {
-	return weaponAiming || activateAiming;
+	return this.currentSequence instanceof AimSequence;
     }
     /* */
 

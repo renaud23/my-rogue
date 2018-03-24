@@ -5,9 +5,11 @@ import com.renaud.rogue.game.event.ActionEvent;
 public class AimSequence implements RogueSequence, ActionEvent {
 
     private Game game;
+    private AimingAction aiming;
 
-    public AimSequence(Game game) {
+    public AimSequence(Game game, AimingAction aiming) {
 	this.game = game;
+	this.aiming = aiming;
     }
 
     @Override
@@ -17,27 +19,28 @@ public class AimSequence implements RogueSequence, ActionEvent {
 
     @Override
     public void goUpAction() {
-	game.getJoueur().aimUp();
+	aiming.aimUp();
     }
 
     @Override
     public void goDownAction() {
-	game.getJoueur().aimDown();
+	aiming.aimDown();
     }
 
     @Override
     public void goLeftAction() {
-	game.getJoueur().aimLeft();
+	aiming.aimLeft();
     }
 
     @Override
     public void goRightAction() {
-	game.getJoueur().aimRight();
+	aiming.aimRight();
     }
 
     @Override
     public void weaponAction() {
-
+	this.aiming.activate(game);
+	game.changeSequence(new PlayingSequence(game));
     }
 
 }

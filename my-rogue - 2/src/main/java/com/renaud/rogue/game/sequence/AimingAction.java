@@ -2,14 +2,16 @@ package com.renaud.rogue.game.sequence;
 
 public interface AimingAction {
 
-	void aimUp();
+    void aimUp();
 
-	void aimDown();
+    void aimDown();
 
-	void aimLeft();
+    void aimLeft();
 
-	void aimRight();
+    void aimRight();
 
-	int getDepht();
+    int getDepht();
+
+    void activate(Game game);
 
 }

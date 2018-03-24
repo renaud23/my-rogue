@@ -5,9 +5,11 @@ import com.renaud.rogue.game.layout.LootLayout;
 
 public class LootSequence implements RogueSequence, ActionEvent {
 
+    private Game game;
     private LootLayout layout;
 
-    public LootSequence(LootLayout layout) {
+    public LootSequence(Game game, LootLayout layout) {
+	this.game = game;
 	this.layout = layout;
     }
 

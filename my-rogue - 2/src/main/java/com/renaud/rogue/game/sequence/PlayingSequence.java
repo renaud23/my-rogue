@@ -19,6 +19,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 
     @Override
     public void activate() {
+	game.illumine();
 	if (playChange) {
 	    playChange = false;
 	    game.getProjectiles().removeIf(m -> m.isEnd());
@@ -99,6 +100,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void weaponAction() {
 	actions--;
 	playChange = true;
+	game.changeSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
     }
 
     public int getActions() {
@@ -122,6 +124,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 
     @Override
     public void activateAction() {
+	game.changeSequence(new AimSequence(game, new ActivateAiming(game)));
     }
 
 }

@@ -5,10 +5,8 @@ import java.util.Set;
 
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.inventaire.Inventaire;
-import com.renaud.rogue.game.sequence.ActivateAiming;
 import com.renaud.rogue.game.sequence.AimingAction;
 import com.renaud.rogue.game.sequence.Game;
-import com.renaud.rogue.game.sequence.ShootingAiming;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Knife;
@@ -127,16 +125,9 @@ public class Joueur implements Living {
 	return lastComputed;
     }
 
-    public void resetAimingForShoot() {
+    public void resetAiming() {
 	this.aimx = x;
 	this.aimy = y;
-	this.aiming = new ShootingAiming(this, this.activeWeapon);
-    }
-
-    public void resetAimingForActivate() {
-	this.aimx = x;
-	this.aimy = y;
-	this.aiming = new ActivateAiming(this);
     }
 
     public void aimUp() {
