@@ -1,15 +1,13 @@
 package com.renaud.rogue.game.sequence;
 
-import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.event.ActionEvent;
+import com.renaud.rogue.game.layout.LootLayout;
 
 public class LootSequence implements RogueSequence, ActionEvent {
 
-    private Joueur joueur;
-    private ActionEvent layout;
+    private LootLayout layout;
 
-    public LootSequence(Joueur joueur, ActionEvent layout) {
-	this.joueur = joueur;
+    public LootSequence(LootLayout layout) {
 	this.layout = layout;
     }
 
@@ -20,31 +18,37 @@ public class LootSequence implements RogueSequence, ActionEvent {
 
     @Override
     public void goUpAction() {
+	layout.setChanged(true);
 	layout.goUpAction();
     }
 
     @Override
     public void goDownAction() {
+	layout.setChanged(true);
 	layout.goDownAction();
     }
 
     @Override
     public void goLeftAction() {
+	layout.setChanged(true);
 	layout.goLeftAction();
     }
 
     @Override
     public void goRightAction() {
+	layout.setChanged(true);
 	layout.goRightAction();
     }
 
     @Override
     public void weaponAction() {
+	layout.setChanged(true);
 	layout.weaponAction();
     }
 
     @Override
     public void annulerAction() {
+	layout.setChanged(true);
 	layout.annulerAction();
     }
 

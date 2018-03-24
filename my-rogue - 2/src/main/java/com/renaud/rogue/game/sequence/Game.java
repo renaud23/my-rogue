@@ -14,6 +14,7 @@ import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
 import com.renaud.rogue.game.inventaire.GunAmmo;
+import com.renaud.rogue.game.layout.LootLayout;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Gun;
 import com.renaud.rogue.game.weapon.NoWeapon;
@@ -35,20 +36,22 @@ public class Game implements RogueSequence, ActionEvent {
     private List<Projectile> projectiles = new ArrayList<>();
     private List<LightSource> lightSources = new ArrayList<>();
 
-    private PlaySequence playSequence;
+    private PlayingSequence playSequence;
     private AimSequence aimSequence;
     private RogueSequence currentSequence;
     private LootSequence lootSequence;
+
     private boolean onLoot;
 
-    public Game(World world, Joueur joueur) {
+    public Game(World world, Joueur joueur, LootLayout lootLayout) {
 	this.world = world;
 	this.joueur = joueur;
-	// this.lootSequence = lootSequence;
 	setElement(this.joueur);
 
-	this.playSequence = new PlaySequence(this);
+	this.playSequence = new PlayingSequence(this);
 	this.aimSequence = new AimSequence(this);
+	this.lootSequence = new LootSequence(lootLayout);
+
 	this.currentSequence = this.playSequence;
 
 	// for dev
@@ -107,14 +110,20 @@ public class Game implements RogueSequence, ActionEvent {
 	if (shoot) {
 	    shoot = false;
 	    this.joueur.shoot(this);
+
 	} else if (activate) {
 	    activate = false;
 	    this.joueur.activate(this);
-	} else if (onLoot) {
-	    currentSequence = lootSequence;
 	}
-	this.playSequence.activate();
+	if (onLoot) {
+	    currentSequence = lootSequence;
+	    this.lootSequence.activate();
+	} else {
+	    this.playSequence.activate();
+	}
     }
+
+    /* Action Event */
 
     @Override
     public void goUpAction() {
@@ -147,21 +156,25 @@ public class Game implements RogueSequence, ActionEvent {
 
     @Override
     public void weaponAction() {
-	if (joueur.getActiveWeapon() instanceof NoWeapon)
-	    return;
-	if (activateAiming) {
-	    activateAiming = false;
-	    this.currentSequence = playSequence;
-	    activate = true;
-	} else if (!weaponAiming) {
-	    weaponAiming = true;
-	    this.joueur.resetAimingForShoot();
-	    this.currentSequence = aimSequence;
+	if (onLoot) {
+	    this.currentSequence.weaponAction();
 	} else {
-	    weaponAiming = false;
-	    shoot = true;
-	    this.currentSequence = playSequence;
-	    playSequence.weaponAction();
+	    if (joueur.getActiveWeapon() instanceof NoWeapon)
+		return;
+	    if (activateAiming) {
+		activateAiming = false;
+		this.currentSequence = playSequence;
+		activate = true;
+	    } else if (!weaponAiming) {
+		weaponAiming = true;
+		this.joueur.resetAimingForShoot();
+		this.currentSequence = aimSequence;
+	    } else {
+		weaponAiming = false;
+		shoot = true;
+		this.currentSequence = playSequence;
+		playSequence.weaponAction();
+	    }
 	}
     }
 
@@ -169,6 +182,21 @@ public class Game implements RogueSequence, ActionEvent {
     public void switchWeaponAction() {
 	this.currentSequence.switchWeaponAction();
     }
+
+    @Override
+    public void annulerAction() {
+	if (onLoot) {
+	    // onLoot = false;
+	    // currentSequence = playSequence;
+	}
+	this.currentSequence.annulerAction();
+    }
+
+    public void changeSequence(RogueSequence sequence) {
+	this.currentSequence = sequence;
+    }
+
+    /* */
 
     public void moveTo(Element element, int x, int y) {
 	this.removeElement(element);

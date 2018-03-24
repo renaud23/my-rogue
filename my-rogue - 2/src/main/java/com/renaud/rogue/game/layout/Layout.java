@@ -1,4 +1,4 @@
-package com.renaud.rogue.view.drawer.menu;
+package com.renaud.rogue.game.layout;
 
 import java.util.ArrayList;
 import java.util.Iterator;

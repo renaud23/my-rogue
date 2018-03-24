@@ -1,16 +1,17 @@
 package com.renaud.rogue.game.sequence;
 
+import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.view.drawer.menu.InventoryLayout;
+import com.renaud.rogue.game.layout.InventoryLayout;
 
 public class InventaireSequence implements RogueSequence, ActionEvent {
 
-    private Game game;
+    private Joueur joueur;
     private InventoryLayout layout;
 
-    public InventaireSequence(Game game, InventoryLayout layout) {
+    public InventaireSequence(Joueur joueur, InventoryLayout layout) {
 	this.layout = layout;
-	this.game = game;
+	this.joueur = joueur;
     }
 
     @Override

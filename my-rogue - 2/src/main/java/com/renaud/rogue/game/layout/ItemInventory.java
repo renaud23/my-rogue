@@ -1,4 +1,4 @@
-package com.renaud.rogue.view.drawer.menu;
+package com.renaud.rogue.game.layout;
 
 import com.renaud.rogue.game.inventaire.Item;
 

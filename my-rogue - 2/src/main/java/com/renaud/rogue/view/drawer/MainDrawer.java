@@ -8,10 +8,10 @@ import com.renaud.rogue.view.IDrawable;
 public class MainDrawer implements IDrawable, DrawOperationAware {
 
     private PlayingDrawer playingDrawer;
-    private InventaireDrawer inventaireDrawer;
+    private LayoutDrawer inventaireDrawer;
     private MainSequence mainSequence;
 
-    public MainDrawer(PlayingDrawer playingDrawer, InventaireDrawer inventaireDrawer, MainSequence mainSequence) {
+    public MainDrawer(PlayingDrawer playingDrawer, LayoutDrawer inventaireDrawer, MainSequence mainSequence) {
 	this.playingDrawer = playingDrawer;
 	this.inventaireDrawer = inventaireDrawer;
 	this.mainSequence = mainSequence;

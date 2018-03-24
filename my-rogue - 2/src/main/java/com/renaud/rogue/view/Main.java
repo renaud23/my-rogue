@@ -2,6 +2,8 @@ package com.renaud.rogue.view;
 
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.event.EventListener;
+import com.renaud.rogue.game.layout.InventoryLayout;
+import com.renaud.rogue.game.layout.LootLayout;
 import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.sequence.InventaireSequence;
 import com.renaud.rogue.game.sequence.MainSequence;
@@ -10,11 +12,10 @@ import com.renaud.rogue.game.world.World;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.GameDrawer;
 import com.renaud.rogue.view.drawer.HudDrawer;
-import com.renaud.rogue.view.drawer.InventaireDrawer;
+import com.renaud.rogue.view.drawer.LayoutDrawer;
 import com.renaud.rogue.view.drawer.MainDrawer;
 import com.renaud.rogue.view.drawer.MinimapDrawer;
 import com.renaud.rogue.view.drawer.PlayingDrawer;
-import com.renaud.rogue.view.drawer.menu.InventoryLayout;
 
 public class Main {
 
@@ -35,32 +36,34 @@ public class Main {
 	int consoleWidth = screenLargeur + hudLargeur;
 	int consoleHeight = 100;
 
+	InventoryLayout layoutInventory = new InventoryLayout(0, 0, screenLargeur, screenHauteur);
+	LootLayout layoutLoot = new LootLayout(0, 0, screenLargeur, screenHauteur);
+
 	World world = new World(wolrdLargeur, worldHauteur);
 	Point start = world.peekEmptyPlace();
 	Joueur joueur = new Joueur(start.x, start.y, wolrdLargeur, worldHauteur);
+	Game game = new Game(world, joueur, layoutLoot);
 
-	Game game = new Game(world, joueur);
-	InventoryLayout layoutInventory = new InventoryLayout(0, 0, screenLargeur, screenHauteur);
-	InventaireSequence inventaire = new InventaireSequence(game, layoutInventory);
-
+	//
+	InventaireSequence inventaire = new InventaireSequence(joueur, layoutInventory);
 	MainSequence mainSequence = new MainSequence(game, inventaire);
+
 	EventListener listener = new EventListener(mainSequence);
-
-	Fenetre fenetre = new Fenetre(mainSequence, screenLargeur + hudLargeur, screenHauteur + consoleHeight,
-		"My Rogue");
-	fenetre.addKeyListener(listener);
-
-	InventaireDrawer inventaireDrawer = new InventaireDrawer(layoutInventory, screenLargeur, screenHauteur);
+	LayoutDrawer inventaireDrawer = new LayoutDrawer(layoutInventory, screenLargeur, screenHauteur);
+	LayoutDrawer lootDrawer = new LayoutDrawer(layoutLoot, screenLargeur, screenHauteur);
 	GameDrawer gameDrawer = new GameDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur);
 	HudDrawer hudDrawer = new HudDrawer(joueur, screenLargeur, 0, hudLargeur, hudHauteur);
 	MinimapDrawer minimapDrawer = new MinimapDrawer(game, screenLargeur, hudHauteur - mapHauteur, mapLargeur,
 		mapHauteur);
 	GameConsoleDrawer consoleDrawer = new GameConsoleDrawer(0, screenHauteur, consoleWidth, consoleHeight);
-	PlayingDrawer playingDrawer = new PlayingDrawer(gameDrawer, hudDrawer, minimapDrawer, consoleDrawer);
-
+	PlayingDrawer playingDrawer = new PlayingDrawer(game, gameDrawer, hudDrawer, minimapDrawer, consoleDrawer,
+		lootDrawer);
 	MainDrawer mainDrawer = new MainDrawer(playingDrawer, inventaireDrawer, mainSequence);
-	fenetre.addDrawable(mainDrawer);
 
+	Fenetre fenetre = new Fenetre(mainSequence, screenLargeur + hudLargeur, screenHauteur + consoleHeight,
+		"My Rogue");
+	fenetre.addKeyListener(listener);
+	fenetre.addDrawable(mainDrawer);
 	fenetre.start();
     }
 }

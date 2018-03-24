@@ -4,7 +4,7 @@ import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
 
-public class PlaySequence implements RogueSequence, ActionEvent {
+public class PlayingSequence implements RogueSequence, ActionEvent {
 
     private int actionsMax = 2;
     private int step;
@@ -13,7 +13,7 @@ public class PlaySequence implements RogueSequence, ActionEvent {
 
     private Game game;
 
-    public PlaySequence(Game game) {
+    public PlayingSequence(Game game) {
 	this.game = game;
     }
 

@@ -75,9 +75,9 @@ public class Joueur implements Living {
 	if (tile instanceof Activable) {
 	    ((Activable) tile).activate(game, aimx, aimy);
 	} else {
-	    // if (tile.getItems().isEmpty()) {
-	    // game.setOnLoot(true);
-	    // }
+	    if (tile.getItems().isEmpty()) {
+		game.setOnLoot(true);
+	    }
 	}
     }
 

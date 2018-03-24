@@ -2,19 +2,18 @@ package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 
+import com.renaud.rogue.game.layout.Layout;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.MainDrawer.Draw;
-import com.renaud.rogue.view.drawer.menu.InventoryLayout;
-import com.renaud.rogue.view.drawer.menu.Layout;
 
-public class InventaireDrawer implements Draw {
+public class LayoutDrawer implements Draw {
 
-    private InventoryLayout layout;
+    private Layout layout;
     private JImageBuffer buffer;
     private IDrawOperation op;
 
-    public InventaireDrawer(InventoryLayout layout, int screenLargeur, int screenHauteur) {
+    public LayoutDrawer(Layout layout, int screenLargeur, int screenHauteur) {
 	this.layout = layout;
 	buffer = new JImageBuffer(Color.gray, screenLargeur, screenHauteur);
     }
@@ -34,7 +33,6 @@ public class InventaireDrawer implements Draw {
 	    layout.setChanged(false);
 	    this.drawLayout(layout);
 	}
-
 	this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
     }
 
