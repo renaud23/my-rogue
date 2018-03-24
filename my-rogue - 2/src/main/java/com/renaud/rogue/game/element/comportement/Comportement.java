@@ -1,6 +1,6 @@
-package com.renaud.rogue.element.comportement;
+package com.renaud.rogue.game.element.comportement;
 
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.sequence.Game;
 
 public interface Comportement {
     void activate(Game game);

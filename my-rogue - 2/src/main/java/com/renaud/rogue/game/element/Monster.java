@@ -1,6 +1,6 @@
-package com.renaud.rogue.element;
+package com.renaud.rogue.game.element;
 
-import com.renaud.rogue.element.monster.Shooter;
+import com.renaud.rogue.game.element.monster.Shooter;
 
 public interface Monster extends Living, TurnPlay {
 

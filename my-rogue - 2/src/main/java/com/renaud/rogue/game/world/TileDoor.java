@@ -1,11 +1,11 @@
-package com.renaud.rogue.world;
+package com.renaud.rogue.game.world;
 
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.view.drawer.tile.DoorClosedTile;
 import com.renaud.rogue.view.drawer.tile.DoorOpenedTile;
 import com.renaud.rogue.view.drawer.tile.RogueTile;
 
-public class TileDoor extends Tile implements Activable {
+public class TileDoor extends TileDungeon implements Activable {
 
 	private static RogueTile openDoorTile = new DoorOpenedTile();
 	private static RogueTile closeDoorTile = new DoorClosedTile();

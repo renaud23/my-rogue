@@ -1,16 +1,16 @@
-package com.renaud.rogue.element.projectile;
+package com.renaud.rogue.game.element.projectile;
 
 import java.util.List;
 
-import com.renaud.rogue.element.Element;
-import com.renaud.rogue.element.Living;
-import com.renaud.rogue.element.TileElement;
-import com.renaud.rogue.element.TurnPlay;
-import com.renaud.rogue.element.light.Explosion;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.game.element.Element;
+import com.renaud.rogue.game.element.Living;
+import com.renaud.rogue.game.element.TileElement;
+import com.renaud.rogue.game.element.TurnPlay;
+import com.renaud.rogue.game.element.light.Explosion;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class Projectile implements Element, TurnPlay {
 
@@ -63,7 +63,7 @@ public class Projectile implements Element, TurnPlay {
 			} else {
 				finished = true;
 				game.addLightSource(new Explosion(next.x, next.y));
-				Tile tile = game.getWorld().getTile(next.x, next.y);
+				TileDungeon tile = game.getWorld().getTile(next.x, next.y);
 				if (!tile.isEmpty() && tile.getOccupant() instanceof Living) {
 					((Living) tile.getOccupant()).injured(game, this);
 				}

@@ -1,4 +1,4 @@
-package com.renaud.rogue.world;
+package com.renaud.rogue.game.world;
 
 public class Light {
     public float pr;

@@ -1,10 +1,10 @@
-package com.renaud.rogue.sequence;
+package com.renaud.rogue.game.sequence;
 
-import com.renaud.rogue.element.Monster;
-import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.event.KeyboardEvent;
+import com.renaud.rogue.game.element.Monster;
+import com.renaud.rogue.game.element.projectile.Projectile;
+import com.renaud.rogue.game.event.ActionEvent;
 
-public class PlaySequence implements RogueSequence, KeyboardEvent {
+public class PlaySequence implements RogueSequence, ActionEvent {
 
 	private int actionsMax = 2;
 	private int step;
@@ -60,7 +60,7 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void keyUpPressed() {
+	public void goUpAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() - 1).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() - 1);
 			actions--;
@@ -69,7 +69,7 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void keyDownPressed() {
+	public void goDownAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() + 1).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() + 1);
 			actions--;
@@ -78,7 +78,7 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void keyLeftPressed() {
+	public void goLeftAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX() - 1, game.getJoueur().getY()).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX() - 1, game.getJoueur().getY());
 			actions--;
@@ -87,7 +87,7 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void keyRightPressed() {
+	public void goRightAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX() + 1, game.getJoueur().getY()).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX() + 1, game.getJoueur().getY());
 			actions--;
@@ -96,7 +96,7 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void weaponPressed() {
+	public void weaponAction() {
 		actions--;
 		playChange = true;
 	}
@@ -114,14 +114,14 @@ public class PlaySequence implements RogueSequence, KeyboardEvent {
 	}
 
 	@Override
-	public void switchWeaponPressed() {
+	public void switchWeaponAction() {
 		actions--;
 		playChange = true;
 		game.getJoueur().switchWeapon();
 	}
 
 	@Override
-	public void activatePressed() {
+	public void activateAction() {
 		System.out.println("activate");
 	}
 

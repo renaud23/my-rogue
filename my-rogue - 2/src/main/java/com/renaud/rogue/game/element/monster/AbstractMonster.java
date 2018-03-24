@@ -1,10 +1,10 @@
-package com.renaud.rogue.element.monster;
+package com.renaud.rogue.game.element.monster;
 
-import com.renaud.rogue.element.Monster;
-import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.element.Monster;
+import com.renaud.rogue.game.element.projectile.Projectile;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
-import com.renaud.rogue.weapon.Weapon;
 
 public abstract class AbstractMonster implements Monster {
 

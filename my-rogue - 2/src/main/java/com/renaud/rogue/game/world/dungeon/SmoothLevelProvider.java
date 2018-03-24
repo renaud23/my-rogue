@@ -1,13 +1,13 @@
-package com.renaud.rogue.world.dungeon;
+package com.renaud.rogue.game.world.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.tools.Rectangle;
-import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.tools.Rectangle;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class SmoothLevelProvider {
 
@@ -16,7 +16,7 @@ public class SmoothLevelProvider {
 
 	private SmoothLevelProvider(int largeur, int hauteur) {
 		e = new Dungeon(largeur, hauteur);
-		e.fill(Tile.WALL);
+		e.fill(TileDungeon.WALL);
 	}
 
 	public void setNbStep(int nbStep) {
@@ -28,7 +28,7 @@ public class SmoothLevelProvider {
 		for (int i = 1; i < (e.getWidth() - 1); i++) {
 			for (int j = 1; j < (e.getHeight() - 1); j++) {
 				if (rnd.nextInt(100) > 45) {
-					e.setTile(i, j, Tile.Factory.getFloor());
+					e.setTile(i, j, TileDungeon.Factory.getFloor());
 				}
 			}
 		}
@@ -70,7 +70,7 @@ public class SmoothLevelProvider {
 		for (List<Point> room : rooms) {
 			if (room != best) {
 				for (Point p : room) {
-					e.setTile(p.x, p.y, Tile.Factory.getWall());
+					e.setTile(p.x, p.y, TileDungeon.Factory.getWall());
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class SmoothLevelProvider {
 			int mx = r.x + rand.nextInt(r.width);
 			int my = r.y + rand.nextInt(r.height);
 			if (mx > 0 && my > 0 && mx < e.getWidth() && my < e.getHeight()) {
-				if (e.getTile(mx, my).getCode() == Tile.FLOOR)
+				if (e.getTile(mx, my).getCode() == TileDungeon.FLOOR)
 					e.addTorche(mx, my);
 			}
 		}
@@ -119,7 +119,7 @@ public class SmoothLevelProvider {
 
 	private Point peekFirstFloor(Dungeon d) {
 		for (int i = 0; i < d.getSize(); i++) {
-			if (d.getTile(i).getCode() == Tile.FLOOR)
+			if (d.getTile(i).getCode() == TileDungeon.FLOOR)
 				return new Point(i % d.getWidth(), i / d.getWidth());
 		}
 		return null;
@@ -127,33 +127,33 @@ public class SmoothLevelProvider {
 
 	private void carve() {
 		Dungeon e2 = new Dungeon(e.getWidth(), e.getHeight());
-		e2.fill(Tile.WALL);
+		e2.fill(TileDungeon.WALL);
 		for (int i = 2; i < (e.getWidth() - 2); i++) {
 			for (int j = 2; j < (e.getHeight() - 2); j++) {
 				int nb = 0;
 
-				nb += e.getTile(i - 1, j).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i + 1, j).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i, j - 1).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i, j + 1).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i - 1, j - 1).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i + 1, j + 1).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i - 1, j + 1).getCode() != Tile.WALL ? 0 : 1;
-				nb += e.getTile(i + 1, j - 1).getCode() != Tile.WALL ? 0 : 1;
+				nb += e.getTile(i - 1, j).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i + 1, j).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i - 1, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i + 1, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i - 1, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += e.getTile(i + 1, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
 				// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
-				if (e.getTile(i, j).getCode() == Tile.WALL) {
+				if (e.getTile(i, j).getCode() == TileDungeon.WALL) {
 					if (nb >= 4) {
-						e2.setTile(i, j, Tile.Factory.getWall());
+						e2.setTile(i, j, TileDungeon.Factory.getWall());
 					} else if (nb < 2) {
-						e2.setTile(i, j, Tile.Factory.getFloor());
+						e2.setTile(i, j, TileDungeon.Factory.getFloor());
 					} else {
-						e2.setTile(i, j, Tile.Factory.getFloor());
+						e2.setTile(i, j, TileDungeon.Factory.getFloor());
 					}
 				} else {
 					if (nb >= 5) {
-						e2.setTile(i, j, Tile.Factory.getWall());
+						e2.setTile(i, j, TileDungeon.Factory.getWall());
 					} else {
-						e2.setTile(i, j, Tile.Factory.getFloor());
+						e2.setTile(i, j, TileDungeon.Factory.getFloor());
 					}
 				}
 			}
@@ -176,10 +176,10 @@ public class SmoothLevelProvider {
 		for (int i = 0; i < largeur; i++) {
 			for (int j = 0; j < hauteur; j++) {
 				if (i == 0 || i == largeur - 1 || j == 0 || j == hauteur - 1) {
-					e.setTile(posX + i, posY + j, Tile.Factory.getWall());
+					e.setTile(posX + i, posY + j, TileDungeon.Factory.getWall());
 					walls.add(new Point(posX + i, posY + j));
 				} else {
-					e.setTile(posX + i, posY + j, Tile.Factory.getFloor());
+					e.setTile(posX + i, posY + j, TileDungeon.Factory.getFloor());
 					exit.add(new Point(posX + i, posY + j));
 				}
 			}
@@ -218,7 +218,7 @@ public class SmoothLevelProvider {
 		e.setExitRoom(exit);
 		e.setExitDoorLocation(new Point(dx, dy));
 		e.setCavern(best);
-		e.setTile(dx, dy, Tile.Factory.createDoor());
+		e.setTile(dx, dy, TileDungeon.Factory.createDoor());
 
 	}
 

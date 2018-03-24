@@ -1,9 +1,9 @@
-package com.renaud.rogue.element.comportement;
+package com.renaud.rogue.game.element.comportement;
 
-import com.renaud.rogue.element.Element;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.game.element.Element;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
 
 public class MoveToJoueur implements Comportement {
 

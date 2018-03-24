@@ -2,7 +2,7 @@ package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 
-import com.renaud.rogue.element.Joueur;
+import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.MainDrawer.Draw;

@@ -1,4 +1,4 @@
-package com.renaud.rogue.element;
+package com.renaud.rogue.game.element;
 
 public interface Element {
 

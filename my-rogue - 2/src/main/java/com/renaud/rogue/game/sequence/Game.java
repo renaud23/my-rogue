@@ -1,28 +1,28 @@
-package com.renaud.rogue.sequence;
+package com.renaud.rogue.game.sequence;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.renaud.rogue.element.Element;
-import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.element.LightSource;
-import com.renaud.rogue.element.Monster;
-import com.renaud.rogue.element.light.Torche;
-import com.renaud.rogue.element.light.TorcheFixe;
-import com.renaud.rogue.element.monster.Wolf;
-import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.event.KeyboardEvent;
-import com.renaud.rogue.inventaire.GunAmmo;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.weapon.Gun;
-import com.renaud.rogue.weapon.NoWeapon;
-import com.renaud.rogue.weapon.Weapon;
-import com.renaud.rogue.world.Light;
-import com.renaud.rogue.world.Tile;
-import com.renaud.rogue.world.World;
+import com.renaud.rogue.game.element.Element;
+import com.renaud.rogue.game.element.Joueur;
+import com.renaud.rogue.game.element.LightSource;
+import com.renaud.rogue.game.element.Monster;
+import com.renaud.rogue.game.element.light.Torche;
+import com.renaud.rogue.game.element.light.TorcheFixe;
+import com.renaud.rogue.game.element.monster.Wolf;
+import com.renaud.rogue.game.element.projectile.Projectile;
+import com.renaud.rogue.game.event.ActionEvent;
+import com.renaud.rogue.game.inventaire.GunAmmo;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.weapon.Gun;
+import com.renaud.rogue.game.weapon.NoWeapon;
+import com.renaud.rogue.game.weapon.Weapon;
+import com.renaud.rogue.game.world.Light;
+import com.renaud.rogue.game.world.TileDungeon;
+import com.renaud.rogue.game.world.World;
 
-public class Game implements RogueSequence, KeyboardEvent {
+public class Game implements RogueSequence, ActionEvent {
 
     private boolean shoot;
     private boolean activate;
@@ -112,27 +112,27 @@ public class Game implements RogueSequence, KeyboardEvent {
     }
 
     @Override
-    public void keyUpPressed() {
-	this.currentSequence.keyUpPressed();
+    public void goUpAction() {
+	this.currentSequence.goUpAction();
     }
 
     @Override
-    public void keyDownPressed() {
-	this.currentSequence.keyDownPressed();
+    public void goDownAction() {
+	this.currentSequence.goDownAction();
     }
 
     @Override
-    public void keyLeftPressed() {
-	this.currentSequence.keyLeftPressed();
+    public void goLeftAction() {
+	this.currentSequence.goLeftAction();
     }
 
     @Override
-    public void keyRightPressed() {
-	this.currentSequence.keyRightPressed();
+    public void goRightAction() {
+	this.currentSequence.goRightAction();
     }
 
     @Override
-    public void activatePressed() {
+    public void activateAction() {
 
 	if (!activateAiming) {
 	    activateAiming = true;
@@ -142,7 +142,7 @@ public class Game implements RogueSequence, KeyboardEvent {
     }
 
     @Override
-    public void weaponPressed() {
+    public void weaponAction() {
 	if (joueur.getActiveWeapon() instanceof NoWeapon)
 	    return;
 	if (activateAiming) {
@@ -157,13 +157,13 @@ public class Game implements RogueSequence, KeyboardEvent {
 	    weaponAiming = false;
 	    shoot = true;
 	    this.currentSequence = playSequence;
-	    playSequence.weaponPressed();
+	    playSequence.weaponAction();
 	}
     }
 
     @Override
-    public void switchWeaponPressed() {
-	this.currentSequence.switchWeaponPressed();
+    public void switchWeaponAction() {
+	this.currentSequence.switchWeaponAction();
     }
 
     public void moveTo(Element element, int x, int y) {
@@ -211,7 +211,7 @@ public class Game implements RogueSequence, KeyboardEvent {
     }
 
     public void addMonster(Monster monster) {
-	Tile tile = this.world.getTile(monster.getX(), monster.getY());
+	TileDungeon tile = this.world.getTile(monster.getX(), monster.getY());
 	if (tile.isEmpty()) {
 	    this.monsters.add(monster);
 	    tile.setOccupant(monster);
@@ -240,7 +240,7 @@ public class Game implements RogueSequence, KeyboardEvent {
 	for (int i = -1; i <= 1; i++) {
 	    for (int j = -1; j <= 1; j++) {
 		if (rand.nextInt(10) > 3 || (i == 0 && j == 0)) {
-		    Tile tile = this.world.getTile(x + i, y + j);
+		    TileDungeon tile = this.world.getTile(x + i, y + j);
 		    float how = 0.4f + rand.nextInt(2) / 10f;
 		    float r = (tile.getColor() >> 16) & 0xFF;
 		    r *= how;

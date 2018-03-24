@@ -1,10 +1,10 @@
-package com.renaud.rogue.world.dungeon;
+package com.renaud.rogue.game.world.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class RoomCrowler implements Crowler {
 
@@ -18,7 +18,7 @@ public class RoomCrowler implements Crowler {
 	@Override
 	public void crowl(int x, int y) {
 		room.add(new Point(x, y));
-		e2.setTile(x, y, Tile.Factory.getWall());
+		e2.setTile(x, y, TileDungeon.Factory.getWall());
 	}
 
 	public List<Point> getRoom() {

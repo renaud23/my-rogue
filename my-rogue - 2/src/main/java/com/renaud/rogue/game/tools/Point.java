@@ -1,4 +1,4 @@
-package com.renaud.rogue.tools;
+package com.renaud.rogue.game.tools;
 
 import java.util.HashSet;
 import java.util.Set;

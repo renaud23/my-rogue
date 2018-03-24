@@ -1,9 +1,9 @@
-package com.renaud.rogue.element.monster;
+package com.renaud.rogue.game.element.monster;
 
-import com.renaud.rogue.element.TileElement;
-import com.renaud.rogue.element.comportement.Comportement;
-import com.renaud.rogue.element.comportement.MoveToJoueur;
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.element.TileElement;
+import com.renaud.rogue.game.element.comportement.Comportement;
+import com.renaud.rogue.game.element.comportement.MoveToJoueur;
+import com.renaud.rogue.game.sequence.Game;
 
 public class Wolf extends AbstractMonster {
 

@@ -1,7 +1,7 @@
-package com.renaud.rogue.sequence;
+package com.renaud.rogue.game.sequence;
 
-import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.weapon.Weapon;
+import com.renaud.rogue.game.element.Joueur;
+import com.renaud.rogue.game.weapon.Weapon;
 
 public class ShootingAiming implements AimingAction {
 

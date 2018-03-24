@@ -1,9 +1,9 @@
-package com.renaud.rogue.weapon;
+package com.renaud.rogue.game.weapon;
 
-import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.element.Living;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.game.element.Joueur;
+import com.renaud.rogue.game.element.Living;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class Knife implements Weapon {
 
@@ -29,7 +29,7 @@ public class Knife implements Weapon {
 
 	@Override
 	public void shoot(Game game, int aimx, int aimy) {
-		Tile tile = game.getWorld().getTile(aimx, aimy);
+		TileDungeon tile = game.getWorld().getTile(aimx, aimy);
 		if (!tile.isEmpty()) {
 			if (tile.getOccupant() instanceof Joueur) {
 				System.out.println("vous vous infligé un sépuku rituel !");

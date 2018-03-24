@@ -1,6 +1,6 @@
-package com.renaud.rogue.world;
+package com.renaud.rogue.game.world;
 
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.sequence.Game;
 
 public interface Activable {
 

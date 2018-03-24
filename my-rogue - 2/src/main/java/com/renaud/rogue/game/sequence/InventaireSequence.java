@@ -1,45 +1,50 @@
-package com.renaud.rogue.sequence;
+package com.renaud.rogue.game.sequence;
 
-import com.renaud.rogue.event.KeyboardEvent;
+import com.renaud.rogue.game.event.ActionEvent;
 
-public class InventaireSequence implements RogueSequence, KeyboardEvent {
+public class InventaireSequence implements RogueSequence, ActionEvent {
 
-	private Game game;
-	private KeyboardEvent layout;
+    private Game game;
+    private ActionEvent layout;
 
-	public InventaireSequence(Game game, KeyboardEvent layout) {
-		this.game = game;
-		this.layout = layout;
-	}
+    public InventaireSequence(Game game, ActionEvent layout) {
+	this.game = game;
+	this.layout = layout;
+    }
 
-	@Override
-	public void activate() {
+    @Override
+    public void activate() {
 
-	}
+    }
 
-	@Override
-	public void keyUpPressed() {
-		layout.keyUpPressed();
-	}
+    @Override
+    public void goUpAction() {
+	layout.goUpAction();
+    }
 
-	@Override
-	public void keyDownPressed() {
-		layout.keyDownPressed();
-	}
+    @Override
+    public void goDownAction() {
+	layout.goDownAction();
+    }
 
-	@Override
-	public void keyLeftPressed() {
-		layout.keyLeftPressed();
-	}
+    @Override
+    public void goLeftAction() {
+	layout.goLeftAction();
+    }
 
-	@Override
-	public void keyRightPressed() {
-		layout.keyRightPressed();
-	}
+    @Override
+    public void goRightAction() {
+	layout.goRightAction();
+    }
 
-	@Override
-	public void weaponPressed() {
-		layout.weaponPressed();
-	}
+    @Override
+    public void weaponAction() {
+	layout.weaponAction();
+    }
+
+    @Override
+    public void annulerAction() {
+	layout.annulerAction();
+    }
 
 }

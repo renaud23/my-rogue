@@ -1,5 +1,5 @@
 
-package com.renaud.rogue.element;
+package com.renaud.rogue.game.element;
 
 import com.renaud.rogue.view.drawer.sprite.HeroSprite;
 import com.renaud.rogue.view.drawer.sprite.TorcheSprite;

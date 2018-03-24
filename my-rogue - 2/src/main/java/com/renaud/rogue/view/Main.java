@@ -1,11 +1,12 @@
 package com.renaud.rogue.view;
 
-import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.event.EventListener;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.sequence.InventaireSequence;
-import com.renaud.rogue.sequence.MainSequence;
-import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.game.element.Joueur;
+import com.renaud.rogue.game.event.EventListener;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.sequence.InventaireSequence;
+import com.renaud.rogue.game.sequence.MainSequence;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.World;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.GameDrawer;
 import com.renaud.rogue.view.drawer.HudDrawer;
@@ -13,7 +14,6 @@ import com.renaud.rogue.view.drawer.InventaireDrawer;
 import com.renaud.rogue.view.drawer.MainDrawer;
 import com.renaud.rogue.view.drawer.MinimapDrawer;
 import com.renaud.rogue.view.drawer.PlayingDrawer;
-import com.renaud.rogue.world.World;
 
 public class Main {
 

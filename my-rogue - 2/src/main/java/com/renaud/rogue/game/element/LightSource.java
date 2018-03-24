@@ -1,6 +1,6 @@
-package com.renaud.rogue.element;
+package com.renaud.rogue.game.element;
 
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.sequence.Game;
 
 public interface LightSource {
 

@@ -1,4 +1,4 @@
-package com.renaud.rogue.world.dungeon;
+package com.renaud.rogue.game.world.dungeon;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -8,16 +8,16 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
-import com.renaud.rogue.element.light.TorcheFixe;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.game.element.light.TorcheFixe;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class Dungeon {
 
 	private int width;
 	private int height;
 	private int size;
-	private Tile[] tiles;
+	private TileDungeon[] tiles;
 
 	private List<TorcheFixe> torches = new ArrayList<>();
 	private List<Point> cavern;
@@ -30,18 +30,18 @@ public class Dungeon {
 		this.width = width;
 		this.height = height;
 		this.size = this.width * this.height;
-		this.tiles = new Tile[this.size];
+		this.tiles = new TileDungeon[this.size];
 	}
 
 	public void fill(long type) {
 		for (int i = 0; i < size; i++) {
-			if (type == Tile.WALL) {
-				tiles[i] = Tile.Factory.getWall();
-			} else if (type == Tile.UNKNOW) {
-				tiles[i] = Tile.Factory.getUnknow();
+			if (type == TileDungeon.WALL) {
+				tiles[i] = TileDungeon.Factory.getWall();
+			} else if (type == TileDungeon.UNKNOW) {
+				tiles[i] = TileDungeon.Factory.getUnknow();
 			} else {
-				if (type == Tile.FLOOR) {
-					tiles[i] = Tile.Factory.getFloor();
+				if (type == TileDungeon.FLOOR) {
+					tiles[i] = TileDungeon.Factory.getFloor();
 				}
 			}
 		}
@@ -52,7 +52,7 @@ public class Dungeon {
 		Point point = null;
 		while (point == null) {
 			point = cavern.get(rnd.nextInt(cavern.size()));
-			Tile tile = getTile(point.x, point.y);
+			TileDungeon tile = getTile(point.x, point.y);
 			if (tile.getCode() != tileCode || !tile.isEmpty()) {
 				point = null;
 			}
@@ -91,19 +91,19 @@ public class Dungeon {
 		return d;
 	}
 
-	public Tile getTile(int i, int j) {
+	public TileDungeon getTile(int i, int j) {
 		return tiles[i + j * width];
 	}
 
-	public Tile getTile(int i) {
+	public TileDungeon getTile(int i) {
 		return tiles[i];
 	}
 
-	public void setTile(int i, int j, Tile tile) {
+	public void setTile(int i, int j, TileDungeon tile) {
 		tiles[i + j * width] = tile;
 	}
 
-	public void setTile(int i, Tile tile) {
+	public void setTile(int i, TileDungeon tile) {
 		tiles[i] = tile;
 	}
 

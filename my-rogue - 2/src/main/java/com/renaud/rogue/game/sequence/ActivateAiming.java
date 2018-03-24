@@ -1,6 +1,6 @@
-package com.renaud.rogue.sequence;
+package com.renaud.rogue.game.sequence;
 
-import com.renaud.rogue.element.Joueur;
+import com.renaud.rogue.game.element.Joueur;
 
 public class ActivateAiming implements AimingAction {
 

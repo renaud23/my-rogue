@@ -4,19 +4,19 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.renaud.rogue.element.Element;
-import com.renaud.rogue.element.LightSource;
-import com.renaud.rogue.element.TileElement;
-import com.renaud.rogue.element.light.Explosion;
-import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.inventaire.Item;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.game.element.Element;
+import com.renaud.rogue.game.element.LightSource;
+import com.renaud.rogue.game.element.TileElement;
+import com.renaud.rogue.game.element.light.Explosion;
+import com.renaud.rogue.game.element.projectile.Projectile;
+import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.MainDrawer.Draw;
-import com.renaud.rogue.world.Tile;
 
 public class GameDrawer implements Draw {
 
@@ -56,7 +56,7 @@ public class GameDrawer implements Draw {
 		for (int i = 0; i < size; i++) {
 			int xi = i % largeur;
 			int yi = i / largeur;
-			Tile tileMemory = game.getJoueur().getMemory(startX + xi, startY + yi);
+			TileDungeon tileMemory = game.getJoueur().getMemory(startX + xi, startY + yi);
 			tiles[i] = new Bloc(xi, yi, tileMemory, new Color(tileMemory.getColor()), 0.2f);
 		}
 
@@ -65,7 +65,7 @@ public class GameDrawer implements Draw {
 			int yi = point.getY() - startY;
 			int si = xi + yi * largeur;
 			if (si < size) {
-				Tile tile = game.getWorld().getTile(point.getX(), point.getY());
+				TileDungeon tile = game.getWorld().getTile(point.getX(), point.getY());
 				if (tile.isLighted()) {
 					tiles[si] = new Bloc(xi, yi, tile, getColor(tile), 1.0f);
 					if (!tile.isEmpty()) {
@@ -114,7 +114,7 @@ public class GameDrawer implements Draw {
 
 			TileElement tile = element.getTile();
 			if (tile.getTile() != null) {
-				Tile ground = game.getWorld().getTile(element.getX(), element.getY());
+				TileDungeon ground = game.getWorld().getTile(element.getX(), element.getY());
 				buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, ground.getLight().getAlpha());
 
 			} else {
@@ -180,7 +180,7 @@ public class GameDrawer implements Draw {
 		}
 	}
 
-	private Color getColor(Tile tile) {
+	private Color getColor(TileDungeon tile) {
 		float r = (tile.getColor() >> 16) & 0xFF;
 		int ri = (int) (r * tile.getLight().pr);
 		float g = (tile.getColor() >> 8) & 0xFF;
@@ -199,11 +199,11 @@ public class GameDrawer implements Draw {
 
 		public int x;
 		public int y;
-		public Tile tile;
+		public TileDungeon tile;
 		public Color color;
 		public float alpha;
 
-		public Bloc(int x, int y, Tile tile, Color color, float alpha) {
+		public Bloc(int x, int y, TileDungeon tile, Color color, float alpha) {
 			this.x = x;
 			this.y = y;
 			this.tile = tile;

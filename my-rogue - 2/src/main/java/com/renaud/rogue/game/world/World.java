@@ -1,15 +1,15 @@
-package com.renaud.rogue.world;
+package com.renaud.rogue.game.world;
 
 import java.io.PrintStream;
 import java.util.List;
 
-import com.renaud.rogue.element.Element;
-import com.renaud.rogue.element.Monster;
-import com.renaud.rogue.element.light.TorcheFixe;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.world.dungeon.Dungeon;
-import com.renaud.rogue.world.dungeon.SmoothLevelProvider;
+import com.renaud.rogue.game.element.Element;
+import com.renaud.rogue.game.element.Monster;
+import com.renaud.rogue.game.element.light.TorcheFixe;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.dungeon.Dungeon;
+import com.renaud.rogue.game.world.dungeon.SmoothLevelProvider;
 
 public class World {
 
@@ -32,7 +32,7 @@ public class World {
 	}
 
 	public Point peekEmptyPlace() {
-		return dungeon.peekRandomOne(Tile.FLOOR);
+		return dungeon.peekRandomOne(TileDungeon.FLOOR);
 	}
 
 	public int getWidth() {
@@ -47,19 +47,19 @@ public class World {
 		return size;
 	}
 
-	public Tile getTile(int i, int j) {
+	public TileDungeon getTile(int i, int j) {
 		if (i < 0 || j < 0 || i >= getWidth() || j >= getHeight())
 			return null;
 		return dungeon.getTile(i, j);
 	}
 
-	public void setTile(int i, int j, Tile tile) {
+	public void setTile(int i, int j, TileDungeon tile) {
 		if (i < 0 || j < 0 || i >= getWidth() || j >= getHeight())
 			return;
 		this.dungeon.setTile(i, j, tile);
 	}
 
-	public Tile getTile(int i) {
+	public TileDungeon getTile(int i) {
 		return dungeon.getTile(i);
 	}
 

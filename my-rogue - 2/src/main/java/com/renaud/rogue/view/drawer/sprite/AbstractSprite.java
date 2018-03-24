@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import com.renaud.rogue.tools.Chrono;
+import com.renaud.rogue.game.tools.Chrono;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.tile.RogueTile;
 

@@ -1,8 +1,8 @@
-package com.renaud.rogue.element.comportement;
+package com.renaud.rogue.game.element.comportement;
 
-import com.renaud.rogue.element.Element;
-import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.element.Element;
+import com.renaud.rogue.game.element.projectile.Projectile;
+import com.renaud.rogue.game.sequence.Game;
 
 public class ShootFireball implements Comportement {
 

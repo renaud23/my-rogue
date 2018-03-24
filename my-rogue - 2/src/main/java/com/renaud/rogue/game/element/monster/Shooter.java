@@ -1,11 +1,11 @@
-package com.renaud.rogue.element.monster;
+package com.renaud.rogue.game.element.monster;
 
-import com.renaud.rogue.element.TileElement;
-import com.renaud.rogue.element.comportement.Comportement;
-import com.renaud.rogue.element.comportement.MoveToJoueur;
-import com.renaud.rogue.element.comportement.ShootFireball;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.tools.MathTools;
+import com.renaud.rogue.game.element.TileElement;
+import com.renaud.rogue.game.element.comportement.Comportement;
+import com.renaud.rogue.game.element.comportement.MoveToJoueur;
+import com.renaud.rogue.game.element.comportement.ShootFireball;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.tools.MathTools;
 
 public class Shooter extends AbstractMonster {
 

@@ -1,14 +1,14 @@
-package com.renaud.rogue.element.light;
+package com.renaud.rogue.game.element.light;
 
 import java.util.Random;
 
-import com.renaud.rogue.element.LightSource;
-import com.renaud.rogue.element.Living;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.tools.Chrono;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.world.Light;
+import com.renaud.rogue.game.element.LightSource;
+import com.renaud.rogue.game.element.Living;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.tools.Chrono;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Light;
 
 public class Torche implements LightSource {
 

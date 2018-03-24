@@ -1,4 +1,4 @@
-package com.renaud.rogue.world.dungeon;
+package com.renaud.rogue.game.world.dungeon;
 
 public interface Crowler {
 

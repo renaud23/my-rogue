@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
-import com.renaud.rogue.sequence.RogueSequence;
+import com.renaud.rogue.game.sequence.RogueSequence;
 
 public class Fenetre implements Iterable<IDrawable> {
 

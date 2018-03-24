@@ -1,23 +1,23 @@
-package com.renaud.rogue.element;
+package com.renaud.rogue.game.element;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.renaud.rogue.element.projectile.Projectile;
-import com.renaud.rogue.inventaire.Inventaire;
-import com.renaud.rogue.sequence.ActivateAiming;
-import com.renaud.rogue.sequence.AimingAction;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.sequence.ShootingAiming;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
+import com.renaud.rogue.game.element.projectile.Projectile;
+import com.renaud.rogue.game.inventaire.Inventaire;
+import com.renaud.rogue.game.sequence.ActivateAiming;
+import com.renaud.rogue.game.sequence.AimingAction;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.sequence.ShootingAiming;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.weapon.Knife;
+import com.renaud.rogue.game.weapon.NoWeapon;
+import com.renaud.rogue.game.weapon.Weapon;
+import com.renaud.rogue.game.world.Activable;
+import com.renaud.rogue.game.world.TileDungeon;
+import com.renaud.rogue.game.world.dungeon.Dungeon;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
-import com.renaud.rogue.weapon.Knife;
-import com.renaud.rogue.weapon.NoWeapon;
-import com.renaud.rogue.weapon.Weapon;
-import com.renaud.rogue.world.Activable;
-import com.renaud.rogue.world.Tile;
-import com.renaud.rogue.world.dungeon.Dungeon;
 
 public class Joueur implements Living {
 
@@ -48,7 +48,7 @@ public class Joueur implements Living {
 		this.y = y;
 		this.depht = 12;
 		this.memory = new Dungeon(worldWidth, worldHeight);
-		this.memory.fill(Tile.UNKNOW);
+		this.memory.fill(TileDungeon.UNKNOW);
 		this.rankedWeapon = new NoWeapon();
 		this.meleeWeapon = new Knife(this);
 		this.activeWeapon = this.meleeWeapon;
@@ -71,7 +71,7 @@ public class Joueur implements Living {
 	}
 
 	public void activate(Game game) {
-		Tile tile = game.getWorld().getTile(aimx, aimy);
+		TileDungeon tile = game.getWorld().getTile(aimx, aimy);
 		if (tile instanceof Activable) {
 			((Activable) tile).activate(game, aimx, aimy);
 		}
@@ -110,7 +110,7 @@ public class Joueur implements Living {
 					}
 					if (visible) {
 						lastComputed.add(new Point(xi, yi));
-						Tile tile = game.getWorld().getTile(xi, yi);
+						TileDungeon tile = game.getWorld().getTile(xi, yi);
 						float percent = tile.getLight().pr;
 						percent += tile.getLight().pg;
 						percent += tile.getLight().pb;
@@ -155,7 +155,7 @@ public class Joueur implements Living {
 		return lastComputed;
 	}
 
-	public Tile getMemory(int x, int y) {
+	public TileDungeon getMemory(int x, int y) {
 		return memory.getTile(x, y);
 	}
 

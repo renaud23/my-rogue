@@ -1,14 +1,14 @@
-package com.renaud.rogue.weapon;
+package com.renaud.rogue.game.weapon;
 
-import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.element.Living;
-import com.renaud.rogue.element.TileElement;
-import com.renaud.rogue.element.light.Explosion;
-import com.renaud.rogue.inventaire.Item;
-import com.renaud.rogue.sequence.Game;
-import com.renaud.rogue.tools.MathTools;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.world.Tile;
+import com.renaud.rogue.game.element.Joueur;
+import com.renaud.rogue.game.element.Living;
+import com.renaud.rogue.game.element.TileElement;
+import com.renaud.rogue.game.element.light.Explosion;
+import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class Gun implements RankedWeapon, Item {
 
@@ -36,7 +36,7 @@ public class Gun implements RankedWeapon, Item {
 		for (Point p : MathTools.getSegment(game.getJoueur().getX(), game.getJoueur().getY(), game.getJoueur().getAimx(), game.getJoueur().getAimy())) {
 			if (p.x == game.getJoueur().getX() && p.y == game.getJoueur().getY())
 				continue;
-			Tile tile = game.getWorld().getTile(p.x, p.y);
+			TileDungeon tile = game.getWorld().getTile(p.x, p.y);
 			if (!tile.isEmpty()) {
 				game.addLightSource(new Explosion(p.x, p.y));
 				if (tile.getOccupant() instanceof Living) {

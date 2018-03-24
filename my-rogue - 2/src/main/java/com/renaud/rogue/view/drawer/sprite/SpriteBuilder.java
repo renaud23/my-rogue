@@ -3,9 +3,9 @@ package com.renaud.rogue.view.drawer.sprite;
 import java.awt.Image;
 import java.io.PrintStream;
 
-import com.renaud.rogue.tools.ImageBuilder;
-import com.renaud.rogue.tools.Point;
-import com.renaud.rogue.tools.SimpleImageLoader;
+import com.renaud.rogue.game.tools.ImageBuilder;
+import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.tools.SimpleImageLoader;
 
 public class SpriteBuilder {
 

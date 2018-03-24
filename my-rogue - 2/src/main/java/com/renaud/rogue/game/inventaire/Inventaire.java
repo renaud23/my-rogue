@@ -1,4 +1,4 @@
-package com.renaud.rogue.inventaire;
+package com.renaud.rogue.game.inventaire;
 
 import java.util.ArrayList;
 import java.util.List;

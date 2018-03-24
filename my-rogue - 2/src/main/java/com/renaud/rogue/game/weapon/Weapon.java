@@ -1,8 +1,8 @@
-package com.renaud.rogue.weapon;
+package com.renaud.rogue.game.weapon;
 
-import com.renaud.rogue.element.Joueur;
-import com.renaud.rogue.element.Living;
-import com.renaud.rogue.sequence.Game;
+import com.renaud.rogue.game.element.Joueur;
+import com.renaud.rogue.game.element.Living;
+import com.renaud.rogue.game.sequence.Game;
 
 public interface Weapon {
 

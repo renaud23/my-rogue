@@ -1,6 +1,6 @@
-package com.renaud.rogue.inventaire;
+package com.renaud.rogue.game.inventaire;
 
-import com.renaud.rogue.element.TileElement;
+import com.renaud.rogue.game.element.TileElement;
 
 public class GunAmmo implements Item {
 
