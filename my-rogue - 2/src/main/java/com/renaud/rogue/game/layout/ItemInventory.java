@@ -2,17 +2,16 @@ package com.renaud.rogue.game.layout;
 
 import com.renaud.rogue.game.inventaire.Item;
 
-public class ItemInventory extends Layout {
+public class ItemInventory extends LayoutLeaf {
 
     private int i;
     private int j;
     private Item item;
 
-    public ItemInventory(int i, int j, int pixelx, int pixely, int largeur, int hauteur, Layout parent) {
-	super(pixelx, pixely, largeur, hauteur, parent);
+    public ItemInventory(int i, int j, int pixelx, int pixely, int largeur, int hauteur, LayoutComposite parent) {
+	super(0x000050, pixelx, pixely, largeur, hauteur, parent);
 	this.i = i;
 	this.j = j;
-	this.color = 0x000050;
     }
 
     public void setItem(Item item) {

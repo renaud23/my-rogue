@@ -6,10 +6,14 @@ import com.renaud.rogue.game.layout.LootLayout;
 public class LootSequence implements RogueSequence, ActionEvent {
 
     private Game game;
+    private int x;
+    private int y;
     private LootLayout layout;
 
-    public LootSequence(Game game) {
+    public LootSequence(Game game, int x, int y) {
 	this.game = game;
+	this.x = x;
+	this.y = y;
 	this.layout = game.getLootLayout();
     }
 

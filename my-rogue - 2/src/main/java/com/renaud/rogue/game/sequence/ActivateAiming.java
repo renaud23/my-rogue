@@ -50,7 +50,7 @@ public class ActivateAiming implements AimingAction {
 
     @Override
     public void changeSequence(Game game) {
-	game.changeSequence(new LootSequence(game));
+	game.changeSequence(new LootSequence(game, this.game.getJoueur().getAimx(), this.game.getJoueur().getAimy()));
 
     }
 
