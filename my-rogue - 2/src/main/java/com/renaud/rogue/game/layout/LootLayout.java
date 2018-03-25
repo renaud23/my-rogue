@@ -35,6 +35,18 @@ public class LootLayout extends LayoutComposite {
 		la.overTilesItems(item, i, j);
 	    }
 	});
+
+	this.inventoryItems.addGridListener(new GridLayoutListener<Item>() {
+
+	    public void activate(Item item, int i, int j) {
+		la.activateInventoryItems(item, i, j);
+	    }
+
+	    @Override
+	    public void over(Item item, int i, int j) {
+		la.overInventoryItems(item, i, j);
+	    }
+	});
     }
 
     public void initialise(Inventaire inventaire, TileDungeon tile) {
@@ -48,19 +60,46 @@ public class LootLayout extends LayoutComposite {
 	    this.tilesItems.setLeaf(it, i % 2, i / 2);
 	    i++;
 	}
+	i = 0;
+	for (Item it : inventory) {
+	    this.inventoryItems.setLeaf(it, i % 5, i / 5);
+	    i++;
+	}
     }
 
     public boolean isOpened() {
 	return openedChild != null;
     }
 
-    public void activateTilesItems(Item u, int i, int j) {
+    public void activateTilesItems(Item item, int i, int j) {
+	if (item != null) {
+	    this.changed = true;
+	    if (!inventory.isFull()) {
+		GameConsoleDrawer.addLine("Vous vous emparez de " + item.getDesription(), 0x0000FF);
+		tile.removeItem(item);
+		tilesItems.setLeaf(null, i, j);
+		inventory.addItem(item);
+		inventoryItems.setFirstEmpty(item);
+
+	    } else {
+		GameConsoleDrawer.addLine("Votre inventaire est plein", 0x0000FF);
+	    }
+	}
+    }
+
+    public void overTilesItems(Item u, int i, int j) {
+	if (u != null) {
+	    GameConsoleDrawer.addLine(u.getDesription(), 0x0000FF);
+	}
+    }
+
+    public void activateInventoryItems(Item u, int i, int j) {
 	if (u != null) {
 	    // GameConsoleDrawer.addLine(u.getDesription(), 0x0000FF);
 	}
     }
 
-    public void overTilesItems(Item u, int i, int j) {
+    public void overInventoryItems(Item u, int i, int j) {
 	if (u != null) {
 	    GameConsoleDrawer.addLine(u.getDesription(), 0x0000FF);
 	}

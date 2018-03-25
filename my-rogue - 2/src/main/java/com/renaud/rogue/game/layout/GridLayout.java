@@ -40,6 +40,15 @@ public abstract class GridLayout<U> extends LayoutComposite {
 
     }
 
+    public void setFirstEmpty(U leaf) {
+	for (int i = 0; i < size; i++) {
+	    if (leaves[i] == null) {
+		leaves[i] = leaf;
+		break;
+	    }
+	}
+    }
+
     public void setLeaf(U leaf, int i, int j) {
 	leaves[i + j * gridWidth] = leaf;
     }
