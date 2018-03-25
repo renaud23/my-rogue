@@ -17,17 +17,17 @@ import com.renaud.rogue.game.inventaire.GunAmmo;
 import com.renaud.rogue.game.layout.LootLayout;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Gun;
-import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.game.world.Light;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
 
 public class Game implements RogueSequence, ActionEvent {
 
-    private boolean shoot;
-    private boolean activate;
-    private boolean weaponAiming;
-    private boolean activateAiming;
+    public final static int ACTION_MAX = 2;
+    private int step;
+    private int actions = ACTION_MAX;
+    private boolean playFinished;
+
     private World world;
     private Joueur joueur;
 
@@ -35,23 +35,17 @@ public class Game implements RogueSequence, ActionEvent {
     private List<Projectile> projectiles = new ArrayList<>();
     private List<LightSource> lightSources = new ArrayList<>();
 
-    private PlayingSequence playSequence;
-    private AimSequence aimSequence;
     private RogueSequence currentSequence;
-    private LootSequence lootSequence;
 
+    private LootLayout lootLayout;
     private boolean onLoot;
 
     public Game(World world, Joueur joueur, LootLayout lootLayout) {
+	this.lootLayout = lootLayout;
 	this.world = world;
 	this.joueur = joueur;
 	setElement(this.joueur);
-
-	this.playSequence = new PlayingSequence(this);
-	// this.aimSequence = new AimSequence(this);
-	this.lootSequence = new LootSequence(this, lootLayout);
-
-	this.currentSequence = this.playSequence;
+	this.currentSequence = new PlayingSequence(this);
 
 	// for dev
 	for (int i = 0; i < 2; i++) {
@@ -85,6 +79,10 @@ public class Game implements RogueSequence, ActionEvent {
 	this.addLightSource(new Torche(joueur));
     }
 
+    public LootLayout getLootLayout() {
+	return lootLayout;
+    }
+
     public World getWorld() {
 	return world;
     }
@@ -108,21 +106,6 @@ public class Game implements RogueSequence, ActionEvent {
     @Override
     public void activate() {
 	this.currentSequence.activate();
-	// this.illumine();
-	// if (shoot) {
-	// shoot = false;
-	// this.joueur.shoot(this);
-	//
-	// } else if (activate) {
-	// activate = false;
-	// this.joueur.activate(this);
-	// }
-	// if (onLoot) {
-	// currentSequence = lootSequence;
-	// this.lootSequence.activate();
-	// } else {
-	// this.playSequence.activate();
-	// }
     }
 
     /* Action Event */
@@ -150,36 +133,11 @@ public class Game implements RogueSequence, ActionEvent {
     @Override
     public void activateAction() {
 	this.currentSequence.activateAction();
-	// if (!activateAiming) {
-	// activateAiming = true;
-	// this.joueur.resetAimingForActivate();
-	// this.currentSequence = aimSequence;
-	// }
     }
 
     @Override
     public void weaponAction() {
 	this.currentSequence.weaponAction();
-	// if (onLoot) {
-	// this.currentSequence.weaponAction();
-	// } else {
-	// if (joueur.getActiveWeapon() instanceof NoWeapon)
-	// return;
-	// if (activateAiming) {
-	// activateAiming = false;
-	// this.currentSequence = playSequence;
-	// activate = true;
-	// } else if (!weaponAiming) {
-	// weaponAiming = true;
-	// this.joueur.resetAimingForShoot();
-	// this.currentSequence = aimSequence;
-	// } else {
-	// weaponAiming = false;
-	// shoot = true;
-	// this.currentSequence = playSequence;
-	// playSequence.weaponAction();
-	// }
-	// }
     }
 
     @Override
@@ -196,6 +154,30 @@ public class Game implements RogueSequence, ActionEvent {
 	this.currentSequence = sequence;
     }
 
+    /* turn play */
+
+    public void playFinished() {
+	actions--;
+	playFinished = true;
+    }
+
+    public boolean isPlayFinished() {
+	return playFinished;
+    }
+
+    public boolean isTurnFinished() {
+	return actions <= 0;
+    }
+
+    public void startNextTurn() {
+	step++;
+	actions = ACTION_MAX;
+    }
+
+    public void startNextPlay() {
+	playFinished = false;
+    }
+
     /* */
 
     public void moveTo(Element element, int x, int y) {
@@ -203,6 +185,10 @@ public class Game implements RogueSequence, ActionEvent {
 	element.setX(x);
 	element.setY(y);
 	this.world.setElement(element, x, y);
+    }
+
+    public boolean isAiming() {
+	return this.currentSequence instanceof AimSequence;
     }
 
     public void removeElement(Element element) {
@@ -213,18 +199,6 @@ public class Game implements RogueSequence, ActionEvent {
 	this.world.setElement(element, element.getX(), element.getY());
     }
 
-    public int getActions() {
-	return this.playSequence.getActions();
-    }
-
-    public int getActionsMax() {
-	return this.playSequence.getActionsMax();
-    }
-
-    public int getStep() {
-	return this.playSequence.getStep();
-    }
-
     public List<Monster> getMonsters() {
 	return monsters;
     }
@@ -232,11 +206,6 @@ public class Game implements RogueSequence, ActionEvent {
     public List<Projectile> getProjectiles() {
 	return projectiles;
     }
-
-    public boolean isAiming() {
-	return this.currentSequence instanceof AimSequence;
-    }
-    /* */
 
     public void addProjectile(Projectile p) {
 	this.projectiles.add(p);
@@ -292,16 +261,8 @@ public class Game implements RogueSequence, ActionEvent {
 	}
     }
 
-    public Weapon getActiveWeapon() {
-	return joueur.getActiveWeapon();
-    }
-
     public boolean isOnLoot() {
-	return onLoot;
-    }
-
-    public boolean setOnLoot(boolean onLoot) {
-	return this.onLoot = onLoot;
+	return this.currentSequence instanceof LootSequence;
     }
 
 }

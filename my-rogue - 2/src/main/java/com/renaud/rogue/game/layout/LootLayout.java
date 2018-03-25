@@ -16,4 +16,8 @@ public class LootLayout extends Layout {
 
     }
 
+    public boolean isOpened() {
+	return openedChild != null;
+    }
+
 }

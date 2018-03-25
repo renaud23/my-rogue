@@ -48,4 +48,10 @@ public class ActivateAiming implements AimingAction {
 	game.getJoueur().activate(game);
     }
 
+    @Override
+    public void changeSequence(Game game) {
+	game.changeSequence(new LootSequence(game));
+
+    }
+
 }

@@ -9,15 +9,15 @@ import com.renaud.rogue.game.tools.Rectangle;
 
 public class Layout implements ActionEvent, Iterable<Layout> {
 
-    private List<Layout> children = new ArrayList<>();
-    private Layout parent;
-    private Layout activeChild;
-    private Layout openedChild;
+    protected List<Layout> children = new ArrayList<>();
+    protected Layout parent;
+    protected Layout activeChild;
+    protected Layout openedChild;
     protected int color = 0xFF0000;
-    private boolean actif;
+    protected boolean actif;
     protected boolean changed = true;
 
-    private Rectangle rectangle;
+    protected Rectangle rectangle;
 
     public Layout(int x, int y, int largeur, int hauteur) {
 	rectangle = new Rectangle(x, y, largeur, hauteur);

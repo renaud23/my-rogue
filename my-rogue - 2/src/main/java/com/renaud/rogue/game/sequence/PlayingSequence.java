@@ -6,11 +6,6 @@ import com.renaud.rogue.game.event.ActionEvent;
 
 public class PlayingSequence implements RogueSequence, ActionEvent {
 
-    private int actionsMax = 2;
-    private int step;
-    private boolean playChange;
-    private int actions;
-
     private Game game;
 
     public PlayingSequence(Game game) {
@@ -20,8 +15,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     @Override
     public void activate() {
 	game.illumine();
-	if (playChange) {
-	    playChange = false;
+	if (game.isPlayFinished()) {
 	    game.getProjectiles().removeIf(m -> m.isEnd());
 	    game.getProjectiles().forEach(m -> {
 		m.startTurn();
@@ -41,7 +35,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 		    }
 		}
 
-		if (actions <= 0) {
+		if (game.isTurnFinished()) {
 		    // next turn
 		    for (Monster monster : game.getMonsters()) {
 			if (!monster.turnIsEnd()) {
@@ -51,12 +45,17 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 		    }
 		}
 	    }
-
-	    if (actions <= 0) {
-		// next turn
-		this.actions = this.actionsMax;
-		this.step++;
+	    if (game.isTurnFinished()) {
+		game.startNextTurn();
 	    }
+	    ;
+	    game.startNextPlay();
+
+	    // if (game.actions <= 0) {
+	    // // next turn
+	    // game.actions = Game.ACTION_MAX;
+	    // game.step++;
+	    // }
 	}
     }
 
@@ -64,8 +63,9 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goUpAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() - 1).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() - 1);
-	    actions--;
-	    playChange = true;
+	    // game.actions--;
+	    // game.playChange = true;
+	    game.playFinished();
 	}
     }
 
@@ -73,8 +73,9 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goDownAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() + 1).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() + 1);
-	    actions--;
-	    playChange = true;
+	    // game.actions--;
+	    // game.playChange = true;
+	    game.playFinished();
 	}
     }
 
@@ -82,8 +83,9 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goLeftAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX() - 1, game.getJoueur().getY()).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX() - 1, game.getJoueur().getY());
-	    actions--;
-	    playChange = true;
+	    // game.actions--;
+	    // game.playChange = true;
+	    game.playFinished();
 	}
     }
 
@@ -91,35 +93,26 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goRightAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX() + 1, game.getJoueur().getY()).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX() + 1, game.getJoueur().getY());
-	    actions--;
-	    playChange = true;
+	    // game.actions--;
+	    // game.playChange = true;
+	    game.playFinished();
 	}
     }
 
     @Override
     public void weaponAction() {
-	actions--;
-	playChange = true;
+	// game.actions--;
+	// game.playChange = true;
 	game.changeSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
-    }
-
-    public int getActions() {
-	return actions;
-    }
-
-    public int getActionsMax() {
-	return actionsMax;
-    }
-
-    public int getStep() {
-	return step;
+	game.playFinished();
     }
 
     @Override
     public void switchWeaponAction() {
-	actions--;
-	playChange = true;
+	// game.actions--;
+	// game.playChange = true;
 	game.getJoueur().switchWeapon();
+	game.playFinished();
     }
 
     @Override

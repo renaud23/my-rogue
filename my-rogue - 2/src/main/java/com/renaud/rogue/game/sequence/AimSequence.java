@@ -40,7 +40,7 @@ public class AimSequence implements RogueSequence, ActionEvent {
     @Override
     public void weaponAction() {
 	this.aiming.activate(game);
-	game.changeSequence(new PlayingSequence(game));
+	this.aiming.changeSequence(game);
     }
 
 }

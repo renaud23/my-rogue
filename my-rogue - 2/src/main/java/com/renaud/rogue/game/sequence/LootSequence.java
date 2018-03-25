@@ -8,9 +8,9 @@ public class LootSequence implements RogueSequence, ActionEvent {
     private Game game;
     private LootLayout layout;
 
-    public LootSequence(Game game, LootLayout layout) {
+    public LootSequence(Game game) {
 	this.game = game;
-	this.layout = layout;
+	this.layout = game.getLootLayout();
     }
 
     @Override
@@ -51,7 +51,11 @@ public class LootSequence implements RogueSequence, ActionEvent {
     @Override
     public void annulerAction() {
 	layout.setChanged(true);
-	layout.annulerAction();
+	if (layout.isOpened()) {
+	    layout.annulerAction();
+	} else {
+	    game.changeSequence(new PlayingSequence(game));
+	}
     }
 
 }

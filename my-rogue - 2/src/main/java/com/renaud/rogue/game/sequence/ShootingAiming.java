@@ -48,4 +48,9 @@ public class ShootingAiming implements AimingAction {
 	this.joueur.shoot(game);
     }
 
+    @Override
+    public void changeSequence(Game game) {
+	game.changeSequence(new PlayingSequence(game));
+    }
+
 }

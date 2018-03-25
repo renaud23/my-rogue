@@ -14,4 +14,6 @@ public interface AimingAction {
 
     void activate(Game game);
 
+    void changeSequence(Game game);
+
 }
