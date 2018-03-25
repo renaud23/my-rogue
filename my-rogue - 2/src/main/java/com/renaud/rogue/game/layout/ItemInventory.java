@@ -9,7 +9,7 @@ public class ItemInventory extends LayoutLeaf {
     private Item item;
 
     public ItemInventory(int i, int j, int pixelx, int pixely, int largeur, int hauteur, LayoutComposite parent) {
-	super(0l, 0x000050, pixelx, pixely, largeur, hauteur, parent);
+	super(0x000050, pixelx, pixely, largeur, hauteur, parent);
 	this.i = i;
 	this.j = j;
     }

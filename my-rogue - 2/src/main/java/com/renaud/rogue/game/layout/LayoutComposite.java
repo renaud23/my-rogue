@@ -51,6 +51,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	    openedChild.goUpAction();
 	} else if (activeChild == null && !children.isEmpty()) {
 	    activeChild = getUperLeft();
+	    over(activeChild);
 	} else {
 	    int projxmin = Integer.MAX_VALUE;
 	    int eccartymin = Integer.MAX_VALUE;
@@ -74,7 +75,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-		notifyOver(best);
+		over(best);
 	    }
 	}
     }
@@ -85,6 +86,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	    activeChild.goDownAction();
 	} else if (activeChild == null && !children.isEmpty()) {
 	    activeChild = getUperLeft();
+	    over(activeChild);
 	} else {
 	    int projxmin = Integer.MAX_VALUE;
 	    int eccartymin = Integer.MAX_VALUE;
@@ -108,7 +110,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-		notifyOver(best);
+		over(best);
 	    }
 	}
     }
@@ -119,6 +121,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	    activeChild.goLeftAction();
 	} else if (activeChild == null && !children.isEmpty()) {
 	    activeChild = getUperLeft();
+	    over(activeChild);
 	} else {
 	    int projymin = Integer.MAX_VALUE;
 	    int eccartxmin = Integer.MAX_VALUE;
@@ -142,7 +145,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-		notifyOver(best);
+		over(best);
 	    }
 	}
     }
@@ -153,6 +156,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	    activeChild.goRightAction();
 	} else if (activeChild == null && !children.isEmpty()) {
 	    activeChild = getUperLeft();
+	    over(activeChild);
 	} else {
 	    int projymin = Integer.MAX_VALUE;
 	    int eccartxmin = Integer.MAX_VALUE;
@@ -176,7 +180,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-		notifyOver(best);
+		over(best);
 	    }
 	}
     }
@@ -188,6 +192,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	    activeChild.setActif(false);
 	    openedChild = (LayoutComposite) activeChild;
 	    openedChild.activeChild = openedChild.getUperLeft();
+	    over(activeChild);
 	} else if (activeChild != null) {
 	    activeChild.weaponAction();
 	}
@@ -282,7 +287,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	this.listeners.add(listener);
     }
 
-    public void notifyOver(Layout u) {
+    public void over(Layout u) {
 	for (LayoutListener l : listeners) {
 	    l.over(u);
 	}

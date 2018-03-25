@@ -11,22 +11,21 @@ public class LayoutLeaf implements Layout {
     private int color;
     private LayoutComposite parent;
     private List<LayoutListener> listeners = new ArrayList<>();
-    private Long id;
 
     private boolean actif;
 
-    public LayoutLeaf(Long id, int x, int y, int width, int height, LayoutComposite parent) {
+    public LayoutLeaf(int x, int y, int width, int height, LayoutComposite parent) {
 	rect = new Rectangle(x, y, width, height);
 	color = 0x000050;
-	this.id = id;
+
 	this.parent = parent;
     }
 
-    public LayoutLeaf(Long id, int color, int x, int y, int width, int height, LayoutComposite parent) {
+    public LayoutLeaf(int color, int x, int y, int width, int height, LayoutComposite parent) {
 	rect = new Rectangle(x, y, width, height);
 	this.color = color;
 	this.parent = parent;
-	this.id = id;
+
     }
 
     @Override
@@ -62,10 +61,6 @@ public class LayoutLeaf implements Layout {
 
     public void addListener(LayoutListener listener) {
 	this.listeners.add(listener);
-    }
-
-    public Long getId() {
-	return id;
     }
 
 }

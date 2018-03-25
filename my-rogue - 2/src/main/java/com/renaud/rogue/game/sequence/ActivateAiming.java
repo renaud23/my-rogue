@@ -1,5 +1,8 @@
 package com.renaud.rogue.game.sequence;
 
+import com.renaud.rogue.game.world.Activable;
+import com.renaud.rogue.game.world.TileDungeon;
+
 public class ActivateAiming implements AimingAction {
 
     Game game;
@@ -50,8 +53,13 @@ public class ActivateAiming implements AimingAction {
 
     @Override
     public void changeSequence(Game game) {
-	game.changeSequence(new LootSequence(game, this.game.getJoueur().getAimx(), this.game.getJoueur().getAimy()));
-
+	TileDungeon tile = game.getWorld().getTile(this.game.getJoueur().getAimx(), this.game.getJoueur().getAimy());
+	if (tile instanceof Activable) {
+	    game.changeSequence(new PlayingSequence(game));
+	} else {
+	    game.changeSequence(
+		    new LootSequence(game, this.game.getJoueur().getAimx(), this.game.getJoueur().getAimy()));
+	}
     }
 
 }

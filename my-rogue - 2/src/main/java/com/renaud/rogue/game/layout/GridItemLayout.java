@@ -24,8 +24,4 @@ public class GridItemLayout extends GridLayout<Item> {
 	}
     }
 
-    public void activate(Layout l) {
-	System.out.println(l);
-    }
-
 }

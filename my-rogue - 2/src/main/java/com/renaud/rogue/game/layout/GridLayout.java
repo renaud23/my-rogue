@@ -1,13 +1,21 @@
 package com.renaud.rogue.game.layout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public abstract class GridLayout<U> extends LayoutComposite {
 
+    private List<GridLayoutListener<U>> gridListeners = new ArrayList<>();
     private static int marge = 4;
     private int size;
     private int gridWidth;
     private int gridHeight;
 
     private U[] leaves;
+
+    private Map<Layout, Integer> access = new HashMap<>();
 
     @SuppressWarnings("unchecked")
     public GridLayout(int color, int x, int y, int gridWidth, int gridHeight, int gridSize) {
@@ -22,11 +30,14 @@ public abstract class GridLayout<U> extends LayoutComposite {
 	    int xi = i % gridWidth;
 	    int yi = i / gridWidth;
 
-	    LayoutLeaf leaf = new LayoutLeaf((long) i, color, x + marge + xi * (gridSize + marge),
+	    LayoutLeaf leaf = new LayoutLeaf(color, x + marge + xi * (gridSize + marge),
 		    y + marge + yi * (gridSize + marge), gridSize, gridSize, this);
 	    leaf.addListener(this);
+	    access.put(leaf, i);
 	    this.addChild(leaf);
 	}
+	addListener(this);
+
     }
 
     public void setLeaf(U leaf, int i, int j) {
@@ -43,6 +54,28 @@ public abstract class GridLayout<U> extends LayoutComposite {
 
     public int getGridHeight() {
 	return gridHeight;
+    }
+
+    /* */
+
+    public void over(Layout l) {
+	int index = access.get(l);
+	U u = leaves[index];
+	for (GridLayoutListener<U> li : gridListeners) {
+	    li.over(u, index % gridWidth, index / gridWidth);
+	}
+    }
+
+    public void activate(Layout l) {
+	int index = access.get(l);
+	U u = leaves[index];
+	for (GridLayoutListener<U> li : gridListeners) {
+	    li.activate(u, index % gridWidth, index / gridWidth);
+	}
+    }
+
+    public void addGridListener(GridLayoutListener<U> l) {
+	this.gridListeners.add(l);
     }
 
 }

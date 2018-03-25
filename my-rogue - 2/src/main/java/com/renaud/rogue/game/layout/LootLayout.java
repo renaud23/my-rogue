@@ -24,11 +24,17 @@ public class LootLayout extends LayoutComposite {
 
 	final LootLayout la = this;
 
-	// this.tilesItems.addListener(new LayoutListener() {
-	// public void activate(Layout l) {
-	// // la.activateTilesItems;
-	// }
-	// });
+	this.tilesItems.addGridListener(new GridLayoutListener<Item>() {
+
+	    public void activate(Item item, int i, int j) {
+		la.activateTilesItems(item, i, j);
+	    }
+
+	    @Override
+	    public void over(Item item, int i, int j) {
+		la.overTilesItems(item, i, j);
+	    }
+	});
     }
 
     public void initialise(Inventaire inventaire, TileDungeon tile) {
@@ -48,8 +54,16 @@ public class LootLayout extends LayoutComposite {
 	return openedChild != null;
     }
 
-    public void activateTilesItems(Item u) {
-	GameConsoleDrawer.addLine(u.getDesription(), 0x0000FF);
+    public void activateTilesItems(Item u, int i, int j) {
+	if (u != null) {
+	    // GameConsoleDrawer.addLine(u.getDesription(), 0x0000FF);
+	}
+    }
+
+    public void overTilesItems(Item u, int i, int j) {
+	if (u != null) {
+	    GameConsoleDrawer.addLine(u.getDesription(), 0x0000FF);
+	}
     }
 
 }
