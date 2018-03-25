@@ -4,5 +4,6 @@ import com.renaud.rogue.game.event.ActionEvent;
 
 public interface RogueSequence extends ActionEvent {
 
-	void activate();
+    default void activate() {
+    };
 }

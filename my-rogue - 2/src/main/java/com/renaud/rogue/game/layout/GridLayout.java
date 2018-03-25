@@ -1,6 +1,6 @@
 package com.renaud.rogue.game.layout;
 
-public class GridLayout<U> extends LayoutComposite {
+public abstract class GridLayout<U> extends LayoutComposite {
 
     private static int marge = 4;
     private int size;
@@ -22,8 +22,10 @@ public class GridLayout<U> extends LayoutComposite {
 	    int xi = i % gridWidth;
 	    int yi = i / gridWidth;
 
-	    this.addChild(new LayoutLeaf(color, x + marge + xi * (gridSize + marge),
-		    y + marge + yi * (gridSize + marge), gridSize, gridSize, this));
+	    LayoutLeaf leaf = new LayoutLeaf((long) i, color, x + marge + xi * (gridSize + marge),
+		    y + marge + yi * (gridSize + marge), gridSize, gridSize, this);
+	    leaf.addListener(this);
+	    this.addChild(leaf);
 	}
     }
 
@@ -33,6 +35,14 @@ public class GridLayout<U> extends LayoutComposite {
 
     public U getLeaf(int i, int j) {
 	return leaves[i + j * gridWidth];
+    }
+
+    public int getGridWidth() {
+	return gridWidth;
+    }
+
+    public int getGridHeight() {
+	return gridHeight;
     }
 
 }

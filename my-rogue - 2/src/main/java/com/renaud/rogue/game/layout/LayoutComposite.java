@@ -6,8 +6,9 @@ import java.util.List;
 
 import com.renaud.rogue.game.tools.Rectangle;
 
-public class LayoutComposite implements Iterable<Layout>, Layout {
+public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener {
 
+    private List<LayoutListener> listeners = new ArrayList<>();
     protected List<Layout> children = new ArrayList<>();
     protected LayoutComposite parent;
     protected Layout activeChild;
@@ -73,7 +74,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-
+		notifyOver(best);
 	    }
 	}
     }
@@ -107,7 +108,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-
+		notifyOver(best);
 	    }
 	}
     }
@@ -141,7 +142,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-
+		notifyOver(best);
 	    }
 	}
     }
@@ -175,7 +176,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 		best.setActif(true);
 		activeChild.setActif(false);
 		activeChild = best;
-
+		notifyOver(best);
 	    }
 	}
     }
@@ -274,6 +275,24 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
     @Override
     public void setActif(boolean actif) {
 	this.actif = actif;
+    }
+
+    /* */
+    public void addListener(LayoutListener listener) {
+	this.listeners.add(listener);
+    }
+
+    public void notifyOver(Layout u) {
+	for (LayoutListener l : listeners) {
+	    l.over(u);
+	}
+    }
+
+    @Override
+    public void activate(Layout u) {
+	for (LayoutListener l : listeners) {
+	    l.activate(u);
+	}
     }
 
 }
