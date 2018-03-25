@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.renaud.rogue.game.tools.Rectangle;
 
-public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener {
+public class LayoutComposite implements Iterable<Layout>, Layout {
 
     private List<LayoutListener> listeners = new ArrayList<>();
     protected List<Layout> children = new ArrayList<>();
@@ -192,7 +192,8 @@ public class LayoutComposite implements Iterable<Layout>, Layout, LayoutListener
 	    activeChild.setActif(false);
 	    openedChild = (LayoutComposite) activeChild;
 	    openedChild.activeChild = openedChild.getUperLeft();
-	    over(activeChild);
+	    openedChild.over(openedChild.activeChild);
+
 	} else if (activeChild != null) {
 	    activeChild.weaponAction();
 	}
