@@ -1,12 +1,12 @@
-package com.renaud.rogue.layout.loot;
+package com.renaud.rogue.layout.loot.item;
 
 import com.renaud.rogue.game.inventaire.Item;
 
-public class ItemWeapon implements ItemInventory {
+public class ItemLayoutWeapon implements ItemLayout {
 
     private Item item;
 
-    public ItemWeapon(Item item) {
+    public ItemLayoutWeapon(Item item) {
 	this.item = item;
     }
 

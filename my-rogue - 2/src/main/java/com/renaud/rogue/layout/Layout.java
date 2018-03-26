@@ -3,7 +3,7 @@ package com.renaud.rogue.layout;
 import com.renaud.rogue.game.event.ActionEvent;
 import com.renaud.rogue.game.tools.Rectangle;
 
-public interface Layout extends ActionEvent, LayoutListener {
+public interface Layout extends ActionEvent {
     Rectangle getRectangle();
 
     void setActif(boolean actif);

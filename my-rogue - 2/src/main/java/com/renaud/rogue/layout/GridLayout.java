@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class GridLayout<U> extends LayoutComposite {
+public abstract class GridLayout<U> extends LayoutComposite implements LayoutListener {
 
     private List<GridLayoutListener<U>> gridListeners = new ArrayList<>();
     private static int marge = 4;

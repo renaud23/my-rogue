@@ -2,8 +2,9 @@ package com.renaud.rogue.layout.loot;
 
 import com.renaud.rogue.layout.GridLayout;
 import com.renaud.rogue.layout.LayoutComposite;
+import com.renaud.rogue.layout.loot.item.ItemLayout;
 
-public class GridInventoryItemLayout extends GridLayout<ItemInventory> {
+public class GridInventoryItemLayout extends GridLayout<ItemLayout> {
 
     private int gridWidth;
     private int gridHeight;

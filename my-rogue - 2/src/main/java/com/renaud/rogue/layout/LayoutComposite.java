@@ -321,12 +321,12 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 	}
     }
 
-    @Override
-    public void weaponAction(Layout u) {
-	for (LayoutListener l : listeners) {
-	    l.weaponAction(u);
-	}
-    }
+    // @Override
+    // public void weaponAction(Layout u) {
+    // for (LayoutListener l : listeners) {
+    // l.weaponAction(u);
+    // }
+    // }
 
     /* */
 
