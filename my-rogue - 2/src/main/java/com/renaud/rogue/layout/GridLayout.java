@@ -1,4 +1,4 @@
-package com.renaud.rogue.game.layout;
+package com.renaud.rogue.layout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +65,10 @@ public abstract class GridLayout<U> extends LayoutComposite {
 	return gridHeight;
     }
 
+    public void addGridListener(GridLayoutListener<U> l) {
+	this.gridListeners.add(l);
+    }
+
     /* */
 
     public void over(Layout l) {
@@ -75,16 +79,39 @@ public abstract class GridLayout<U> extends LayoutComposite {
 	}
     }
 
-    public void activate(Layout l) {
+    public void weaponAction(Layout l) {
 	int index = access.get(l);
 	U u = leaves[index];
 	for (GridLayoutListener<U> li : gridListeners) {
-	    li.activate(u, index % gridWidth, index / gridWidth);
+	    li.weaponAction(u, index % gridWidth, index / gridWidth);
 	}
     }
 
-    public void addGridListener(GridLayoutListener<U> l) {
-	this.gridListeners.add(l);
+    @Override
+    public void activateAction(Layout l) {
+	int index = access.get(l);
+	U u = leaves[index];
+	for (GridLayoutListener<U> li : gridListeners) {
+	    li.activateAction(u, index % gridWidth, index / gridWidth);
+	}
+    }
+
+    @Override
+    public void switchWeaponAction(Layout l) {
+	int index = access.get(l);
+	U u = leaves[index];
+	for (GridLayoutListener<U> li : gridListeners) {
+	    li.switchWeaponAction(u, index % gridWidth, index / gridWidth);
+	}
+    }
+
+    @Override
+    public void inventaireAction(Layout l) {
+	int index = access.get(l);
+	U u = leaves[index];
+	for (GridLayoutListener<U> li : gridListeners) {
+	    li.inventaireAction(u, index % gridWidth, index / gridWidth);
+	}
     }
 
 }

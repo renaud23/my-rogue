@@ -2,13 +2,13 @@ package com.renaud.rogue.view;
 
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.event.EventListener;
-import com.renaud.rogue.game.layout.InventoryLayout;
-import com.renaud.rogue.game.layout.LootLayout;
 import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.sequence.InventaireSequence;
 import com.renaud.rogue.game.sequence.MainSequence;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.World;
+import com.renaud.rogue.layout.loot.InventoryLayout;
+import com.renaud.rogue.layout.loot.LootLayout;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.GameDrawer;
 import com.renaud.rogue.view.drawer.HudDrawer;

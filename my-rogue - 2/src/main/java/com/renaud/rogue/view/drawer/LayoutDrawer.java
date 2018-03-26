@@ -3,9 +3,9 @@ package com.renaud.rogue.view.drawer;
 import java.awt.Color;
 
 import com.renaud.rogue.game.inventaire.Item;
-import com.renaud.rogue.game.layout.GridItemLayout;
-import com.renaud.rogue.game.layout.Layout;
-import com.renaud.rogue.game.layout.LayoutComposite;
+import com.renaud.rogue.layout.Layout;
+import com.renaud.rogue.layout.LayoutComposite;
+import com.renaud.rogue.layout.loot.GridItemLayout;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.MainDrawer.Draw;

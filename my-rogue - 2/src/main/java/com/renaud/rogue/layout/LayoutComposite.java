@@ -1,4 +1,4 @@
-package com.renaud.rogue.game.layout;
+package com.renaud.rogue.layout;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -212,11 +212,38 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 	}
     }
 
+    @Override
+    public void activateAction() {
+	if (openedChild != null) {
+	    openedChild.activateAction();
+	} else if (activeChild != null) {
+	    activeChild.activateAction();
+	}
+    }
+
+    @Override
+    public void switchWeaponAction() {
+	if (openedChild != null) {
+	    openedChild.activateAction();
+	} else if (activeChild != null) {
+	    activeChild.activateAction();
+	}
+    }
+
+    @Override
+    public void inventaireAction() {
+	if (openedChild != null) {
+	    openedChild.activateAction();
+	} else if (activeChild != null) {
+	    activeChild.activateAction();
+	}
+    }
+
+    /* */
     public void addChild(Layout child) {
 	this.children.add(child);
     }
 
-    /* */
     private Layout getUperLeft() {
 	int minx = Integer.MAX_VALUE;
 	int miny = Integer.MAX_VALUE;
@@ -295,10 +322,12 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
     }
 
     @Override
-    public void activate(Layout u) {
+    public void weaponAction(Layout u) {
 	for (LayoutListener l : listeners) {
-	    l.activate(u);
+	    l.weaponAction(u);
 	}
     }
+
+    /* */
 
 }

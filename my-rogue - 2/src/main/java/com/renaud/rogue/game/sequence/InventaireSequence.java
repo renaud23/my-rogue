@@ -2,7 +2,7 @@ package com.renaud.rogue.game.sequence;
 
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.game.layout.InventoryLayout;
+import com.renaud.rogue.layout.loot.InventoryLayout;
 
 public class InventaireSequence implements RogueSequence, ActionEvent {
 

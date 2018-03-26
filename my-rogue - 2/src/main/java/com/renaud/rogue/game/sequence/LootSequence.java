@@ -1,7 +1,7 @@
 package com.renaud.rogue.game.sequence;
 
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.game.layout.LootLayout;
+import com.renaud.rogue.layout.loot.LootLayout;
 
 public class LootSequence implements RogueSequence, ActionEvent {
 
@@ -56,6 +56,24 @@ public class LootSequence implements RogueSequence, ActionEvent {
 	} else {
 	    game.changeSequence(new PlayingSequence(game));
 	}
+    }
+
+    @Override
+    public void switchWeaponAction() {
+	layout.setChanged(true);
+	layout.switchWeaponAction();
+    }
+
+    @Override
+    public void inventaireAction() {
+	layout.setChanged(true);
+	layout.inventaireAction();
+    }
+
+    @Override
+    public void activateAction() {
+	layout.setChanged(true);
+	layout.activateAction();
     }
 
 }

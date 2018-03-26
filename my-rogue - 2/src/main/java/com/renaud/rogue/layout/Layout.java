@@ -1,4 +1,4 @@
-package com.renaud.rogue.game.layout;
+package com.renaud.rogue.layout;
 
 import com.renaud.rogue.game.event.ActionEvent;
 import com.renaud.rogue.game.tools.Rectangle;

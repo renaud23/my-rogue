@@ -1,4 +1,6 @@
-package com.renaud.rogue.game.layout;
+package com.renaud.rogue.layout.loot;
+
+import com.renaud.rogue.layout.LayoutComposite;
 
 public class InventoryLayout extends LayoutComposite {
 

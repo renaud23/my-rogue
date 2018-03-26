@@ -14,12 +14,12 @@ import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
 import com.renaud.rogue.game.inventaire.GunAmmo;
-import com.renaud.rogue.game.layout.LootLayout;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Gun;
 import com.renaud.rogue.game.world.Light;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
+import com.renaud.rogue.layout.loot.LootLayout;
 
 public class Game implements RogueSequence, ActionEvent {
 

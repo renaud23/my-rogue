@@ -1,8 +1,10 @@
-package com.renaud.rogue.game.layout;
+package com.renaud.rogue.layout.loot;
 
 import com.renaud.rogue.game.inventaire.Inventaire;
 import com.renaud.rogue.game.inventaire.Item;
 import com.renaud.rogue.game.world.TileDungeon;
+import com.renaud.rogue.layout.GridLayoutListener;
+import com.renaud.rogue.layout.LayoutComposite;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class LootLayout extends LayoutComposite {
@@ -26,7 +28,7 @@ public class LootLayout extends LayoutComposite {
 
 	this.tilesItems.addGridListener(new GridLayoutListener<Item>() {
 
-	    public void activate(Item item, int i, int j) {
+	    public void weaponAction(Item item, int i, int j) {
 		la.activateTilesItems(item, i, j);
 	    }
 
@@ -38,7 +40,7 @@ public class LootLayout extends LayoutComposite {
 
 	this.inventoryItems.addGridListener(new GridLayoutListener<Item>() {
 
-	    public void activate(Item item, int i, int j) {
+	    public void weaponAction(Item item, int i, int j) {
 		la.activateInventoryItems(item, i, j);
 	    }
 

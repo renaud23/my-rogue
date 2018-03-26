@@ -48,14 +48,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 	    if (game.isTurnFinished()) {
 		game.startNextTurn();
 	    }
-	    ;
 	    game.startNextPlay();
-
-	    // if (game.actions <= 0) {
-	    // // next turn
-	    // game.actions = Game.ACTION_MAX;
-	    // game.step++;
-	    // }
 	}
     }
 
@@ -63,8 +56,6 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goUpAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() - 1).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() - 1);
-	    // game.actions--;
-	    // game.playChange = true;
 	    game.playFinished();
 	}
     }
@@ -73,8 +64,6 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goDownAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() + 1).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() + 1);
-	    // game.actions--;
-	    // game.playChange = true;
 	    game.playFinished();
 	}
     }
@@ -83,8 +72,6 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goLeftAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX() - 1, game.getJoueur().getY()).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX() - 1, game.getJoueur().getY());
-	    // game.actions--;
-	    // game.playChange = true;
 	    game.playFinished();
 	}
     }
@@ -93,24 +80,18 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
     public void goRightAction() {
 	if (game.getWorld().getTile(game.getJoueur().getX() + 1, game.getJoueur().getY()).canWalkOn()) {
 	    game.moveTo(game.getJoueur(), game.getJoueur().getX() + 1, game.getJoueur().getY());
-	    // game.actions--;
-	    // game.playChange = true;
 	    game.playFinished();
 	}
     }
 
     @Override
     public void weaponAction() {
-	// game.actions--;
-	// game.playChange = true;
 	game.changeSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
 	game.playFinished();
     }
 
     @Override
     public void switchWeaponAction() {
-	// game.actions--;
-	// game.playChange = true;
 	game.getJoueur().switchWeapon();
 	game.playFinished();
     }

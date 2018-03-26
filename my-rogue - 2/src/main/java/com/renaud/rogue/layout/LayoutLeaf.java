@@ -1,4 +1,4 @@
-package com.renaud.rogue.game.layout;
+package com.renaud.rogue.layout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,15 +52,38 @@ public class LayoutLeaf implements Layout {
 	return parent;
     }
 
+    public void addListener(LayoutListener listener) {
+	this.listeners.add(listener);
+    }
+
+    /* */
+
     @Override
     public void weaponAction() {
 	for (LayoutListener l : listeners) {
-	    l.activate(this);
+	    l.weaponAction(this);
 	}
     }
 
-    public void addListener(LayoutListener listener) {
-	this.listeners.add(listener);
+    @Override
+    public void activateAction() {
+	for (LayoutListener l : listeners) {
+	    l.activateAction(this);
+	}
+    }
+
+    @Override
+    public void switchWeaponAction() {
+	for (LayoutListener l : listeners) {
+	    l.switchWeaponAction(this);
+	}
+    }
+
+    @Override
+    public void inventaireAction() {
+	for (LayoutListener l : listeners) {
+	    l.inventaireAction(this);
+	}
     }
 
 }
