@@ -15,7 +15,7 @@ public class LootSequence implements RogueSequence, ActionEvent {
 	this.x = x;
 	this.y = y;
 	this.layout = game.getLootLayout();
-	this.layout.initialise(game.getJoueur().getInventaire(), game.getWorld().getTile(x, y));
+	this.layout.initialise(game, game.getWorld().getTile(x, y));
     }
 
     @Override

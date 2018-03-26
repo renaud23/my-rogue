@@ -1,13 +1,16 @@
 package com.renaud.rogue.layout.loot.item;
 
 import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
-public class ItemDefault implements ItemLayout {
+public class ItemLayoutDefault implements ItemLayout {
 
     private Item item;
+    private ItemLayoutAction activateAction;
 
-    public ItemDefault(Item item) {
+    public ItemLayoutDefault(Item item, ItemLayoutAction weaponAction) {
 	this.item = item;
+	this.activateAction = weaponAction;
     }
 
     @Override
@@ -17,12 +20,12 @@ public class ItemDefault implements ItemLayout {
 
     @Override
     public void weaponAction() {
-	System.out.println("weaponAction");
+	this.activateAction.doIt();
     }
 
     @Override
-    public void activateAction() {
-	System.out.println("activateAction");
+    public void over() {
+	GameConsoleDrawer.addLine(item.getDesription(), 0xFFFF00);
     }
 
 }

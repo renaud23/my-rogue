@@ -60,6 +60,10 @@ public class TileElement {
 	    return new TileElement('d', 0xEEEEEE, new GunTile());
 	}
 
+	public static TileElement createKnife() {
+	    return new TileElement('k', 0xEEEEEE);
+	}
+
     }
 
     public char getCharCode() {

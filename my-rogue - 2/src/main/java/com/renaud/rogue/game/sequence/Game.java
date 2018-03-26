@@ -66,7 +66,7 @@ public class Game implements RogueSequence, ActionEvent {
 	    world.getTile(start.x, start.y).addItem(new GunAmmo());
 	}
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 20; i++) {
 	    Point start = world.peekEmptyPlace();
 	    world.getTile(start.x, start.y).addItem(new Gun());
 	}

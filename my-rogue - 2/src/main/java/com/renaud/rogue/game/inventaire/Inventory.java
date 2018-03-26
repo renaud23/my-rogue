@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Inventaire implements Iterable<Item> {
+public class Inventory implements Iterable<Item> {
 
     private int maxSize = 5;
     private List<Item> items = new ArrayList<>();

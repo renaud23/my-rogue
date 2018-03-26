@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.renaud.rogue.game.element.projectile.Projectile;
-import com.renaud.rogue.game.inventaire.Inventaire;
+import com.renaud.rogue.game.inventaire.Inventory;
 import com.renaud.rogue.game.sequence.AimingAction;
 import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.MathTools;
@@ -27,7 +27,7 @@ public class Joueur implements Living {
     private int aimx;
     private int aimy;
 
-    private Inventaire inventaire;
+    private Inventory inventaire;
 
     private Weapon rankedWeapon;
     private Weapon meleeWeapon;
@@ -51,7 +51,7 @@ public class Joueur implements Living {
 	this.meleeWeapon = new Knife(this);
 	this.activeWeapon = this.meleeWeapon;
 
-	this.inventaire = new Inventaire();
+	this.inventaire = new Inventory();
     }
 
     private Dungeon memory;
@@ -243,8 +243,28 @@ public class Joueur implements Living {
 	this.maxLife = maxLife;
     }
 
-    public Inventaire getInventaire() {
+    public Inventory getInventaire() {
 	return inventaire;
+    }
+
+    public Weapon getRankedWeapon() {
+	return rankedWeapon;
+    }
+
+    public void setRankedWeapon(Weapon rankedWeapon) {
+	this.rankedWeapon = rankedWeapon;
+    }
+
+    public Weapon getMeleeWeapon() {
+	return meleeWeapon;
+    }
+
+    public void setMeleeWeapon(Weapon meleeWeapon) {
+	this.meleeWeapon = meleeWeapon;
+    }
+
+    public void setActiveWeapon(Weapon activeWeapon) {
+	this.activeWeapon = activeWeapon;
     }
 
 }
