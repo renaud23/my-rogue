@@ -27,8 +27,7 @@ public class World {
 
 	// private PlayerActionGestionnaire mouvements;
 
-	public World() {
-	}
+	public World() {}
 
 	public World(Level level, Joueur joueur) {
 		this.level = level;

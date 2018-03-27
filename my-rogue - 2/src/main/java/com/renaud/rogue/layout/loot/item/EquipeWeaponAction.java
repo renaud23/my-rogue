@@ -4,15 +4,16 @@ import com.renaud.rogue.game.sequence.Game;
 
 public class EquipeWeaponAction implements ItemLayoutAction {
 
-    private Game game;
+	private Game game;
 
-    public EquipeWeaponAction(Game game) {
-	this.game = game;
-    }
+	public EquipeWeaponAction(Game game) {
+		this.game = game;
+	}
 
-    @Override
-    public void doIt() {
+	@Override
+	public void doIt(ItemLayout u, int i, int j) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 
 }

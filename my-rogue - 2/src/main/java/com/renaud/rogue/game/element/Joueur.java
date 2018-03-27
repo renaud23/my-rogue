@@ -243,7 +243,7 @@ public class Joueur implements Living {
 	this.maxLife = maxLife;
     }
 
-    public Inventory getInventaire() {
+    public Inventory getInventory() {
 	return inventaire;
     }
 
