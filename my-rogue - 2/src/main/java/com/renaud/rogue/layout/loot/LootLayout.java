@@ -35,12 +35,12 @@ public class LootLayout extends LayoutComposite implements GridLayoutListener<It
 		this.tilesItems.empty();
 		int i = 0;
 		for (Item item : tile.getItems()) {
-			this.tilesItems.setLeaf(ItemLayout.Factory.createLootToInventory(game, item), i % 2, i / 2);
+			this.tilesItems.setLeaf(ItemLayout.Factory.createLoot(game, item), i % 2, i / 2);
 			i++;
 		}
 		i = 0;
 		for (Item item : game.getJoueur().getInventory()) {
-			this.inventoryItems.setLeaf(ItemLayout.Factory.createInventoryToFloor(game, item), i % 5, i / 5);
+			this.inventoryItems.setLeaf(ItemLayout.Factory.createInventory(game, item), i % 5, i / 5);
 			i++;
 		}
 		this.changed = true;

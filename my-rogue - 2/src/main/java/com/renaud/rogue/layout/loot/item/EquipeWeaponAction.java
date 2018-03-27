@@ -12,7 +12,7 @@ public class EquipeWeaponAction implements ItemLayoutAction {
 
 	@Override
 	public void doIt(ItemLayout u, int i, int j) {
-		// TODO Auto-generated method stub
+		System.out.println("bhouu");
 
 	}
 
