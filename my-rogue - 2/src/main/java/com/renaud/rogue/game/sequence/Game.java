@@ -40,6 +40,10 @@ public class Game implements RogueSequence, ActionEvent {
     private LootLayout lootLayout;
     private boolean onLoot;
 
+    public Game(World world) {
+	this.world = world;
+    }
+
     public Game(World world, Joueur joueur, LootLayout lootLayout) {
 	this.lootLayout = lootLayout;
 	this.world = world;
