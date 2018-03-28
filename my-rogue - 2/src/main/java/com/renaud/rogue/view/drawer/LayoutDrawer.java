@@ -2,7 +2,9 @@ package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 
+import com.renaud.rogue.game.element.TileElement;
 import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.game.weapon.NoWeapon;
 import com.renaud.rogue.layout.Layout;
 import com.renaud.rogue.layout.LayoutComposite;
 import com.renaud.rogue.layout.loot.GridInventoryItemLayout;
@@ -68,10 +70,11 @@ public class LayoutDrawer implements Draw {
 
 			ItemLayout itemLayout = l.getLeaf(i % l.getGridWidth(), i / l.getGridWidth());
 			if (itemLayout != null) {
-				RogueTile tile = itemLayout.getItem().getTile().getTile();
-				if (tile != null) {
-					double scale = child.getRectangle().width / tile.getImage().getWidth(null);
-					this.buffer.drawImage(tile.getImage(), //
+				TileElement tile = itemLayout.getItem().getTile();
+
+				if (tile != null && tile.getTile() != null && !(tile.getTile() instanceof NoWeapon)) {
+					double scale = child.getRectangle().width / tile.getTile().getImage().getWidth(null);
+					this.buffer.drawImage(tile.getTile().getImage(), //
 						child.getRectangle().x + 1, //
 						child.getRectangle().y + 1, //
 						0, //

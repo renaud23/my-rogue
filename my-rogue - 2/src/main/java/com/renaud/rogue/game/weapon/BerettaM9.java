@@ -27,7 +27,7 @@ public class BerettaM9 implements RankedWeapon, Item {
 	private TileElement tile = TileElement.Factory.createGun();
 
 	public BerettaM9() {
-		ammo = rnd.nextInt(CHARGER_SIZE + 1);
+		ammo = 0;
 	}
 
 	public BerettaM9(Living user) {

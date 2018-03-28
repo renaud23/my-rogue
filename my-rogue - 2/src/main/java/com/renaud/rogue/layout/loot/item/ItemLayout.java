@@ -32,5 +32,11 @@ public interface ItemLayout extends GridLayoutListener<ItemLayout> {
 			return l;
 		}
 
+		public static ItemLayout createWeaponRack(Item item) {
+			ItemLayoutGen l = new ItemLayoutGen(item);
+
+			return l;
+		}
+
 	}
 }

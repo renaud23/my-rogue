@@ -16,18 +16,23 @@ public class LootLayout extends LayoutComposite implements GridLayoutListener<It
 
 	private GridInventoryItemLayout inventoryItems;
 	private GridInventoryItemLayout tilesItems;
+	private GridInventoryItemLayout weapons;
 
 	public LootLayout(int x, int y, int largeur, int hauteur) {
 		super(x, y, largeur, hauteur);
 		this.color = 0x505050;
 		this.tilesItems = new GridInventoryItemLayout(x + 20 + 5 * (tileSize + 4), y + 10, 2, 5, tileSize, this, 0x900000, 0x000090);
 		this.inventoryItems = new GridInventoryItemLayout(x + 10, y + 10, 5, 5, tileSize, this, 0x900000, 0x000090);
+		this.weapons = new GridInventoryItemLayout(x + 10, y + 20 + 5 * (tileSize + 4), 2, 1, tileSize, this, 0x900000, 0x000090);
 		this.tilesItems.addGridListener(new GridInventoryItemListener());
 		this.inventoryItems.addGridListener(new GridInventoryItemListener());
+		this.weapons.addGridListener(new GridInventoryItemListener());
 		this.tilesItems.addGridListener(this);
 		this.inventoryItems.addGridListener(this);
+		this.weapons.addGridListener(this);
 		this.addChild(this.tilesItems);
 		this.addChild(this.inventoryItems);
+		this.addChild(this.weapons);
 	}
 
 	public void refresh() {
@@ -43,6 +48,9 @@ public class LootLayout extends LayoutComposite implements GridLayoutListener<It
 			this.inventoryItems.setLeaf(ItemLayout.Factory.createInventory(game, item), i % 5, i / 5);
 			i++;
 		}
+
+		this.weapons.setLeaf(ItemLayout.Factory.createWeaponRack(game.getJoueur().getMeleeWeapon()), 0, 0);
+		this.weapons.setLeaf(ItemLayout.Factory.createWeaponRack(game.getJoueur().getRankedWeapon()), 1, 0);
 		this.changed = true;
 	}
 

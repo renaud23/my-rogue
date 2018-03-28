@@ -22,6 +22,7 @@ public class ReloadWeaponAction implements ItemLayoutAction {
 			this.ammunation = (Ammunition) u.getItem();
 			ActionContext.getInstance().setWeaponAction(this);
 			searchWeapon = true;
+			GameConsoleDrawer.addLine("Choisissez une arme à recharger avec " + this.ammunation.getDesription(), 0xFFFF00);
 		} else {
 			if (u.getItem() instanceof RankedWeapon) {
 				((RankedWeapon) u.getItem()).reload(this.ammunation);
