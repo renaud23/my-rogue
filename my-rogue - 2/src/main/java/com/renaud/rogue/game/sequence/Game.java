@@ -13,7 +13,7 @@ import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.game.inventaire.GunAmmo;
+import com.renaud.rogue.game.inventaire.Charger9MM;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Gun;
 import com.renaud.rogue.game.world.Light;
@@ -63,7 +63,7 @@ public class Game implements RogueSequence, ActionEvent {
 
 		for (int i = 0; i < 20; i++) {
 			Point start = world.peekEmptyPlace();
-			world.getTile(start.x, start.y).addItem(new GunAmmo());
+			world.getTile(start.x, start.y).addItem(new Charger9MM());
 		}
 
 		for (int i = 0; i < 20; i++) {

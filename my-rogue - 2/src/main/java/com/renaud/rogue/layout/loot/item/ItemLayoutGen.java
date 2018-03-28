@@ -4,7 +4,6 @@ import com.renaud.rogue.game.inventaire.Item;
 
 public class ItemLayoutGen implements ItemLayout {
 
-	private ActionContext context;
 	private Item item;
 
 	private ItemLayoutAction weaponAction;
@@ -12,15 +11,14 @@ public class ItemLayoutGen implements ItemLayout {
 	private ItemLayoutAction inventaireAction;
 	private ItemLayoutAction activateAction;
 
-	public ItemLayoutGen(ActionContext context, Item item) {
+	public ItemLayoutGen(Item item) {
 		this.item = item;
-		this.context = context;
 	}
 
 	@Override
 	public void weaponAction(ItemLayout u, int i, int j) {
-		if (context.getWeaponAction() != null) {
-			context.getWeaponAction().doIt(u, i, j);
+		if (ActionContext.getInstance().getWeaponAction() != null) {
+			ActionContext.getInstance().getWeaponAction().doIt(u, i, j);
 		} else if (weaponAction != null) {
 			weaponAction.doIt(u, i, j);
 		}
@@ -28,8 +26,8 @@ public class ItemLayoutGen implements ItemLayout {
 
 	@Override
 	public void switchWeaponAction(ItemLayout u, int i, int j) {
-		if (context.getSwitchWeaponAction() != null) {
-			context.getSwitchWeaponAction().doIt(u, i, j);
+		if (ActionContext.getInstance().getSwitchWeaponAction() != null) {
+			ActionContext.getInstance().getSwitchWeaponAction().doIt(u, i, j);
 		} else if (switchWeaponAction != null) {
 			switchWeaponAction.doIt(u, i, j);
 		}
@@ -37,8 +35,8 @@ public class ItemLayoutGen implements ItemLayout {
 
 	@Override
 	public void inventaireAction(ItemLayout u, int i, int j) {
-		if (context.getInventaireAction() != null) {
-			context.getInventaireAction().doIt(u, i, j);
+		if (ActionContext.getInstance().getInventaireAction() != null) {
+			ActionContext.getInstance().getInventaireAction().doIt(u, i, j);
 		} else if (inventaireAction != null) {
 			inventaireAction.doIt(u, i, j);
 		}
@@ -46,8 +44,8 @@ public class ItemLayoutGen implements ItemLayout {
 
 	@Override
 	public void activateAction(ItemLayout u, int i, int j) {
-		if (context.getActivateAction() != null) {
-			context.getActivateAction().doIt(u, i, j);
+		if (ActionContext.getInstance().getActivateAction() != null) {
+			ActionContext.getInstance().getActivateAction().doIt(u, i, j);
 		} else if (activateAction != null) {
 			activateAction.doIt(u, i, j);
 		}
@@ -72,6 +70,12 @@ public class ItemLayoutGen implements ItemLayout {
 	@Override
 	public Item getItem() {
 		return item;
+	}
+
+	@Override
+	public void annulerAction(ItemLayout u, int i, int j) {
+		ActionContext.getInstance().reset();
+
 	}
 
 }

@@ -39,4 +39,12 @@ public class GridInventoryItemListener implements GridLayoutListener<ItemLayout>
 		}
 	}
 
+	@Override
+	public void annulerAction(ItemLayout u, int i, int j) {
+		if (u != null) {
+			u.annulerAction(u, i, j);
+		}
+
+	}
+
 }

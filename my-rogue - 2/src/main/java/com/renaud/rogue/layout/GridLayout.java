@@ -113,4 +113,23 @@ public abstract class GridLayout<U> extends LayoutComposite implements LayoutLis
 		}
 	}
 
+	@Override
+	public void annulerAction(Layout l) {
+		int index = access.get(l);
+		U u = leaves[index];
+		for (GridLayoutListener<U> li : gridListeners) {
+			li.annulerAction(u, index % gridWidth, index / gridWidth);
+		}
+	}
+
+	@Override
+	public void annulerAction() {
+		super.annulerAction();
+		if (openedChild != null) {
+			annulerAction(openedChild);
+		} else if (activeChild != null) {
+			annulerAction(activeChild);
+		}
+	}
+
 }

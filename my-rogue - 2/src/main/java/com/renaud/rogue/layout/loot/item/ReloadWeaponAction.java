@@ -5,23 +5,24 @@ import com.renaud.rogue.game.sequence.Game;
 public class ReloadWeaponAction implements ItemLayoutAction {
 
 	private Game game;
-	private ActionContext context;
 	private boolean searchWeapon = false;
+	private ItemLayout ammunation;
 
-	public ReloadWeaponAction(ActionContext context, Game game) {
+	public ReloadWeaponAction(Game game) {
 		this.game = game;
-		this.context = context;
+
 	}
 
 	@Override
 	public void doIt(ItemLayout u, int i, int j) {
 		if (!searchWeapon) {
 			System.out.println("start");
-			this.context.setWeaponAction(this);
+			this.ammunation = u;
+			ActionContext.getInstance().setWeaponAction(this);
 			searchWeapon = true;
 		} else {
 			System.out.println("fini");
-			this.context.setWeaponAction(null);
+			ActionContext.getInstance().setWeaponAction(null);
 		}
 
 	}

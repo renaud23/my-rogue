@@ -7,6 +7,24 @@ public class ActionContext {
 	private ItemLayoutAction inventaireAction;
 	private ItemLayoutAction activateAction;
 
+	private ActionContext() {}
+
+	private static ActionContext instance;
+
+	public static ActionContext getInstance() {
+		if (instance == null) {
+			instance = new ActionContext();
+		}
+		return instance;
+	}
+
+	public void reset() {
+		weaponAction = null;
+		switchWeaponAction = null;
+		inventaireAction = null;
+		activateAction = null;
+	}
+
 	public ItemLayoutAction getWeaponAction() {
 		return weaponAction;
 	}
