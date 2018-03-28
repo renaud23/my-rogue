@@ -7,6 +7,7 @@ import com.renaud.rogue.view.drawer.tile.FireballTile;
 import com.renaud.rogue.view.drawer.tile.GhoulTile;
 import com.renaud.rogue.view.drawer.tile.GunAmmoTile;
 import com.renaud.rogue.view.drawer.tile.GunTile;
+import com.renaud.rogue.view.drawer.tile.KnifeTile;
 import com.renaud.rogue.view.drawer.tile.RogueTile;
 import com.renaud.rogue.view.drawer.tile.WolfTile;
 
@@ -61,7 +62,7 @@ public class TileElement {
 	}
 
 	public static TileElement createKnife() {
-	    return new TileElement('k', 0xEEEEEE);
+	    return new TileElement('k', 0xEEEEEE, new KnifeTile());
 	}
 
     }

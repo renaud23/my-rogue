@@ -9,65 +9,65 @@ import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class Knife implements MeleeWeapon {
 
-	private Living user;
-	private int damage = 5;
-	private TileElement tile = TileElement.Factory.createKnife();
+    private Living user;
+    private int damage = 5;
+    private TileElement tile = TileElement.Factory.createKnife();
 
-	public Knife(Living user) {
-		this.user = user;
-	}
+    public Knife(Living user) {
+	this.user = user;
+    }
 
-	@Override
-	public int getDepht() {
-		return 1;
-	}
+    @Override
+    public int getDepht() {
+	return 1;
+    }
 
-	public boolean canAim(Joueur joueur, int x, int y) {
-		int dx = Math.abs(x - joueur.getX());
-		int dy = Math.abs(y - joueur.getY());
-		if (dx <= 1 && dy <= 1)
-			return true;
-		return false;
-	}
+    public boolean canAim(Joueur joueur, int x, int y) {
+	int dx = Math.abs(x - joueur.getX());
+	int dy = Math.abs(y - joueur.getY());
+	if (dx <= 1 && dy <= 1)
+	    return true;
+	return false;
+    }
 
-	@Override
-	public void shoot(Game game, int aimx, int aimy) {
-		TileDungeon tile = game.getWorld().getTile(aimx, aimy);
-		if (!tile.isEmpty()) {
-			if (tile.getOccupant() instanceof Joueur) {
-				GameConsoleDrawer.carefull("vous vous infligé un sépuku rituel !");
-			} else if (tile.getOccupant() instanceof Living) {
-				((Living) tile.getOccupant()).injured(game, this);
-			}
-		}
+    @Override
+    public void shoot(Game game, int aimx, int aimy) {
+	TileDungeon tile = game.getWorld().getTile(aimx, aimy);
+	if (!tile.isEmpty()) {
+	    if (tile.getOccupant() instanceof Joueur) {
+		GameConsoleDrawer.carefull("vous vous infligé un sépuku rituel !");
+	    } else if (tile.getOccupant() instanceof Living) {
+		((Living) tile.getOccupant()).injured(game, this);
+	    }
 	}
+    }
 
-	public int getDamage() {
-		return this.damage * this.user.getLevel();
-	}
+    public int getDamage() {
+	return this.damage * this.user.getLevel();
+    }
 
-	@Override
-	public String getName() {
-		return "knife";
-	}
+    @Override
+    public String getName() {
+	return "knife";
+    }
 
-	public Living getUser() {
-		return user;
-	}
+    public Living getUser() {
+	return user;
+    }
 
-	@Override
-	public TileElement getTile() {
-		return tile;
-	}
+    @Override
+    public TileElement getTile() {
+	return tile;
+    }
 
-	@Override
-	public String getDesription() {
-		return "Couteau de cuisine";
-	}
+    @Override
+    public String getDesription() {
+	return "Bowie";
+    }
 
-	@Override
-	public void setUser(Living user) {
-		this.user = user;
-	}
+    @Override
+    public void setUser(Living user) {
+	this.user = user;
+    }
 
 }

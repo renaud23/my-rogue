@@ -64,9 +64,9 @@ public class ImageBuilder {
 	int largeur = 16;
 	int hauteur = 16;
 	SimpleImageLoader loader = new SimpleImageLoader();
-	Image image = loader.getImage("E:\\workspace\\my-rogue\\my-rogue - 2\\src\\main\\resources\\img\\pack.png");
+	Image image = loader.getImage("E:\\workspace\\my-rogue\\my-rogue - 2\\src\\main\\resources\\img\\knife.png");
 
-	int[] pix = ImageBuilder.loadImage(image, 52, 0, largeur, hauteur);
+	int[] pix = ImageBuilder.loadImage(image, 0, 0, largeur, hauteur);
 
 	for (int i = 0; i < pix.length; i++) {
 	    System.out.print(pix[i] + " ,");
