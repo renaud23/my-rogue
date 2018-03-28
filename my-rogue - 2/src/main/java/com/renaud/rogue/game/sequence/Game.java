@@ -13,9 +13,9 @@ import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.game.inventaire.Charger9MM;
+import com.renaud.rogue.game.inventaire.Chargeur9mm;
 import com.renaud.rogue.game.tools.Point;
-import com.renaud.rogue.game.weapon.Gun;
+import com.renaud.rogue.game.weapon.BerettaM9;
 import com.renaud.rogue.game.world.Light;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
@@ -63,12 +63,12 @@ public class Game implements RogueSequence, ActionEvent {
 
 		for (int i = 0; i < 20; i++) {
 			Point start = world.peekEmptyPlace();
-			world.getTile(start.x, start.y).addItem(new Charger9MM());
+			world.getTile(start.x, start.y).addItem(new Chargeur9mm());
 		}
 
 		for (int i = 0; i < 20; i++) {
 			Point start = world.peekEmptyPlace();
-			world.getTile(start.x, start.y).addItem(new Gun());
+			world.getTile(start.x, start.y).addItem(new BerettaM9());
 		}
 
 		for (TorcheFixe torche : world.getTorches()) {
@@ -267,6 +267,13 @@ public class Game implements RogueSequence, ActionEvent {
 
 	public boolean isOnLoot() {
 		return this.currentSequence instanceof LootSequence;
+	}
+
+	public int getAimingDepht() {
+		if (currentSequence instanceof AimSequence) {
+			return ((AimSequence) currentSequence).getDepht();
+		}
+		return -1;
 	}
 
 }

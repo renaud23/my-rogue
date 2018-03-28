@@ -1,6 +1,7 @@
 package com.renaud.rogue.layout.loot.item;
 
 import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class ItemLayoutGen implements ItemLayout {
 
@@ -76,6 +77,11 @@ public class ItemLayoutGen implements ItemLayout {
 	public void annulerAction(ItemLayout u, int i, int j) {
 		ActionContext.getInstance().reset();
 
+	}
+
+	@Override
+	public void over(ItemLayout u, int i, int j) {
+		GameConsoleDrawer.addLine(u.getItem().getDesription(), 0xFFFF00);
 	}
 
 }

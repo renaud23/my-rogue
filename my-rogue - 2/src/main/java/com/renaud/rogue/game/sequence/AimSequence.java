@@ -4,43 +4,48 @@ import com.renaud.rogue.game.event.ActionEvent;
 
 public class AimSequence implements RogueSequence, ActionEvent {
 
-    private Game game;
-    private AimingAction aiming;
+	private Game game;
+	private AimingAction aiming;
 
-    public AimSequence(Game game, AimingAction aiming) {
-	this.game = game;
-	this.aiming = aiming;
-    }
+	public AimSequence(Game game, AimingAction aiming) {
+		this.game = game;
+		this.aiming = aiming;
 
-    @Override
-    public void activate() {
+	}
 
-    }
+	@Override
+	public void activate() {
 
-    @Override
-    public void goUpAction() {
-	aiming.aimUp();
-    }
+	}
 
-    @Override
-    public void goDownAction() {
-	aiming.aimDown();
-    }
+	@Override
+	public void goUpAction() {
+		aiming.aimUp();
+	}
 
-    @Override
-    public void goLeftAction() {
-	aiming.aimLeft();
-    }
+	@Override
+	public void goDownAction() {
+		aiming.aimDown();
+	}
 
-    @Override
-    public void goRightAction() {
-	aiming.aimRight();
-    }
+	@Override
+	public void goLeftAction() {
+		aiming.aimLeft();
+	}
 
-    @Override
-    public void weaponAction() {
-	this.aiming.activate(game);
-	this.aiming.changeSequence(game);
-    }
+	@Override
+	public void goRightAction() {
+		aiming.aimRight();
+	}
+
+	@Override
+	public void weaponAction() {
+		this.aiming.activate(game);
+		this.aiming.changeSequence(game);
+	}
+
+	public int getDepht() {
+		return aiming.getDepht();
+	}
 
 }

@@ -7,20 +7,24 @@ import com.renaud.rogue.game.sequence.Game;
 
 public interface Weapon extends Item {
 
-    boolean canAim(Joueur joueur, int x, int y);
+	boolean canAim(Joueur joueur, int x, int y);
 
-    Living getUser();
+	Living getUser();
 
-    void setUser(Living living);
+	void setUser(Living living);
 
-    int getDepht();
+	int getDepht();
 
-    void shoot(Game game, int aimx, int aimy);
+	void shoot(Game game, int aimx, int aimy);
 
-    String getName();
+	String getName();
 
-    default int getDamage() {
-	return 0;
-    };
+	default int getLevel() {
+		return 1;
+	}
+
+	default int getDamage() {
+		return 0;
+	};
 
 }

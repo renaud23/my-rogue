@@ -15,14 +15,14 @@ import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
 import com.renaud.rogue.game.world.dungeon.Dungeon;
 
-public class Dijkstra implements Comportement {
+public class AStar implements Comportement {
 
 	private Element element;
 	private Point goal;
 	private Point start;
 	private Map<Point, Point> cameFrom = new HashMap<>();
 
-	public Dijkstra(Element element, Point goal) {
+	public AStar(Element element, Point goal) {
 		this.element = element;
 		start = new Point(element.getX(), element.getY());
 		this.goal = goal;
@@ -101,7 +101,7 @@ public class Dijkstra implements Comportement {
 		Game game = new Game(world);
 		Element wolf = new Wolf(start.x, start.y);
 
-		Dijkstra dijkStra = new Dijkstra(wolf, end);
+		AStar dijkStra = new AStar(wolf, end);
 		dijkStra.activate(game);
 		List<Point> path = dijkStra.getPath();
 

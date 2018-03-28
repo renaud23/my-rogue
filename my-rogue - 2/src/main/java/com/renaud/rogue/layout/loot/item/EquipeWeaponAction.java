@@ -30,7 +30,7 @@ public class EquipeWeaponAction implements ItemLayoutAction {
 			game.getJoueur().setMeleeWeapon(weapon);
 			game.getJoueur().setActiveWeapon(weapon);
 		}
-
+		weapon.setUser(game.getJoueur());
 		if (old != null && !(old instanceof NoWeapon)) {
 			game.getJoueur().getInventory().addItem(old);
 		}
