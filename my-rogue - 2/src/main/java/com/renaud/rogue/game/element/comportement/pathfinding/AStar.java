@@ -11,7 +11,6 @@ import com.renaud.rogue.game.element.Element;
 import com.renaud.rogue.game.element.comportement.Comportement;
 import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.sequence.Game;
-import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
@@ -53,7 +52,7 @@ public class AStar implements Comportement {
 		int newCost = costSofar.get(current) + 1;// ;
 		if (!costSofar.containsKey(next) || newCost < costSofar.get(next)) {
 		    costSofar.put(next, newCost);
-		    int priority = newCost + MathTools.distance(goal, next);
+		    int priority = newCost + Math.abs(next.x - goal.x) + Math.abs(next.y - goal.y);
 		    frontier.add(new PointPriority(next, priority));
 		    cameFrom.put(next, current);
 		}
