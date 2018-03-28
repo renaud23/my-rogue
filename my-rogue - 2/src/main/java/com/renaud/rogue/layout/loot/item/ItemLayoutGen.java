@@ -81,7 +81,7 @@ public class ItemLayoutGen implements ItemLayout {
 
 	@Override
 	public void over(ItemLayout u, int i, int j) {
-		GameConsoleDrawer.addLine(u.getItem().getDesription(), 0xFFFF00);
+		GameConsoleDrawer.inventory(u.getItem().getDesription());
 	}
 
 }

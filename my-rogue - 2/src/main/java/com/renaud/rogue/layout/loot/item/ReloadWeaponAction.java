@@ -22,11 +22,11 @@ public class ReloadWeaponAction implements ItemLayoutAction {
 			this.ammunation = (Ammunition) u.getItem();
 			ActionContext.getInstance().setWeaponAction(this);
 			searchWeapon = true;
-			GameConsoleDrawer.addLine("Choisissez une arme à recharger avec " + this.ammunation.getDesription(), 0xFFFF00);
+			GameConsoleDrawer.info("Choisissez une arme à recharger avec " + this.ammunation.getDesription());
 		} else {
 			if (u.getItem() instanceof RankedWeapon) {
 				((RankedWeapon) u.getItem()).reload(this.ammunation);
-				GameConsoleDrawer.addLine("Vous rechargez " + u.getItem().getDesription(), 0xFFFF00);
+				GameConsoleDrawer.inventory("Vous rechargez " + u.getItem().getDesription());
 				if (this.ammunation.isEmpty()) {
 					game.getJoueur().getInventory().removeItem(this.ammunation);
 				}

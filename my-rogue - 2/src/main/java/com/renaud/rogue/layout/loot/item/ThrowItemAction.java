@@ -19,7 +19,7 @@ public class ThrowItemAction implements ItemLayoutAction {
 		tile.addItem(u.getItem());
 		game.getJoueur().getInventory().removeItem(u.getItem());
 
-		GameConsoleDrawer.addLine("Vous jeter " + u.getItem().getDesription(), 0xFFFF00);
+		GameConsoleDrawer.inventory("Vous jeter " + u.getItem().getDesription());
 	}
 
 }

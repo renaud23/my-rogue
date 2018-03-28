@@ -183,12 +183,12 @@ public class Joueur implements Living {
 
 	@Override
 	public void injured(Game game, Projectile projectile) {
-		GameConsoleDrawer.addLine("Vous êtes atteind par " + projectile.name, 0xff0000);
+		GameConsoleDrawer.carefull("Vous êtes atteind par " + projectile.name);
 		this.life -= projectile.damage;
 	}
 
 	public void injured(Monster monster) {
-		GameConsoleDrawer.addLine("Vous êtes attaqué par " + monster.getName(), 0xff0000);
+		GameConsoleDrawer.carefull("Vous êtes attaqué par " + monster.getName());
 		this.life -= monster.getMeleeDamage();
 	}
 

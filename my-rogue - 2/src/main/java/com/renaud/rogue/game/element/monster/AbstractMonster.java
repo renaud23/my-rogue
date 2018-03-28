@@ -29,7 +29,7 @@ public abstract class AbstractMonster implements Monster {
 			game.removeMonster(this);
 			game.bloodify(x, y);
 		}
-		GameConsoleDrawer.addLine(getName() + " reçoit un coup de " + weapon.getName() + " " + this.life + "  life", 0xFFFF00);
+		GameConsoleDrawer.success(getName() + " reçoit un coup de " + weapon.getName() + " " + this.life + "  life");
 	}
 
 	@Override

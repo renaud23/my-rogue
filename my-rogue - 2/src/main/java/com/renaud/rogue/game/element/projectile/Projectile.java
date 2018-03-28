@@ -119,7 +119,7 @@ public class Projectile implements Element, TurnPlay {
 			p.depht = 12;
 			p.speed = 1;
 			p.opaque = false;
-			p.damage = 5;
+			p.damage = 10;
 			p.name = "fireball";
 			p.tile = TileElement.Factory.getFireball();
 			p.init();

@@ -16,11 +16,11 @@ import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class BerettaM9 implements RankedWeapon, Item {
 
-	private final static int CHARGER_SIZE = 15;
+	private final static int CHARGER_SIZE = 8;
 	private final static Random rnd = new Random();
 
 	private Living user;
-	private int damage = 5;
+	private int damage = 8;
 	private int depht = 6;
 	private int ammo;
 
@@ -60,7 +60,7 @@ public class BerettaM9 implements RankedWeapon, Item {
 
 			}
 		} else {
-			GameConsoleDrawer.addLine("Plus de munition, recharger !", 0xFFFF00);
+			GameConsoleDrawer.info("Plus de munition, recharger !");
 		}
 	}
 
@@ -104,7 +104,7 @@ public class BerettaM9 implements RankedWeapon, Item {
 			this.ammo += can;
 			charger.removeAmmo(can);
 		} else {
-			GameConsoleDrawer.addLine("Munition incompatible", 0xFFFF00);
+			GameConsoleDrawer.info("Munition incompatible");
 		}
 	}
 

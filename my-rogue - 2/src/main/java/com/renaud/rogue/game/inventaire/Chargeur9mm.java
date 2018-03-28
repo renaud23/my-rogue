@@ -4,7 +4,7 @@ import com.renaud.rogue.game.element.TileElement;
 
 public class Chargeur9mm implements Item, Ammunition {
 
-	private int ammunitions = 15;
+	private int ammunitions = 8;
 
 	private TileElement tile = TileElement.Factory.createGunAmmo();
 

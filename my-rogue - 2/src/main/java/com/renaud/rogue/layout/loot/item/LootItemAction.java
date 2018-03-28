@@ -22,7 +22,7 @@ public class LootItemAction implements ItemLayoutAction {
 			tile.removeItem(u.getItem());
 			inventory.addItem(u.getItem());
 		} else {
-			GameConsoleDrawer.addLine("Votre inventaire est plein.", 0xFFFF00);
+			GameConsoleDrawer.carefull("Votre inventaire est plein.");
 		}
 	}
 

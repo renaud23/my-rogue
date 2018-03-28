@@ -25,7 +25,7 @@ public interface Monster extends Living, TurnPlay {
 			m.life = 10;
 			m.actionsMax = 2;
 			m.isMeleeAttaque = true;
-			m.meleeDamage = 2;
+			m.meleeDamage = 8;
 			m.xp = 4;
 			m.name = "Ghoull";
 

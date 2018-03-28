@@ -10,6 +10,11 @@ public class GameConsoleDrawer implements Draw {
 
 	private IDrawOperation op;
 
+	public final static int COLOR_INFO = 0xFF0000;
+	public final static int COLOR_CAREFULL = 0xFFFF00;
+	public final static int COLOR_SUCCESS = 0x0000FF;
+	public final static int COLOR_INVENTORY = 0x00FF00;
+
 	private int posX;
 	private int posY;
 	private int largeur;
@@ -35,7 +40,23 @@ public class GameConsoleDrawer implements Draw {
 		this.op = op;
 	}
 
-	public static void addLine(String line, int color) {
+	public static void info(String line) {
+		addLine(line, COLOR_INFO);
+	}
+
+	public static void success(String line) {
+		addLine(line, COLOR_SUCCESS);
+	}
+
+	public static void carefull(String line) {
+		addLine(line, COLOR_CAREFULL);
+	}
+
+	public static void inventory(String line) {
+		addLine(line, COLOR_INVENTORY);
+	}
+
+	private static void addLine(String line, int color) {
 		if (console != null) {
 			console.addLigne(line, new Color(color));
 		}
