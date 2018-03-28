@@ -140,23 +140,14 @@ public class Game implements RogueSequence, ActionEvent {
 		this.currentSequence.weaponAction();
 	}
 
-<<<<<<< HEAD
 	@Override
 	public void switchWeaponAction() {
 		this.currentSequence.switchWeaponAction();
 	}
-=======
-    public Game(World world) {
-	this.world = world;
-    }
 
-    public Game(World world, Joueur joueur, LootLayout lootLayout) {
-	this.lootLayout = lootLayout;
-	this.world = world;
-	this.joueur = joueur;
-	setElement(this.joueur);
-	this.currentSequence = new PlayingSequence(this);
->>>>>>> 7bbf324236b1c82eaa1450b433e61aaaebd552cb
+	public Game(World world) {
+		this.world = world;
+	}
 
 	@Override
 	public void annulerAction() {
