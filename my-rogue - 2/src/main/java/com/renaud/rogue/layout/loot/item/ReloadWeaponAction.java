@@ -30,7 +30,10 @@ public class ReloadWeaponAction implements ItemLayoutAction {
 				if (this.ammunation.isEmpty()) {
 					game.getJoueur().getInventory().removeItem(this.ammunation);
 				}
+			} else {
+				GameConsoleDrawer.inventory("Vous ne pouvez pas rechargez " + u.getItem().getDesription() + " avec " + this.ammunation.getDesription());
 			}
+
 			ActionContext.getInstance().setWeaponAction(null);
 			searchWeapon = false;
 		}

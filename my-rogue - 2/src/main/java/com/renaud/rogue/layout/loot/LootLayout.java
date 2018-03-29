@@ -5,6 +5,7 @@ import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.layout.GridLayoutListener;
 import com.renaud.rogue.layout.LayoutComposite;
+import com.renaud.rogue.layout.loot.item.ActionContext;
 import com.renaud.rogue.layout.loot.item.GridInventoryItemListener;
 import com.renaud.rogue.layout.loot.item.ItemLayout;
 
@@ -92,6 +93,7 @@ public class LootLayout extends LayoutComposite implements GridLayoutListener<It
 	@Override
 	public void annulerAction(ItemLayout u, int i, int j) {
 		this.refresh();
+		ActionContext.getInstance().reset();
 	}
 
 }

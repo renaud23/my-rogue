@@ -7,31 +7,24 @@ import com.renaud.rogue.view.IDrawable;
 
 public class MainDrawer implements IDrawable, DrawOperationAware {
 
-    private PlayingDrawer playingDrawer;
-    private LayoutDrawer inventaireDrawer;
-    private MainSequence mainSequence;
+	private PlayingDrawer playingDrawer;
+	private MainSequence mainSequence;
 
-    public MainDrawer(PlayingDrawer playingDrawer, LayoutDrawer inventaireDrawer, MainSequence mainSequence) {
-	this.playingDrawer = playingDrawer;
-	this.inventaireDrawer = inventaireDrawer;
-	this.mainSequence = mainSequence;
-    }
-
-    public void setDrawOperation(IDrawOperation op) {
-	this.playingDrawer.setDrawOperation(op);
-	this.inventaireDrawer.setDrawOperation(op);
-    }
-
-    @Override
-    public void draw() {
-	if (mainSequence.isOnPlay()) {
-	    this.playingDrawer.draw();
-	} else if (mainSequence.isOnInventaire()) {
-	    this.inventaireDrawer.draw();
+	public MainDrawer(PlayingDrawer playingDrawer, MainSequence mainSequence) {
+		this.playingDrawer = playingDrawer;
+		this.mainSequence = mainSequence;
 	}
 
-    }
+	public void setDrawOperation(IDrawOperation op) {
+		this.playingDrawer.setDrawOperation(op);
+	}
 
-    public static interface Draw extends IDrawable, DrawOperationAware {
-    }
+	@Override
+	public void draw() {
+
+		this.playingDrawer.draw();
+
+	}
+
+	public static interface Draw extends IDrawable, DrawOperationAware {}
 }

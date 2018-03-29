@@ -202,6 +202,7 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 			parent.activeChild = this;
 			actif = true;
 			activeChild.annulerAction();
+			activeChild = null;
 		}
 	}
 

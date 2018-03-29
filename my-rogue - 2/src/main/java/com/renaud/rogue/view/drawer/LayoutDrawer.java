@@ -3,17 +3,14 @@ package com.renaud.rogue.view.drawer;
 import java.awt.Color;
 
 import com.renaud.rogue.game.element.TileElement;
-import com.renaud.rogue.game.inventaire.Item;
 import com.renaud.rogue.game.weapon.NoWeapon;
 import com.renaud.rogue.layout.Layout;
 import com.renaud.rogue.layout.LayoutComposite;
 import com.renaud.rogue.layout.loot.GridInventoryItemLayout;
-import com.renaud.rogue.layout.loot.GridItemLayout;
 import com.renaud.rogue.layout.loot.item.ItemLayout;
 import com.renaud.rogue.view.IDrawOperation;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.MainDrawer.Draw;
-import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public class LayoutDrawer implements Draw {
 
@@ -32,34 +29,10 @@ public class LayoutDrawer implements Draw {
 		buffer.drawRect(l.isActif() ? Color.yellow : color, l.getRectangle().x, l.getRectangle().y, l.getRectangle().width, l.getRectangle().height, 1.0f);
 		if (l instanceof GridInventoryItemLayout) {
 			drawGridItemLayout((GridInventoryItemLayout) l);
-		} else if (l instanceof GridItemLayout) {
-			drawGridItemLayout((GridItemLayout) l);
 		} else if (l instanceof LayoutComposite) {
 			for (Layout child : (LayoutComposite) l) {
 				drawLayout(child);
 			}
-		}
-	}
-
-	private void drawGridItemLayout(GridItemLayout l) {
-		int i = 0;
-		for (Layout child : l) {
-			drawLayout(child);
-
-			Item item = l.getLeaf(i % l.getGridWidth(), i / l.getGridWidth());
-			if (item != null) {
-				RogueTile tile = item.getTile().getTile();
-				if (tile != null) {
-					double scale = child.getRectangle().width / tile.getImage().getWidth(null);
-					this.buffer.drawImage(tile.getImage(), //
-						child.getRectangle().x + 1, //
-						child.getRectangle().y + 1, //
-						0, //
-						0, //
-						0, scale, scale, 1.0f);
-				}
-			}
-			i++;
 		}
 	}
 

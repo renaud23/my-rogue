@@ -1,7 +1,5 @@
 package com.renaud.rogue.game.weapon;
 
-import java.util.Random;
-
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.element.Living;
 import com.renaud.rogue.game.element.TileElement;
@@ -17,7 +15,6 @@ import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 public class BerettaM9 implements RankedWeapon, Item {
 
 	private final static int CHARGER_SIZE = 8;
-	private final static Random rnd = new Random();
 
 	private Living user;
 	private int damage = 8;
@@ -57,7 +54,6 @@ public class BerettaM9 implements RankedWeapon, Item {
 					game.addLightSource(new Explosion(p.x, p.y));
 					break;
 				}
-
 			}
 		} else {
 			GameConsoleDrawer.info("Plus de munition, recharger !");

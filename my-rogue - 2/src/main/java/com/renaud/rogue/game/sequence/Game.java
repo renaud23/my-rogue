@@ -19,6 +19,7 @@ import com.renaud.rogue.game.weapon.BerettaM9;
 import com.renaud.rogue.game.world.Light;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
+import com.renaud.rogue.layout.loot.InventoryLayout;
 import com.renaud.rogue.layout.loot.LootLayout;
 
 public class Game implements RogueSequence, ActionEvent {
@@ -38,10 +39,12 @@ public class Game implements RogueSequence, ActionEvent {
 	private RogueSequence currentSequence;
 
 	private LootLayout lootLayout;
+	private InventoryLayout inventoryLayout;
 	private boolean onLoot;
 
-	public Game(World world, Joueur joueur, LootLayout lootLayout) {
+	public Game(World world, Joueur joueur, LootLayout lootLayout, InventoryLayout inventoryLayout) {
 		this.lootLayout = lootLayout;
+		this.inventoryLayout = inventoryLayout;
 		this.world = world;
 		this.joueur = joueur;
 		setElement(this.joueur);

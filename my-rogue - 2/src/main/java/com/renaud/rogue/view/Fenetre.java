@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
-import com.renaud.rogue.game.sequence.RogueSequence;
+import com.renaud.rogue.game.sequence.SequenceAutomate;
 
 public class Fenetre implements Iterable<IDrawable> {
 
@@ -27,11 +27,10 @@ public class Fenetre implements Iterable<IDrawable> {
 	private CanvasHwdBuffer buffer;
 	private Timer timer;
 	private List<IDrawable> drawables = new ArrayList<IDrawable>();
-	private RogueSequence sequence;
 	private Image background;
 
-	public Fenetre(RogueSequence sequence, int largeur, int hauteur, String title) {
-		this.sequence = sequence;
+	public Fenetre(int largeur, int hauteur, String title) {
+
 		this.frame = new JFrame(title);
 		this.frame.setIgnoreRepaint(true);
 		this.frame.setVisible(true);
@@ -106,7 +105,8 @@ public class Fenetre implements Iterable<IDrawable> {
 
 			@Override
 			public void run() {
-				f.sequence.activate();
+				SequenceAutomate.getInstance().activate();
+				// f.sequence.activate();
 				f.drawBackground();
 				for (IDrawable drw : f) {
 					if (drw instanceof DrawOperationAware)
@@ -123,8 +123,7 @@ public class Fenetre implements Iterable<IDrawable> {
 	private void drawBackground() {
 		if (background != null) {
 			this.getDrawOperation().drawImage(background, 0, 0, largeur, hauteur, 0, 0, background.getWidth(null), background.getHeight(null));
-		}
-		else {
+		} else {
 			this.getDrawOperation().clean();
 		}
 	}

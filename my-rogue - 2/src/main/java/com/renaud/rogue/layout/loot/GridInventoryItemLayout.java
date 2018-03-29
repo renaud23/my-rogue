@@ -26,10 +26,4 @@ public class GridInventoryItemLayout extends GridLayout<ItemLayout> {
 		}
 	}
 
-	@Override
-	public void annulerAction() {
-		super.annulerAction();
-
-	}
-
 }
