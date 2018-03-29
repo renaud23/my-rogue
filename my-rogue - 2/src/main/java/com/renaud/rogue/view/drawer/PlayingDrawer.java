@@ -26,7 +26,6 @@ public class PlayingDrawer implements Draw {
 
 	@Override
 	public void draw() {
-		// if (game.isOnLoot()) {
 		if (SequenceAutomate.getInstance().isOnLoot()) {
 			lootDrawer.draw();
 		} else {

@@ -12,7 +12,7 @@ public class GameConsoleDrawer implements Draw {
 
 	public final static int COLOR_INFO = 0xFF0000;
 	public final static int COLOR_CAREFULL = 0xFFFF00;
-	public final static int COLOR_SUCCESS = 0x0000FF;
+	public final static int COLOR_SUCCESS = 0x00FFFF;
 	public final static int COLOR_INVENTORY = 0x00FF00;
 
 	private int posX;

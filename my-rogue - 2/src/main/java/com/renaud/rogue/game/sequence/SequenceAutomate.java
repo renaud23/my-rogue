@@ -5,14 +5,10 @@ import com.renaud.rogue.layout.loot.LootLayout;
 
 public class SequenceAutomate implements RogueSequence {
 
-	public LootLayout lootLayout;
-	public InventoryLayout inventoryLayout;
+	private LootLayout lootLayout;
+	private InventoryLayout inventoryLayout;
 
 	private Playingcontext playingContext;
-
-	public Playingcontext getPlayingContext() {
-		return playingContext;
-	}
 
 	private RogueSequence currentSequence;
 
@@ -21,6 +17,10 @@ public class SequenceAutomate implements RogueSequence {
 	private SequenceAutomate() {
 		this.playingContext = new Playingcontext();
 		this.playingContext.startGame();
+	}
+
+	public Playingcontext getPlayingContext() {
+		return playingContext;
 	}
 
 	public static SequenceAutomate getInstance() {
@@ -97,6 +97,22 @@ public class SequenceAutomate implements RogueSequence {
 			return ((AimSequence) currentSequence).getDepht();
 		}
 		return 0;
+	}
+
+	public LootLayout getLootLayout() {
+		return lootLayout;
+	}
+
+	public void setLootLayout(LootLayout lootLayout) {
+		this.lootLayout = lootLayout;
+	}
+
+	public InventoryLayout getInventoryLayout() {
+		return inventoryLayout;
+	}
+
+	public void setInventoryLayout(InventoryLayout inventoryLayout) {
+		this.inventoryLayout = inventoryLayout;
 	}
 
 }

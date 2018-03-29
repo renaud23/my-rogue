@@ -47,8 +47,8 @@ public class Main {
 		LootLayout layoutLoot = new LootLayout(0, 0, screenLargeur, screenHauteur);
 
 		// state sequence initialisation
-		SequenceAutomate.getInstance().inventoryLayout = layoutInventory;
-		SequenceAutomate.getInstance().lootLayout = layoutLoot;
+		SequenceAutomate.getInstance().setInventoryLayout(layoutInventory);
+		SequenceAutomate.getInstance().setLootLayout(layoutLoot);
 		SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
 		EventListener listener = new EventListener(SequenceAutomate.getInstance());
 

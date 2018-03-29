@@ -8,17 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.renaud.rogue.view.IDrawOperation;
+import com.renaud.rogue.view.IDrawable;
 import com.renaud.rogue.view.JImageBuffer;
-import com.renaud.rogue.view.drawer.MainDrawer.Draw;
 
-public class Console implements Draw {
+public class Console implements IDrawable {
 
 	private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 12);
 
 	private List<Line> lignes = new ArrayList<>();
 	private int currentLine = 0;
 
-	private IDrawOperation op;
 	private IDrawOperation buffer;
 	boolean hasChanged = true;
 	boolean showLast = true;
@@ -36,11 +35,7 @@ public class Console implements Draw {
 		this.largeurLigne = largeur - 2 * cursorx;
 		buffer = new JImageBuffer(Color.white, largeur, hauteur);
 
-		lignes.add(new Line("Bonjour !", Color.blue));
-		// lignes.add(new Line("Des milliards de morceaux de plastique et 80 000 tonnes de déchets : la gigantesque décharge qui flotte dans le Pacifique est bien plus importante qu’estimé
-		// précédemment.", Color.red));
-		// lignes.add(new Line("La durée de l'installation des mises à jour biannuelles de Windows 10 sera réduite de 63 % par rapport à la Creators Update, qui aura été la dernière à utiliser l'ancien
-		// procédé.", Color.yellow));
+		lignes.add(new Line("Bonjour !", Color.cyan));
 	}
 
 	@Override
@@ -56,11 +51,6 @@ public class Console implements Draw {
 			}
 		}
 
-	}
-
-	@Override
-	public void setDrawOperation(IDrawOperation op) {
-		this.op = op;
 	}
 
 	public boolean drawLine(Line line) {

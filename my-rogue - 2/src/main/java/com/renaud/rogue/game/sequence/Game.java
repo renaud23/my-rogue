@@ -65,14 +65,6 @@ public class Game implements RogueSequence, ActionEvent {
 		this.addLightSource(new Torche(joueur));
 	}
 
-	public World getWorld() {
-		return world;
-	}
-
-	public Joueur getJoueur() {
-		return joueur;
-	}
-
 	public void illumine() {
 		for (int i = 0; i < this.world.getSize(); i++) {
 			this.world.getTile(i).setLight(Light.DARK);
@@ -83,10 +75,6 @@ public class Game implements RogueSequence, ActionEvent {
 		}
 	}
 
-	public Game(World world) {
-		this.world = world;
-	}
-
 	/* */
 
 	public void moveTo(Element element, int x, int y) {
@@ -94,51 +82,6 @@ public class Game implements RogueSequence, ActionEvent {
 		element.setX(x);
 		element.setY(y);
 		this.world.setElement(element, x, y);
-	}
-
-	public void removeElement(Element element) {
-		this.world.removeElement(element.getX(), element.getY());
-	}
-
-	public void setElement(Element element) {
-		this.world.setElement(element, element.getX(), element.getY());
-	}
-
-	public List<Monster> getMonsters() {
-		return monsters;
-	}
-
-	public List<Projectile> getProjectiles() {
-		return projectiles;
-	}
-
-	public void addProjectile(Projectile p) {
-		this.projectiles.add(p);
-	}
-
-	public void addMonster(Monster monster) {
-		TileDungeon tile = this.world.getTile(monster.getX(), monster.getY());
-		if (tile.isEmpty()) {
-			this.monsters.add(monster);
-			tile.setOccupant(monster);
-		}
-	}
-
-	public void removeMonster(Monster monster) {
-		this.monsters.remove(monster);
-		this.removeElement(monster);
-	}
-
-	public List<LightSource> getLightSources() {
-		return lightSources;
-	}
-
-	public void addLightSource(LightSource ls) {
-		this.lightSources.add(ls);
-	}
-
-	public void removeLightSource(LightSource ls) {
-		this.lightSources.remove(ls);
 	}
 
 	public void bloodify(int x, int y) {
@@ -164,6 +107,67 @@ public class Game implements RogueSequence, ActionEvent {
 				}
 			}
 		}
+	}
+
+	/* */
+
+	public void addProjectile(Projectile p) {
+		this.projectiles.add(p);
+	}
+
+	public void addMonster(Monster monster) {
+		TileDungeon tile = this.world.getTile(monster.getX(), monster.getY());
+		if (tile.isEmpty()) {
+			this.monsters.add(monster);
+			tile.setOccupant(monster);
+		}
+	}
+
+	public void addLightSource(LightSource ls) {
+		this.lightSources.add(ls);
+	}
+
+	public void removeMonster(Monster monster) {
+		this.monsters.remove(monster);
+		this.removeElement(monster);
+	}
+
+	public void removeLightSource(LightSource ls) {
+		this.lightSources.remove(ls);
+	}
+
+	public void removeElement(Element element) {
+		this.world.removeElement(element.getX(), element.getY());
+	}
+
+	public void setElement(Element element) {
+		this.world.setElement(element, element.getX(), element.getY());
+	}
+
+	/* */
+
+	public Game(World world) {
+		this.world = world;
+	}
+
+	public List<Monster> getMonsters() {
+		return monsters;
+	}
+
+	public List<Projectile> getProjectiles() {
+		return projectiles;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public Joueur getJoueur() {
+		return joueur;
+	}
+
+	public List<LightSource> getLightSources() {
+		return lightSources;
 	}
 
 }
