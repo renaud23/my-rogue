@@ -101,4 +101,9 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 		SequenceAutomate.getInstance().setNextSequence(new AimSequence(game, new ActivateAiming(game)));
 	}
 
+	@Override
+	public void inventaireAction() {
+		SequenceAutomate.getInstance().setNextSequence(new InventorySequence(game));
+	}
+
 }

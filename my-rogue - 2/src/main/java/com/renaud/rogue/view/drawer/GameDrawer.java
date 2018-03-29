@@ -105,7 +105,6 @@ public class GameDrawer implements Draw {
 			}
 		}
 
-		// if (game.isAiming()) {
 		if (SequenceAutomate.getInstance().isOnAiming()) {
 			drawAiming(startX, startY, carrSize);
 		}
@@ -118,13 +117,11 @@ public class GameDrawer implements Draw {
 			if (tile.getTile() != null) {
 				TileDungeon ground = game.getWorld().getTile(element.getX(), element.getY());
 				buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, ground.getLight().getAlpha());
-
 			} else {
 				StringBuilder bld = new StringBuilder();
 				bld.append(tile.getCharCode());
 				buffer.drawChar(bld.toString(), xi * carrSize + 1, yi * carrSize + carrSize - 2, carrSize + 1, new Color(tile.getColor()));
 			}
-
 		}
 
 		for (Projectile proj : projectiles) {
@@ -153,7 +150,6 @@ public class GameDrawer implements Draw {
 		}
 
 		this.op.drawImage(buffer.getImage(), 0, 0, 0, 0, 0, 1.0, 1.0f);
-
 	}
 
 	private void drawAiming(int startX, int startY, int carrSize) {

@@ -54,11 +54,12 @@ public class Main {
 
 		// drawer layer
 		LayoutDrawer lootDrawer = new LayoutDrawer(layoutLoot, screenLargeur, screenHauteur);
+		LayoutDrawer inventoryDrawer = new LayoutDrawer(layoutInventory, screenLargeur, screenHauteur);
 		GameDrawer gameDrawer = new GameDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur);
 		HudDrawer hudDrawer = new HudDrawer(joueur, screenLargeur, 0, hudLargeur, hudHauteur);
 		MinimapDrawer minimapDrawer = new MinimapDrawer(game, screenLargeur, hudHauteur - mapHauteur, mapLargeur, mapHauteur);
 		GameConsoleDrawer consoleDrawer = new GameConsoleDrawer(0, screenHauteur, consoleWidth, consoleHeight);
-		PlayingDrawer playingDrawer = new PlayingDrawer(game, gameDrawer, hudDrawer, minimapDrawer, consoleDrawer, lootDrawer);
+		PlayingDrawer playingDrawer = new PlayingDrawer(game, gameDrawer, hudDrawer, minimapDrawer, consoleDrawer, lootDrawer, inventoryDrawer);
 		MainDrawer mainDrawer = new MainDrawer(playingDrawer);
 
 		// start application

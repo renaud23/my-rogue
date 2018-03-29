@@ -34,4 +34,8 @@ public class Playingcontext {
 	public void startNextPlay() {
 		playFinished = false;
 	}
+
+	public int getStep() {
+		return step;
+	}
 }

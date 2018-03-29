@@ -7,9 +7,7 @@ public class SequenceAutomate implements RogueSequence {
 
 	private LootLayout lootLayout;
 	private InventoryLayout inventoryLayout;
-
 	private Playingcontext playingContext;
-
 	private RogueSequence currentSequence;
 
 	public static SequenceAutomate instance;
@@ -84,6 +82,12 @@ public class SequenceAutomate implements RogueSequence {
 		this.currentSequence.activate();
 	}
 
+	/* */
+
+	public boolean isOnInventory() {
+		return currentSequence instanceof InventorySequence;
+	}
+
 	public boolean isOnLoot() {
 		return currentSequence instanceof LootSequence;
 	}
@@ -98,6 +102,8 @@ public class SequenceAutomate implements RogueSequence {
 		}
 		return 0;
 	}
+
+	/* */
 
 	public LootLayout getLootLayout() {
 		return lootLayout;

@@ -5,13 +5,9 @@ import com.renaud.rogue.game.event.ActionEvent;
 public class LootSequence implements RogueSequence, ActionEvent {
 
 	private Game game;
-	private int x;
-	private int y;
 
 	public LootSequence(Game game, int x, int y) {
 		this.game = game;
-		this.x = x;
-		this.y = y;
 		SequenceAutomate.getInstance().getLootLayout().initialise(game, game.getWorld().getTile(x, y));
 	}
 
