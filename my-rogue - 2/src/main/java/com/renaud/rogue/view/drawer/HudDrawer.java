@@ -82,15 +82,15 @@ public class HudDrawer implements Draw {
 
 	    RankedWeapon rw = (RankedWeapon) joueur.getRankedWeapon();
 	    for (int i = 0; i < rw.getRemainingAmmos(); i++) {
-		buffer.fillRect(Color.yellow, x + xi + 32 + marge + 3 * i, y + 2, 2, 2, 1.0f);
+		buffer.fillRect(Color.yellow, x + xi + 32 + marge + 2 + 3 * i, y + 2, 2, 2, 1.0f);
 	    }
 	}
 	int vx = 0;
 	if (joueur.getActiveWeapon() == joueur.getRankedWeapon()) {
 	    vx += marge + tileSize;
 	}
-	buffer.drawRect(Color.black, x + xi + vx + 1, y + 1, tileSize, tileSize);
-	buffer.drawRect(FireBrick, x + xi + vx, y, tileSize, tileSize);
+	buffer.drawRect(Color.black, x + xi + vx, y, tileSize + 1, tileSize + 1);
+	buffer.drawRect(FireBrick, x + xi + vx - 1, y - 1, tileSize + 1, tileSize + 1);
 
     }
 
