@@ -1,79 +1,80 @@
 package com.renaud.rogue.game.sequence;
 
 import com.renaud.rogue.game.event.ActionEvent;
-import com.renaud.rogue.layout.loot.LootLayout;
 
 public class LootSequence implements RogueSequence, ActionEvent {
 
-    private Game game;
-    private int x;
-    private int y;
-    private LootLayout layout;
+	private Game game;
+	private int x;
+	private int y;
+	// private LootLayout layout;
 
-    public LootSequence(Game game, int x, int y) {
-	this.game = game;
-	this.x = x;
-	this.y = y;
-	this.layout = game.getLootLayout();
-	this.layout.initialise(game, game.getWorld().getTile(x, y));
-    }
-
-    @Override
-    public void goUpAction() {
-	layout.setChanged(true);
-	layout.goUpAction();
-    }
-
-    @Override
-    public void goDownAction() {
-	layout.setChanged(true);
-	layout.goDownAction();
-    }
-
-    @Override
-    public void goLeftAction() {
-	layout.setChanged(true);
-	layout.goLeftAction();
-    }
-
-    @Override
-    public void goRightAction() {
-	layout.setChanged(true);
-	layout.goRightAction();
-    }
-
-    @Override
-    public void weaponAction() {
-	layout.setChanged(true);
-	layout.weaponAction();
-    }
-
-    @Override
-    public void annulerAction() {
-	layout.setChanged(true);
-	if (layout.isOpened()) {
-	    layout.annulerAction();
-	} else {
-	    game.changeSequence(new PlayingSequence(game));
+	public LootSequence(Game game, int x, int y) {
+		this.game = game;
+		this.x = x;
+		this.y = y;
+		// this.layout = game.getLootLayout();
+		// this.layout.initialise(game, game.getWorld().getTile(x, y));
+		SequenceAutomate.getInstance().lootLayout.initialise(game, game.getWorld().getTile(x, y));
 	}
-    }
 
-    @Override
-    public void switchWeaponAction() {
-	layout.setChanged(true);
-	layout.switchWeaponAction();
-    }
+	@Override
+	public void goUpAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.goUpAction();
+	}
 
-    @Override
-    public void inventaireAction() {
-	layout.setChanged(true);
-	layout.inventaireAction();
-    }
+	@Override
+	public void goDownAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.goDownAction();
+	}
 
-    @Override
-    public void activateAction() {
-	layout.setChanged(true);
-	layout.activateAction();
-    }
+	@Override
+	public void goLeftAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.goLeftAction();
+	}
+
+	@Override
+	public void goRightAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.goRightAction();
+	}
+
+	@Override
+	public void weaponAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.weaponAction();
+	}
+
+	@Override
+	public void annulerAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		if (SequenceAutomate.getInstance().lootLayout.isOpened()) {
+			SequenceAutomate.getInstance().lootLayout.annulerAction();
+		} else {
+			// game.changeSequence(new PlayingSequence(game));
+			SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
+		}
+	}
+
+	@Override
+	public void switchWeaponAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.switchWeaponAction();
+	}
+
+	@Override
+	public void inventaireAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.inventaireAction();
+	}
+
+	@Override
+	public void activateAction() {
+		SequenceAutomate.getInstance().lootLayout.setChanged(true);
+		SequenceAutomate.getInstance().lootLayout.activateAction();
+	}
 
 }

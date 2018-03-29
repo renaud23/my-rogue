@@ -15,7 +15,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 	@Override
 	public void activate() {
 		game.illumine();
-		if (game.isPlayFinished()) {
+		if (SequenceAutomate.getInstance().getPlayingContext().isPlayFinished()) {
 			game.getProjectiles().removeIf(m -> m.isEnd());
 			game.getProjectiles().forEach(m -> {
 				m.startTurn();
@@ -35,7 +35,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 					}
 				}
 
-				if (game.isTurnFinished()) {
+				if (SequenceAutomate.getInstance().getPlayingContext().isTurnFinished()) {
 					// next turn
 					for (Monster monster : game.getMonsters()) {
 						if (!monster.turnIsEnd()) {
@@ -45,10 +45,10 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 					}
 				}
 			}
-			if (game.isTurnFinished()) {
-				game.startNextTurn();
+			if (SequenceAutomate.getInstance().getPlayingContext().isTurnFinished()) {
+				SequenceAutomate.getInstance().getPlayingContext().startNextTurn();
 			}
-			game.startNextPlay();
+			SequenceAutomate.getInstance().getPlayingContext().startNextPlay();
 		}
 	}
 
@@ -56,7 +56,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 	public void goUpAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() - 1).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() - 1);
-			game.playFinished();
+			SequenceAutomate.getInstance().getPlayingContext().playFinished();
 		}
 	}
 
@@ -64,7 +64,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 	public void goDownAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX(), game.getJoueur().getY() + 1).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX(), game.getJoueur().getY() + 1);
-			game.playFinished();
+			SequenceAutomate.getInstance().getPlayingContext().playFinished();
 		}
 	}
 
@@ -72,7 +72,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 	public void goLeftAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX() - 1, game.getJoueur().getY()).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX() - 1, game.getJoueur().getY());
-			game.playFinished();
+			SequenceAutomate.getInstance().getPlayingContext().playFinished();
 		}
 	}
 
@@ -80,25 +80,27 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 	public void goRightAction() {
 		if (game.getWorld().getTile(game.getJoueur().getX() + 1, game.getJoueur().getY()).canWalkOn()) {
 			game.moveTo(game.getJoueur(), game.getJoueur().getX() + 1, game.getJoueur().getY());
-			game.playFinished();
+			SequenceAutomate.getInstance().getPlayingContext().playFinished();
 		}
 	}
 
 	@Override
 	public void weaponAction() {
-		game.changeSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
-		game.playFinished();
+		// game.changeSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
+		SequenceAutomate.getInstance().setNextSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
+		SequenceAutomate.getInstance().getPlayingContext().playFinished();
 	}
 
 	@Override
 	public void switchWeaponAction() {
 		game.getJoueur().switchWeapon();
-		game.playFinished();
+		SequenceAutomate.getInstance().getPlayingContext().playFinished();
 	}
 
 	@Override
 	public void activateAction() {
-		game.changeSequence(new AimSequence(game, new ActivateAiming(game)));
+		// game.changeSequence(new AimSequence(game, new ActivateAiming(game)));
+		SequenceAutomate.getInstance().setNextSequence(new AimSequence(game, new ActivateAiming(game)));
 	}
 
 }

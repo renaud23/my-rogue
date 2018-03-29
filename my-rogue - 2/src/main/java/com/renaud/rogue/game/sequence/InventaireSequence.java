@@ -55,7 +55,8 @@ public class InventaireSequence implements RogueSequence, ActionEvent {
 		if (layout.isOpened()) {
 			layout.annulerAction();
 		} else {
-			game.changeSequence(new PlayingSequence(game));
+			// game.changeSequence(new PlayingSequence(game));
+			SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
 		}
 	}
 

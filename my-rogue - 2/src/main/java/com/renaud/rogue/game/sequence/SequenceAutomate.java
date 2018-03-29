@@ -1,12 +1,27 @@
 package com.renaud.rogue.game.sequence;
 
+import com.renaud.rogue.layout.loot.InventoryLayout;
+import com.renaud.rogue.layout.loot.LootLayout;
+
 public class SequenceAutomate implements RogueSequence {
+
+	public LootLayout lootLayout;
+	public InventoryLayout inventoryLayout;
+
+	private Playingcontext playingContext;
+
+	public Playingcontext getPlayingContext() {
+		return playingContext;
+	}
 
 	private RogueSequence currentSequence;
 
 	public static SequenceAutomate instance;
 
-	private SequenceAutomate() {}
+	private SequenceAutomate() {
+		this.playingContext = new Playingcontext();
+		this.playingContext.startGame();
+	}
 
 	public static SequenceAutomate getInstance() {
 		if (instance == null) {
@@ -18,10 +33,6 @@ public class SequenceAutomate implements RogueSequence {
 	public void setNextSequence(RogueSequence sequence) {
 		this.currentSequence = sequence;
 	}
-
-	// public RogueSequence getCurrentSequence() {
-	// return currentSequence;
-	// }
 
 	@Override
 	public void goUpAction() {
@@ -71,6 +82,21 @@ public class SequenceAutomate implements RogueSequence {
 	@Override
 	public void activate() {
 		this.currentSequence.activate();
+	}
+
+	public boolean isOnLoot() {
+		return currentSequence instanceof LootSequence;
+	}
+
+	public boolean isOnAiming() {
+		return currentSequence instanceof AimSequence;
+	}
+
+	public int getAimingDepht() {
+		if (isOnAiming()) {
+			return ((AimSequence) currentSequence).getDepht();
+		}
+		return 0;
 	}
 
 }

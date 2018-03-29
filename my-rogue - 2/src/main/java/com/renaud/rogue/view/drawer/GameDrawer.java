@@ -11,6 +11,7 @@ import com.renaud.rogue.game.element.light.Explosion;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.inventaire.Item;
 import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.sequence.SequenceAutomate;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
@@ -104,7 +105,8 @@ public class GameDrawer implements Draw {
 			}
 		}
 
-		if (game.isAiming()) {
+		// if (game.isAiming()) {
+		if (SequenceAutomate.getInstance().isOnAiming()) {
 			drawAiming(startX, startY, carrSize);
 		}
 
@@ -155,7 +157,7 @@ public class GameDrawer implements Draw {
 	}
 
 	private void drawAiming(int startX, int startY, int carrSize) {
-		int wd = game.getAimingDepht();
+		int wd = SequenceAutomate.getInstance().getAimingDepht();// game.getAimingDepht();
 		int wd2 = wd;
 		wd2 *= wd;
 		for (int i = -wd; i <= wd; i++) {

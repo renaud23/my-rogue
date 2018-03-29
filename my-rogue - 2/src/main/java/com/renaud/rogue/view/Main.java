@@ -3,7 +3,7 @@ package com.renaud.rogue.view;
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.event.EventListener;
 import com.renaud.rogue.game.sequence.Game;
-import com.renaud.rogue.game.sequence.MainSequence;
+import com.renaud.rogue.game.sequence.PlayingSequence;
 import com.renaud.rogue.game.sequence.SequenceAutomate;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.World;
@@ -36,26 +36,32 @@ public class Main {
 		int consoleWidth = screenLargeur + hudLargeur;
 		int consoleHeight = 100;
 
-		InventoryLayout layoutInventory = new InventoryLayout(0, 0, screenLargeur, screenHauteur);
-		LootLayout layoutLoot = new LootLayout(0, 0, screenLargeur, screenHauteur);
-
+		// game layer
 		World world = new World(wolrdLargeur, worldHauteur);
 		Point start = world.peekEmptyPlace();
 		Joueur joueur = new Joueur(start.x, start.y, wolrdLargeur, worldHauteur);
-		Game game = new Game(world, joueur, layoutLoot, layoutInventory);
+		Game game = new Game(world, joueur);
 
-		MainSequence mainSequence = new MainSequence(game);
+		// game layout
+		InventoryLayout layoutInventory = new InventoryLayout(0, 0, screenLargeur, screenHauteur);
+		LootLayout layoutLoot = new LootLayout(0, 0, screenLargeur, screenHauteur);
 
-		EventListener listener = new EventListener(mainSequence);
+		// state sequence initialisation
+		SequenceAutomate.getInstance().inventoryLayout = layoutInventory;
+		SequenceAutomate.getInstance().lootLayout = layoutLoot;
+		SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
+		EventListener listener = new EventListener(SequenceAutomate.getInstance());
+
+		// drawer layer
 		LayoutDrawer lootDrawer = new LayoutDrawer(layoutLoot, screenLargeur, screenHauteur);
 		GameDrawer gameDrawer = new GameDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur);
 		HudDrawer hudDrawer = new HudDrawer(joueur, screenLargeur, 0, hudLargeur, hudHauteur);
 		MinimapDrawer minimapDrawer = new MinimapDrawer(game, screenLargeur, hudHauteur - mapHauteur, mapLargeur, mapHauteur);
 		GameConsoleDrawer consoleDrawer = new GameConsoleDrawer(0, screenHauteur, consoleWidth, consoleHeight);
 		PlayingDrawer playingDrawer = new PlayingDrawer(game, gameDrawer, hudDrawer, minimapDrawer, consoleDrawer, lootDrawer);
-		MainDrawer mainDrawer = new MainDrawer(playingDrawer, mainSequence);
+		MainDrawer mainDrawer = new MainDrawer(playingDrawer);
 
-		SequenceAutomate.getInstance().setNextSequence(mainSequence);
+		// start application
 		Fenetre fenetre = new Fenetre(screenLargeur + hudLargeur, screenHauteur + consoleHeight, "My Rogue");
 		fenetre.addKeyListener(listener);
 		fenetre.addDrawable(mainDrawer);

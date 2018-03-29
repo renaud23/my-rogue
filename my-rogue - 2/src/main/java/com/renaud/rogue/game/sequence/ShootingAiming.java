@@ -50,7 +50,8 @@ public class ShootingAiming implements AimingAction {
 
 	@Override
 	public void changeSequence(Game game) {
-		game.changeSequence(new PlayingSequence(game));
+		// game.changeSequence(new PlayingSequence(game));
+		SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
 	}
 
 }
