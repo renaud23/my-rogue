@@ -93,8 +93,8 @@ public class GameDrawer implements Draw {
 			if (bloc.tile.hasItem()) {
 				Item item = bloc.tile.getLastItem();
 				TileElement tile = item.getTile();
-				if (tile.getTile() != null) {
-					buffer.drawImage(tile.getTile().getImage(), bloc.x * carrSize, bloc.y * carrSize, 0, 0, 0, 1.0, bloc.tile.getLight().getAlpha());
+				if (tile.getTileImage() != null) {
+					buffer.drawImage(tile.getTileImage().getImage(), bloc.x * carrSize, bloc.y * carrSize, 0, 0, 0, 1.0, bloc.tile.getLight().getAlpha());
 
 				} else {
 
@@ -114,9 +114,9 @@ public class GameDrawer implements Draw {
 			int yi = element.getY() - startY;
 
 			TileElement tile = element.getTile();
-			if (tile.getTile() != null) {
+			if (tile.getTileImage() != null) {
 				TileDungeon ground = game.getWorld().getTile(element.getX(), element.getY());
-				buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, ground.getLight().getAlpha());
+				buffer.drawImage(tile.getTileImage().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, ground.getLight().getAlpha());
 			} else {
 				StringBuilder bld = new StringBuilder();
 				bld.append(tile.getCharCode());
@@ -130,8 +130,8 @@ public class GameDrawer implements Draw {
 			int xi = proj.getX() - startX;
 			int yi = proj.getY() - startY;
 			TileElement tile = proj.getTile();
-			if (tile.getTile() != null) {
-				buffer.drawImage(tile.getTile().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, 1.0f);
+			if (tile.getTileImage() != null) {
+				buffer.drawImage(tile.getTileImage().getImage(), xi * carrSize, yi * carrSize, 0, 0, 0, 1.0, 1.0f);
 			} else {
 				StringBuilder bld = new StringBuilder();
 				bld.append(proj.getTile().getCharCode());

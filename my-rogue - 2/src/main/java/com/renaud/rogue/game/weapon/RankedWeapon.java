@@ -4,7 +4,9 @@ import com.renaud.rogue.game.inventaire.Ammunition;
 
 public interface RankedWeapon extends Weapon {
 
-	void reload(Ammunition ammo);
+    void reload(Ammunition ammo);
 
-	boolean isEmpty();
+    boolean isEmpty();
+
+    int getRemainingAmmos();
 }

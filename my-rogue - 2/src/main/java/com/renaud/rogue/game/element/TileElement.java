@@ -14,7 +14,7 @@ import com.renaud.rogue.view.drawer.tile.WolfTile;
 public class TileElement {
 
     private char charCode;
-    private RogueTile tile;
+    private RogueTile tileImage;
     private int color;
 
     public TileElement() {
@@ -22,7 +22,7 @@ public class TileElement {
 
     public TileElement(char charCode, int color, RogueTile tile) {
 	this.charCode = charCode;
-	this.tile = tile;
+	this.tileImage = tile;
 	this.color = color;
     }
 
@@ -75,12 +75,12 @@ public class TileElement {
 	this.charCode = charCode;
     }
 
-    public RogueTile getTile() {
-	return tile;
+    public RogueTile getTileImage() {
+	return tileImage;
     }
 
     public void setTile(RogueTile tile) {
-	this.tile = tile;
+	this.tileImage = tile;
     }
 
     public int getColor() {

@@ -45,9 +45,9 @@ public class LayoutDrawer implements Draw {
 			if (itemLayout != null) {
 				TileElement tile = itemLayout.getItem().getTile();
 
-				if (tile != null && tile.getTile() != null && !(tile.getTile() instanceof NoWeapon)) {
-					double scale = child.getRectangle().width / tile.getTile().getImage().getWidth(null);
-					this.buffer.drawImage(tile.getTile().getImage(), //
+				if (tile != null && tile.getTileImage() != null && !(tile.getTileImage() instanceof NoWeapon)) {
+					double scale = child.getRectangle().width / tile.getTileImage().getImage().getWidth(null);
+					this.buffer.drawImage(tile.getTileImage().getImage(), //
 						child.getRectangle().x + 1, //
 						child.getRectangle().y + 1, //
 						0, //
