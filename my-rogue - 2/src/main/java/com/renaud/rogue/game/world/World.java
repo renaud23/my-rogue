@@ -9,7 +9,7 @@ import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.dungeon.Dungeon;
-import com.renaud.rogue.game.world.dungeon.SmoothLevelProvider;
+import com.renaud.rogue.game.world.dungeon.SmoothDungeonProvider;
 
 public class World {
 
@@ -22,7 +22,7 @@ public class World {
 	this.width = width;
 	this.height = height;
 	this.size = this.width * this.height;
-	this.dungeon = SmoothLevelProvider.newInstance(width, height).setNbStep(5).carve().lighting()
+	this.dungeon = SmoothDungeonProvider.newInstance(width, height).setNbStep(5).carve().lighting()
 		.buildEscapeRoom(10, 10).build();
     }
 

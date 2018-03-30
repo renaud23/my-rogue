@@ -55,22 +55,27 @@ public class Projectile implements Element, TurnPlay {
 	@Override
 	public void activate(Game game) {
 		actions--;
-		if (segment.size() > 0) {
-			Point next = segment.remove(0);
-			if (game.getWorld().canGo(next.x, next.y)) {
-				x = next.x;
-				y = next.y;
+		for (int i = 0; i < speed; i++) {
+			if (segment.size() > 0) {
+				Point next = segment.remove(0);
+				if (game.getWorld().canGo(next.x, next.y)) {
+					x = next.x;
+					y = next.y;
+				} else {
+					finished = true;
+					game.addLightSource(new Explosion(next.x, next.y));
+					TileDungeon tile = game.getWorld().getTile(next.x, next.y);
+					if (!tile.isEmpty() && tile.getOccupant() instanceof Living) {
+						((Living) tile.getOccupant()).injured(game, this);
+					}
+					break;
+				}
+
 			} else {
 				finished = true;
-				game.addLightSource(new Explosion(next.x, next.y));
-				TileDungeon tile = game.getWorld().getTile(next.x, next.y);
-				if (!tile.isEmpty() && tile.getOccupant() instanceof Living) {
-					((Living) tile.getOccupant()).injured(game, this);
-				}
+				game.addLightSource(new Explosion(x, y));
+				break;
 			}
-		} else {
-			finished = true;
-			game.addLightSource(new Explosion(x, y));
 		}
 
 	}
@@ -117,7 +122,7 @@ public class Projectile implements Element, TurnPlay {
 			Projectile p = new Projectile(x, y, ciblex, cibley);
 			p.actionsMax = 2;
 			p.depht = 12;
-			p.speed = 1;
+			p.speed = 2;
 			p.opaque = false;
 			p.damage = 10;
 			p.name = "fireball";

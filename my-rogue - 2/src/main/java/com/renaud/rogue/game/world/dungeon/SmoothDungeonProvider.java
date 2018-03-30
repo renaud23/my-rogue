@@ -9,12 +9,12 @@ import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.tools.Rectangle;
 import com.renaud.rogue.game.world.TileDungeon;
 
-public class SmoothLevelProvider {
+public class SmoothDungeonProvider {
 
 	private Dungeon e;
 	private int nbStep;
 
-	private SmoothLevelProvider(int largeur, int hauteur) {
+	private SmoothDungeonProvider(int largeur, int hauteur) {
 		e = new Dungeon(largeur, hauteur);
 		e.fill(TileDungeon.WALL);
 	}
@@ -114,7 +114,6 @@ public class SmoothLevelProvider {
 					e.addTorche(mx, my);
 			}
 		}
-
 	}
 
 	private Point peekFirstFloor(Dungeon d) {
@@ -229,10 +228,10 @@ public class SmoothLevelProvider {
 
 	public static class Builder {
 
-		SmoothLevelProvider e;
+		SmoothDungeonProvider e;
 
 		private Builder(int largeur, int hauteur) {
-			e = new SmoothLevelProvider(largeur, hauteur);
+			e = new SmoothDungeonProvider(largeur, hauteur);
 		}
 
 		public Builder setNbStep(int nbStep) {
@@ -267,7 +266,7 @@ public class SmoothLevelProvider {
 	}
 
 	public final static void main(String[] args) {
-		Dungeon e = SmoothLevelProvider.newInstance(80, 60).setNbStep(4).carve().buildEscapeRoom(8, 8).build();
+		Dungeon e = SmoothDungeonProvider.newInstance(80, 60).setNbStep(4).carve().buildEscapeRoom(8, 8).build();
 		e.print(System.out, false);
 	}
 
