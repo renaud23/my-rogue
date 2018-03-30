@@ -2,15 +2,16 @@ package com.renaud.rogue.game.element.monster;
 
 import com.renaud.rogue.game.element.TileElement;
 import com.renaud.rogue.game.element.comportement.Comportement;
-import com.renaud.rogue.game.element.comportement.MoveToJoueur;
 import com.renaud.rogue.game.element.comportement.ShootFireball;
+import com.renaud.rogue.game.element.comportement.TrackPlayer;
 import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.MathTools;
 
 public class Shooter extends AbstractMonster {
 
-	private Comportement moveToPlayer = new MoveToJoueur(this);
+	private Comportement trackPlayer = new TrackPlayer(this);
 	private Comportement fireballShoot = new ShootFireball(this);
+	private boolean seenPlayer;
 	private TileElement tile = TileElement.Factory.getGhoul();
 
 	public int dephtOfFire;
@@ -26,21 +27,23 @@ public class Shooter extends AbstractMonster {
 	@Override
 	public void activate(Game game) {
 		actions--;
-		if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
-			if (isMeleeAttaque) {
-				game.getJoueur().injured(this);
+		if (!seenPlayer) {
+			if (game.getWorld().canSee(this, game.getJoueur())) {
+				seenPlayer = true;
+				activate(game);
 			}
-		} else if (game.getWorld().canSee(this, game.getJoueur())) {
+		} else {
 			int dist = MathTools.distance(x, y, game.getJoueur().getX(), game.getJoueur().getY());
-			if (dist < dephtOfFire * dephtOfFire) {
-				if (fireballShoot.isFinished()) {
-					fireballShoot.activate(game);
+			if (dist < dephtOfFire * dephtOfFire && fireballShoot.isFinished()) {
+				fireballShoot.activate(game);
+			} else if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
+				if (isMeleeAttaque) {
+					game.getJoueur().injured(this);
 				}
 			} else {
-				moveToPlayer.activate(game);
+				trackPlayer.activate(game);
 			}
 		}
-
 	}
 
 	@Override
