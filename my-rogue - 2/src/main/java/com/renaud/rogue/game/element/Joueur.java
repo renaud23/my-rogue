@@ -13,7 +13,7 @@ import com.renaud.rogue.game.weapon.NoWeapon;
 import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.game.world.Activable;
 import com.renaud.rogue.game.world.TileDungeon;
-import com.renaud.rogue.game.world.dungeon.Dungeon;
+import com.renaud.rogue.game.world.dungeon.Cave;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class Joueur implements Living {
@@ -44,7 +44,7 @@ public class Joueur implements Living {
 	this.x = x;
 	this.y = y;
 	this.depht = 12;
-	this.memory = new Dungeon(worldWidth, worldHeight);
+	this.memory = new Cave(worldWidth, worldHeight);
 	this.memory.fill(TileDungeon.UNKNOW);
 	this.rankedWeapon = new NoWeapon();
 	this.meleeWeapon = new Knife(this);
@@ -53,7 +53,7 @@ public class Joueur implements Living {
 	this.inventaire = new Inventory();
     }
 
-    private Dungeon memory;
+    private Cave memory;
 
     public void switchWeapon() {
 	if (activeWeapon == meleeWeapon) {
@@ -153,7 +153,7 @@ public class Joueur implements Living {
 	return memory.getTile(x, y);
     }
 
-    public Dungeon getMemory() {
+    public Cave getMemory() {
 	return memory;
     }
 

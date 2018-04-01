@@ -8,10 +8,10 @@ import com.renaud.rogue.game.world.TileDungeon;
 
 public class RoomCrowler implements Crowler {
 
-	Dungeon e2;
+	Cave e2;
 	List<Point> room = new ArrayList<>();
 
-	public RoomCrowler(Dungeon e2) {
+	public RoomCrowler(Cave e2) {
 		this.e2 = e2;
 	}
 

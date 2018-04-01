@@ -11,12 +11,12 @@ import com.renaud.rogue.game.world.TileDungeon;
 
 public class SmoothDungeonProvider {
 
-	private Dungeon e;
+	private Cave cave;
 	private int nbStep;
 
 	private SmoothDungeonProvider(int largeur, int hauteur) {
-		e = new Dungeon(largeur, hauteur);
-		e.fill(TileDungeon.WALL);
+		cave = new Cave(largeur, hauteur);
+		cave.fill(TileDungeon.WALL);
 	}
 
 	public void setNbStep(int nbStep) {
@@ -25,10 +25,10 @@ public class SmoothDungeonProvider {
 
 	private void init() {
 		Random rnd = new Random();
-		for (int i = 1; i < (e.getWidth() - 1); i++) {
-			for (int j = 1; j < (e.getHeight() - 1); j++) {
+		for (int i = 1; i < (cave.getWidth() - 1); i++) {
+			for (int j = 1; j < (cave.getHeight() - 1); j++) {
 				if (rnd.nextInt(100) > 45) {
-					e.setTile(i, j, TileDungeon.Factory.getFloor());
+					cave.setTile(i, j, TileDungeon.Factory.getFloor());
 				}
 			}
 		}
@@ -43,7 +43,7 @@ public class SmoothDungeonProvider {
 	}
 
 	private List<List<Point>> getAllRooms() {
-		Dungeon e2 = e.clone();
+		Cave e2 = cave.clone();
 
 		Point start = peekFirstFloor(e2);
 		List<List<Point>> rooms = new ArrayList<>();
@@ -70,7 +70,7 @@ public class SmoothDungeonProvider {
 		for (List<Point> room : rooms) {
 			if (room != best) {
 				for (Point p : room) {
-					e.setTile(p.x, p.y, TileDungeon.Factory.getWall());
+					cave.setTile(p.x, p.y, TileDungeon.Factory.getWall());
 				}
 			}
 		}
@@ -87,7 +87,7 @@ public class SmoothDungeonProvider {
 		int step = 2;
 
 		List<Rectangle> rect = new ArrayList<>();
-		rect.add(new Rectangle(0, 0, e.getWidth(), e.getHeight()));
+		rect.add(new Rectangle(0, 0, cave.getWidth(), cave.getHeight()));
 
 		while (step > 0) {
 			step--;
@@ -109,14 +109,14 @@ public class SmoothDungeonProvider {
 		for (Rectangle r : rect) {
 			int mx = r.x + rand.nextInt(r.width);
 			int my = r.y + rand.nextInt(r.height);
-			if (mx > 0 && my > 0 && mx < e.getWidth() && my < e.getHeight()) {
-				if (e.getTile(mx, my).getCode() == TileDungeon.FLOOR)
-					e.addTorche(mx, my);
+			if (mx > 0 && my > 0 && mx < cave.getWidth() && my < cave.getHeight()) {
+				if (cave.getTile(mx, my).getCode() == TileDungeon.FLOOR)
+					cave.addTorche(mx, my);
 			}
 		}
 	}
 
-	private Point peekFirstFloor(Dungeon d) {
+	private Point peekFirstFloor(Cave d) {
 		for (int i = 0; i < d.getSize(); i++) {
 			if (d.getTile(i).getCode() == TileDungeon.FLOOR)
 				return new Point(i % d.getWidth(), i / d.getWidth());
@@ -125,22 +125,22 @@ public class SmoothDungeonProvider {
 	}
 
 	private void carve() {
-		Dungeon e2 = new Dungeon(e.getWidth(), e.getHeight());
+		Cave e2 = new Cave(cave.getWidth(), cave.getHeight());
 		e2.fill(TileDungeon.WALL);
-		for (int i = 2; i < (e.getWidth() - 2); i++) {
-			for (int j = 2; j < (e.getHeight() - 2); j++) {
+		for (int i = 2; i < (cave.getWidth() - 2); i++) {
+			for (int j = 2; j < (cave.getHeight() - 2); j++) {
 				int nb = 0;
 
-				nb += e.getTile(i - 1, j).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i + 1, j).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i - 1, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i + 1, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i - 1, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
-				nb += e.getTile(i + 1, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i - 1, j).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i + 1, j).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i - 1, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i + 1, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i - 1, j + 1).getCode() != TileDungeon.WALL ? 0 : 1;
+				nb += cave.getTile(i + 1, j - 1).getCode() != TileDungeon.WALL ? 0 : 1;
 				// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
-				if (e.getTile(i, j).getCode() == TileDungeon.WALL) {
+				if (cave.getTile(i, j).getCode() == TileDungeon.WALL) {
 					if (nb >= 4) {
 						e2.setTile(i, j, TileDungeon.Factory.getWall());
 					} else if (nb < 2) {
@@ -157,28 +157,28 @@ public class SmoothDungeonProvider {
 				}
 			}
 		}
-		e = e2;
+		cave = e2;
 
 	}
 
-	public Dungeon getDungeon() {
-		return e;
+	public Cave getDungeon() {
+		return cave;
 	}
 
 	public void buildEscapeRoom(int largeur, int hauteur) {
 		Random rnd = new Random();
-		int posX = rnd.nextInt(e.getWidth() - largeur - 1) + 1;
-		int posY = rnd.nextInt(e.getHeight() - hauteur - 1) + 1;
+		int posX = rnd.nextInt(cave.getWidth() - largeur - 1) + 1;
+		int posY = rnd.nextInt(cave.getHeight() - hauteur - 1) + 1;
 
 		List<Point> exit = new ArrayList<>();
 		List<Point> walls = new ArrayList<>();
 		for (int i = 0; i < largeur; i++) {
 			for (int j = 0; j < hauteur; j++) {
 				if (i == 0 || i == largeur - 1 || j == 0 || j == hauteur - 1) {
-					e.setTile(posX + i, posY + j, TileDungeon.Factory.getWall());
+					cave.setTile(posX + i, posY + j, TileDungeon.Factory.getWall());
 					walls.add(new Point(posX + i, posY + j));
 				} else {
-					e.setTile(posX + i, posY + j, TileDungeon.Factory.getFloor());
+					cave.setTile(posX + i, posY + j, TileDungeon.Factory.getFloor());
 					exit.add(new Point(posX + i, posY + j));
 				}
 			}
@@ -214,10 +214,9 @@ public class SmoothDungeonProvider {
 		int dx = (ba.x + bb.x) / 2;
 		int dy = (ba.y + bb.y) / 2;
 
-		e.setExitRoom(exit);
-		e.setExitDoorLocation(new Point(dx, dy));
-		e.setCavern(best);
-		e.setTile(dx, dy, TileDungeon.Factory.createDoor());
+		cave.setDoors(new ArrayList<>(exit));
+		cave.setFloors(best);
+		cave.setTile(dx, dy, TileDungeon.Factory.createDoor());
 
 	}
 
@@ -259,14 +258,14 @@ public class SmoothDungeonProvider {
 			return this;
 		}
 
-		public Dungeon build() {
+		public Cave build() {
 
 			return e.getDungeon();
 		}
 	}
 
 	public final static void main(String[] args) {
-		Dungeon e = SmoothDungeonProvider.newInstance(80, 60).setNbStep(4).carve().buildEscapeRoom(8, 8).build();
+		Cave e = SmoothDungeonProvider.newInstance(80, 60).setNbStep(4).carve().buildEscapeRoom(8, 8).build();
 		e.print(System.out, false);
 	}
 

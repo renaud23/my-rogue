@@ -1,54 +1,36 @@
 package com.renaud.rogue.game.world.dungeon;
 
-import java.awt.Color;
-import java.awt.image.VolatileImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-
+import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.tools.Rectangle;
 import com.renaud.rogue.game.world.TileDungeon;
-import com.renaud.rogue.view.JImageBuffer;
 
 public class FacilityDungeonProvider {
 
 	private Random rnd = new Random();
-	private Dungeon e;
+	private Facility e;
+	private Carving crowler;
 	private int largeur;
 	private int hauteur;
 
 	private FacilityDungeonProvider(int largeur, int hauteur) {
-		e = new Dungeon(largeur, hauteur);
-		e.fill(TileDungeon.FLOOR);
+		e = new Facility(largeur, hauteur);
+		e.fill(TileDungeon.WALL);
 		this.largeur = largeur;
 		this.hauteur = hauteur;
 	}
 
-	private void init() {
-		Random rnd = new Random();
-		for (int i = 1; i < (e.getWidth() - 1); i++) {
-			for (int j = 1; j < (e.getHeight() - 1); j++) {
-				if (rnd.nextInt(100) > 45) {
-					e.setTile(i, j, TileDungeon.Factory.getFloor());
-				}
-			}
-		}
-	}
-
-	public void build() {
-		init();
-
-	}
-
 	public void divide(int step) {
 		List<TupleRect> rect = new ArrayList<>();
-		Rectangle rootZone = new Rectangle(0, 0, e.getWidth(), e.getHeight());
+		Rectangle rootZone = new Rectangle(2, 2, largeur - 4, hauteur - 4);
 		TupleRect root = new TupleRect(rootZone);
-		rect.add(new TupleRect(rootZone));
+		rect.add(root);
 
 		while (step > 0) {
 			step--;
@@ -72,42 +54,87 @@ public class FacilityDungeonProvider {
 					tuple.left = a;
 					tuple.right = b;
 				}
-
 			}
 			rect = newRect;
 		}
 
-		//
-		JImageBuffer buffer = new JImageBuffer(Color.white, largeur + 1, hauteur + 1);
-		for (TupleRect r : rect) {
-			buffer.drawRect(Color.red, r.node.x, r.node.y, r.node.width, r.node.height);
-		}
+		this.crowler = new Carving(e);
+		carveRoom(root, crowler);
+		carveWall();
+		putDoor();
 
-		File outputfile = new File("d:/saved.png");
-		try {
-			VolatileImage vi = (VolatileImage) buffer.getImage();
-			ImageIO.write(vi.getSnapshot(), "png", outputfile);
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		e.setFloors(crowler.getPositions().stream().collect(Collectors.toList()));
+	}
+
+	private void carveWall() {
+		Facility e2 = e.clone();
+		for (int i = 0; i < largeur; i++) {
+			for (int j = 0; j < hauteur; j++) {
+				if (i == 0 || i == largeur - 1 || j == 0 || j == hauteur - 1) {
+					e.setTile(i, j, TileDungeon.Factory.getFloor());
+				} else if (e2.getTile(i, j).getCode() == TileDungeon.WALL) {
+					int n = 0;
+					for (int a = -1; a <= 1; a++) {
+						for (int b = -1; b <= 1; b++) {
+							if (a == 0 && b == 0)
+								continue;
+							if (e2.getTile(i + a, j + b).getCode() == TileDungeon.WALL)
+								n++;
+						}
+					}
+					if (n == 8)
+						e.setTile(i, j, TileDungeon.Factory.getFloor());
+				}
+			}
 		}
 	}
 
-	private void check(TupleRect tuple) {
+	private void putDoor() {
+		for (Rectangle room : crowler.getRooms()) {
+			List<Point> possibilities = new ArrayList<>();
+			for (int i = 0; i < room.width + 2; i++) {
+				for (int j = 0; j < room.height + 2; j++) {
+					if (i == 0 || i == room.width + 1 || j == 0 || j == room.height + 1) {
+						if (e.getTile(room.x + i - 1, room.y + j - 1).getCode() == TileDungeon.FLOOR) {
+							possibilities.add(new Point(room.x + i - 1, room.y + j - 1));
+						}
+					}
+				}
+			}
+			if (possibilities.size() == 1) {
+				Point door = possibilities.get(0);
+				e.setTile(door.x, door.y, TileDungeon.Factory.createDoor());
+			}
+		}
+	}
+
+	//
+	// JImageBuffer buffer = new JImageBuffer(Color.white, largeur + 1, hauteur + 1);
+
+	// for (TupleRect r : rect) {
+	// buffer.drawRect(Color.red, r.node.x, r.node.y, r.node.width, r.node.height);
+	// }
+
+	// File outputfile = new File("e:/saved.png");
+	// try {
+	// VolatileImage vi = (VolatileImage) buffer.getImage();
+	// ImageIO.write(vi.getSnapshot(), "png", outputfile);
+	// }
+	// catch (IOException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+
+	private void carveRoom(TupleRect tuple, Crowler cr) {
+		cr.crowl(tuple);
+		if (tuple.left != null && tuple.right != null) {
+			carveRoom(tuple.left, cr);
+			carveRoom(tuple.right, cr);
+		}
 
 	}
 
-	private Rectangle carveRoom(Rectangle r) {
-		int x = rnd.nextInt(r.width / 4);
-		int l = Math.max(3, r.width / 2) + rnd.nextInt(r.width / 4);
-		int y = rnd.nextInt(r.height / 4);
-		int h = Math.max(3, r.height / 2) + rnd.nextInt(r.height / 4);
-
-		return new Rectangle(r.x + 2 + x, r.y + 2 + y, l - 3, h - 3);
-	}
-
-	public Dungeon getDungeon() {
+	public Facility getDungeon() {
 		return e;
 	}
 
@@ -129,14 +156,9 @@ public class FacilityDungeonProvider {
 			return this;
 		}
 
-		public Dungeon build() {
+		public Facility build() {
 			return e.getDungeon();
 		}
-	}
-
-	public final static void main(String[] args) {
-		Dungeon e = FacilityDungeonProvider.newInstance(300, 300).divide(4).build();
-		e.print(System.out, false);
 	}
 
 	/* **** */
@@ -152,6 +174,68 @@ public class FacilityDungeonProvider {
 
 		public TupleRect() {}
 
+	}
+
+	public static interface Crowler {
+
+		void crowl(TupleRect tuple);
+	}
+
+	public static class Carving implements Crowler {
+
+		private Random rnd = new Random();
+		private Facility dungeon;
+		private List<Rectangle> rooms = new ArrayList<>();
+		private Set<Point> positions = new HashSet<>();
+
+		public Carving(Facility dungeon) {
+			this.dungeon = dungeon;
+		}
+
+		public List<Rectangle> getRooms() {
+			return rooms;
+		}
+
+		public Set<Point> getPositions() {
+			return positions;
+		}
+
+		@Override
+		public void crowl(TupleRect tuple) {
+			if (tuple.left == null && tuple.right == null) {
+				int sx = rnd.nextInt(tuple.node.width / 4) + 1;
+				int l = tuple.node.width - sx - rnd.nextInt(tuple.node.width / 4) - 1;
+				int sy = rnd.nextInt(tuple.node.height / 4) + 1;
+				int h = tuple.node.height - sy - rnd.nextInt(tuple.node.height / 4) - 1;
+				rooms.add(new Rectangle(tuple.node.x + sx, tuple.node.y + sy, l, h));
+				for (int i = 0; i < l; i++) {
+					for (int j = 0; j < h; j++) {
+						dungeon.setTile(tuple.node.x + sx + i, tuple.node.y + sy + j, TileDungeon.Factory.getFloor());
+						positions.add(new Point(tuple.node.x + sx + i, tuple.node.y + sy + j));
+					}
+				}
+			} else {
+				int xl = tuple.left.node.x + tuple.left.node.width / 2;
+				int yl = tuple.left.node.y + tuple.left.node.height / 2;
+				int xr = tuple.right.node.x + tuple.right.node.width / 2;
+				int yr = tuple.right.node.y + tuple.right.node.height / 2;
+				for (int l = -1; l < 0; l++) {
+					for (int i = Math.min(xl, xr); i <= Math.max(xl, xr); i++) {
+						for (int j = Math.min(yl, yr); j <= Math.max(yl, yr); j++) {
+							dungeon.setTile(i + l, j + l, TileDungeon.Factory.getFloor());
+							positions.add(new Point(i + l, j + l));
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	/* ** */
+	public final static void main(String[] args) {
+		Dungeon e = FacilityDungeonProvider.newInstance(200, 200).divide(4).build();
+		e.print(System.out, false);
 	}
 
 }
