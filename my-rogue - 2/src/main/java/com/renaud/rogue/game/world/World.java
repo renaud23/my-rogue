@@ -22,7 +22,7 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.size = this.width * this.height;
-		this.dungeon = ExtentedDungeonProvider.newInstance(width, height).buildCave(5).divideFacility(3).combine().carveAccess().build();
+		this.dungeon = ExtentedDungeonProvider.newInstance(width, height).buildCave(5).divideFacility(3).combine().carveAccess().lighting(2).build();
 
 		// this.dungeon = FacilityDungeonProvider.newInstance(width, height).divide(4).build();
 

@@ -20,6 +20,11 @@ public abstract class AbstractDungeon implements Dungeon {
 	protected TileDungeon[] tiles;
 
 	protected List<TorcheFixe> torches = new ArrayList<>();
+
+	public void setTorches(List<TorcheFixe> torches) {
+		this.torches = torches;
+	}
+
 	protected List<Point> floors = new ArrayList<>();
 	protected List<Point> walls = new ArrayList<>();
 	protected List<Point> doors = new ArrayList<>();

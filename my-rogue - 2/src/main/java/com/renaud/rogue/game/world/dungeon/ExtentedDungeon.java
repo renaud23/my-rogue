@@ -1,11 +1,15 @@
 package com.renaud.rogue.game.world.dungeon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.tools.Point;
 
 public class ExtentedDungeon extends AbstractDungeon {
+
+	private List<Point> floorsCave = new ArrayList<>();
+	private List<Point> floorsFacility = new ArrayList<>();
 
 	public ExtentedDungeon(int width, int height) {
 		super(width, height);
@@ -49,6 +53,22 @@ public class ExtentedDungeon extends AbstractDungeon {
 
 	public void setDoors(List<Point> doors) {
 		this.doors = doors;
+	}
+
+	public List<Point> getFloorsCave() {
+		return floorsCave;
+	}
+
+	public void setFloorsCave(List<Point> floorsCave) {
+		this.floorsCave = floorsCave;
+	}
+
+	public List<Point> getFloorsFacility() {
+		return floorsFacility;
+	}
+
+	public void setFloorsFacility(List<Point> floorsFacility) {
+		this.floorsFacility = floorsFacility;
 	}
 
 }

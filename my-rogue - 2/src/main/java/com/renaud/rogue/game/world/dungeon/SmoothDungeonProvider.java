@@ -74,7 +74,7 @@ public class SmoothDungeonProvider {
 				}
 			}
 		}
-
+		this.cave.setFloors(best);
 		return best;
 	}
 

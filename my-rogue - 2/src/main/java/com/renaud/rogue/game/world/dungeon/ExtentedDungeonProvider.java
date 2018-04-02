@@ -80,7 +80,39 @@ public class ExtentedDungeonProvider {
 				ay += dy;
 			}
 		}
+	}
 
+	public void lightingCave(int step) {
+
+		List<Rectangle> rect = new ArrayList<>();
+		rect.add(new Rectangle(0, 0, cave.getWidth(), cave.getHeight()));
+
+		while (step > 0) {
+			step--;
+			List<Rectangle> newRect = new ArrayList<>();
+			while (!rect.isEmpty()) {
+				Rectangle r = rect.remove(0);
+				int w = r.width / 2;
+
+				int h = r.height / 2;
+
+				newRect.add(new Rectangle(r.x, r.y, w, h));
+				newRect.add(new Rectangle(r.x + r.width - w, r.y, r.width, h));
+				newRect.add(new Rectangle(r.x, r.y + r.height - h, w, r.height - h));
+				newRect.add(new Rectangle(r.x + r.width - w, r.y + r.height - h, r.width - w, r.height - h));
+			}
+			rect = newRect;
+		}
+		Random rand = new Random();
+		for (Rectangle r : rect) {
+			int mx = r.x + rand.nextInt(r.width);
+			int my = r.y + rand.nextInt(r.height);
+			if (mx > 0 && my > 0 && mx < cave.getWidth() && my < cave.getHeight()) {
+				Point cdt = new Point(mx, my);
+				if (extented.getFloorsCave().contains(cdt) && !extented.getFloorsFacility().contains(cdt))
+					cave.addTorche(mx, my);
+			}
+		}
 	}
 
 	public void combine() {
@@ -102,7 +134,11 @@ public class ExtentedDungeonProvider {
 		floors.addAll(cave.getFloors());
 		floors.addAll(facility.getFloors());
 
+		extented.setFloorsCave(cave.getFloors());
+		extented.setFloorsFacility(facility.getFloors());
 		extented.setFloors(floors);
+		//
+		extented.setTorches(cave.getTorches());
 	}
 
 	public Dungeon getDungeon() {
@@ -142,6 +178,11 @@ public class ExtentedDungeonProvider {
 			return this;
 		}
 
+		public Builder lighting(int step) {
+			e.lightingCave(step);
+			return this;
+		}
+
 		private Builder(int largeur, int hauteur) {
 			e = new ExtentedDungeonProvider(largeur, hauteur);
 		}
@@ -151,6 +192,7 @@ public class ExtentedDungeonProvider {
 	/* ** */
 	public final static void main(String[] args) {
 		Dungeon e = ExtentedDungeonProvider.newInstance(200, 200).buildCave(5).divideFacility(4).combine().carveAccess().build();
+
 		e.print(System.out, false);
 	}
 
