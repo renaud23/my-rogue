@@ -34,14 +34,18 @@ public class Shooter extends AbstractMonster {
 			}
 		} else {
 			int dist = MathTools.distance(x, y, game.getJoueur().getX(), game.getJoueur().getY());
-			if (dist < dephtOfFire * dephtOfFire && fireballShoot.isFinished()) {
-				fireballShoot.activate(game);
-			} else if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
+			if (Math.abs(this.x - game.getJoueur().getX()) <= 1 && Math.abs(this.y - game.getJoueur().getY()) <= 1) {
 				if (isMeleeAttaque) {
 					game.getJoueur().injured(this);
 				}
+			} else if (dist < dephtOfFire * dephtOfFire && fireballShoot.isFinished() && game.getWorld().canSee(this, game.getJoueur())) {
+				fireballShoot.activate(game);
 			} else {
 				trackPlayer.activate(game);
+				if (trackPlayer.isFinished()) {
+					trackPlayer.reset();
+					seenPlayer = false;
+				}
 			}
 		}
 	}

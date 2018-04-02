@@ -21,6 +21,7 @@ public abstract class AbstractDungeon implements Dungeon {
 
 	protected List<TorcheFixe> torches = new ArrayList<>();
 	protected List<Point> floors = new ArrayList<>();
+	protected List<Point> walls = new ArrayList<>();
 	protected List<Point> doors = new ArrayList<>();
 
 	public AbstractDungeon(int width, int height) {
@@ -90,6 +91,18 @@ public abstract class AbstractDungeon implements Dungeon {
 
 	public List<TorcheFixe> getTorches() {
 		return torches;
+	}
+
+	public List<Point> getFloors() {
+		return floors;
+	}
+
+	public List<Point> getWalls() {
+		return walls;
+	}
+
+	public void setWalls(List<Point> walls) {
+		this.walls = walls;
 	}
 
 	/* */

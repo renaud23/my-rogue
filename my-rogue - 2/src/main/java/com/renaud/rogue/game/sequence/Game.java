@@ -34,7 +34,7 @@ public class Game implements RogueSequence, ActionEvent {
 		this.joueur = joueur;
 		setElement(this.joueur);
 		// for dev
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 15; i++) {
 			Point start = world.peekEmptyPlace();
 			Monster monster = Monster.Factory.createGhool(start.x, start.y);
 			monsters.add(monster);

@@ -39,11 +39,11 @@ public class FacilityDungeonProvider {
 				TupleRect tuple = rect.remove(0);
 				Rectangle r = tuple.node;
 				TupleRect a = null, b = null;
-				if (r.width > r.height && r.width > 3) {
+				if (r.width > r.height && r.width > 4) {
 					int how = Math.max(1, r.width / 4 + rnd.nextInt(r.width / 2));
 					a = new TupleRect(new Rectangle(r.x, r.y, how, r.height));
 					b = new TupleRect(new Rectangle(r.x + how, r.y, r.width - how, r.height));
-				} else if (r.height > 3) {
+				} else if (r.height > 4) {
 					int how = Math.max(1, r.height / 4 + rnd.nextInt(r.height / 2));
 					a = new TupleRect(new Rectangle(r.x, r.y, r.width, how));
 					b = new TupleRect(new Rectangle(r.x, r.y + how, r.width, r.height - how));
@@ -63,6 +63,7 @@ public class FacilityDungeonProvider {
 		carveWall();
 		putDoor();
 
+		e.setRooms(this.crowler.getRooms());
 		e.setFloors(crowler.getPositions().stream().collect(Collectors.toList()));
 	}
 
@@ -108,30 +109,12 @@ public class FacilityDungeonProvider {
 		}
 	}
 
-	//
-	// JImageBuffer buffer = new JImageBuffer(Color.white, largeur + 1, hauteur + 1);
-
-	// for (TupleRect r : rect) {
-	// buffer.drawRect(Color.red, r.node.x, r.node.y, r.node.width, r.node.height);
-	// }
-
-	// File outputfile = new File("e:/saved.png");
-	// try {
-	// VolatileImage vi = (VolatileImage) buffer.getImage();
-	// ImageIO.write(vi.getSnapshot(), "png", outputfile);
-	// }
-	// catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-
 	private void carveRoom(TupleRect tuple, Crowler cr) {
 		cr.crowl(tuple);
 		if (tuple.left != null && tuple.right != null) {
 			carveRoom(tuple.left, cr);
 			carveRoom(tuple.right, cr);
 		}
-
 	}
 
 	public Facility getDungeon() {

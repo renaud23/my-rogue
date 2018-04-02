@@ -5,9 +5,9 @@ import java.util.List;
 import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.tools.Point;
 
-public class Cave extends AbstractDungeon {
+public class ExtentedDungeon extends AbstractDungeon {
 
-	public Cave(int width, int height) {
+	public ExtentedDungeon(int width, int height) {
 		super(width, height);
 	}
 
@@ -15,8 +15,8 @@ public class Cave extends AbstractDungeon {
 		this.torches.add(new TorcheFixe(x, y));
 	}
 
-	public Cave clone() {
-		Cave d = new Cave(width, height);
+	public ExtentedDungeon clone() {
+		ExtentedDungeon d = new ExtentedDungeon(width, height);
 		for (int i = 0; i < size; i++) {
 			d.setTile(i, tiles[i].clone());
 		}
@@ -33,6 +33,10 @@ public class Cave extends AbstractDungeon {
 
 	public int getSize() {
 		return size;
+	}
+
+	public List<Point> getFloors() {
+		return floors;
 	}
 
 	public void setFloors(List<Point> floors) {

@@ -56,6 +56,7 @@ public class Projectile implements Element, TurnPlay {
 	public void activate(Game game) {
 		actions--;
 		for (int i = 0; i < speed; i++) {
+
 			if (segment.size() > 0) {
 				Point next = segment.remove(0);
 				if (game.getWorld().canGo(next.x, next.y)) {
@@ -63,7 +64,7 @@ public class Projectile implements Element, TurnPlay {
 					y = next.y;
 				} else {
 					finished = true;
-					game.addLightSource(new Explosion(next.x, next.y));
+					// game.addLightSource(new Explosion(next.x, next.y));
 					TileDungeon tile = game.getWorld().getTile(next.x, next.y);
 					if (!tile.isEmpty() && tile.getOccupant() instanceof Living) {
 						((Living) tile.getOccupant()).injured(game, this);
@@ -73,6 +74,10 @@ public class Projectile implements Element, TurnPlay {
 
 			} else {
 				finished = true;
+				// game.addLightSource(new Explosion(x, y));
+				// break;
+			}
+			if (finished) {
 				game.addLightSource(new Explosion(x, y));
 				break;
 			}

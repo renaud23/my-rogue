@@ -14,6 +14,7 @@ public class TrackPlayer implements Comportement {
 	private int lastx = Integer.MAX_VALUE;
 	private int lasty = Integer.MAX_VALUE;
 	private List<Point> path;
+	private boolean finished;
 
 	public TrackPlayer(Element l) {
 		this.l = l;
@@ -24,6 +25,9 @@ public class TrackPlayer implements Comportement {
 		if (lastx != game.getJoueur().getX() || lasty != game.getJoueur().getY()) {
 			PathFinding theWay = new AStar(game, new Point(l.getX(), l.getY()), new Point(game.getJoueur().getX(), game.getJoueur().getY()));
 			path = theWay.getPath();
+			if (!path.isEmpty()) {
+				path.remove(0);// l'élèment est sur celle-ci
+			}
 			lastx = game.getJoueur().getX();
 			lasty = game.getJoueur().getY();
 		}
@@ -31,25 +35,23 @@ public class TrackPlayer implements Comportement {
 			Point next = path.remove(0);
 			if (game.getWorld().getTile(next.x, next.y).canWalkOn()) {
 				game.moveTo(l, next.x, next.y);
+			} else {
+				finished = true;
 			}
+		} else {
+			finished = true;
 		}
+	}
 
-		// Point best = new Point(l.getX(), l.getY());
-		// int bestDir = Integer.MAX_VALUE;
-		// for (int i = -1; i <= 1; i++) {
-		// for (int j = -1; j <= 1; j++) {
-		// if ((i == 0 && j == 0) || (i != 0 && j != 0))
-		// continue;
-		// if (game.getWorld().canGo(l.getX() + i, l.getY() + j)) {
-		// int dir = MathTools.distance(l.getX() + i, l.getY() + j, game.getJoueur().getX(), game.getJoueur().getY());
-		// if (dir < bestDir) {
-		// bestDir = dir;
-		// best = new Point(l.getX() + i, l.getY() + j);
-		// }
-		// }
-		// }
-		// }
-		// game.moveTo(l, best.x, best.y);
+	@Override
+	public void reset() {
+		finished = false;
+		path.clear();
+	}
+
+	@Override
+	public boolean isFinished() {
+		return finished;
 	}
 
 }

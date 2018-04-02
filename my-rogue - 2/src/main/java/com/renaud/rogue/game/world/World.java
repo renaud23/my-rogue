@@ -9,7 +9,7 @@ import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.dungeon.Dungeon;
-import com.renaud.rogue.game.world.dungeon.FacilityDungeonProvider;
+import com.renaud.rogue.game.world.dungeon.ExtentedDungeonProvider;
 
 public class World {
 
@@ -22,7 +22,10 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.size = this.width * this.height;
-		this.dungeon = FacilityDungeonProvider.newInstance(width, height).divide(4).build();
+		this.dungeon = ExtentedDungeonProvider.newInstance(width, height).buildCave(5).divideFacility(3).combine().carveAccess().build();
+
+		// this.dungeon = FacilityDungeonProvider.newInstance(width, height).divide(4).build();
+
 		// this.dungeon = SmoothDungeonProvider
 		// .newInstance(width, height)
 		// .setNbStep(5)
