@@ -146,6 +146,12 @@ public class TileDungeon {
 			return new TileDoor(DOOR, 'D', 0x505050);
 		}
 
+		public static TileDungeon createLockedDoor(int code) {
+			TileDoor door = new TileDoor(DOOR, 'D', 0x505050, code);
+			door.lock();
+			return door;
+		}
+
 		public static TileDungeon createFack() {
 			return new TileDungeon(DOOR, '*', 0x505050);
 		}

@@ -19,6 +19,8 @@ public interface Dungeon {
 
 	List<TorcheFixe> getTorches();
 
+	List<Point> getFloors();
+
 	void print(PrintStream out, boolean element);
 
 	void fill(long type);

@@ -60,8 +60,8 @@ public class FacilityDungeonProvider {
 
 		this.crowler = new Carving(e);
 		carveRoom(root, crowler);
-		carveWall();
 		putDoor();
+		carveWall();
 
 		e.setRooms(this.crowler.getRooms());
 		e.setFloors(crowler.getPositions().stream().collect(Collectors.toList()));
@@ -91,20 +91,28 @@ public class FacilityDungeonProvider {
 	}
 
 	private void putDoor() {
-		for (Rectangle room : crowler.getRooms()) {
-			List<Point> possibilities = new ArrayList<>();
-			for (int i = 0; i < room.width + 2; i++) {
-				for (int j = 0; j < room.height + 2; j++) {
-					if (i == 0 || i == room.width + 1 || j == 0 || j == room.height + 1) {
-						if (e.getTile(room.x + i - 1, room.y + j - 1).getCode() == TileDungeon.FLOOR) {
-							possibilities.add(new Point(room.x + i - 1, room.y + j - 1));
-						}
-					}
-				}
+		for (int i = 1; i < largeur - 1; i++) {
+			for (int j = 1; j < hauteur - 1; j++) {
+				if (e.getTile(i, j).getCode() == TileDungeon.FLOOR)
+					checkDoor(i, j);
 			}
-			if (possibilities.size() == 1) {
-				Point door = possibilities.get(0);
-				e.setTile(door.x, door.y, TileDungeon.Factory.createDoor());
+		}
+	}
+
+	private void checkDoor(int i, int j) {
+		int n = 0;
+		for (int a = -1; a <= 1; a++) {
+			for (int b = -1; b <= 1; b++) {
+				if (b == 0 && a == 0)
+					continue;
+				if (e.getTile(i + a, j + b).getCode() == TileDungeon.WALL)
+					n++;
+
+			}
+		}
+		if (n < 6) {
+			if (e.getTile(i + 1, j).getCode() == e.getTile(i - 1, j).getCode() && e.getTile(i, j + 1).getCode() == e.getTile(i, j - 1).getCode() && e.getTile(i + 1, j).getCode() != e.getTile(i, j + 1).getCode()) {
+				e.setTile(i, j, TileDungeon.Factory.createDoor());
 			}
 		}
 	}
@@ -186,10 +194,11 @@ public class FacilityDungeonProvider {
 		@Override
 		public void crowl(TupleRect tuple) {
 			if (tuple.left == null && tuple.right == null) {
-				int sx = rnd.nextInt(tuple.node.width / 4) + 1;
-				int l = tuple.node.width - sx - rnd.nextInt(tuple.node.width / 4) - 1;
-				int sy = rnd.nextInt(tuple.node.height / 4) + 1;
-				int h = tuple.node.height - sy - rnd.nextInt(tuple.node.height / 4) - 1;
+				int l = Math.max(4, rnd.nextInt(tuple.node.width / 4 + 1) + tuple.node.width / 2);
+				int sx = l == 4 ? 0 : rnd.nextInt(tuple.node.width / 4);
+				int h = Math.max(4, rnd.nextInt(tuple.node.height / 4 + 1) + tuple.node.height / 2);
+				int sy = h == 4 ? 0 : rnd.nextInt(tuple.node.height / 4);
+
 				rooms.add(new Rectangle(tuple.node.x + sx, tuple.node.y + sy, l, h));
 				for (int i = 0; i < l; i++) {
 					for (int j = 0; j < h; j++) {
@@ -217,7 +226,7 @@ public class FacilityDungeonProvider {
 
 	/* ** */
 	public final static void main(String[] args) {
-		Dungeon e = FacilityDungeonProvider.newInstance(200, 200).divide(4).build();
+		Dungeon e = FacilityDungeonProvider.newInstance(50, 50).divide(3).build();
 		e.print(System.out, false);
 	}
 

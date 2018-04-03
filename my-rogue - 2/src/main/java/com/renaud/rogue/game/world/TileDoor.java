@@ -1,6 +1,8 @@
 package com.renaud.rogue.game.world;
 
+import com.renaud.rogue.game.inventaire.KeyDoor;
 import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.tile.DoorClosedTile;
 import com.renaud.rogue.view.drawer.tile.DoorOpenedTile;
 import com.renaud.rogue.view.drawer.tile.RogueTile;
@@ -11,9 +13,15 @@ public class TileDoor extends TileDungeon implements Activable {
 	private static RogueTile closeDoorTile = new DoorClosedTile();
 	private boolean closed = true;
 	private boolean locked = false;
+	private int keyCode;
 
 	public TileDoor(long code, char tile, int color) {
 		super(code, tile, color, openDoorTile);
+	}
+
+	public TileDoor(long code, char tile, int color, int keyCode) {
+		super(code, tile, color, openDoorTile);
+		this.keyCode = keyCode;
 	}
 
 	public boolean isClose() {
@@ -44,9 +52,22 @@ public class TileDoor extends TileDungeon implements Activable {
 		locked = true;
 	}
 
+	public boolean unlock(KeyDoor key) {
+		if (key.getCode() == keyCode) {
+			locked = false;
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public void activate(Game game, int x, int y) {
-		this.closed = !closed;
+		if (!locked) {
+			this.closed = !closed;
+			GameConsoleDrawer.info("La porte grince en s'ouvrant.");
+		} else {
+			GameConsoleDrawer.info("Cette porte est vérrouillée.");
+		}
 	}
 
 	@Override

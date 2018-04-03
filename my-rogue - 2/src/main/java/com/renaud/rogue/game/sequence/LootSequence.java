@@ -64,9 +64,9 @@ public class LootSequence implements RogueSequence, ActionEvent {
 	}
 
 	@Override
-	public void activateAction() {
+	public void useAction() {
 		SequenceAutomate.getInstance().getLootLayout().setChanged(true);
-		SequenceAutomate.getInstance().getLootLayout().activateAction();
+		SequenceAutomate.getInstance().getLootLayout().useAction();
 	}
 
 }

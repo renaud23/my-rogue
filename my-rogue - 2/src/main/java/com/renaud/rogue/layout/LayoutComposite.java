@@ -207,29 +207,29 @@ public class LayoutComposite implements Iterable<Layout>, Layout {
 	}
 
 	@Override
-	public void activateAction() {
+	public void useAction() {
 		if (openedChild != null) {
-			openedChild.activateAction();
+			openedChild.useAction();
 		} else if (activeChild != null) {
-			activeChild.activateAction();
+			activeChild.useAction();
 		}
 	}
 
 	@Override
 	public void switchWeaponAction() {
 		if (openedChild != null) {
-			openedChild.activateAction();
+			openedChild.useAction();
 		} else if (activeChild != null) {
-			activeChild.activateAction();
+			activeChild.useAction();
 		}
 	}
 
 	@Override
 	public void inventaireAction() {
 		if (openedChild != null) {
-			openedChild.activateAction();
+			openedChild.useAction();
 		} else if (activeChild != null) {
-			activeChild.activateAction();
+			activeChild.useAction();
 		}
 	}
 

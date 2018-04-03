@@ -2,9 +2,11 @@ package com.renaud.rogue.game.world.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.TileDungeon;
 
 public class ExtentedDungeon extends AbstractDungeon {
 
@@ -17,6 +19,20 @@ public class ExtentedDungeon extends AbstractDungeon {
 
 	public void addTorche(int x, int y) {
 		this.torches.add(new TorcheFixe(x, y));
+	}
+
+	public TileDungeon peekRandomCaveFloor() {
+		Random rnd = new Random();
+		Point point = null;
+		while (point == null) {
+			point = floorsCave.get(rnd.nextInt(floorsCave.size()));
+			TileDungeon tile = getTile(point.x, point.y);
+			if (tile.getCode() != TileDungeon.FLOOR || !tile.isEmpty()) {
+				point = null;
+			}
+		}
+
+		return this.getTile(point.x, point.y);
 	}
 
 	public ExtentedDungeon clone() {

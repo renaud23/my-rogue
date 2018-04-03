@@ -2,6 +2,7 @@ package com.renaud.rogue.layout.loot.item;
 
 import com.renaud.rogue.game.inventaire.Ammunition;
 import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.game.inventaire.KeyDoor;
 import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.layout.GridLayoutListener;
@@ -16,11 +17,13 @@ public interface ItemLayout extends GridLayoutListener<ItemLayout> {
 
 		public static ItemLayout createInventory(Game game, Item item) {
 			ItemLayoutGen l = new ItemLayoutGen(item);
-			l.setWeaponAction(new ThrowItemAction(game));
+			l.setWeaponAction(new UseKey(game));
 			if (item instanceof Ammunition) {
 				l.setActivateAction(new ReloadWeaponAction(game));
 			} else if (item instanceof Weapon) {
 				l.setActivateAction(new EquipeWeaponAction(game));
+			} else if (item instanceof KeyDoor) {
+				l.setActivateAction(new UseKey(game));
 			}
 			return l;
 		}

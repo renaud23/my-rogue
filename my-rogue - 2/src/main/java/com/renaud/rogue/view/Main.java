@@ -21,8 +21,8 @@ public class Main {
 
 	public final static void main(String[] args) {
 
-		int wolrdLargeur = 100;
-		int worldHauteur = 100;
+		int wolrdLargeur = 60;
+		int worldHauteur = 60;
 		int viewLargeur = 40;
 		int viewHauteur = 30;
 

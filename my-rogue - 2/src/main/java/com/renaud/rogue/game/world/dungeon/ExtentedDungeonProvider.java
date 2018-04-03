@@ -3,7 +3,9 @@ package com.renaud.rogue.game.world.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+import com.renaud.rogue.game.inventaire.KeyDoor;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.tools.Rectangle;
 import com.renaud.rogue.game.world.TileDungeon;
@@ -58,12 +60,13 @@ public class ExtentedDungeonProvider {
 		int y = this.yFacility + west.y + 1 + rnd.nextInt(west.height - 2);
 		Point dest = new Point(this.xFacility, y);
 		Point origine = new Point(this.xFacility + west.x, y);
-		carve(dest, origine);
+		carveCorridor(dest, origine);
 
-		this.extented.setTile(this.xFacility + west.x - 1, y, TileDungeon.Factory.createDoor());
+		this.extented.setTile(this.xFacility + west.x - 1, y, TileDungeon.Factory.createLockedDoor(23));
+		this.extented.peekRandomCaveFloor().addItem(new KeyDoor(23));
 	}
 
-	private void carve(Point a, Point b) {
+	private void carveCorridor(Point a, Point b) {
 		int dx = b.x - a.x;
 		dx /= dx != 0 ? Math.abs(dx) : 1;
 		int dy = b.y - a.y;
@@ -83,7 +86,6 @@ public class ExtentedDungeonProvider {
 	}
 
 	public void lightingCave(int step) {
-
 		List<Rectangle> rect = new ArrayList<>();
 		rect.add(new Rectangle(0, 0, cave.getWidth(), cave.getHeight()));
 
@@ -116,7 +118,6 @@ public class ExtentedDungeonProvider {
 	}
 
 	public void combine() {
-
 		for (int i = 0; i < this.largeurFacility; i++) {
 			for (int j = 0; j < this.hauteurFacility; j++) {
 				cave.setTile(this.xFacility + i, this.yFacility + j, this.facility.getTile(i, j));
@@ -130,18 +131,23 @@ public class ExtentedDungeonProvider {
 			}
 		}
 
-		List<Point> floors = new ArrayList<>();
-		floors.addAll(cave.getFloors());
-		floors.addAll(facility.getFloors());
-
 		extented.setFloorsCave(cave.getFloors());
-		extented.setFloorsFacility(facility.getFloors());
-		extented.setFloors(floors);
-		//
+		extented.setFloorsFacility(facility
+			.getFloors()
+			.stream()
+			.map(p -> new Point(p.x + this.xFacility, p.y + this.yFacility))
+			.collect(Collectors.toList()));
+
+		extented
+			.getFloorsCave()
+			.removeIf(p -> p.x >= this.xFacility && p.y >= this.yFacility && p.x < this.xFacility + this.largeurFacility && p.y < this.yFacility + this.hauteurFacility);
+
+		extented.getFloors().addAll(extented.getFloorsCave());
+		extented.getFloors().addAll(extented.getFloorsFacility());
 		extented.setTorches(cave.getTorches());
 	}
 
-	public Dungeon getDungeon() {
+	public ExtentedDungeon getDungeon() {
 		return this.extented;
 	}
 
@@ -164,7 +170,7 @@ public class ExtentedDungeonProvider {
 			return this;
 		}
 
-		public Dungeon build() {
+		public ExtentedDungeon build() {
 			return e.getDungeon();
 		}
 
@@ -191,7 +197,7 @@ public class ExtentedDungeonProvider {
 
 	/* ** */
 	public final static void main(String[] args) {
-		Dungeon e = ExtentedDungeonProvider.newInstance(200, 200).buildCave(5).divideFacility(4).combine().carveAccess().build();
+		ExtentedDungeon e = ExtentedDungeonProvider.newInstance(100, 100).buildCave(5).divideFacility(3).combine().carveAccess().build();
 
 		e.print(System.out, false);
 	}

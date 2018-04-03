@@ -68,8 +68,8 @@ public class SequenceAutomate implements RogueSequence {
 	}
 
 	@Override
-	public void activateAction() {
-		this.currentSequence.activateAction();
+	public void useAction() {
+		this.currentSequence.useAction();
 	}
 
 	@Override
@@ -80,6 +80,11 @@ public class SequenceAutomate implements RogueSequence {
 	@Override
 	public void activate() {
 		this.currentSequence.activate();
+	}
+
+	@Override
+	public void activateAction() {
+		this.currentSequence.activateAction();
 	}
 
 	/* */
