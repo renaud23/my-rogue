@@ -39,7 +39,7 @@ public class Game implements RogueSequence, ActionEvent {
 			monsters.add(monster);
 			setElement(monster);
 		}
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 5; i++) {
 			Point start = world.peekEmptyPlace();
 			Monster monster = new Wolf(start.x, start.y);
 			monsters.add(monster);

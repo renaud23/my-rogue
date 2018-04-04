@@ -1,6 +1,9 @@
 package com.renaud.rogue.view.drawer.sprite;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import com.renaud.rogue.game.tools.ImageBuilder;
@@ -33,7 +36,7 @@ public class SpriteBuilder {
 	}
 
 	public void print(PrintStream out, String className) {
-		out.println("package com.renaud.rogue.drawer.sprite;");
+		out.println("package com.renaud.rogue.view.drawer.sprite;");
 		out.println();
 		out.println("public class " + className + " extends AbstractSprite {");
 		out.println("\tpublic " + className + " () { super(pixels.length, " + largeur + ", " + hauteur + "); }");
@@ -57,19 +60,23 @@ public class SpriteBuilder {
 		out.println("}");
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
+		FileOutputStream file = new FileOutputStream(new File("e:/BatSprite.java"));
+		PrintStream stream = new PrintStream(file);
 		SimpleImageLoader loader = new SimpleImageLoader();
 		Image image = loader
-			.getImage("C:/Users/kqhlz2/workspace_js/my-rogue/my-rogue - 2/src/main/resources/img/template.png");
+			.getImage("e:/vampire-bat.png");
 
-		Point[] points = new Point[4];
-		for (int i = 0; i < 4; i++) {
-			points[i] = new Point(0 + i * 16, 0);
+		Point[] points = new Point[14];
+		int pas = 38;
+		for (int i = 0; i < 7; i++) {
+			points[i] = new Point(0 + i * pas, 0);
+			points[13 - i] = new Point(0 + i * pas, 0);
 		}
 
-		SpriteBuilder sp = new SpriteBuilder(image, points, 16, 16, 1.0);
+		SpriteBuilder sp = new SpriteBuilder(image, points, pas, pas, 0.5);
 		sp.genere();
-		sp.print(System.out, "HeroSprite");
+		sp.print(stream, "BatSprite");
 	}
 
 }

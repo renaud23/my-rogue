@@ -15,7 +15,7 @@ public class Lampe implements PhysicalLightSource {
 	private int x;
 	private int y;
 
-	private int depht = 3;
+	private int depht = 4;
 	private TileElement tile = TileElement.Factory.getTorche();
 
 	private Set<Point> visibility;
@@ -68,9 +68,9 @@ public class Lampe implements PhysicalLightSource {
 				float how = cube / (cube + dist);
 				Light li = game.getWorld().getTile(p.x, p.y).getLight();
 
-				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.2f));
+				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.5f));
 				float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.2f));
-				float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
+				float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.2f));
 				game.getWorld().getTile(p.x, p.y).setLight(new Light(r, g, b));
 
 			}

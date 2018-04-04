@@ -3,12 +3,15 @@ package com.renaud.rogue.view.drawer.sprite;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import com.renaud.rogue.game.tools.Chrono;
 import com.renaud.rogue.view.JImageBuffer;
 import com.renaud.rogue.view.drawer.tile.RogueTile;
 
 public abstract class AbstractSprite implements RogueTile {
+
+	private final static Random rnd = new Random();
 
 	private Chrono speed;
 	private int length;
@@ -23,6 +26,8 @@ public abstract class AbstractSprite implements RogueTile {
 
 		this.width = largeur;
 		this.height = hauteur;
+
+		this.current = rnd.nextInt(length);
 	}
 
 	public abstract long getSpeed();

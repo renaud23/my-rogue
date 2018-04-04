@@ -75,7 +75,7 @@ public class TileDungeon {
 	public boolean canWalkOn() {
 		if (this instanceof TileDoor) {
 			TileDoor door = (TileDoor) this;
-			return door.isOpen();
+			return door.isOpen() && occupant == null;
 		}
 		return this.code == FLOOR && occupant == null;
 	}
@@ -147,7 +147,7 @@ public class TileDungeon {
 		}
 
 		public static TileDungeon createFacilityfloor() {
-			return new TileDungeon(FLOOR, '.', 0x903030);
+			return new TileDungeon(FLOOR, '.', 0x303030);
 		}
 
 		public static TileDungeon createDoor() {

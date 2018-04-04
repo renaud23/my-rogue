@@ -66,9 +66,9 @@ public class ImageBuilder {
 		int largeur = 16;
 		int hauteur = 16;
 		SimpleImageLoader loader = new SimpleImageLoader();
-		Image image = loader.getImage("d:/reloader.png");
+		Image image = loader.getImage("e:/MeteorRepository1Icons_fixed.png");
 
-		int[] pix = ImageBuilder.loadImage(image, 0, 0, largeur, hauteur);
+		int[] pix = ImageBuilder.loadImage(image, 0, 57, largeur, hauteur);
 
 		for (int i = 0; i < pix.length; i++) {
 			System.out.print(pix[i] + " ,");

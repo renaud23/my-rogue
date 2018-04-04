@@ -1,6 +1,7 @@
 
 package com.renaud.rogue.game.element;
 
+import com.renaud.rogue.view.drawer.sprite.BatSprite;
 import com.renaud.rogue.view.drawer.sprite.HeroSprite;
 import com.renaud.rogue.view.drawer.sprite.TorcheSprite;
 import com.renaud.rogue.view.drawer.tile.FireballTile;
@@ -10,7 +11,6 @@ import com.renaud.rogue.view.drawer.tile.GunTile;
 import com.renaud.rogue.view.drawer.tile.KeyDoorTile;
 import com.renaud.rogue.view.drawer.tile.KnifeTile;
 import com.renaud.rogue.view.drawer.tile.RogueTile;
-import com.renaud.rogue.view.drawer.tile.WolfTile;
 
 public class TileElement {
 
@@ -38,7 +38,7 @@ public class TileElement {
 		}
 
 		public static TileElement getWolf() {
-			return new TileElement('W', 0xAA0000, new WolfTile());
+			return new TileElement('W', 0xAA0000, new BatSprite());
 		}
 
 		public static TileElement getGhoul() {
