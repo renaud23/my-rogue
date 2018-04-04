@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.renaud.rogue.game.element.Element;
 import com.renaud.rogue.game.element.Monster;
-import com.renaud.rogue.game.element.light.TorcheFixe;
+import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.dungeon.Dungeon;
@@ -22,6 +22,7 @@ public class World {
 		this.width = width;
 		this.height = height;
 		this.size = this.width * this.height;
+
 		this.dungeon = ExtentedDungeonProvider.newInstance(width, height).buildCave(5).divideFacility(2).combine().carveAccess().lighting(2).build();
 
 		// this.dungeon = FacilityDungeonProvider.newInstance(width, height).divide(4).build();
@@ -123,8 +124,8 @@ public class World {
 		return true;
 	}
 
-	public List<TorcheFixe> getTorches() {
-		return dungeon.getTorches();
+	public List<PhysicalLightSource> getTorches() {
+		return dungeon.getDungeonLightSource();
 	}
 
 	public void print(PrintStream out, boolean element) {

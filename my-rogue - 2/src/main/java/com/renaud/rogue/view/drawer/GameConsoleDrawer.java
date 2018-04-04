@@ -22,6 +22,8 @@ public class GameConsoleDrawer implements Draw {
 
 	private static Console console;
 
+	public GameConsoleDrawer() {}
+
 	public GameConsoleDrawer(int posX, int posY, int largeur, int hauteur) {
 		this.posX = posX;
 		this.posY = posY;
@@ -61,4 +63,5 @@ public class GameConsoleDrawer implements Draw {
 			console.addLigne(line, new Color(color));
 		}
 	}
+
 }

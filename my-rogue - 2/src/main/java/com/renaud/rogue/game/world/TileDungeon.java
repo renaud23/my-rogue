@@ -134,12 +134,20 @@ public class TileDungeon {
 			return new TileDungeon(UNKNOW, '?', 0x505050);
 		}
 
-		public static TileDungeon getWall() {
+		public static TileDungeon createWall() {
 			return new TileDungeon(WALL, 'X', 0x909090);
 		}
 
-		public static TileDungeon getFloor() {
+		public static TileDungeon createFactoryWall() {
+			return new TileDungeon(WALL, 'X', 0xAA5050);
+		}
+
+		public static TileDungeon createfloor() {
 			return new TileDungeon(FLOOR, '.', 0x505050);
+		}
+
+		public static TileDungeon createFacilityfloor() {
+			return new TileDungeon(FLOOR, '.', 0x903030);
 		}
 
 		public static TileDungeon createDoor() {

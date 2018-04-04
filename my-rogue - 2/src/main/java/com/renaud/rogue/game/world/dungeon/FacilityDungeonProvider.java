@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.renaud.rogue.game.element.PhysicalLightSource;
+import com.renaud.rogue.game.element.light.Lampe;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.tools.Rectangle;
 import com.renaud.rogue.game.world.TileDungeon;
@@ -21,7 +23,10 @@ public class FacilityDungeonProvider {
 
 	private FacilityDungeonProvider(int largeur, int hauteur) {
 		e = new Facility(largeur, hauteur);
-		e.fill(TileDungeon.WALL);
+		// e.fill(TileDungeon.WALL);
+		for (int i = 0; i < largeur * hauteur; i++) {
+			e.setTile(i, TileDungeon.Factory.createFactoryWall());
+		}
 		this.largeur = largeur;
 		this.hauteur = hauteur;
 	}
@@ -72,7 +77,7 @@ public class FacilityDungeonProvider {
 		for (int i = 0; i < largeur; i++) {
 			for (int j = 0; j < hauteur; j++) {
 				if (i == 0 || i == largeur - 1 || j == 0 || j == hauteur - 1) {
-					e.setTile(i, j, TileDungeon.Factory.getFloor());
+					e.setTile(i, j, TileDungeon.Factory.createfloor());
 				} else if (e2.getTile(i, j).getCode() == TileDungeon.WALL) {
 					int n = 0;
 					for (int a = -1; a <= 1; a++) {
@@ -84,10 +89,21 @@ public class FacilityDungeonProvider {
 						}
 					}
 					if (n == 8)
-						e.setTile(i, j, TileDungeon.Factory.getFloor());
+						e.setTile(i, j, TileDungeon.Factory.createfloor());
 				}
 			}
 		}
+	}
+
+	public void lighting() {
+		List<PhysicalLightSource> lights = new ArrayList<>();
+		for (Rectangle room : e.getRooms()) {
+			int x = room.x + room.width / 2;
+			int y = room.y + room.height / 2;
+			lights.add(new Lampe(x, y));
+		}
+
+		e.setDungeonLightsource(lights);
 	}
 
 	private void putDoor() {
@@ -147,6 +163,11 @@ public class FacilityDungeonProvider {
 			return this;
 		}
 
+		public Builder lighting() {
+			e.lighting();
+			return this;
+		}
+
 		public Facility build() {
 			return e.getDungeon();
 		}
@@ -202,7 +223,7 @@ public class FacilityDungeonProvider {
 				rooms.add(new Rectangle(tuple.node.x + sx, tuple.node.y + sy, l, h));
 				for (int i = 0; i < l; i++) {
 					for (int j = 0; j < h; j++) {
-						dungeon.setTile(tuple.node.x + sx + i, tuple.node.y + sy + j, TileDungeon.Factory.getFloor());
+						dungeon.setTile(tuple.node.x + sx + i, tuple.node.y + sy + j, TileDungeon.Factory.createFacilityfloor());
 						positions.add(new Point(tuple.node.x + sx + i, tuple.node.y + sy + j));
 					}
 				}
@@ -214,14 +235,13 @@ public class FacilityDungeonProvider {
 				for (int l = -1; l < 0; l++) {
 					for (int i = Math.min(xl, xr); i <= Math.max(xl, xr); i++) {
 						for (int j = Math.min(yl, yr); j <= Math.max(yl, yr); j++) {
-							dungeon.setTile(i + l, j + l, TileDungeon.Factory.getFloor());
+							dungeon.setTile(i + l, j + l, TileDungeon.Factory.createFacilityfloor());
 							positions.add(new Point(i + l, j + l));
 						}
 					}
 				}
 			}
 		}
-
 	}
 
 	/* ** */

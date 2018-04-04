@@ -18,7 +18,7 @@ public class RoomCrowler implements Crowler {
 	@Override
 	public void crowl(int x, int y) {
 		room.add(new Point(x, y));
-		e2.setTile(x, y, TileDungeon.Factory.getWall());
+		e2.setTile(x, y, TileDungeon.Factory.createWall());
 	}
 
 	public List<Point> getRoom() {

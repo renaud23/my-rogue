@@ -18,6 +18,7 @@ public class Shooter extends AbstractMonster {
 
 	public String name = "Monster";
 	public boolean isMeleeAttaque;
+	public boolean waitAfterShoot;
 
 	public Shooter(int x, int y) {
 		this.x = x;
@@ -40,8 +41,12 @@ public class Shooter extends AbstractMonster {
 				}
 			} else if (dist < dephtOfFire * dephtOfFire && fireballShoot.isFinished() && game.getWorld().canSee(this, game.getJoueur())) {
 				fireballShoot.activate(game);
+				waitAfterShoot = true;
 			} else {
-				trackPlayer.activate(game);
+				if (!waitAfterShoot) {
+					trackPlayer.activate(game);
+				}
+				waitAfterShoot = false;
 				if (trackPlayer.isFinished()) {
 					trackPlayer.reset();
 					seenPlayer = false;

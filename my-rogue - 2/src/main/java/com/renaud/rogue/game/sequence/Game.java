@@ -9,7 +9,6 @@ import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.element.LightSource;
 import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.light.Torche;
-import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
@@ -57,9 +56,9 @@ public class Game implements RogueSequence, ActionEvent {
 			world.getTile(start.x, start.y).addItem(new BerettaM9());
 		}
 
-		for (TorcheFixe torche : world.getTorches()) {
+		for (LightSource torche : world.getTorches()) {
 			this.addLightSource(torche);
-			this.setElement(torche);
+			this.setElement((Element) torche);
 		}
 		world.print(System.out, true);
 		this.addLightSource(new Torche(joueur));

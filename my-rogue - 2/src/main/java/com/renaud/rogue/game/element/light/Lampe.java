@@ -1,36 +1,29 @@
 package com.renaud.rogue.game.element.light;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.element.TileElement;
 import com.renaud.rogue.game.sequence.Game;
-import com.renaud.rogue.game.tools.Chrono;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.Light;
 
-public class TorcheFixe implements PhysicalLightSource {
+public class Lampe implements PhysicalLightSource {
 
 	private int x;
 	private int y;
 
-	private Chrono chrono;
-	private Random rand = new Random();
-	private int dephtMax = 10;
-	private int dephtMin = 8;
-	private int dephtVar = 1;
-	private int depht = 8;
+	private int depht = 3;
 	private TileElement tile = TileElement.Factory.getTorche();
 
 	private Set<Point> visibility;
 
-	public TorcheFixe(int x, int y) {
+	public Lampe(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.chrono = new Chrono(350l);
+
 	}
 
 	private void init(Game game) {
@@ -62,22 +55,6 @@ public class TorcheFixe implements PhysicalLightSource {
 		}
 	}
 
-	private void change() {
-		if (chrono.isEllapsed()) {
-			depht += dephtVar;
-			visibility = null;
-			if (rand.nextBoolean()) {
-				dephtVar *= -1;
-			}
-			if (depht == dephtMax) {
-				dephtVar = -1;
-			} else if (depht == dephtMin) {
-				dephtVar = 1;
-			}
-
-		}
-	}
-
 	@Override
 	public void illumine(Game game) {
 		if (visibility == null) {
@@ -91,14 +68,13 @@ public class TorcheFixe implements PhysicalLightSource {
 				float how = cube / (cube + dist);
 				Light li = game.getWorld().getTile(p.x, p.y).getLight();
 
-				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.4f));
-				float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.4f));
+				float r = Math.min(1.0f, Math.min(1.0f, li.pr + how * 0.2f));
+				float g = Math.min(1.0f, Math.min(1.0f, li.pg + how * 0.2f));
 				float b = Math.min(1.0f, Math.min(1.0f, li.pb + how * 0.1f));
 				game.getWorld().getTile(p.x, p.y).setLight(new Light(r, g, b));
 
 			}
 		}
-		change();
 	}
 
 	public int getX() {

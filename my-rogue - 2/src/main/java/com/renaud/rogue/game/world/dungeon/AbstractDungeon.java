@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
-import com.renaud.rogue.game.element.light.TorcheFixe;
+import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
 
@@ -19,11 +19,7 @@ public abstract class AbstractDungeon implements Dungeon {
 	protected int size;
 	protected TileDungeon[] tiles;
 
-	protected List<TorcheFixe> torches = new ArrayList<>();
-
-	public void setTorches(List<TorcheFixe> torches) {
-		this.torches = torches;
-	}
+	protected List<PhysicalLightSource> lightsources = new ArrayList<>();
 
 	protected List<Point> floors = new ArrayList<>();
 	protected List<Point> walls = new ArrayList<>();
@@ -56,7 +52,8 @@ public abstract class AbstractDungeon implements Dungeon {
 		for (int i = 0; i < size; i++) {
 			if (!tiles[i].isEmpty() && element) {
 				out.print(tiles[i].getOccupant().getTile().getCharCode());
-			} else out.print(tiles[i].getCharCode());
+			} else
+				out.print(tiles[i].getCharCode());
 
 			if ((i % width) == (width - 1)) {
 				out.println();
@@ -67,12 +64,12 @@ public abstract class AbstractDungeon implements Dungeon {
 	public void fill(long type) {
 		for (int i = 0; i < size; i++) {
 			if (type == TileDungeon.WALL) {
-				tiles[i] = TileDungeon.Factory.getWall();
+				tiles[i] = TileDungeon.Factory.createWall();
 			} else if (type == TileDungeon.UNKNOW) {
 				tiles[i] = TileDungeon.Factory.getUnknow();
 			} else {
 				if (type == TileDungeon.FLOOR) {
-					tiles[i] = TileDungeon.Factory.getFloor();
+					tiles[i] = TileDungeon.Factory.createfloor();
 				}
 			}
 		}
@@ -94,8 +91,12 @@ public abstract class AbstractDungeon implements Dungeon {
 		tiles[i] = tile;
 	}
 
-	public List<TorcheFixe> getTorches() {
-		return torches;
+	public void setDungeonLightsource(List<PhysicalLightSource> lightsources) {
+		this.lightsources = lightsources;
+	}
+
+	public List<PhysicalLightSource> getDungeonLightSource() {
+		return lightsources;
 	}
 
 	public List<Point> getFloors() {

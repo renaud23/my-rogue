@@ -12,7 +12,7 @@ public class Cave extends AbstractDungeon {
 	}
 
 	public void addTorche(int x, int y) {
-		this.torches.add(new TorcheFixe(x, y));
+		this.lightsources.add(new TorcheFixe(x, y));
 	}
 
 	public Cave clone() {

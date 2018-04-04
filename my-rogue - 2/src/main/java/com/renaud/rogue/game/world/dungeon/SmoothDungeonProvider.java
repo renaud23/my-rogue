@@ -28,7 +28,7 @@ public class SmoothDungeonProvider {
 		for (int i = 1; i < (cave.getWidth() - 1); i++) {
 			for (int j = 1; j < (cave.getHeight() - 1); j++) {
 				if (rnd.nextInt(100) > 45) {
-					cave.setTile(i, j, TileDungeon.Factory.getFloor());
+					cave.setTile(i, j, TileDungeon.Factory.createfloor());
 				}
 			}
 		}
@@ -70,7 +70,7 @@ public class SmoothDungeonProvider {
 		for (List<Point> room : rooms) {
 			if (room != best) {
 				for (Point p : room) {
-					cave.setTile(p.x, p.y, TileDungeon.Factory.getWall());
+					cave.setTile(p.x, p.y, TileDungeon.Factory.createWall());
 				}
 			}
 		}
@@ -142,17 +142,17 @@ public class SmoothDungeonProvider {
 				// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
 				if (cave.getTile(i, j).getCode() == TileDungeon.WALL) {
 					if (nb >= 4) {
-						e2.setTile(i, j, TileDungeon.Factory.getWall());
+						e2.setTile(i, j, TileDungeon.Factory.createWall());
 					} else if (nb < 2) {
-						e2.setTile(i, j, TileDungeon.Factory.getFloor());
+						e2.setTile(i, j, TileDungeon.Factory.createfloor());
 					} else {
-						e2.setTile(i, j, TileDungeon.Factory.getFloor());
+						e2.setTile(i, j, TileDungeon.Factory.createfloor());
 					}
 				} else {
 					if (nb >= 5) {
-						e2.setTile(i, j, TileDungeon.Factory.getWall());
+						e2.setTile(i, j, TileDungeon.Factory.createWall());
 					} else {
-						e2.setTile(i, j, TileDungeon.Factory.getFloor());
+						e2.setTile(i, j, TileDungeon.Factory.createfloor());
 					}
 				}
 			}
@@ -175,10 +175,10 @@ public class SmoothDungeonProvider {
 		for (int i = 0; i < largeur; i++) {
 			for (int j = 0; j < hauteur; j++) {
 				if (i == 0 || i == largeur - 1 || j == 0 || j == hauteur - 1) {
-					cave.setTile(posX + i, posY + j, TileDungeon.Factory.getWall());
+					cave.setTile(posX + i, posY + j, TileDungeon.Factory.createWall());
 					walls.add(new Point(posX + i, posY + j));
 				} else {
-					cave.setTile(posX + i, posY + j, TileDungeon.Factory.getFloor());
+					cave.setTile(posX + i, posY + j, TileDungeon.Factory.createfloor());
 					exit.add(new Point(posX + i, posY + j));
 				}
 			}

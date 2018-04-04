@@ -3,7 +3,7 @@ package com.renaud.rogue.game.world.dungeon;
 import java.io.PrintStream;
 import java.util.List;
 
-import com.renaud.rogue.game.element.light.TorcheFixe;
+import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
 
@@ -17,7 +17,7 @@ public interface Dungeon {
 
 	void setTile(int i, int j, TileDungeon tile);
 
-	List<TorcheFixe> getTorches();
+	List<PhysicalLightSource> getDungeonLightSource();
 
 	List<Point> getFloors();
 

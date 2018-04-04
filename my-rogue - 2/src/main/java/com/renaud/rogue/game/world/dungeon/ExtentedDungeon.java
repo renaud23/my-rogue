@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.renaud.rogue.game.element.light.TorcheFixe;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
 
@@ -17,15 +16,11 @@ public class ExtentedDungeon extends AbstractDungeon {
 		super(width, height);
 	}
 
-	public void addTorche(int x, int y) {
-		this.torches.add(new TorcheFixe(x, y));
-	}
-
 	public TileDungeon peekRandomCaveFloor() {
 		Random rnd = new Random();
 		Point point = null;
 		while (point == null) {
-			point = floorsCave.get(rnd.nextInt(floorsCave.size()));
+			point = floorsFacility.get(rnd.nextInt(floorsFacility.size()));
 			TileDungeon tile = getTile(point.x, point.y);
 			if (tile.getCode() != TileDungeon.FLOOR || !tile.isEmpty()) {
 				point = null;
@@ -43,6 +38,20 @@ public class ExtentedDungeon extends AbstractDungeon {
 		return d;
 	}
 
+	public Point peekRandomOne(long tileCode) {
+		Random rnd = new Random();
+		Point point = null;
+		while (point == null) {
+			point = floorsFacility.get(rnd.nextInt(floorsFacility.size()));
+			TileDungeon tile = getTile(point.x, point.y);
+			if (tile.getCode() != tileCode || !tile.isEmpty()) {
+				point = null;
+			}
+		}
+
+		return point;
+	}
+
 	public int getWidth() {
 		return width;
 	}
@@ -53,22 +62,6 @@ public class ExtentedDungeon extends AbstractDungeon {
 
 	public int getSize() {
 		return size;
-	}
-
-	public List<Point> getFloors() {
-		return floors;
-	}
-
-	public void setFloors(List<Point> floors) {
-		this.floors = floors;
-	}
-
-	public List<Point> getDoors() {
-		return doors;
-	}
-
-	public void setDoors(List<Point> doors) {
-		this.doors = doors;
 	}
 
 	public List<Point> getFloorsCave() {
