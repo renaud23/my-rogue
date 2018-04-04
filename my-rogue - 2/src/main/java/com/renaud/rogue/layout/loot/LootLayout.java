@@ -71,7 +71,7 @@ public class LootLayout extends LayoutComposite implements GridLayoutListener<It
 	}
 
 	@Override
-	public void activateAction(ItemLayout u, int i, int j) {
+	public void useAction(ItemLayout u, int i, int j) {
 		this.refresh();
 	}
 

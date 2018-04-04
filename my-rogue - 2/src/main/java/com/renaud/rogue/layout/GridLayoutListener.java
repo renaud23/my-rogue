@@ -4,7 +4,7 @@ public interface GridLayoutListener<U> {
 
 	default void weaponAction(U u, int i, int j) {}
 
-	default void activateAction(U u, int i, int j) {
+	default void useAction(U u, int i, int j) {
 
 	}
 

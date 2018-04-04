@@ -86,7 +86,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 
 	@Override
 	public void weaponAction() {
-		SequenceAutomate.getInstance().setNextSequence(new AimSequence(game, new ShootingAiming(game.getJoueur())));
+		SequenceAutomate.getInstance().setNextSequence(new AimingSequence(game, new ShootingAiming(game.getJoueur())));
 		SequenceAutomate.getInstance().getPlayingContext().playFinished();
 	}
 
@@ -98,7 +98,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 
 	@Override
 	public void useAction() {
-		SequenceAutomate.getInstance().setNextSequence(new AimSequence(game, new UseAiming(game)));
+		SequenceAutomate.getInstance().setNextSequence(new AimingSequence(game, new UseAiming(game)));
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 
 	@Override
 	public void activateAction() {
-		SequenceAutomate.getInstance().setNextSequence(new AimSequence(game, new ActivateAiming(game)));
+		SequenceAutomate.getInstance().setNextSequence(new AimingSequence(game, new ActivateAiming(game)));
 	}
 
 }

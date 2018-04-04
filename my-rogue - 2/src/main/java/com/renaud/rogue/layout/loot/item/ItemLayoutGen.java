@@ -44,7 +44,7 @@ public class ItemLayoutGen implements ItemLayout {
 	}
 
 	@Override
-	public void activateAction(ItemLayout u, int i, int j) {
+	public void useAction(ItemLayout u, int i, int j) {
 		if (ActionContext.getInstance().getActivateAction() != null) {
 			ActionContext.getInstance().getActivateAction().doIt(u, i, j);
 		} else if (activateAction != null) {

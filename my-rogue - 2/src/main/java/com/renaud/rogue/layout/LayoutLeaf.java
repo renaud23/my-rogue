@@ -68,7 +68,7 @@ public class LayoutLeaf implements Layout {
 	@Override
 	public void useAction() {
 		for (LayoutListener l : listeners) {
-			l.activateAction(this);
+			l.useAction(this);
 		}
 	}
 

@@ -2,12 +2,12 @@ package com.renaud.rogue.game.sequence;
 
 import com.renaud.rogue.game.event.ActionEvent;
 
-public class AimSequence implements RogueSequence, ActionEvent {
+public class AimingSequence implements RogueSequence, ActionEvent {
 
 	private Game game;
 	private AimingAction aiming;
 
-	public AimSequence(Game game, AimingAction aiming) {
+	public AimingSequence(Game game, AimingAction aiming) {
 		this.game = game;
 		this.aiming = aiming;
 
@@ -46,6 +46,11 @@ public class AimSequence implements RogueSequence, ActionEvent {
 
 	public int getDepht() {
 		return aiming.getDepht();
+	}
+
+	@Override
+	public void annulerAction() {
+		SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
 	}
 
 }

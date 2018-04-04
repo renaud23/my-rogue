@@ -4,7 +4,7 @@ public interface LayoutListener {
 
 	default void weaponAction(Layout u) {};
 
-	default void activateAction(Layout u) {};
+	default void useAction(Layout u) {};
 
 	default void over(Layout u) {};
 

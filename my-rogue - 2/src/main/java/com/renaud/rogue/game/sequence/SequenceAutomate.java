@@ -98,12 +98,12 @@ public class SequenceAutomate implements RogueSequence {
 	}
 
 	public boolean isOnAiming() {
-		return currentSequence instanceof AimSequence;
+		return currentSequence instanceof AimingSequence;
 	}
 
 	public int getAimingDepht() {
 		if (isOnAiming()) {
-			return ((AimSequence) currentSequence).getDepht();
+			return ((AimingSequence) currentSequence).getDepht();
 		}
 		return 0;
 	}

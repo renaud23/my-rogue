@@ -87,11 +87,11 @@ public abstract class GridLayout<U> extends LayoutComposite implements LayoutLis
 	}
 
 	@Override
-	public void activateAction(Layout l) {
+	public void useAction(Layout l) {
 		int index = access.get(l);
 		U u = leaves[index];
 		for (GridLayoutListener<U> li : gridListeners) {
-			li.activateAction(u, index % gridWidth, index / gridWidth);
+			li.useAction(u, index % gridWidth, index / gridWidth);
 		}
 	}
 

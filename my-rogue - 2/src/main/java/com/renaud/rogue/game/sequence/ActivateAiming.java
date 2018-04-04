@@ -8,7 +8,6 @@ public class ActivateAiming extends UseAiming {
 
 	@Override
 	public void changeSequence(Game game) {
-		// TileDungeon tile = game.getWorld().getTile(this.game.getJoueur().getAimx(), this.game.getJoueur().getAimy());
 		SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
 	}
 

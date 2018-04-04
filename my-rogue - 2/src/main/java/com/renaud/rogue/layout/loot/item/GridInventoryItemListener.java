@@ -12,9 +12,9 @@ public class GridInventoryItemListener implements GridLayoutListener<ItemLayout>
 	}
 
 	@Override
-	public void activateAction(ItemLayout u, int i, int j) {
+	public void useAction(ItemLayout u, int i, int j) {
 		if (u != null) {
-			u.activateAction(u, i, j);
+			u.useAction(u, i, j);
 		}
 	}
 

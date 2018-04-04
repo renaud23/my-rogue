@@ -66,7 +66,7 @@ public class ImageBuilder {
 		int largeur = 16;
 		int hauteur = 16;
 		SimpleImageLoader loader = new SimpleImageLoader();
-		Image image = loader.getImage("d:/key.png");
+		Image image = loader.getImage("d:/reloader.png");
 
 		int[] pix = ImageBuilder.loadImage(image, 0, 0, largeur, hauteur);
 

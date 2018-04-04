@@ -17,7 +17,7 @@ public interface ItemLayout extends GridLayoutListener<ItemLayout> {
 
 		public static ItemLayout createInventory(Game game, Item item) {
 			ItemLayoutGen l = new ItemLayoutGen(item);
-			l.setWeaponAction(new UseKey(game));
+			l.setWeaponAction(new ThrowItemAction(game));
 			if (item instanceof Ammunition) {
 				l.setActivateAction(new ReloadWeaponAction(game));
 			} else if (item instanceof Weapon) {
