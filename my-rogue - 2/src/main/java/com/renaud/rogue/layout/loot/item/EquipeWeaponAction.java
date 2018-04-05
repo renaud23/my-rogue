@@ -37,4 +37,8 @@ public class EquipeWeaponAction implements ItemLayoutAction {
 
 	}
 
+	@Override
+	public String getAction() {
+		return "équiper";
+	}
 }

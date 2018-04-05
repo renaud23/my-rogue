@@ -97,6 +97,11 @@ public class Console implements IDrawable {
 		return !noMore;
 	}
 
+	public void clear() {
+		lignes.clear();
+		hasChanged = true;
+	}
+
 	public void addLigne(String line, Color color) {
 		hasChanged = true;
 		lignes.add(new Line(line, color));

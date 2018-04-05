@@ -34,4 +34,8 @@ public class UseKey implements ItemLayoutAction {
 		}
 	}
 
+	@Override
+	public String getAction() {
+		return "utiliser";
+	}
 }

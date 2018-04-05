@@ -12,26 +12,22 @@ public class PlayingDrawer implements Draw {
 	private HudDrawer hudDrawer;
 	private MinimapDrawer minimapDrawer;
 	private GameConsoleDrawer consoleDrawer;
-	private LayoutDrawer lootDrawer;
-	LayoutDrawer inventoryDrawer;
+	private LootMenuDrawer lootDrawer;
 
 	public PlayingDrawer(Game game, GameDrawer gameDrawer, HudDrawer hudDrawer, MinimapDrawer minimapDrawer,
-		GameConsoleDrawer consoleDrawer, LayoutDrawer lootDrawer, LayoutDrawer inventoryDrawer) {
+		GameConsoleDrawer consoleDrawer, LootMenuDrawer lootDrawer) {
 		this.game = game;
 		this.gameDrawer = gameDrawer;
 		this.hudDrawer = hudDrawer;
 		this.minimapDrawer = minimapDrawer;
 		this.consoleDrawer = consoleDrawer;
 		this.lootDrawer = lootDrawer;
-		this.inventoryDrawer = inventoryDrawer;
 	}
 
 	@Override
 	public void draw() {
 		if (SequenceAutomate.getInstance().isOnLoot()) {
 			lootDrawer.draw();
-		} else if (SequenceAutomate.getInstance().isOnInventory()) {
-			inventoryDrawer.draw();
 		} else {
 			gameDrawer.draw();
 		}
@@ -47,6 +43,5 @@ public class PlayingDrawer implements Draw {
 		minimapDrawer.setDrawOperation(op);
 		consoleDrawer.setDrawOperation(op);
 		lootDrawer.setDrawOperation(op);
-		inventoryDrawer.setDrawOperation(op);
 	}
 }

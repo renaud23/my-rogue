@@ -1,19 +1,24 @@
 package com.renaud.rogue.layout.loot.item;
 
+import java.awt.Color;
+
 import com.renaud.rogue.game.inventaire.Item;
+import com.renaud.rogue.view.console.Console;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class ItemLayoutGen implements ItemLayout {
 
 	private Item item;
+	private Console console;
 
 	private ItemLayoutAction weaponAction;
 	private ItemLayoutAction switchWeaponAction;
 	private ItemLayoutAction inventaireAction;
 	private ItemLayoutAction activateAction;
 
-	public ItemLayoutGen(Item item) {
+	public ItemLayoutGen(Console console, Item item) {
 		this.item = item;
+		this.console = console;
 	}
 
 	@Override
@@ -82,6 +87,17 @@ public class ItemLayoutGen implements ItemLayout {
 	@Override
 	public void over(ItemLayout u, int i, int j) {
 		GameConsoleDrawer.inventory(u.getItem().getDesription());
+		console.clear();
+		console.addLigne(u.getItem().getDesription(), Color.green);
+		console.addLigne(getAction(), Color.yellow);
+	}
+
+	public String getAction() {
+		StringBuilder bld = new StringBuilder();
+		if (activateAction != null) {
+			bld.append("(e) ").append(activateAction.getAction()).append("-");
+		}
+		return bld.toString();
 	}
 
 }

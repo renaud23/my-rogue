@@ -6,6 +6,7 @@ import com.renaud.rogue.game.inventaire.KeyDoor;
 import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.layout.GridLayoutListener;
+import com.renaud.rogue.view.console.Console;
 
 public interface ItemLayout extends GridLayoutListener<ItemLayout> {
 
@@ -15,8 +16,8 @@ public interface ItemLayout extends GridLayoutListener<ItemLayout> {
 
 	public static class Factory {
 
-		public static ItemLayout createInventory(Game game, Item item) {
-			ItemLayoutGen l = new ItemLayoutGen(item);
+		public static ItemLayout createInventory(Console console, Game game, Item item) {
+			ItemLayoutGen l = new ItemLayoutGen(console, item);
 			l.setWeaponAction(new ThrowItemAction(game));
 			if (item instanceof Ammunition) {
 				l.setActivateAction(new ReloadWeaponAction(game));
@@ -28,15 +29,15 @@ public interface ItemLayout extends GridLayoutListener<ItemLayout> {
 			return l;
 		}
 
-		public static ItemLayout createLoot(Game game, Item item) {
-			ItemLayoutGen l = new ItemLayoutGen(item);
+		public static ItemLayout createLoot(Console console, Game game, Item item) {
+			ItemLayoutGen l = new ItemLayoutGen(console, item);
 			l.setWeaponAction(new LootItemAction(game));
 
 			return l;
 		}
 
-		public static ItemLayout createWeaponRack(Item item) {
-			ItemLayoutGen l = new ItemLayoutGen(item);
+		public static ItemLayout createWeaponRack(Console console, Item item) {
+			ItemLayoutGen l = new ItemLayoutGen(console, item);
 
 			return l;
 		}

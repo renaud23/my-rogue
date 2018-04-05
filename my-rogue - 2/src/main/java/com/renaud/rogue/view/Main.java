@@ -12,7 +12,7 @@ import com.renaud.rogue.layout.loot.LootLayout;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.GameDrawer;
 import com.renaud.rogue.view.drawer.HudDrawer;
-import com.renaud.rogue.view.drawer.LayoutDrawer;
+import com.renaud.rogue.view.drawer.LootMenuDrawer;
 import com.renaud.rogue.view.drawer.MainDrawer;
 import com.renaud.rogue.view.drawer.MinimapDrawer;
 import com.renaud.rogue.view.drawer.PlayingDrawer;
@@ -21,8 +21,8 @@ public class Main {
 
 	public final static void main(String[] args) {
 
-		int wolrdLargeur = 60;
-		int worldHauteur = 60;
+		int wolrdLargeur = 120;
+		int worldHauteur = 120;
 		int viewLargeur = 40;
 		int viewHauteur = 30;
 
@@ -53,13 +53,12 @@ public class Main {
 		EventListener listener = new EventListener(SequenceAutomate.getInstance());
 
 		// drawer layer
-		LayoutDrawer lootDrawer = new LayoutDrawer(layoutLoot, screenLargeur, screenHauteur);
-		LayoutDrawer inventoryDrawer = new LayoutDrawer(layoutInventory, screenLargeur, screenHauteur);
+		LootMenuDrawer lootDrawer = new LootMenuDrawer(layoutLoot, screenLargeur, screenHauteur);
 		GameDrawer gameDrawer = new GameDrawer(game, viewLargeur, viewHauteur, screenLargeur, screenHauteur);
 		HudDrawer hudDrawer = new HudDrawer(joueur, screenLargeur, 0, hudLargeur, hudHauteur);
 		MinimapDrawer minimapDrawer = new MinimapDrawer(game, screenLargeur, hudHauteur - mapHauteur, mapLargeur, mapHauteur);
 		GameConsoleDrawer consoleDrawer = new GameConsoleDrawer(0, screenHauteur, consoleWidth, consoleHeight);
-		PlayingDrawer playingDrawer = new PlayingDrawer(game, gameDrawer, hudDrawer, minimapDrawer, consoleDrawer, lootDrawer, inventoryDrawer);
+		PlayingDrawer playingDrawer = new PlayingDrawer(game, gameDrawer, hudDrawer, minimapDrawer, consoleDrawer, lootDrawer);
 		MainDrawer mainDrawer = new MainDrawer(playingDrawer);
 
 		// start application

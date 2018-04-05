@@ -37,7 +37,11 @@ public class ReloadWeaponAction implements ItemLayoutAction {
 			ActionContext.getInstance().setWeaponAction(null);
 			searchWeapon = false;
 		}
+	}
 
+	@Override
+	public String getAction() {
+		return "recharger";
 	}
 
 }

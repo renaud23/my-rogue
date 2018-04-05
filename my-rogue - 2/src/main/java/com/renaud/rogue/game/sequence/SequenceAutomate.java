@@ -89,10 +89,6 @@ public class SequenceAutomate implements RogueSequence {
 
 	/* */
 
-	public boolean isOnInventory() {
-		return currentSequence instanceof InventorySequence;
-	}
-
 	public boolean isOnLoot() {
 		return currentSequence instanceof LootSequence;
 	}

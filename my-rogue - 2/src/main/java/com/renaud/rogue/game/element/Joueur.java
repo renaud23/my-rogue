@@ -129,22 +129,6 @@ public class Joueur implements Living {
 		this.aimy = y;
 	}
 
-	// public void aimUp() {
-	// this.aiming.aimUp();
-	// }
-	//
-	// public void aimDown() {
-	// this.aiming.aimDown();
-	// }
-	//
-	// public void aimLeft() {
-	// this.aiming.aimLeft();
-	// }
-	//
-	// public void aimRight() {
-	// this.aiming.aimRight();
-	// }
-
 	public Set<Point> getLastComputed() {
 		return lastComputed;
 	}
