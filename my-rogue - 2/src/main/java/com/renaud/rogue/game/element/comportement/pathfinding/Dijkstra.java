@@ -8,9 +8,9 @@ import java.util.Map;
 
 import com.renaud.rogue.game.element.Element;
 import com.renaud.rogue.game.element.comportement.Comportement;
-import com.renaud.rogue.game.element.monster.Wolf;
-import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.element.monster.Bat;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
 
@@ -92,7 +92,7 @@ public class Dijkstra implements Comportement {
 	Point start = world.peekEmptyPlace();
 	Point end = world.peekEmptyPlace();
 	Game game = new Game(world);
-	Element wolf = new Wolf(start.x, start.y);
+	Element wolf = new Bat(start.x, start.y);
 
 	Dijkstra dijkStra = new Dijkstra(wolf, end);
 	dijkStra.activate(game);

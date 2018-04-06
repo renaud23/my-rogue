@@ -6,10 +6,10 @@ import java.util.Set;
 
 import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.element.TileElement;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.Chrono;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.Light;
 
 public class TorcheFixe implements PhysicalLightSource {

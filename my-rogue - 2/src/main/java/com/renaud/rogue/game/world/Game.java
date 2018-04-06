@@ -1,5 +1,6 @@
-package com.renaud.rogue.game.sequence;
+package com.renaud.rogue.game.world;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,15 +10,13 @@ import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.element.LightSource;
 import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.light.Torche;
-import com.renaud.rogue.game.element.monster.Wolf;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
 import com.renaud.rogue.game.inventaire.Chargeur9mm;
+import com.renaud.rogue.game.sequence.RogueSequence;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.BerettaM9;
-import com.renaud.rogue.game.world.Light;
-import com.renaud.rogue.game.world.TileDungeon;
-import com.renaud.rogue.game.world.World;
+import com.renaud.rogue.view.console.ConsoleStream;
 
 public class Game implements RogueSequence, ActionEvent {
 
@@ -33,18 +32,18 @@ public class Game implements RogueSequence, ActionEvent {
 		this.joueur = joueur;
 		setElement(this.joueur);
 		// for dev
-		for (int i = 0; i < 2; i++) {
-			Point start = world.peekEmptyPlace();
-			Monster monster = Monster.Factory.createGhool(start.x, start.y);
-			monsters.add(monster);
-			setElement(monster);
-		}
-		for (int i = 0; i < 5; i++) {
-			Point start = world.peekEmptyPlace();
-			Monster monster = new Wolf(start.x, start.y);
-			monsters.add(monster);
-			setElement(monster);
-		}
+		// for (int i = 0; i < 2; i++) {
+		// Point start = world.peekEmptyPlace();
+		// Monster monster = Monster.Factory.createGhool(start.x, start.y);
+		// monsters.add(monster);
+		// setElement(monster);
+		// }
+		// for (int i = 0; i < 5; i++) {
+		// Point start = world.peekEmptyPlace();
+		// Monster monster = new Bat(start.x, start.y);
+		// monsters.add(monster);
+		// setElement(monster);
+		// }
 
 		for (int i = 0; i < 2; i++) {
 			Point start = world.peekEmptyPlace();
@@ -61,6 +60,7 @@ public class Game implements RogueSequence, ActionEvent {
 			this.setElement((Element) torche);
 		}
 		world.print(System.out, true);
+		System.setOut(new PrintStream(new ConsoleStream()));
 		this.addLightSource(new Torche(joueur));
 	}
 

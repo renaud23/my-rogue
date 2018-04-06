@@ -1,9 +1,9 @@
 package com.renaud.rogue.game.element.comportement;
 
 import com.renaud.rogue.game.element.Element;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 
 public class MoveToPlayer implements Comportement {
 

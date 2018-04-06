@@ -3,7 +3,7 @@ package com.renaud.rogue.game.weapon;
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.element.Living;
 import com.renaud.rogue.game.element.TileElement;
-import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.world.Game;
 
 public class NoWeapon implements Weapon {
 

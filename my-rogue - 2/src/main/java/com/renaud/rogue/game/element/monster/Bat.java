@@ -3,24 +3,23 @@ package com.renaud.rogue.game.element.monster;
 import com.renaud.rogue.game.element.TileElement;
 import com.renaud.rogue.game.element.comportement.Comportement;
 import com.renaud.rogue.game.element.comportement.MoveToPlayer;
-import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.world.Game;
 
-public class Wolf extends AbstractMonster {
+public class Bat extends AbstractMonster {
+
+	private final static int BAT_MINXP = 5;
 
 	private Comportement moveToPlayer = new MoveToPlayer(this);
 	private TileElement tile = TileElement.Factory.getWolf();
 
-	public Wolf(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public Bat(int x, int y, int level) {
+		super(x, y, BAT_MINXP * level);
 
-		actionsMax = 3;
-		depht = 10;
-		level = 1;
-		life = 10;
-		xp = 2;
-		meleeDamage = 5;
-
+		this.actionsMax = 3;
+		this.depht = 10;
+		this.level = level;
+		this.life = 10;
+		this.meleeDamage = 5;
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class Wolf extends AbstractMonster {
 
 	@Override
 	public String getName() {
-		return "Wolf";
+		return "Chauve-souris";
 	}
 
 }

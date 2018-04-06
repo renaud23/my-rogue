@@ -1,6 +1,7 @@
 package com.renaud.rogue.game.sequence;
 
 import com.renaud.rogue.game.event.ActionEvent;
+import com.renaud.rogue.game.world.Game;
 
 public class AimingSequence implements RogueSequence, ActionEvent {
 

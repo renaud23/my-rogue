@@ -5,8 +5,8 @@ import java.util.List;
 import com.renaud.rogue.game.element.Element;
 import com.renaud.rogue.game.element.comportement.pathfinding.AStar;
 import com.renaud.rogue.game.element.comportement.pathfinding.PathFinding;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 
 public class TrackPlayer implements Comportement {
 

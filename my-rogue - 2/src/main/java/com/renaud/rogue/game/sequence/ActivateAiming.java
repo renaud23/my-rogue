@@ -1,5 +1,7 @@
 package com.renaud.rogue.game.sequence;
 
+import com.renaud.rogue.game.world.Game;
+
 public class ActivateAiming extends UseAiming {
 
 	public ActivateAiming(Game game) {

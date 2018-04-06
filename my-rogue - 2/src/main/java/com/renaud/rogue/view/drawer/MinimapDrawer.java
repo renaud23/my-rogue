@@ -2,8 +2,8 @@ package com.renaud.rogue.view.drawer;
 
 import java.awt.Color;
 
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.view.DrawOperationAware;
 import com.renaud.rogue.view.IDrawOperation;

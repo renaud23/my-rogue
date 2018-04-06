@@ -4,10 +4,10 @@ import java.util.Random;
 
 import com.renaud.rogue.game.element.LightSource;
 import com.renaud.rogue.game.element.Living;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.Chrono;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.Light;
 
 public class Torche implements LightSource {

@@ -1,7 +1,7 @@
 package com.renaud.rogue.layout.loot;
 
 import com.renaud.rogue.game.inventaire.Item;
-import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.layout.GridLayoutListener;
 import com.renaud.rogue.layout.LayoutComposite;

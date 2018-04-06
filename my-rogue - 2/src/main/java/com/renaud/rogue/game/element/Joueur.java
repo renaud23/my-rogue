@@ -5,18 +5,18 @@ import java.util.Set;
 
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.inventaire.Inventory;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.weapon.Knife;
 import com.renaud.rogue.game.weapon.NoWeapon;
 import com.renaud.rogue.game.weapon.Weapon;
 import com.renaud.rogue.game.world.Activable;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.dungeon.Cave;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
-public class Joueur implements Living {
+public class Joueur implements Living, XpEarning {
 
 	private final static TileElement tile = TileElement.Factory.createPlayer();
 
@@ -27,18 +27,15 @@ public class Joueur implements Living {
 	private int aimy;
 
 	private Inventory inventaire;
+	private ExperienceManager xpManager;
 
 	private Weapon rankedWeapon;
 	private Weapon meleeWeapon;
 	private Weapon activeWeapon;
 	private Set<Point> lastComputed = new HashSet<>();
 
-	// private AimingAction aiming;
-
 	int life = 100;
 	int maxLife = 100;
-	int xp = 0;
-	int level = 1;
 
 	public Joueur(int x, int y, int worldWidth, int worldHeight) {
 		this.x = x;
@@ -51,6 +48,7 @@ public class Joueur implements Living {
 		this.activeWeapon = this.meleeWeapon;
 
 		this.inventaire = new Inventory();
+		this.xpManager = new ExperienceManager();
 	}
 
 	private Cave memory;
@@ -71,10 +69,15 @@ public class Joueur implements Living {
 		TileDungeon tile = game.getWorld().getTile(aimx, aimy);
 		if (tile instanceof Activable) {
 			((Activable) tile).activate(game, aimx, aimy);
-		} else {
-			if (tile.getItems().isEmpty()) {
-				// game.setOnLoot(true);
-			}
+		}
+	}
+
+	@Override
+	public void kill(Living living) {
+		if (living instanceof Monster) {
+			Monster monster = (Monster) living;
+			GameConsoleDrawer.info("Vous abattez " + monster.getName());
+			this.xpManager.killMonster(monster);
 		}
 	}
 
@@ -206,10 +209,6 @@ public class Joueur implements Living {
 		return activeWeapon;
 	}
 
-	// public int getAimingDepht() {
-	// return this.aiming.getDepht();
-	// }
-
 	public int getLife() {
 		return life;
 	}
@@ -250,8 +249,27 @@ public class Joueur implements Living {
 		this.activeWeapon = activeWeapon;
 	}
 
-	// public void setAiming(AimingAction aiming) {
-	// this.aiming = aiming;
-	// }
+	public ExperienceManager getXpManager() {
+		return xpManager;
+	}
+
+	public int getXp() {
+		return this.xpManager.getXp();
+	}
+
+	@Override
+	public int getLevel() {
+		return xpManager.getLevel();
+	}
+
+	@Override
+	public int getXpTotal() {
+		return xpManager.getXpTotal();
+	}
+
+	@Override
+	public int getXpForNextLevel() {
+		return xpManager.getXpForNextLevel();
+	}
 
 }

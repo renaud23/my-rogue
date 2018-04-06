@@ -7,9 +7,9 @@ import com.renaud.rogue.game.element.Living;
 import com.renaud.rogue.game.element.TileElement;
 import com.renaud.rogue.game.element.TurnPlay;
 import com.renaud.rogue.game.element.light.Explosion;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 
 public class Projectile implements Element, TurnPlay {

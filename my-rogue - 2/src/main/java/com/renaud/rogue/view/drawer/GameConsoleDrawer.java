@@ -64,4 +64,8 @@ public class GameConsoleDrawer implements Draw {
 		}
 	}
 
+	public static Console getConsole() {
+		return console;
+	}
+
 }

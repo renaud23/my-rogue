@@ -3,8 +3,8 @@ package com.renaud.rogue.layout.loot.item;
 import com.renaud.rogue.game.inventaire.Ammunition;
 import com.renaud.rogue.game.inventaire.Item;
 import com.renaud.rogue.game.inventaire.KeyDoor;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.weapon.Weapon;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.layout.GridLayoutListener;
 import com.renaud.rogue.view.console.Console;
 

@@ -1,10 +1,10 @@
 package com.renaud.rogue.layout.loot.item;
 
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.weapon.MeleeWeapon;
 import com.renaud.rogue.game.weapon.NoWeapon;
 import com.renaud.rogue.game.weapon.RankedWeapon;
 import com.renaud.rogue.game.weapon.Weapon;
+import com.renaud.rogue.game.world.Game;
 
 public class EquipeWeaponAction implements ItemLayoutAction {
 

@@ -1,7 +1,6 @@
 package com.renaud.rogue.game.world;
 
 import com.renaud.rogue.game.inventaire.KeyDoor;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 import com.renaud.rogue.view.drawer.tile.DoorClosedTile;
 import com.renaud.rogue.view.drawer.tile.DoorOpenedTile;

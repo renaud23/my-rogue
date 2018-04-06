@@ -2,8 +2,8 @@ package com.renaud.rogue.game.element.monster;
 
 import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.projectile.Projectile;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.weapon.Weapon;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public abstract class AbstractMonster implements Monster {
@@ -21,15 +21,21 @@ public abstract class AbstractMonster implements Monster {
 
 	public boolean opaque = false;
 
+	public AbstractMonster(int x, int y, int xp) {
+		this.x = x;
+		this.y = y;
+		this.xp = xp;
+	}
+
 	@Override
 	public void injured(Game game, Weapon weapon) {
 		this.life -= weapon.getDamage();
+		GameConsoleDrawer.success(getName() + " reçoit un coup de " + weapon.getName() + " " + this.life + "  life");
 		if (isDead()) {
-			weapon.getUser().winXp(this.xp);
+			weapon.getUser().kill(this);
 			game.removeMonster(this);
 			game.bloodify(x, y);
 		}
-		GameConsoleDrawer.success(getName() + " reçoit un coup de " + weapon.getName() + " " + this.life + "  life");
 	}
 
 	@Override
@@ -103,6 +109,11 @@ public abstract class AbstractMonster implements Monster {
 	@Override
 	public int getLevel() {
 		return this.level;
+	}
+
+	@Override
+	public int getXp() {
+		return xp * this.level;
 	}
 
 }

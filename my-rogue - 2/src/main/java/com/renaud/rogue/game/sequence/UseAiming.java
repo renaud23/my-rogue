@@ -1,5 +1,7 @@
 package com.renaud.rogue.game.sequence;
 
+import com.renaud.rogue.game.world.Game;
+
 public class UseAiming implements AimingAction {
 
 	Game game;

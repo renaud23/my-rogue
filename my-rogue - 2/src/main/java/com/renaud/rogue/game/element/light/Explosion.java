@@ -2,8 +2,8 @@ package com.renaud.rogue.game.element.light;
 
 import com.renaud.rogue.game.element.Element;
 import com.renaud.rogue.game.element.LightSource;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.Chrono;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.view.drawer.sprite.ExplosionSprite;
 
 public class Explosion implements LightSource, Element {

@@ -3,7 +3,7 @@ package com.renaud.rogue.game.weapon;
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.element.Living;
 import com.renaud.rogue.game.inventaire.Item;
-import com.renaud.rogue.game.sequence.Game;
+import com.renaud.rogue.game.world.Game;
 
 public interface Weapon extends Item {
 
@@ -23,8 +23,6 @@ public interface Weapon extends Item {
 		return 1;
 	}
 
-	default int getDamage() {
-		return 0;
-	};
+	int getDamage();
 
 }

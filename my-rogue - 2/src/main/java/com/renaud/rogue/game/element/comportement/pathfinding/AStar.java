@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 import com.renaud.rogue.game.element.Joueur;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
 import com.renaud.rogue.game.world.World;
 

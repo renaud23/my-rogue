@@ -3,6 +3,7 @@ package com.renaud.rogue.game.sequence;
 import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
+import com.renaud.rogue.game.world.Game;
 
 public class PlayingSequence implements RogueSequence, ActionEvent {
 

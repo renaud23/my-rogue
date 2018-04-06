@@ -2,6 +2,7 @@ package com.renaud.rogue.game.sequence;
 
 import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.weapon.Weapon;
+import com.renaud.rogue.game.world.Game;
 
 public class ShootingAiming implements AimingAction {
 
@@ -50,7 +51,6 @@ public class ShootingAiming implements AimingAction {
 
 	@Override
 	public void changeSequence(Game game) {
-		// game.changeSequence(new PlayingSequence(game));
 		SequenceAutomate.getInstance().setNextSequence(new PlayingSequence(game));
 	}
 

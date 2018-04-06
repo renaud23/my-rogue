@@ -1,8 +1,8 @@
 package com.renaud.rogue.layout.loot.item;
 
 import com.renaud.rogue.game.inventaire.Ammunition;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.weapon.RankedWeapon;
+import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.view.drawer.GameConsoleDrawer;
 
 public class ReloadWeaponAction implements ItemLayoutAction {

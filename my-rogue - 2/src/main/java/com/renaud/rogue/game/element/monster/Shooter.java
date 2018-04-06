@@ -4,8 +4,8 @@ import com.renaud.rogue.game.element.TileElement;
 import com.renaud.rogue.game.element.comportement.Comportement;
 import com.renaud.rogue.game.element.comportement.ShootFireball;
 import com.renaud.rogue.game.element.comportement.TrackPlayer;
-import com.renaud.rogue.game.sequence.Game;
 import com.renaud.rogue.game.tools.MathTools;
+import com.renaud.rogue.game.world.Game;
 
 public class Shooter extends AbstractMonster {
 
@@ -20,9 +20,8 @@ public class Shooter extends AbstractMonster {
 	public boolean isMeleeAttaque;
 	public boolean waitAfterShoot;
 
-	public Shooter(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public Shooter(int x, int y, int xp) {
+		super(x, y, xp);
 	}
 
 	@Override
