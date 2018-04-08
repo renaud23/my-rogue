@@ -21,6 +21,10 @@ public abstract class AbstractMonster implements Monster {
 
 	public boolean opaque = false;
 
+	public AbstractMonster(int xp) {
+		this.xp = xp;
+	}
+
 	public AbstractMonster(int x, int y, int xp) {
 		this.x = x;
 		this.y = y;

@@ -20,6 +20,10 @@ public class Shooter extends AbstractMonster {
 	public boolean isMeleeAttaque;
 	public boolean waitAfterShoot;
 
+	public Shooter(int xp) {
+		super(xp);
+	}
+
 	public Shooter(int x, int y, int xp) {
 		super(x, y, xp);
 	}

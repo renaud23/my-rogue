@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.renaud.rogue.game.element.ExperienceManager;
 import com.renaud.rogue.game.element.Monster;
 
 public class MonsterFactory {
 
 	private final static Random rnd = new Random();
 
-	public static List<Monster> createMonsters(int xpEscompted, int level) {
+	public static List<Monster> createMonsters(int level) {
+		int xpEscompted = ExperienceManager.computeXpForLevel(level);
 		List<Monster> monsters = new ArrayList<>();
 		int xpCurr = 0;
 		while (xpCurr < xpEscompted) {
-			Monster m = createMonster(level + rnd.nextInt(2));
+			int alea = rnd.nextInt(100) > 90 ? 1 : 0;
+			Monster m = createMonster(level);
 			xpCurr += m.getXp();
 			monsters.add(m);
 		}
@@ -23,6 +26,8 @@ public class MonsterFactory {
 	}
 
 	public static Monster createMonster(int level) {
-		return null;
+		Monster monster = null;
+		monster = new Bat(level);
+		return monster;
 	}
 }

@@ -11,7 +11,7 @@ import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.tools.Rectangle;
 import com.renaud.rogue.game.world.TileDungeon;
 
-public class ExtentedDungeonProvider {
+public class ExtentedDungeonFactory {
 
 	private Random rnd = new Random();
 
@@ -27,7 +27,7 @@ public class ExtentedDungeonProvider {
 	private int xFacility;;
 	private int yFacility;
 
-	private ExtentedDungeonProvider(int largeur, int hauteur) {
+	private ExtentedDungeonFactory(int largeur, int hauteur) {
 		facility = new Facility(largeur, hauteur);
 		facility.fill(TileDungeon.WALL);
 		this.largeur = largeur;
@@ -63,8 +63,12 @@ public class ExtentedDungeonProvider {
 		Point origine = new Point(this.xFacility + west.x, y);
 		carveCorridor(dest, origine);
 
-		this.extented.setTile(this.xFacility + west.x - 1, y, TileDungeon.Factory.createLockedDoor(23));
-		this.extented.peekRandomCaveFloor().addItem(new KeyDoor(23));
+		//
+		int keynum = rnd.nextInt();
+		this.extented.setTile(this.xFacility + west.x - 1, y, TileDungeon.Factory.createLockedDoor(keynum));
+
+		Point kp = this.extented.peekOutsideFloor();
+		this.extented.getTile(kp.x, kp.y).addItem(new KeyDoor(keynum));
 	}
 
 	private void carveCorridor(Point a, Point b) {
@@ -176,7 +180,7 @@ public class ExtentedDungeonProvider {
 
 	public static class Builder {
 
-		ExtentedDungeonProvider e;
+		ExtentedDungeonFactory e;
 
 		public Builder divideFacility(int step) {
 			e.divideFacility(step);
@@ -209,14 +213,14 @@ public class ExtentedDungeonProvider {
 		}
 
 		private Builder(int largeur, int hauteur) {
-			e = new ExtentedDungeonProvider(largeur, hauteur);
+			e = new ExtentedDungeonFactory(largeur, hauteur);
 		}
 
 	}
 
 	/* ** */
 	public final static void main(String[] args) {
-		ExtentedDungeon e = ExtentedDungeonProvider.newInstance(100, 100).buildCave(5).divideFacility(3).combine().carveAccess().build();
+		ExtentedDungeon e = ExtentedDungeonFactory.newInstance(100, 100).buildCave(5).divideFacility(3).combine().carveAccess().build();
 
 		e.print(System.out, false);
 	}

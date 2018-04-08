@@ -9,7 +9,8 @@ import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.tools.MathTools;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.dungeon.Dungeon;
-import com.renaud.rogue.game.world.dungeon.ExtentedDungeonProvider;
+import com.renaud.rogue.game.world.dungeon.ExtentedDungeon;
+import com.renaud.rogue.game.world.dungeon.ExtentedDungeonFactory;
 
 public class World {
 
@@ -23,7 +24,7 @@ public class World {
 		this.height = height;
 		this.size = this.width * this.height;
 
-		this.dungeon = ExtentedDungeonProvider.newInstance(width, height).buildCave(5).divideFacility(3).combine().carveAccess().lighting(2).build();
+		this.dungeon = ExtentedDungeonFactory.newInstance(width, height).buildCave(5).divideFacility(3).combine().carveAccess().lighting(2).build();
 
 		// this.dungeon = FacilityDungeonProvider.newInstance(width, height).divide(4).build();
 
@@ -37,6 +38,9 @@ public class World {
 	}
 
 	public Point peekEmptyPlace() {
+		if (dungeon instanceof ExtentedDungeon) {
+			return ((ExtentedDungeon) dungeon).peekOutsideFloor();
+		}
 		return dungeon.peekRandomOne(TileDungeon.FLOOR);
 	}
 

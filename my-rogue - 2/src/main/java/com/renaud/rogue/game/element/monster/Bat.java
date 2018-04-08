@@ -7,19 +7,25 @@ import com.renaud.rogue.game.world.Game;
 
 public class Bat extends AbstractMonster {
 
-	private final static int BAT_MINXP = 5;
+	private final static int BAT_MINXP = 1;
 
 	private Comportement moveToPlayer = new MoveToPlayer(this);
 	private TileElement tile = TileElement.Factory.getWolf();
 
-	public Bat(int x, int y, int level) {
-		super(x, y, BAT_MINXP * level);
+	public Bat(int level) {
+		super(BAT_MINXP * level);
 
 		this.actionsMax = 3;
 		this.depht = 10;
 		this.level = level;
 		this.life = 10;
 		this.meleeDamage = 5;
+	}
+
+	public Bat(int x, int y, int level) {
+		this(level);
+		this.x = x;
+		this.y = y;
 	}
 
 	@Override

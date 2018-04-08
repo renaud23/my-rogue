@@ -39,10 +39,14 @@ public class ExtentedDungeon extends AbstractDungeon {
 	}
 
 	public Point peekRandomOne(long tileCode) {
+		return peekRandomOne(floors, tileCode);
+	}
+
+	private Point peekRandomOne(List<Point> floorsTile, long tileCode) {
 		Random rnd = new Random();
 		Point point = null;
 		while (point == null) {
-			point = floorsFacility.get(rnd.nextInt(floorsFacility.size()));
+			point = floorsTile.get(rnd.nextInt(floorsTile.size()));
 			TileDungeon tile = getTile(point.x, point.y);
 			if (tile.getCode() != tileCode || !tile.isEmpty()) {
 				point = null;
@@ -50,6 +54,14 @@ public class ExtentedDungeon extends AbstractDungeon {
 		}
 
 		return point;
+	}
+
+	public Point peekInsideFloor() {
+		return peekRandomOne(floorsFacility, TileDungeon.FLOOR);
+	}
+
+	public Point peekOutsideFloor() {
+		return peekRandomOne(floorsCave, TileDungeon.FLOOR);
 	}
 
 	public int getWidth() {
