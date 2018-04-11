@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
+import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
@@ -17,6 +18,7 @@ public abstract class AbstractDungeon implements Dungeon {
 	protected int width;
 	protected int height;
 	protected int size;
+	protected int level = 1;
 	protected TileDungeon[] tiles;
 
 	protected List<PhysicalLightSource> lightsources = new ArrayList<>();
@@ -24,6 +26,8 @@ public abstract class AbstractDungeon implements Dungeon {
 	protected List<Point> floors = new ArrayList<>();
 	protected List<Point> walls = new ArrayList<>();
 	protected List<Point> doors = new ArrayList<>();
+
+	private List<Monster> monsters = new ArrayList<>();
 
 	public AbstractDungeon(int width, int height) {
 		this.width = width;
@@ -138,6 +142,15 @@ public abstract class AbstractDungeon implements Dungeon {
 				}
 			}
 		}
+	}
+
+	@Override
+	public List<Monster> getMonsters() {
+		return this.monsters;
+	}
+
+	public void setMonsters(List<Monster> monsters) {
+		this.monsters = monsters;
 	}
 
 }

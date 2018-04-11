@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.light.Lampe;
+import com.renaud.rogue.game.element.monster.MonsterFactory;
 import com.renaud.rogue.game.inventaire.KeyDoor;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.tools.Rectangle;
@@ -109,7 +111,6 @@ public class ExtentedDungeonFactory {
 			}
 			rect = newRect;
 		}
-		Random rand = new Random();
 		for (Rectangle r : rect) {
 			int mx = r.x + r.width / 2;// r.x + rand.nextInt(r.width);
 			int my = r.y + r.height / 2;// r.y + rand.nextInt(r.height);
@@ -120,12 +121,6 @@ public class ExtentedDungeonFactory {
 			if (extented.getFloorsCave().contains(cdt)) {
 				cave.addTorche(mx, my);
 			}
-
-			// if (mx > 0 && my > 0 && mx < cave.getWidth() && my < cave.getHeight()) {
-			// Point cdt = new Point(mx, my);
-			// if (extented.getFloorsCave().contains(cdt) && !extented.getFloorsFacility().contains(cdt))
-			// cave.addTorche(mx, my);
-			// }
 		}
 	}
 
@@ -169,6 +164,23 @@ public class ExtentedDungeonFactory {
 			.collect(Collectors.toList()));
 	}
 
+	public void setExit() {
+
+	}
+
+	public void addMonsters(int level) {
+		if (extented != null) {
+			List<Monster> monsters = MonsterFactory.createMonsters(level);
+			for (Monster monster : monsters) {
+				Point pos = extented.peekOutsideFloor();
+				monster.setX(pos.x);
+				monster.setY(pos.y);
+				extented.getTile(pos.x, pos.y).setOccupant(monster);
+			}
+			extented.setMonsters(monsters);
+		}
+	}
+
 	public ExtentedDungeon getDungeon() {
 		return this.extented;
 	}
@@ -206,9 +218,13 @@ public class ExtentedDungeonFactory {
 			return this;
 		}
 
+		public Builder addMonsters(int level) {
+			e.addMonsters(level);
+			return this;
+		}
+
 		public Builder lighting(int step) {
 			e.lighting(step);
-
 			return this;
 		}
 

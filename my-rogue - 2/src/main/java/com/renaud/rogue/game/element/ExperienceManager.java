@@ -42,7 +42,7 @@ public class ExperienceManager implements XpEarning {
 	}
 
 	public static int computeXpForLevel(int level) {
-		return (int) (Math.pow(level, 1.5) * 20);
+		return (int) (Math.pow(level, 1.5) * 10);
 	}
 
 }

@@ -1,8 +1,10 @@
 package com.renaud.rogue.game.world.dungeon;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.PhysicalLightSource;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.TileDungeon;
@@ -24,5 +26,9 @@ public interface Dungeon {
 	void print(PrintStream out, boolean element);
 
 	void fill(long type);
+
+	default List<Monster> getMonsters() {
+		return new ArrayList<>();
+	};
 
 }

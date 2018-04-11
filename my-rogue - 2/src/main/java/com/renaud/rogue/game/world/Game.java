@@ -10,7 +10,6 @@ import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.element.LightSource;
 import com.renaud.rogue.game.element.Monster;
 import com.renaud.rogue.game.element.light.Torche;
-import com.renaud.rogue.game.element.monster.MonsterFactory;
 import com.renaud.rogue.game.element.projectile.Projectile;
 import com.renaud.rogue.game.event.ActionEvent;
 import com.renaud.rogue.game.inventaire.Chargeur9mm;
@@ -32,13 +31,17 @@ public class Game implements RogueSequence, ActionEvent {
 		this.world = world;
 		this.joueur = joueur;
 		setElement(this.joueur);
-		// les monstres
-		for (Monster monster : MonsterFactory.createMonsters(1)) {
-			Point start = world.peekEmptyPlace();
-			monster.setX(start.x);
-			monster.setY(start.y);
+		this.refreshDungeon();
+
+		world.print(System.out, true);
+		System.setOut(new PrintStream(new ConsoleStream()));
+		this.addLightSource(new Torche(joueur));
+	}
+
+	public void refreshDungeon() {
+		monsters.clear();
+		for (Monster monster : this.world.getMonsters()) {
 			monsters.add(monster);
-			setElement(monster);
 		}
 
 		for (int i = 0; i < 2; i++) {
@@ -55,9 +58,6 @@ public class Game implements RogueSequence, ActionEvent {
 			this.addLightSource(torche);
 			this.setElement((Element) torche);
 		}
-		world.print(System.out, true);
-		System.setOut(new PrintStream(new ConsoleStream()));
-		this.addLightSource(new Torche(joueur));
 	}
 
 	public void illumine() {

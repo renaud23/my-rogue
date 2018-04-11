@@ -12,14 +12,14 @@ import com.renaud.rogue.game.world.dungeon.Dungeon;
 import com.renaud.rogue.game.world.dungeon.ExtentedDungeon;
 import com.renaud.rogue.game.world.dungeon.ExtentedDungeonFactory;
 
-public class World {
+public class LargeWorld {
 
 	private int width;
 	private int height;
 	private int size;
 	private Dungeon dungeon;
 
-	public World(int width, int height) {
+	public LargeWorld(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.size = this.width * this.height;
