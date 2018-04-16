@@ -22,6 +22,7 @@ public class ExtentedDungeonFactory {
 	private ExtentedDungeon extented;
 	private int largeur;
 	private int hauteur;
+	private int level;
 
 	private int largeurFacility;
 	private int hauteurFacility;
@@ -29,11 +30,12 @@ public class ExtentedDungeonFactory {
 	private int xFacility;;
 	private int yFacility;
 
-	private ExtentedDungeonFactory(int largeur, int hauteur) {
+	private ExtentedDungeonFactory(int largeur, int hauteur, int level) {
 		facility = new Facility(largeur, hauteur);
 		facility.fill(TileDungeon.WALL);
 		this.largeur = largeur;
 		this.hauteur = hauteur;
+		this.level = level;
 		this.largeurFacility = largeur / 2;
 		this.hauteurFacility = hauteur / 2;
 		this.xFacility = this.largeur - this.largeurFacility;
@@ -131,26 +133,34 @@ public class ExtentedDungeonFactory {
 			}
 		}
 
-		this.extented = new ExtentedDungeon(largeur, hauteur);
+		this.extented = new ExtentedDungeon(largeur, hauteur, level);
 		for (int i = 0; i < largeur; i++) {
 			for (int j = 0; j < hauteur; j++) {
 				this.extented.setTile(i, j, this.cave.getTile(i, j));
 			}
 		}
 
-		extented.setFloorsCave(cave.getFloors());
-		extented.setFloorsFacility(facility
-			.getFloors()
-			.stream()
-			.map(p -> new Point(p.x + this.xFacility, p.y + this.yFacility))
-			.collect(Collectors.toList()));
+		extented
+			.setFloorsCave(cave.getFloors());
+
+		extented
+			.setFloorsFacility(facility
+				.getFloors()
+				.stream()
+				.map(p -> new Point(p.x + this.xFacility, p.y + this.yFacility))
+				.collect(Collectors.toList()));
 
 		extented
 			.getFloorsCave()
 			.removeIf(p -> p.x >= this.xFacility && p.y >= this.yFacility && p.x < this.xFacility + this.largeurFacility && p.y < this.yFacility + this.hauteurFacility);
 
-		extented.getFloors().addAll(extented.getFloorsCave());
-		extented.getFloors().addAll(extented.getFloorsFacility());
+		extented
+			.getFloors()
+			.addAll(extented.getFloorsCave());
+
+		extented
+			.getFloors()
+			.addAll(extented.getFloorsFacility());
 
 	}
 
@@ -186,8 +196,8 @@ public class ExtentedDungeonFactory {
 	}
 
 	/* ******************************* */
-	public static Builder newInstance(int largeur, int hauteur) {
-		return new Builder(largeur, hauteur);
+	public static Builder newInstance(int largeur, int hauteur, int level) {
+		return new Builder(largeur, hauteur, level);
 	}
 
 	public static class Builder {
@@ -218,8 +228,8 @@ public class ExtentedDungeonFactory {
 			return this;
 		}
 
-		public Builder addMonsters(int level) {
-			e.addMonsters(level);
+		public Builder addMonsters(int levelDifficulty) {
+			e.addMonsters(levelDifficulty);
 			return this;
 		}
 
@@ -228,15 +238,15 @@ public class ExtentedDungeonFactory {
 			return this;
 		}
 
-		private Builder(int largeur, int hauteur) {
-			e = new ExtentedDungeonFactory(largeur, hauteur);
+		private Builder(int largeur, int hauteur, int level) {
+			e = new ExtentedDungeonFactory(largeur, hauteur, level);
 		}
 
 	}
 
 	/* ** */
 	public final static void main(String[] args) {
-		ExtentedDungeon e = ExtentedDungeonFactory.newInstance(100, 100).buildCave(5).divideFacility(3).combine().carveAccess().build();
+		ExtentedDungeon e = ExtentedDungeonFactory.newInstance(100, 100, 1).buildCave(5).divideFacility(3).combine().carveAccess().build();
 
 		e.print(System.out, false);
 	}

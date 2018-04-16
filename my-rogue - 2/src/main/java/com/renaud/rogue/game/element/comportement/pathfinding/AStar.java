@@ -11,7 +11,7 @@ import com.renaud.rogue.game.element.Joueur;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.Game;
 import com.renaud.rogue.game.world.TileDungeon;
-import com.renaud.rogue.game.world.World;
+import com.renaud.rogue.game.world.SimpleWorld;
 
 public class AStar implements PathFinding {
 
@@ -93,7 +93,7 @@ public class AStar implements PathFinding {
 	}
 
 	public static void main(String[] args) {
-		World world = new World(120, 60);
+		SimpleWorld world = new SimpleWorld(120, 60);
 		Point start = world.peekEmptyPlace();
 		Point end = world.peekEmptyPlace();
 		Game game = new Game(world, new Joueur(end.x, end.y, 120, 60));

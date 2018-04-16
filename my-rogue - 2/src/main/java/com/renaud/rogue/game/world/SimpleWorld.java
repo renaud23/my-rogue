@@ -1,7 +1,6 @@
 package com.renaud.rogue.game.world;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.renaud.rogue.game.element.Monster;
@@ -11,47 +10,34 @@ import com.renaud.rogue.game.world.dungeon.Dungeon;
 import com.renaud.rogue.game.world.dungeon.ExtentedDungeon;
 import com.renaud.rogue.game.world.dungeon.ExtentedDungeonFactory;
 
-public class LargeWorld implements World {
+public class SimpleWorld implements World {
 
 	private int width;
 	private int height;
 	private int size;
-	private List<Dungeon> dungeons = new ArrayList<>();
-	private Dungeon current;
+	private Dungeon dungeon;
 
-	public LargeWorld(int width, int height) {
+	public SimpleWorld(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.size = this.width * this.height;
 
-		// this.dungeon = ExtentedDungeonFactory
-		// .newInstance(width, height)
-		// .buildCave(5)
-		// .divideFacility(2)
-		// .combine()
-		// .carveAccess()
-		// .lighting(2)
-		// .addMonsters(1)
-		// .build();
-		for (int i = 1; i <= 10; i++) {
-			Dungeon d = ExtentedDungeonFactory
-				.newInstance(width, height, i)
-				.buildCave(5)
-				.divideFacility(2)
-				.combine()
-				.carveAccess()
-				.lighting(2)
-				.addMonsters(1)
-				.build();
-			dungeons.add(d);
-		}
+		this.dungeon = ExtentedDungeonFactory
+			.newInstance(width, height, 1)
+			.buildCave(5)
+			.divideFacility(2)
+			.combine()
+			.carveAccess()
+			.lighting(2)
+			.addMonsters(1)
+			.build();
 	}
 
 	public Point peekEmptyPlace() {
-		if (current instanceof ExtentedDungeon) {
-			return ((ExtentedDungeon) current).peekOutsideFloor();
+		if (dungeon instanceof ExtentedDungeon) {
+			return ((ExtentedDungeon) dungeon).peekOutsideFloor();
 		}
-		return current.peekRandomOne(TileDungeon.FLOOR);
+		return dungeon.peekRandomOne(TileDungeon.FLOOR);
 	}
 
 	public int getWidth() {
@@ -69,29 +55,29 @@ public class LargeWorld implements World {
 	public TileDungeon getTile(int i, int j) {
 		if (i < 0 || j < 0 || i >= getWidth() || j >= getHeight())
 			return null;
-		return current.getTile(i, j);
+		return dungeon.getTile(i, j);
 	}
 
 	public void setTile(int i, int j, TileDungeon tile) {
 		if (i < 0 || j < 0 || i >= getWidth() || j >= getHeight())
 			return;
-		this.current.setTile(i, j, tile);
+		this.dungeon.setTile(i, j, tile);
 	}
 
 	public TileDungeon getTile(int i) {
-		return current.getTile(i);
+		return dungeon.getTile(i);
 	}
 
 	public List<PhysicalLightSource> getTorches() {
-		return current.getDungeonLightSource();
+		return dungeon.getDungeonLightSource();
 	}
 
 	public void print(PrintStream out, boolean element) {
-		this.current.print(out, element);
+		this.dungeon.print(out, element);
 	}
 
 	public List<Monster> getMonsters() {
-		return current.getMonsters();
+		return dungeon.getMonsters();
 	}
 
 }

@@ -9,11 +9,13 @@ import com.renaud.rogue.game.world.TileDungeon;
 
 public class ExtentedDungeon extends AbstractDungeon {
 
+	private int level;
 	private List<Point> floorsCave = new ArrayList<>();
 	private List<Point> floorsFacility = new ArrayList<>();
 
-	public ExtentedDungeon(int width, int height) {
+	public ExtentedDungeon(int width, int height, int level) {
 		super(width, height);
+		this.level = level;
 	}
 
 	public TileDungeon peekRandomCaveFloor() {
@@ -31,7 +33,7 @@ public class ExtentedDungeon extends AbstractDungeon {
 	}
 
 	public ExtentedDungeon clone() {
-		ExtentedDungeon d = new ExtentedDungeon(width, height);
+		ExtentedDungeon d = new ExtentedDungeon(width, height, level);
 		for (int i = 0; i < size; i++) {
 			d.setTile(i, tiles[i].clone());
 		}

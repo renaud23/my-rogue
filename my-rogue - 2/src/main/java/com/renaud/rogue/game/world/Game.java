@@ -141,7 +141,7 @@ public class Game implements RogueSequence, ActionEvent {
 
 	/* */
 
-	public Game(World world) {
+	public Game(SimpleWorld world) {
 		this.world = world;
 	}
 

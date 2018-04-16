@@ -11,6 +11,10 @@ import com.renaud.rogue.game.world.TileDungeon;
 
 public interface Dungeon {
 
+	default int getLevel() {
+		return 1;
+	}
+
 	TileDungeon getTile(int i, int j);
 
 	TileDungeon getTile(int i);
@@ -29,6 +33,6 @@ public interface Dungeon {
 
 	default List<Monster> getMonsters() {
 		return new ArrayList<>();
-	};
+	}
 
 }
