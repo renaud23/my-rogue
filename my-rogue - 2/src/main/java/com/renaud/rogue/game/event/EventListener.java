@@ -49,6 +49,12 @@ public class EventListener implements KeyListener, MouseMotionListener {
 			case KeyEvent.VK_ESCAPE:
 				keyboard.annulerAction();
 				break;
+			case KeyEvent.VK_PAGE_UP:
+				keyboard.climbStairs();
+				break;
+			case KeyEvent.VK_PAGE_DOWN:
+				keyboard.goDownStairs();
+				break;
 		}
 	}
 

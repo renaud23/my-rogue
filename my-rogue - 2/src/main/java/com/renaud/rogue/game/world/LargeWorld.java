@@ -45,6 +45,7 @@ public class LargeWorld implements World {
 				.build();
 			dungeons.add(d);
 		}
+		current = dungeons.get(0);
 	}
 
 	public Point peekEmptyPlace() {

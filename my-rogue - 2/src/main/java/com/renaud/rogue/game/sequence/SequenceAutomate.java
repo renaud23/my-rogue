@@ -89,6 +89,16 @@ public class SequenceAutomate implements RogueSequence {
 
 	/* */
 
+	@Override
+	public void climbStairs() {
+		this.currentSequence.climbStairs();
+	}
+
+	@Override
+	public void goDownStairs() {
+		this.currentSequence.goDownStairs();
+	}
+
 	public boolean isOnLoot() {
 		return currentSequence instanceof LootSequence;
 	}

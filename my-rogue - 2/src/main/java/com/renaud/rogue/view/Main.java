@@ -6,7 +6,7 @@ import com.renaud.rogue.game.sequence.PlayingSequence;
 import com.renaud.rogue.game.sequence.SequenceAutomate;
 import com.renaud.rogue.game.tools.Point;
 import com.renaud.rogue.game.world.Game;
-import com.renaud.rogue.game.world.SimpleWorld;
+import com.renaud.rogue.game.world.LargeWorld;
 import com.renaud.rogue.game.world.World;
 import com.renaud.rogue.layout.loot.InventoryLayout;
 import com.renaud.rogue.layout.loot.LootLayout;
@@ -38,7 +38,7 @@ public class Main {
 		int consoleHeight = 100;
 
 		// game layer
-		World world = new SimpleWorld(wolrdLargeur, worldHauteur);
+		World world = new LargeWorld(wolrdLargeur, worldHauteur);
 		Point start = world.peekEmptyPlace();
 		Joueur joueur = new Joueur(start.x, start.y, wolrdLargeur, worldHauteur);
 		Game game = new Game(world, joueur);

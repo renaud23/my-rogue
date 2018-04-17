@@ -27,7 +27,7 @@ public class ExtentedDungeonFactory {
 	private int largeurFacility;
 	private int hauteurFacility;
 
-	private int xFacility;;
+	private int xFacility;
 	private int yFacility;
 
 	private ExtentedDungeonFactory(int largeur, int hauteur, int level) {
@@ -175,6 +175,7 @@ public class ExtentedDungeonFactory {
 	}
 
 	public void setExit() {
+		// Rectangle room = rnd.nextInt(extented.getRooms())
 
 	}
 

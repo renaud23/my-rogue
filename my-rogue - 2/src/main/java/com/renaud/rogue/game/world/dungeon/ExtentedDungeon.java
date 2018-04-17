@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.renaud.rogue.game.tools.Point;
+import com.renaud.rogue.game.tools.Rectangle;
 import com.renaud.rogue.game.world.TileDungeon;
 
 public class ExtentedDungeon extends AbstractDungeon {
@@ -12,6 +13,7 @@ public class ExtentedDungeon extends AbstractDungeon {
 	private int level;
 	private List<Point> floorsCave = new ArrayList<>();
 	private List<Point> floorsFacility = new ArrayList<>();
+	private List<Rectangle> rooms = new ArrayList<>();
 
 	public ExtentedDungeon(int width, int height, int level) {
 		super(width, height);
@@ -92,6 +94,14 @@ public class ExtentedDungeon extends AbstractDungeon {
 
 	public void setFloorsFacility(List<Point> floorsFacility) {
 		this.floorsFacility = floorsFacility;
+	}
+
+	public List<Rectangle> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(List<Rectangle> rooms) {
+		this.rooms = rooms;
 	}
 
 }

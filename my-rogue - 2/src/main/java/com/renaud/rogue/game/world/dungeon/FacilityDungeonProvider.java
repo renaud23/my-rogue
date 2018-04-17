@@ -70,6 +70,7 @@ public class FacilityDungeonProvider {
 
 		e.setRooms(this.crowler.getRooms());
 		e.setFloors(crowler.getPositions().stream().collect(Collectors.toList()));
+		e.setRooms(this.crowler.getRooms());
 	}
 
 	private void carveWall() {
@@ -199,6 +200,7 @@ public class FacilityDungeonProvider {
 		private Facility dungeon;
 		private List<Rectangle> rooms = new ArrayList<>();
 		private Set<Point> positions = new HashSet<>();
+		private Set<Point> roomsPositions = new HashSet<>();
 
 		public Carving(Facility dungeon) {
 			this.dungeon = dungeon;
@@ -224,7 +226,9 @@ public class FacilityDungeonProvider {
 				for (int i = 0; i < l; i++) {
 					for (int j = 0; j < h; j++) {
 						dungeon.setTile(tuple.node.x + sx + i, tuple.node.y + sy + j, TileDungeon.Factory.createFacilityfloor());
-						positions.add(new Point(tuple.node.x + sx + i, tuple.node.y + sy + j));
+						Point position = new Point(tuple.node.x + sx + i, tuple.node.y + sy + j);
+						positions.add(position);
+						roomsPositions.add(position);
 					}
 				}
 			} else {

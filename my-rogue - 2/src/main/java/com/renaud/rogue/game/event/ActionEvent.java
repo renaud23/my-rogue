@@ -22,4 +22,8 @@ public interface ActionEvent {
 
 	default void annulerAction() {};
 
+	default void climbStairs() {};
+
+	default void goDownStairs() {};
+
 }

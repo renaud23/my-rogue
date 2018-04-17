@@ -66,9 +66,9 @@ public class ImageBuilder {
 		int largeur = 16;
 		int hauteur = 16;
 		SimpleImageLoader loader = new SimpleImageLoader();
-		Image image = loader.getImage("d:/stairs.png");
+		Image image = loader.getImage("d:/key.png");
 
-		int[] pix = ImageBuilder.loadImage(image, 32, 0, largeur, hauteur);
+		int[] pix = ImageBuilder.loadImage(image, 0, 0, largeur, hauteur);
 
 		for (int i = 0; i < pix.length; i++) {
 			System.out.print(pix[i] + " ,");

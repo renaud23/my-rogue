@@ -113,4 +113,14 @@ public class PlayingSequence implements RogueSequence, ActionEvent {
 		SequenceAutomate.getInstance().setNextSequence(new AimingSequence(game, new ActivateAiming(game)));
 	}
 
+	@Override
+	public void climbStairs() {
+		System.out.println("climb");
+	}
+
+	@Override
+	public void goDownStairs() {
+		System.out.println("go down");
+	}
+
 }
