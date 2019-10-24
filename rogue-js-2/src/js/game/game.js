@@ -1,6 +1,10 @@
 import { createCave } from "./dungeon";
 import createPlayer, { reduceFOV } from "./player";
-import { createBerserk, activate as activateEnnemy } from "./ennemy";
+import {
+  createBerserk,
+  createWorm,
+  activate as activateEnnemy
+} from "./ennemy";
 import { randomInt, isEmptyPosition } from "./commons";
 
 const ARROW = {
@@ -14,13 +18,17 @@ const initialiseGame = (ww, wh) => {
   const dungeon = createCave(ww, wh);
   const sac = [...dungeon.emptyTiles];
   const position = sac.splice(randomInt(sac.length), 1)[0];
-  const ennemies = new Array(5)
+  const besreserks = new Array(0)
     .fill(0)
     .map(() => createBerserk(sac.splice(randomInt(sac.length), 1)[0]));
+
+  const worms = new Array(10)
+    .fill(0)
+    .map(() => createWorm(sac.splice(randomInt(sac.length), 1)[0]));
   return {
     dungeon,
     player: { ...createPlayer(), position },
-    ennemies
+    ennemies: [...besreserks, ...worms]
   };
 };
 

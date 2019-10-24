@@ -30,6 +30,7 @@ export const astarPath = game => (from, to) => {
       }
     });
   }
+
   const [first, ...path] = refillPath(visited)(to);
   return path;
 };

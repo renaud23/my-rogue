@@ -1,8 +1,17 @@
+body {
+  background-color: black;
+}
 .insee-rogue {
   display: flex;
   flex-direction: row;
+  background-color: blue;
+  color: yellow;
+  &:focus {
+    outline: none;
+  }
   .viewport {
     pre {
+      font-weight: bolder;
       font-size: 1em;
       line-height: 1em;
       white-space: pre;
@@ -16,6 +25,7 @@
       font-size: 0.5em;
       line-height: 0.5em;
       white-space: pre;
+      color: yellow;
     }
   }
 }

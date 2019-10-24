@@ -1,14 +1,9 @@
-import { canSee, isEmptyPosition, createChrono } from "../commons";
+import { canSee, isEmptyPosition, posToCoord } from "../commons";
 import { astarPath } from "./path-finding";
-export const TYPE_BERSERK = "ennemy/berserk";
-// https://www.redblobgames.com/pathfinding/a-star/introduction.html
+import { checkTimer, STATE } from "./commons";
 
-const BERSERK_SPEED = 250;
-
-const STATE = {
-  wait: "berserck/waiting",
-  move: "berserk/move"
-};
+export const TYPE_WORM = "ennemy/worm";
+const WORM_SPEED = 250;
 
 const wait = e => game => {
   const { position } = e;
@@ -17,13 +12,17 @@ const wait = e => game => {
     : { game, e };
 };
 
-const checkTimer = e => ({
-  ...e,
-  timer: e.timer || createChrono(BERSERK_SPEED)
-});
-
 const findPlayer = game => {
   return false;
+};
+
+const wormMove = next => e => {
+  const { positions, length } = e;
+  if (positions.length < length) {
+    return { ...e, positon: next, positions: [next, ...positions] };
+  }
+  const rest = positions.slice(0, positions.length - 1);
+  return { ...e, position: next, positions: [next, ...rest] };
 };
 
 const followPath = game => e => {
@@ -40,7 +39,7 @@ const followPath = game => e => {
   }
   const [next, ...rest] = path;
   return isEmptyPosition(game)(next) && next !== player.position
-    ? { ...e, position: next, path: rest }
+    ? { ...wormMove(next)(e), path: rest }
     : { ...e, path: undefined };
 };
 
@@ -73,22 +72,27 @@ export const activate = e => game => {
     case STATE.wait:
       return wait(e)(game);
     case STATE.move:
-      return move(checkTimer(e))(game);
+      return move(checkTimer(WORM_SPEED)(e))(game);
     default:
       return { game, e };
   }
 };
 
-export const getTileAt = ({ position }) => pos =>
-  position === pos ? "B" : undefined;
+export const getTileAt = ({ positions, tile }) => pos =>
+  positions.indexOf(pos) !== -1 ? tile : undefined;
 
-export const createBerserk = position => ({
+let I = 0;
+export const createWorm = position => ({
   state: STATE.wait,
-  type: TYPE_BERSERK,
+  type: TYPE_WORM,
   timer: undefined,
   lastSee: undefined,
   path: undefined,
-  position
+  position,
+  positions: [position],
+  tile: I++,
+  length: 5
 });
 
-export const isVisibleAt = ({ position }) => pos => position === pos;
+export const isVisibleAt = ({ positions }) => pos =>
+  positions && positions.indexOf(pos) !== -1;

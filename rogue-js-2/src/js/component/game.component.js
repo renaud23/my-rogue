@@ -35,11 +35,10 @@ export default ({ game }) => {
       game.initialiseRenderer(elDungeon.current, elMap.current);
       // Loop game
       if (ref.current) {
-        const it = window.setInterval(() => {
+        window.setInterval(() => {
           game.activate();
           game.render();
-          // clearInterval(it);
-        }, 30);
+        }, 50);
       }
     }
   }, [ref, game]);
