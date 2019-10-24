@@ -167,11 +167,13 @@ public class ExtentedDungeonFactory {
 	public void lighting(int step) {
 		lightingCave(step);
 		extented.getDungeonLightSource().addAll(cave.getDungeonLightSource());
-		extented.getDungeonLightSource().addAll(facility
+		extented
 			.getDungeonLightSource()
-			.stream()
-			.map(l -> new Lampe(l.getX() + xFacility, l.getY() + yFacility))
-			.collect(Collectors.toList()));
+			.addAll(facility
+				.getDungeonLightSource()
+				.stream()
+				.map(l -> new Lampe(l.getX() + xFacility, l.getY() + yFacility))
+				.collect(Collectors.toList()));
 	}
 
 	public void setExit() {

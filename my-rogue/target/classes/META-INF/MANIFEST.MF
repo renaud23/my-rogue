@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: kqhlz2
-Build-Jdk: 1.8.0_40
+Built-By: KQHLZ2
+Build-Jdk: 1.8.0-adoptopenjdk
 Created-By: Maven Integration for Eclipse
 
