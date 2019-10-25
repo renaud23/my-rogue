@@ -1,4 +1,4 @@
-import { createChrono, isEmptyPosition } from "../commons";
+import { createChrono } from "../commons";
 import * as berserk from "./berserk";
 import * as worm from "./worm";
 
@@ -18,12 +18,12 @@ export const activate = e => game => {
   }
 };
 
-export const isVisibleAt = e => pos => {
+export const isAtPos = e => pos => {
   switch (e.type) {
     case berserk.TYPE_BERSERK:
-      return berserk.isVisibleAt(e)(pos);
+      return berserk.isAtPos(e)(pos);
     case worm.TYPE_WORM:
-      return worm.isVisibleAt(e)(pos);
+      return worm.isAtPos(e)(pos);
     default:
       return false;
   }

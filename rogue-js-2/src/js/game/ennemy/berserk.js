@@ -91,4 +91,4 @@ export const createBerserk = position => ({
   position
 });
 
-export const isVisibleAt = ({ position }) => pos => position === pos;
+export const isAtPos = ({ position }) => pos => position === pos;

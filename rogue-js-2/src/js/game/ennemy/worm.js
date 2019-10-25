@@ -1,4 +1,4 @@
-import { canSee, isEmptyPosition, posToCoord } from "../commons";
+import { canSee, isEmptyPosition } from "../commons";
 import { astarPath } from "./path-finding";
 import { checkTimer, STATE } from "./commons";
 
@@ -90,9 +90,9 @@ export const createWorm = position => ({
   path: undefined,
   position,
   positions: [position],
-  tile: I++,
+  tile: Math.min(I++, 9),
   length: 5
 });
 
-export const isVisibleAt = ({ positions }) => pos =>
+export const isAtPos = ({ positions }) => pos =>
   positions && positions.indexOf(pos) !== -1;

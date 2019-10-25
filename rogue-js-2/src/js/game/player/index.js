@@ -1,5 +1,5 @@
 import { getSegment, maxMin, distanceEucl } from "../commons";
-import { isVisibleAt, getTileAt } from "../ennemy";
+import { isAtPos, getTileAt } from "../ennemy";
 
 const isVisibleforPlayer = game => pos => {
   const { player, dungeon } = game;
@@ -24,7 +24,7 @@ const isVisibleforPlayer = game => pos => {
 
 const getVisibleEnnemy = game => pos => {
   const { ennemies } = game;
-  return ennemies.reduce((a, e) => (isVisibleAt(e)(pos) ? e : a), undefined);
+  return ennemies.reduce((a, e) => (isAtPos(e)(pos) ? e : a), undefined);
 };
 
 export const reduceFOV = game => {

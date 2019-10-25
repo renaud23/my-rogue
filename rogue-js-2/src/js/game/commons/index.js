@@ -1,3 +1,4 @@
+export * from "./is-empty-position";
 export * from "./chrono";
 
 const deltaY = ({ dx, y, dy, yinc, cumul }) => {
@@ -76,17 +77,6 @@ export const getEmptyTilesPosition = (game = {}) => {
   const { dungeon, player } = game;
   if (!dungeon || player) return [];
   return [...dungeon.emptyTiles].filter(p => p !== player.position);
-};
-
-const isEnnemyAtPosition = ({ position }) => pos => pos === position;
-
-export const isEmptyPosition = game => pos => {
-  const { dungeon, ennemies = [], player } = game;
-  return (
-    dungeon.data[pos] === dungeon.tiles.empty &&
-    // pos !== player.position &&
-    ennemies.reduce((a, e) => a && !isEnnemyAtPosition(e)(pos), true)
-  );
 };
 
 export const canSee = game => (a, b) => {

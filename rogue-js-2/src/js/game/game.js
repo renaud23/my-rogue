@@ -18,11 +18,11 @@ const initialiseGame = (ww, wh) => {
   const dungeon = createCave(ww, wh);
   const sac = [...dungeon.emptyTiles];
   const position = sac.splice(randomInt(sac.length), 1)[0];
-  const besreserks = new Array(0)
+  const besreserks = new Array(5)
     .fill(0)
     .map(() => createBerserk(sac.splice(randomInt(sac.length), 1)[0]));
 
-  const worms = new Array(10)
+  const worms = new Array(2)
     .fill(0)
     .map(() => createWorm(sac.splice(randomInt(sac.length), 1)[0]));
   return {
