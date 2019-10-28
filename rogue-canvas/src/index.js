@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
 import { Main } from "./js/components";
-import { createGame } from "./js/game";
+import startGame from "./js/game";
 
-render(<Main launch={createGame} />, document.getElementById("root"));
+render(<Main launch={startGame} />, document.getElementById("root"));

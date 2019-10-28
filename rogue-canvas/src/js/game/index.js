@@ -1,10 +1,12 @@
-import { createRenderer } from "../render";
+import { createRenderer, render, createTexture } from "../render";
+import { createGame, activate } from "./game";
 
-export const createGame = canvas => {
+export default (canvas, width, height) => {
   const renderer = createRenderer(canvas);
+  const texture = createTexture(`${window.location.origin}/texture.png`);
 
-  // const texture = createTexture(`${window.location.origin}/snake.large.2.png`);
-  // 	renderer.clear();
-  // 	renderer.drawTexture(texture, 0, 0, 16, 16, x, y, 16, 16);
-  // 	renderer.render();
+  let game = createGame();
+  setInterval(() => {
+    game = render(activate(game))(renderer, texture);
+  }, 100);
 };
