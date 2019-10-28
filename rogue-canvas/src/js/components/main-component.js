@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-export default ({ width = 400, height = 400, launch }) => {
+export default ({ width = 512, height = 512, launch }) => {
   const ref = useRef(null);
   useEffect(() => {
     if (ref.current) {
