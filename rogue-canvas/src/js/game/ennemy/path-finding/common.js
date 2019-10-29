@@ -1,4 +1,4 @@
-import { isEmptyPosition } from "../../commons";
+import { isEmptyPosition } from "../../common-tools";
 
 export const refillPath = visited => last => {
   return visited[last] ? [...refillPath(visited)(visited[last]), last] : [last];

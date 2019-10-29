@@ -1,4 +1,4 @@
-import { canSee, isEmptyPosition, createChrono } from "../commons";
+import { canSee, isEmptyPosition, createChrono } from "../common-tools";
 import { astarPath } from "./path-finding";
 export const TYPE_BERSERK = "ennemy/berserk";
 // https://www.redblobgames.com/pathfinding/a-star/introduction.html

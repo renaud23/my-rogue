@@ -1,4 +1,4 @@
-import { createChrono } from "../commons";
+import { createChrono } from "../common-tools";
 import * as berserk from "./berserk";
 import * as worm from "./worm";
 

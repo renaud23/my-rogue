@@ -1,13 +1,12 @@
-import { distanceEucl, posToCoord } from "../../commons";
-import { refillPath, getNeighbors } from "./common";
-import Queue from "../../commons/priority-queue";
+import * as tools from "../../common-tools";
+import { getNeighbors, refillPath } from "./common";
 
 export const dijkstraPath = game => (from, to) => {
   const { dungeon } = game;
   const { width } = dungeon;
-  let frontiere = new Queue();
+  let frontiere = new tools.Queue();
   frontiere.put(from, 0);
-  const toCoord = posToCoord(width)(to);
+  const toCoord = tools.posToCoord(width)(to);
   const visited = {};
   while (!frontiere.empty()) {
     const current = frontiere.get();
@@ -19,7 +18,7 @@ export const dijkstraPath = game => (from, to) => {
 
     neightbors.forEach(n => {
       if (!(n in visited)) {
-        const dist = distanceEucl(posToCoord(width)(n), toCoord);
+        const dist = tools.distanceEucl(tools.posToCoord(width)(n), toCoord);
         frontiere.put(n, dist);
         visited[n] = current;
       }

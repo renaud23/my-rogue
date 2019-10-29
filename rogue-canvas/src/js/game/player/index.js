@@ -1,4 +1,4 @@
-import { getSegment, maxMin, distanceEucl } from "../commons";
+import { getSegment, maxMin, distanceEucl } from "../common-tools";
 import { isAtPos, getTileAt } from "../ennemy";
 
 const isVisibleforPlayer = game => pos => {

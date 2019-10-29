@@ -1,4 +1,6 @@
 import { createCave } from "./dungeon";
+import createPlayer from "./player";
+import { randomInt } from "./common-tools";
 
 export const activate = game => {
   return { ...game };
@@ -6,8 +8,10 @@ export const activate = game => {
 
 export const createGame = () => {
   const dungeon = createCave(60, 60);
+  const sac = [...dungeon.emptyTiles];
+  const position = sac.splice(randomInt(sac.length), 1)[0];
   return {
-    elements: [],
-    dungeon
+    dungeon,
+    player: { ...createPlayer(), position }
   };
 };

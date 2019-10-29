@@ -1,4 +1,4 @@
-import { canSee, isEmptyPosition } from "../commons";
+import { canSee, isEmptyPosition } from "../common-tools";
 import { astarPath } from "./path-finding";
 import { checkTimer, STATE } from "./commons";
 
