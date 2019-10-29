@@ -47,7 +47,7 @@ const createTextureDrawer = context => (
   context.drawImage(texture, tx, ty, tw, th, x, y, w, h);
 };
 
-const createFillRect = context => (color = "#FF0000", x, y, w, h) => {
+const createFillRect = context => (color, x, y, w, h) => {
   context.fillStyle = color;
   context.fillRect(x, y, w, h);
 };

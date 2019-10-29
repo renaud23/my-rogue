@@ -33,25 +33,33 @@ export default (viewWidth = 10, viewHeight = 10) => game => (
     Math.max(height - hView, 0)
   );
 
-  const { drTiles, drPlayer } = new Array(wView * hView).fill(0).reduce(
-    ({ drTiles, drPlayer }, o, i) => {
-      const xi = i % wView;
-      const yi = Math.trunc(i / wView);
-      const inGamePos = startX + xi + (startY + yi) * width;
-      if (inGamePos === player.position) {
-        drPlayer = { tx: 32, ty: 0, width: 16, height: 16, x: xi, y: yi };
-      }
-      // if (inGamePos in worldView.visibleEnnemies) {
-      //   return worldView.visibleEnnemies[inGamePos];
-      // }
+  const { drTiles, drPlayer, memorisedTiles } = new Array(wView * hView)
+    .fill(0)
+    .reduce(
+      ({ drTiles, drPlayer, memorisedTiles }, o, i) => {
+        const xi = i % wView;
+        const yi = Math.trunc(i / wView);
+        const inGamePos = startX + xi + (startY + yi) * width;
+        if (inGamePos === player.position) {
+          drPlayer = { tx: 32, ty: 0, width: 16, height: 16, x: xi, y: yi };
+        }
+        // if (inGamePos in worldView.visibleEnnemies) {
+        //   return worldView.visibleEnnemies[inGamePos];
+        // }
 
-      if (inGamePos in worldView.visibleTiles) {
-        drTiles.push({ ...getTile(data[inGamePos], tiles), x: xi, y: yi });
-      }
-      return { drTiles, drPlayer };
-    },
-    { drTiles: [], drPlayer: {} }
-  );
+        if (inGamePos in worldView.visibleTiles) {
+          drTiles.push({ ...getTile(data[inGamePos], tiles), x: xi, y: yi });
+        } else if (inGamePos in worldView.memorisedTiles) {
+          memorisedTiles.push({
+            ...getTile(data[inGamePos], tiles),
+            x: xi,
+            y: yi
+          });
+        }
+        return { drTiles, drPlayer, memorisedTiles };
+      },
+      { drTiles: [], drPlayer: {}, memorisedTiles: [] }
+    );
 
   drTiles.forEach(({ x, y, width, height, tx, ty }) => {
     renderer.drawTexture(
@@ -66,6 +74,29 @@ export default (viewWidth = 10, viewHeight = 10) => game => (
       height
     );
   });
+
+  memorisedTiles.forEach(({ x, y, width, height, tx, ty }) => {
+    renderer.drawTexture(
+      texture,
+      tx,
+      ty,
+      width,
+      height,
+      x * width,
+      y * height,
+      width,
+      height
+    );
+
+    renderer.fillRect(
+      "rgba(0, 0, 0, 0.8)",
+      x * width,
+      y * height,
+      width,
+      height
+    );
+  });
+
   renderer.drawTexture(
     texture,
     drPlayer.tx,
