@@ -1,7 +1,9 @@
-const createRenderer = canvas => {
+const createRenderer = (canvas, width = 512, height = 512) => {
   const backBuffer = document.createElement("canvas");
-  backBuffer.width = canvas.width;
-  backBuffer.height = canvas.height;
+  canvas.width = width;
+  canvas.height = height;
+  backBuffer.width = width;
+  backBuffer.height = height;
   const bufferContext = backBuffer.getContext("2d");
   const canvasContext = canvas.getContext("2d");
 

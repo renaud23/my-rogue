@@ -2,11 +2,16 @@ import { createRenderer, render, createTexture } from "../render";
 import { createGame, activate } from "./game";
 
 export default (canvas, width, height) => {
-  const renderer = createRenderer(canvas);
+  const renderer = createRenderer(canvas, width, height);
   const texture = createTexture(`${window.location.origin}/texture.png`);
 
   let game = createGame();
-  setInterval(() => {
+  const loop = () => {
     game = render(activate(game))(renderer, texture);
-  }, 100);
+  };
+  setInterval(loop, 100);
+
+  return () => {
+    clearInterval(loop);
+  };
 };

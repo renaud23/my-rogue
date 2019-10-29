@@ -54,7 +54,7 @@ const randomise = ({ data, width, height }) => ({
 });
 
 /* */
-const findEmtyTiles = data =>
+const findEmptyTiles = data =>
   data.reduce((a, tile, i) => (tile === EMPTY ? [...a, i] : a), []);
 
 const carve = ({ data = [], width, height }, i = 1) =>
@@ -71,7 +71,7 @@ const createCave = (width, height) => {
     height,
     tiles: { empty: EMPTY, rock: ROCK },
     data: step2.data,
-    emptyTiles: findEmtyTiles(step2.data)
+    emptyTiles: findEmptyTiles(step2.data)
   };
 };
 export default createCave;
