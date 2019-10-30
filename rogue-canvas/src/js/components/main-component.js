@@ -2,11 +2,12 @@ import React, { useRef, useEffect } from "react";
 
 export default ({ width = 512, height = 512, launch }) => {
   const ref = useRef(null);
+  const mapRef = useRef(null);
   useEffect(() => {
     if (ref.current) {
-      launch(ref.current, width, height);
+      launch(ref.current, width, height, mapRef);
     }
-  }, [ref, launch, width, height]);
+  }, [ref, mapRef, launch, width, height]);
   return (
     <>
       <canvas
@@ -14,7 +15,7 @@ export default ({ width = 512, height = 512, launch }) => {
         style={{ width: `${width}px`, height: `${height}px` }}
         tabIndex="0"
       />
-      <canvas style={{ width: `${width}px`, height: `${height}px` }} />
+      <canvas ref={mapRef} />
     </>
   );
 };

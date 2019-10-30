@@ -3,19 +3,18 @@ import { createGame, activate } from "./game";
 
 const params = { fov: 4 };
 
-export default (canvas, width, height) => {
-  const offscreen = createOffscreen(canvas, width, height);
-  const texture = createTexture(`${window.location.origin}/texture.png`);
-
+export default (canvas, width, height, canvasMap) => {
   let game = createGame(params);
   const renderer = createRenderer({
     ...params,
+    canvas,
+    canvasMap,
     screenWidth: width,
     screenHeight: height,
     marge: 2
   });
   const loop = () => {
-    game = renderer(activate(game))(offscreen, texture);
+    game = renderer(activate(game)); //(offscreen, texture);
   };
   const keyDownListener = e => {
     e.stopImmediatePropagation();

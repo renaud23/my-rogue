@@ -1,3 +1,4 @@
+import createOffscreen, { createTexture } from "./rendering";
 import { maxMin } from "../game/common-tools";
 
 /* */
@@ -115,7 +116,10 @@ const createGameRenderer = ({
 };
 
 /* */
-export default ({ fov, screenWidth, screenHeight, marge = 2 } = {}) => {
+export default ({ fov, marge = 2, screenWidth, screenHeight, canvas } = {}) => {
+  const offscreen = createOffscreen(canvas, screenWidth, screenHeight);
+  const texture = createTexture(`${window.location.origin}/texture.png`);
+
   const wView = fov * 2 + 1 + 2 * marge;
   const hView = fov * 2 + 1 + 2 * marge;
   const tileWidth = Math.trunc(screenWidth / wView);
@@ -127,5 +131,10 @@ export default ({ fov, screenWidth, screenHeight, marge = 2 } = {}) => {
     tileHeight,
     marge
   });
-  return game => (renderer, texture) => gameRenderer(game)(renderer, texture);
+  return game => {
+    offscreen.clear();
+    gameRenderer(game)(offscreen, texture);
+    offscreen.render();
+    return game;
+  };
 };
