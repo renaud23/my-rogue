@@ -19,11 +19,19 @@ const createRenderer = (canvas, width = 512, height = 512) => {
 
   const drawTexture = createTextureDrawer(bufferContext);
 
+  const resize = (w, h) => {
+    canvas.width = w;
+    canvas.height = h;
+    backBuffer.width = w;
+    backBuffer.height = h;
+  };
+
   return {
     render,
     drawTexture,
     fillRect,
-    clear
+    clear,
+    resize
   };
 };
 

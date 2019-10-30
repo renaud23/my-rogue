@@ -5,7 +5,7 @@ export default ({ width = 512, height = 512, launch }) => {
   const mapRef = useRef(null);
   useEffect(() => {
     if (ref.current) {
-      launch(ref.current, width, height, mapRef);
+      launch(ref.current, width, height, mapRef.current);
     }
   }, [ref, mapRef, launch, width, height]);
   return (

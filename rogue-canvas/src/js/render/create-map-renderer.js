@@ -1,14 +1,5 @@
+import createOffscreen, { createTexture } from "./rendering";
 import { maxMin } from "../game/common-tools";
-
-const getTile = (code, TILES) => {
-  switch (code) {
-    case TILES.rock:
-      return "X";
-
-    default:
-      return " ";
-  }
-};
 
 const getSize = width => pos =>
   pos.reduce(
@@ -33,7 +24,21 @@ const getSize = width => pos =>
     { ww: 0, wh: 0, minx: 99999, maxx: -1, maxy: -1, miny: 99999 }
   );
 
-export default () => ({ canvasMap }) => game => {
+export default ({ canvasMap }) => {
+  const offscreen = createOffscreen(canvasMap, 100, 100);
+  const texture = createTexture(`${window.location.origin}/texture.png`);
+  const mapRenderer = createMapRenderer();
+  return game => {
+    mapRenderer({ offscreen, texture })(game);
+    offscreen.render();
+  };
+};
+
+const createMapRenderer = ({
+  size = 4,
+  width: mapWidth = 30,
+  height: mapHeight = 30
+} = {}) => ({ offscreen, texture }) => game => {
   const { dungeon, player } = game;
   if (!dungeon || !player) return null;
   const { width, tiles, height } = dungeon;
@@ -44,28 +49,54 @@ export default () => ({ canvasMap }) => game => {
 
   const px = position % width;
   const py = Math.trunc(position / width);
-
   const { ww, wh, minx, miny } = getSize(width)(Object.keys(memorisedTiles));
-  //
-  const limX = Math.min(50, ww);
-  const limY = Math.min(50, wh);
-  // const mx =
-  //   limX === ww ? minx : maxMin(px - Math.trunc(limX / 2), 0, width - limX);
-  // const my =
-  //   limY === wh ? miny : maxMin(py - Math.trunc(limY / 2), 0, height - limY);
 
-  // const data = Object.entries(memorisedTiles).reduce((a, [pos, value]) => {
-  //   const x = pos % width;
-  //   const y = Math.trunc(pos / width); //
-  //   if (x >= mx && x <= limX + mx && y >= my && y <= limY + my) {
-  //     a[x - mx + (y - my) * limX] = getTile(value, tiles);
-  //   }
-  //   return a;
-  // }, new Array(limX * limY).fill("."));
-  // data[px - mx + (py - my) * limX] = "O";
+  const limX = Math.min(mapWidth, ww);
+  const limY = Math.min(mapHeight, wh);
 
-  // const content = data.reduce(
-  //   (a, code, i) => ((i + 1) % limX === 0 ? `${a}${code}\r\n` : `${a}${code}`),
-  //   ""
-  // );
+  offscreen.resize(limX * size, limY * size);
+  offscreen.clear();
+
+  const mx =
+    limX === ww ? minx : maxMin(px - Math.trunc(limX / 2), 0, width - limX);
+  const my =
+    limY === wh ? miny : maxMin(py - Math.trunc(limY / 2), 0, height - limY);
+
+  const { drTiles } = Object.entries(memorisedTiles).reduce(
+    (a, [pos, value]) => {
+      const x = pos % width;
+      const y = Math.trunc(pos / width);
+      if (x >= mx && x <= limX + mx && y >= my && y <= limY + my) {
+        if (value === tiles.empty) {
+          a.drTiles.push({ x: x - mx, y: y - my, tx: 0, ty: 0 });
+        } else if (value === tiles.rock) {
+          a.drTiles.push({ x: x - mx, y: y - my, tx: 16, ty: 0 });
+        }
+      }
+      return a;
+    },
+    { drTiles: [] }
+  );
+  drTiles.forEach(({ x, y, tx, ty }) => {
+    offscreen.drawTexture(
+      texture,
+      tx,
+      ty,
+      16,
+      16,
+      x * size,
+      y * size,
+      size,
+      size
+    );
+  });
+
+  offscreen.fillRect(
+    "#ff00ff",
+
+    (px - mx) * size,
+    (py - my) * size,
+    size,
+    size
+  );
 };
