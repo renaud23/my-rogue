@@ -2,6 +2,11 @@ import { createOffscreen, createRenderer, createTexture } from "../render";
 import { createGame, activate } from "./game";
 
 const params = { fov: 4 };
+const map = {
+  size: 4,
+  width: 30,
+  height: 30
+};
 
 export default (canvas, width, height, canvasMap) => {
   let game = createGame(params);
@@ -11,7 +16,8 @@ export default (canvas, width, height, canvasMap) => {
     canvasMap,
     screenWidth: width,
     screenHeight: height,
-    marge: 2
+    marge: 2,
+    map
   });
   const loop = () => {
     game = renderer(activate(game)); //(offscreen, texture);

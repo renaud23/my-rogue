@@ -24,10 +24,10 @@ const getSize = width => pos =>
     { ww: 0, wh: 0, minx: 99999, maxx: -1, maxy: -1, miny: 99999 }
   );
 
-export default ({ canvasMap }) => {
+export default ({ canvasMap, map }) => {
   const offscreen = createOffscreen(canvasMap, 100, 100);
   const texture = createTexture(`${window.location.origin}/texture.png`);
-  const mapRenderer = createMapRenderer();
+  const mapRenderer = createMapRenderer(map);
   return game => {
     mapRenderer({ offscreen, texture })(game);
     offscreen.render();
