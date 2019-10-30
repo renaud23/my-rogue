@@ -72,12 +72,12 @@ export const reduceFOV = game => {
   return { ...player, worldView: whatsNew };
 };
 
-export default () => ({
+export default ({ fov = 6 } = { fov: 6 }) => ({
   worldView: {
     visibleTiles: {},
     memorisedTiles: {},
     visibleEnnemies: {}
   },
   position: undefined, //
-  fov: 12
+  fov
 });

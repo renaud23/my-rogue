@@ -13,7 +13,7 @@ const createRenderer = (canvas, width = 512, height = 512) => {
 
   const fillRect = createFillRect(bufferContext);
 
-  const clear = (color = "#FF0000") => {
+  const clear = (color = "#000000") => {
     fillRect(color, 0, 0, backBuffer.width, backBuffer.height);
   };
 

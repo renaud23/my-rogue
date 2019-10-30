@@ -1,5 +1,6 @@
 import { maxMin } from "../game/common-tools";
 
+/* */
 const getTile = (code, TILES) => {
   switch (code) {
     case TILES.rock:
@@ -12,23 +13,26 @@ const getTile = (code, TILES) => {
   }
 };
 
-export default (viewWidth = 10, viewHeight = 10) => game => (
-  renderer,
-  texture
-) => {
+/* */
+const createGameRenderer = ({
+  wView,
+  hView,
+  tileWidth,
+  tileHeight,
+  marge
+}) => game => (renderer, texture) => {
   const { dungeon, player } = game;
   if (!dungeon || !player) return null;
   const { width, data, tiles, height } = dungeon;
   const { worldView, position } = player;
-  const wView = viewWidth * 2 + 1;
-  const hView = viewHeight * 2 + 1;
+
   const startX = maxMin(
-    (player.position % width) - viewWidth,
+    (player.position % width) - player.fov - marge,
     0,
     Math.max(0, width - wView)
   );
   const startY = maxMin(
-    Math.trunc(position / width) - viewHeight,
+    Math.trunc(position / width) - player.fov - marge,
     0,
     Math.max(height - hView, 0)
   );
@@ -68,10 +72,10 @@ export default (viewWidth = 10, viewHeight = 10) => game => (
       ty,
       width,
       height,
-      x * width,
-      y * height,
-      width,
-      height
+      x * tileWidth,
+      y * tileHeight,
+      tileWidth,
+      tileHeight
     );
   });
 
@@ -82,18 +86,18 @@ export default (viewWidth = 10, viewHeight = 10) => game => (
       ty,
       width,
       height,
-      x * width,
-      y * height,
-      width,
-      height
+      x * tileWidth,
+      y * tileHeight,
+      tileWidth,
+      tileHeight
     );
 
     renderer.fillRect(
       "rgba(0, 0, 0, 0.8)",
-      x * width,
-      y * height,
-      width,
-      height
+      x * tileWidth,
+      y * tileHeight,
+      tileWidth,
+      tileHeight
     );
   });
 
@@ -103,9 +107,25 @@ export default (viewWidth = 10, viewHeight = 10) => game => (
     drPlayer.ty,
     drPlayer.width,
     drPlayer.height,
-    drPlayer.x * drPlayer.width,
-    drPlayer.y * drPlayer.height,
-    drPlayer.width,
-    drPlayer.height
+    drPlayer.x * tileWidth,
+    drPlayer.y * tileHeight,
+    tileWidth,
+    tileHeight
   );
+};
+
+/* */
+export default ({ fov, screenWidth, screenHeight, marge = 2 } = {}) => {
+  const wView = fov * 2 + 1 + 2 * marge;
+  const hView = fov * 2 + 1 + 2 * marge;
+  const tileWidth = Math.trunc(screenWidth / wView);
+  const tileHeight = Math.trunc(screenHeight / hView);
+  const gameRenderer = createGameRenderer({
+    wView,
+    hView,
+    tileWidth,
+    tileHeight,
+    marge
+  });
+  return game => (renderer, texture) => gameRenderer(game)(renderer, texture);
 };

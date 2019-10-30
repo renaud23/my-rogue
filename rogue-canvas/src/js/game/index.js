@@ -1,13 +1,21 @@
-import { createRenderer, render, createTexture } from "../render";
+import { createOffscreen, createRenderer, createTexture } from "../render";
 import { createGame, activate } from "./game";
 
+const params = { fov: 4 };
+
 export default (canvas, width, height) => {
-  const renderer = createRenderer(canvas, width, height);
+  const offscreen = createOffscreen(canvas, width, height);
   const texture = createTexture(`${window.location.origin}/texture.png`);
 
-  let game = createGame();
+  let game = createGame(params);
+  const renderer = createRenderer({
+    ...params,
+    screenWidth: width,
+    screenHeight: height,
+    marge: 2
+  });
   const loop = () => {
-    game = render(activate(game))(renderer, texture);
+    game = renderer(activate(game))(offscreen, texture);
   };
   const keyDownListener = e => {
     e.stopImmediatePropagation();

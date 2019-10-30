@@ -54,14 +54,14 @@ export const activate = game => {
 };
 
 /* */
-export const createGame = () => {
+export const createGame = ({ fov = 6 } = { fov: 6 }) => {
   const dungeon = createCave(60, 60);
   const sac = [...dungeon.emptyTiles];
   const position = sac.splice(randomInt(sac.length), 1)[0];
   return {
     action: undefined,
     dungeon,
-    player: { ...createPlayer(), position },
+    player: { ...createPlayer({ fov }), position },
     ennemies: []
   };
 };
