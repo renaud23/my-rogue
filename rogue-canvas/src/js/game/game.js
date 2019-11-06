@@ -44,6 +44,9 @@ const movePlayer = game => {
 };
 
 /* */
+const playGame = game => game;
+
+/* */
 const playPlayer = game => {
   return movePlayer({ ...game, player: reduceFOV(game) });
 };
@@ -54,11 +57,32 @@ export const activate = game => {
 };
 
 /* */
+export const consumeStep = game => {
+  game.turn = { ...game.turn, stepLeft: Math.max(game.turn.stepLeft - 1, 0) };
+  return game;
+};
+
+/* */
+export const isEndTurn = game => game.turn.stepLeft === 0;
+
+/* */
+export const nextTurn = game => {
+  const { turn } = game;
+  game.turn = { ...turn, stepLeft: turn.step, num: turn.num + 1 };
+  return game;
+};
+
+/* */
 export const createGame = ({ fov = 6 } = { fov: 6 }) => {
   const dungeon = createCave(60, 60);
   const sac = [...dungeon.emptyTiles];
   const position = sac.splice(randomInt(sac.length), 1)[0];
   return {
+    turn: {
+      step: 0,
+      stepLeft: 0,
+      num: 0
+    },
     action: undefined,
     dungeon,
     player: { ...createPlayer({ fov }), position },

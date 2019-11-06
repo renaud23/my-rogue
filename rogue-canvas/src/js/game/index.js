@@ -1,4 +1,4 @@
-import { createOffscreen, createRenderer, createTexture } from "../render";
+import { createRenderer } from "../render";
 import { createGame, activate } from "./game";
 
 const params = { fov: 4 };
@@ -20,7 +20,7 @@ export default (canvas, width, height, canvasMap) => {
     map
   });
   const loop = () => {
-    game = renderer(activate(game)); //(offscreen, texture);
+    game = renderer(activate(game));
   };
   const keyDownListener = e => {
     e.stopImmediatePropagation();
