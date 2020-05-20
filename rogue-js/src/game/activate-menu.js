@@ -1,12 +1,12 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, maxMin } from "../commons";
 import activateHelp, { buildActionHelp } from "./activate-help";
-import activate from "./activate";
+import activate from "./activate-player";
 
 function build(options, active, header = ["MENU", "----"]) {
   return { type: PLAYER_ACTIONS.menu, options, active, header };
 }
 
-const goToExit = ({ player, ...args }) => ({
+const buildExitAction = () => ({ player, ...args }) => ({
   ...args,
   player: { ...player, action: null },
 });
@@ -37,7 +37,7 @@ const ROOT_OPTIONS = [
     desc: "2. inventaire",
     todo: goToInventaire(),
   },
-  { desc: "3. exit", todo: goToExit },
+  { desc: "3. exit", todo: buildExitAction() },
 ];
 
 const INVENTAIRE_OPTIONS = [

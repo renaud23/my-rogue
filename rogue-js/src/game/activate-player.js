@@ -2,6 +2,8 @@ import { movePlayer } from "../player";
 import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
+import { consumeMove, isTurnFinish, nextTurn } from "../player";
+import activateGame from "./activate-game";
 import * as EVENTS from "./events";
 
 function witchDirection(button) {
@@ -25,6 +27,19 @@ function activateMove(state, action) {
   return { activate, player: np, ...rest };
 }
 
+function playTurn({ player, ...args }) {
+  const np = consumeMove(player);
+  if (isTurnFinish(np)) {
+    return activateGame({ player: nextTurn(np), ...args });
+  }
+  return { player: np, ...args };
+}
+
+/**
+ *
+ * @param {dungeon, player} state
+ * @param {type, payload} action
+ */
 function activate(state, action) {
   const { type, payload } = action;
 
@@ -39,7 +54,7 @@ function activate(state, action) {
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:
       case PAD_BUTTON.right:
-        return activateMove(state, action);
+        return playTurn(activateMove(state, action));
       default:
         return { activate, ...state };
     }

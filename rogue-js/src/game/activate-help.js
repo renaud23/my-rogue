@@ -1,5 +1,5 @@
 import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
-import activate from "./activate";
+import activate from "./activate-player";
 
 export function buildActionHelp(position) {
   return { type: PLAYER_ACTIONS.help, position };
