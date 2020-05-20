@@ -1,12 +1,7 @@
-import {
-  PAD_BUTTON,
-  PLAYER_ACTIONS,
-  distanceEucl2,
-  antecedantPoint,
-} from "../commons";
+import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
 import activate from "./activate";
 
-function build(position) {
+export function buildActionHelp(position) {
   return { type: PLAYER_ACTIONS.help, position };
 }
 
@@ -28,17 +23,12 @@ function nextPosition(position, button, width) {
 function movePosition(position, button, state) {
   const {
     dungeon: { width },
-    player: { fov, position: pp },
+    player: { fov, position: pp, visibles },
   } = state;
   const lim = fov * fov;
   const next = nextPosition(position, button, width);
 
-  const dist = distanceEucl2(
-    antecedantPoint(pp, width),
-    antecedantPoint(next, width)
-  );
-
-  return dist <= lim ? next : position;
+  return visibles.indexOf(next) !== -1 ? next : position;
 }
 
 function activateHelp(state, event) {
@@ -49,7 +39,7 @@ function activateHelp(state, event) {
   if (!player.action) {
     return {
       activate: activateHelp,
-      player: { ...player, action: build(player.position) },
+      player: { ...player, action: buildActionHelp(player.position) },
       ...rest,
     };
   }
@@ -63,7 +53,9 @@ function activateHelp(state, event) {
         activate: activateHelp,
         player: {
           ...player,
-          action: build(movePosition(player.action.position, button, state)),
+          action: buildActionHelp(
+            movePosition(player.action.position, button, state)
+          ),
         },
         ...rest,
       };

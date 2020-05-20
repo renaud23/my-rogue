@@ -6,6 +6,7 @@ import { activate as cally } from "../game";
 import Pad from "./pad";
 import { createCave } from "../dungeon";
 import { createPlayer } from "../player";
+import ActionConsole from "./action-log";
 import "./render-game.scss";
 
 function initialize() {
@@ -34,9 +35,10 @@ function Game() {
       >
         renew
       </button>
-
-      <RenderDungeon viewSize={fov + 1} />
-      <GlobalRender />
+      <div className="game">
+        <RenderDungeon viewSize={fov + 1} />
+        <ActionConsole />
+      </div>
     </>
   );
 }

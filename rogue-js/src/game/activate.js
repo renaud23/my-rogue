@@ -1,6 +1,7 @@
 import { movePlayer } from "../player";
 import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
+import activateMenu from "./activate-menu";
 import * as EVENTS from "./events";
 
 function witchDirection(button) {
@@ -26,11 +27,14 @@ function activateMove(state, action) {
 
 function activate(state, action) {
   const { type, payload } = action;
+
   if (type === EVENTS.PAD_EVENT) {
     const { button } = payload;
     switch (button) {
       case PAD_BUTTON.buttonX:
         return activateHelp(state, action);
+      case PAD_BUTTON.buttonY:
+        return activateMenu(state, action);
       case PAD_BUTTON.up:
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:

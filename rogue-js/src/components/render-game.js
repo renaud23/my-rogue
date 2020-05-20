@@ -22,7 +22,7 @@ export function GlobalRender() {
 function getRow(current, { char, color }) {
   return [
     ...current,
-    <span style={{ color: color || "black" }} key={current.length}>
+    <span style={{ color: color || "white" }} key={current.length}>
       {char}
     </span>,
   ];
