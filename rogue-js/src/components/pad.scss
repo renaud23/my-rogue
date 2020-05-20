@@ -1,0 +1,104 @@
+$buttonSize: 20px;
+$directionSize: 15px;
+
+.pad {
+  display: flex;
+  flex-direction: row;
+
+  .pad-cross {
+    display: inline-block;
+    padding: 10px 10px;
+    height: 45px;
+    background-color: dimgrey;
+    border-radius: 50%;
+
+    .pad-row {
+      margin: 0;
+      padding: 0;
+      height: $directionSize;
+      .blank {
+        display: inline-block;
+        width: $directionSize;
+        height: $directionSize;
+        background-color: transparent;
+      }
+      .direction {
+        display: inline-block;
+        width: $directionSize;
+        height: $directionSize;
+        background-color: black;
+        cursor: pointer;
+        &:hover {
+          background-color: darkgoldenrod;
+        }
+        &:focus {
+          outline: darkred solid 1px;
+        }
+      }
+
+      .center {
+        display: inline-block;
+        width: $directionSize;
+        height: $directionSize;
+        background-color: black;
+      }
+    }
+  }
+  .pad-center-bloc {
+    height: 100%;
+    width: 50px;
+  }
+  .pad-buttons { 
+    background-color: darkgray;
+    padding: 5px 5px;
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+    .pad-row-button {
+      margin: 0;
+      padding: 0;
+      height: $buttonSize;
+      .button-blank {
+        display: inline-block;
+        width: $buttonSize;
+        height: $buttonSize;
+        background-color: transparent;
+      }
+      .pad-button {
+          
+        display: inline-block;
+        width: $buttonSize;
+        height: $buttonSize; 
+        border-radius: 50%;
+        font-size: 6px;
+        text-align: center;
+        color: snow;
+
+        &.red {
+          background-color: red;
+           
+        }
+
+        &.blue {
+          background-color: blue;
+        }
+
+        &.green {
+          background-color: green;
+        }
+
+        &.yellow {
+          background-color: gold;
+        }
+
+        cursor: pointer;
+        &:hover {
+          background-color: darkgoldenrod;
+        }
+        &:focus {
+          outline: darkred solid 1px;
+        }
+      }
+    }
+  }
+}
