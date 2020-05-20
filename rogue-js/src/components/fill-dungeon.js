@@ -1,8 +1,7 @@
-import { getVisibles } from "../player";
-import { getTile, TILES } from "../commons";
+import { getTile } from "../commons";
 
 function fillDungeon(tiles, { dungeon, player }, rect) {
-  const { startX, startY, width, height } = rect;
+  const { startX, startY, width } = rect;
   const { data } = dungeon;
 
   return tiles.map(function (_, i) {
@@ -12,8 +11,6 @@ function fillDungeon(tiles, { dungeon, player }, rect) {
 
     return { ...getTile(data[tilePos]), color: "black" };
   });
-
-  return tiles;
 }
 
 export default fillDungeon;

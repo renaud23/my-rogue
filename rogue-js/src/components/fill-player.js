@@ -1,6 +1,5 @@
-import { getVisibles } from "../player";
 import combine from "./combine-fill";
-import { TILES, CODE_TO_TILE, PLAYER_ACTIONS, getTile } from "../commons";
+import { TILES, PLAYER_ACTIONS } from "../commons";
 
 function fillHelp(tiles, state, rect) {
   const { dungeon, player } = state;
@@ -41,9 +40,7 @@ function fillAction(tiles, state, rect) {
 function fill(tiles, state, rect) {
   const { dungeon, player } = state;
   const { startX, startY, width } = rect;
-  const { position } = player;
-
-  const visibles = getVisibles(state);
+  const { position, visibles } = player;
 
   return tiles.map(function (tile, i) {
     const px = i % width;

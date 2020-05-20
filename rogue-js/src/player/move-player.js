@@ -1,6 +1,8 @@
 import { DIRECTION } from "../commons";
+import getVisibles from "./get-visibles";
 
-function movePlayer(direction, { player, dungeon }) {
+function movePlayer(direction, state) {
+  const { player, dungeon } = state;
   if (!dungeon) return player;
   const { position } = player;
   const { width, tiles, data } = dungeon;
@@ -36,4 +38,8 @@ function movePlayer(direction, { player, dungeon }) {
   }
 }
 
-export default movePlayer;
+export default function (direction, state) {
+  const { dungeon } = state;
+  const player = movePlayer(direction, state);
+  return { ...player, visibles: getVisibles({ player, dungeon }) };
+}

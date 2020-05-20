@@ -43,7 +43,6 @@ function movePosition(position, button, state) {
 
 function activateHelp(state, event) {
   const { player, ...rest } = state;
-
   const {
     payload: { button },
   } = event;
@@ -68,8 +67,6 @@ function activateHelp(state, event) {
         },
         ...rest,
       };
-    case PAD_BUTTON.buttonX:
-
     default:
       return { activate, player: { ...player, action: null }, ...rest };
   }

@@ -7,7 +7,7 @@ function isEmpty({ dungeon }, pos) {
 
 function getVisibles({ player, dungeon }) {
   const { fov, position } = player;
-  const { data, width, height } = dungeon;
+  const { width, height } = dungeon;
 
   const px = position % width;
   const py = Math.trunc(position / width);
@@ -19,6 +19,7 @@ function getVisibles({ player, dungeon }) {
   const fovHeight = stopY - startY + 1;
   const playerPoint = { x: px, y: py };
   const limite = fov * fov;
+  console.log(fovWidth);
 
   function isVisible(posPlayer, pos, dungeon) {
     const { width } = dungeon;

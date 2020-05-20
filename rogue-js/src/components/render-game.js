@@ -1,10 +1,9 @@
 import React from "react";
-import { maxMin, getSegment } from "../commons/tools";
+import { useRecoilState } from "recoil";
+import { maxMin } from "../commons/tools";
 import { dungeonState, playerState } from "../recoil";
 import combine from "./combine-fill";
-
-import { useRecoilState } from "recoil";
-import { TILES, CODE_TO_TILE, PLAYER_ACTIONS } from "../commons";
+import { TILES } from "../commons";
 import fillDungeon from "./fill-dungeon";
 import fillPlayer from "./fill-player";
 
@@ -32,7 +31,6 @@ function getRow(current, { char, color }) {
 function render(data, width) {
   return data.reduce(
     function ({ rows, current }, tile, i) {
-      const { char, className, color } = tile;
       if (i % width === width - 1) {
         return {
           current: ``,
@@ -55,7 +53,7 @@ function PlayerRender({ viewSize }) {
   const [player] = useRecoilState(playerState);
   if (!dungeon) return null;
 
-  const { position, action } = player;
+  const { position } = player;
 
   const width = viewSize * 2 + 1;
   const dungX = position % dungeon.width;
@@ -78,7 +76,7 @@ function PlayerRender({ viewSize }) {
 
   const rows = render(tiles, width);
 
-  return <pre style={{ fontSize: 14 }}>{rows}</pre>;
+  return <pre className="game-screen">{rows}</pre>;
 }
 
 export default PlayerRender;
