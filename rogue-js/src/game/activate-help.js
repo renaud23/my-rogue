@@ -1,33 +1,9 @@
 import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
+import { navigateMap } from "./commons";
 import activate from "./activate-player";
 
 export function buildActionHelp(position) {
   return { type: PLAYER_ACTIONS.help, position };
-}
-
-function nextPosition(position, button, width) {
-  switch (button) {
-    case PAD_BUTTON.up:
-      return position - width;
-    case PAD_BUTTON.down:
-      return position + width;
-    case PAD_BUTTON.left:
-      return position - 1;
-    case PAD_BUTTON.right:
-      return position + 1;
-    default:
-      return position;
-  }
-}
-
-function movePosition(position, button, state) {
-  const { dungeon, player } = state;
-  const { fov, position: pp, visibles, currentLevel } = player;
-  const width = dungeon.getWidth(currentLevel);
-  const lim = fov * fov;
-  const next = nextPosition(position, button, width);
-
-  return visibles.indexOf(next) !== -1 ? next : position;
 }
 
 function activateHelp(state, event) {
@@ -43,21 +19,13 @@ function activateHelp(state, event) {
     };
   }
 
+  const next = navigateMap({ ...state, activate: activateHelp }, event);
   switch (button) {
     case PAD_BUTTON.up:
     case PAD_BUTTON.down:
     case PAD_BUTTON.left:
     case PAD_BUTTON.right:
-      return {
-        activate: activateHelp,
-        player: {
-          ...player,
-          action: buildActionHelp(
-            movePosition(player.action.position, button, state)
-          ),
-        },
-        ...rest,
-      };
+      return next;
     default:
       return { activate, player: { ...player, action: null }, ...rest };
   }

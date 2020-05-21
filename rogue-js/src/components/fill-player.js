@@ -1,24 +1,21 @@
 import combine from "./combine-fill";
 import { TILES, PLAYER_ACTIONS } from "../commons";
 
-function fillHelp(tiles, state, rect) {
+function fillHelp(tiles, state, rect, tile) {
   const { dungeon, player } = state;
   const { action, currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const { startX, startY, width, height } = rect;
   const xi = action.position % dungeonWidth;
   const yi = Math.trunc(action.position / dungeonWidth);
-  if (
-    xi >= startX &&
-    xi <= startX + width &&
-    yi >= startY &&
-    yi <= startY + height
-  ) {
-    tiles[xi - startX + (yi - startY) * width] = {
-      ...TILES.unknow,
-      color: "red",
-    };
-  }
+  // if (
+  //   xi >= startX &&
+  //   xi <= startX + width &&
+  //   yi >= startY &&
+  //   yi <= startY + height
+  // ) {
+  tiles[xi - startX + (yi - startY) * width] = tile;
+  // }
 
   return tiles;
 }
@@ -30,7 +27,16 @@ function fillAction(tiles, state, rect) {
   if (action) {
     switch (action.type) {
       case PLAYER_ACTIONS.help:
-        return fillHelp(tiles, state, rect);
+        return fillHelp(tiles, state, rect, {
+          ...TILES.unknow,
+          color: "red",
+        });
+      case PLAYER_ACTIONS.action: {
+        return fillHelp(tiles, state, rect, {
+          ...TILES.ironSight,
+          color: "yellow",
+        });
+      }
       default:
         return tiles;
     }

@@ -1,27 +1,40 @@
 import createCave from "./cave";
 import { TILES, peekOne } from "../commons";
 
-function getStairsTile(level, dungeonSize) {
-  if (level === 0) {
-    return TILES.stairsUp;
-  }
-  if (level === dungeonSize - 1) {
-    return TILES.stairsDown;
-  }
+function getStairsUp(cave) {
+  return { tile: TILES.stairsUp, position: peekOne(cave.emptyTiles) };
+}
 
-  return TILES.stairsUpDown;
+function getStairsDown(cave) {
+  return { tile: TILES.stairsDown, position: peekOne(cave.emptyTiles) };
 }
 
 function createCaves(nb, width, height) {
-  return new Array(nb).fill({}).map(function (_, i) {
-    const cave = createCave(width, height);
-    if (nb === 1) return cave;
-    const position = peekOne(cave.emptyTiles);
-    const tile = getStairsTile(i, nb);
-    cave.data[position] = tile.code;
+  return new Array(nb)
+    .fill({})
+    .map(function (_, i) {
+      const cave = createCave(width, height);
+      const stairs = {};
+      if (i === 0) {
+        return { ...cave, stairs: { up: getStairsUp(cave) } };
+      }
 
-    return { ...cave, stairs: { position, tile } };
-  });
+      if (i === nb - 1) {
+        return { ...cave, stairs: { down: getStairsDown(cave) } };
+      }
+
+      return {
+        ...cave,
+        stairs: { up: getStairsUp(cave), down: getStairsDown(cave) },
+      };
+    })
+    .reduce(function (a, cave) {
+      const { stairs } = cave;
+      Object.values(stairs).forEach(
+        ({ tile, position }) => (cave.data[position] = tile.code)
+      );
+      return [...a, cave];
+    }, []);
 }
 
 function createDungeon(nb = 10, width = 30, height = 30) {
@@ -30,6 +43,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getWidth: (current) => levels[current].width,
     getHeight: (current) => levels[current].height,
     getData: (current) => levels[current].data,
+    getStairs: (current) => levels[current].stairs,
     getEmptyTiles: (current) => levels[current].emptyTiles,
     peekEmptyTile: (current) => peekOne(levels[current].emptyTiles),
   };

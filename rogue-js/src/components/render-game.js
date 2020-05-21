@@ -19,6 +19,9 @@ export function GlobalRender() {
   // stack[player.position] = { ...TILES.player.code, color: "red" };
   const rows = render(
     stack.map((c, i) => {
+      // if(i ===9999){
+
+      // }
       if (i === player.position) {
         return { ...TILES.player, color: "red" };
       }

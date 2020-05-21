@@ -1,80 +1,86 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, maxMin } from "../commons";
-import activateHelp, { buildActionHelp } from "./activate-help";
 import { navigateOptions } from "./commons";
+import activateHelp from "./activate-help";
+import activateAction from "./activate-action";
 import activate from "./activate-player";
 
-function build(options, active, header = ["MENU", "----"]) {
-  return { type: PLAYER_ACTIONS.menu, options, active, header };
+function exit(state) {
+  const { player } = state;
+  return { ...state, player: { ...player, action: null }, activate };
 }
 
-const buildExitAction = () => ({ player, ...args }) => ({
-  ...args,
-  player: { ...player, action: null },
-});
-
-const goToInventaire = () => ({ player, ...args }) => ({
-  ...args,
-  activate: inventaireMenu,
-  player: {
+function buildPlayer(player, options, active, header = ["MENU", "----"]) {
+  return {
     ...player,
-    action: build(INVENTAIRE_OPTIONS, 0, [
-      "INVENTAIRE",
-      "----------",
-      "nothing",
-    ]),
-  },
-});
-
-const ROOT_OPTIONS = [
-  {
-    desc: "1. observer",
-    todo: ({ player, ...args }) => ({
-      ...args,
-      activate: activateHelp,
-      player: { ...player, action: buildActionHelp(player.position) },
-    }),
-  },
-  {
-    desc: "2. inventaire",
-    todo: goToInventaire(),
-  },
-  { desc: "3. exit", todo: buildExitAction() },
-];
-
-const INVENTAIRE_OPTIONS = [
-  {
-    desc: "1. retour",
-    todo: ({ player, ...args }) => ({
-      ...args,
-      activate: root,
-      player: { ...player, action: build(ROOT_OPTIONS, 1) },
-    }),
-  },
-];
-
-// inventaire
-function inventaireMenu(state, event) {
-  const {
-    payload: { button },
-  } = event;
-  return navigateOptions(button, state, root, root);
+    action: { type: PLAYER_ACTIONS.menu, options, active, header },
+  };
 }
 
-// Root
-function root(state, event) {
-  const { player, ...rest } = state;
+function lookAtTodo(state) {
+  const { player } = state;
+  const { position } = player;
+  return {
+    ...state,
+    player: { ...player, action: { type: PLAYER_ACTIONS.help, position } },
+    activate: activateHelp,
+  };
+}
+
+function actionTodo(state) {
+  const { player } = state;
+  return {
+    ...state,
+    player: { ...player, action: null },
+    activate: activateAction,
+  };
+}
+
+function rootTodo(state) {
+  const { player } = state;
+  return {
+    ...state,
+    player: buildPlayer(player, ROOT_MENU, 0),
+    activate: display,
+  };
+}
+
+const INVENTAIRE_MENU = [{ desc: "1. retour", todo: rootTodo }];
+
+const ROOT_MENU = [
+  {
+    desc: "1. inventaire",
+    todo: ({ player, ...state }) => ({
+      ...state,
+      player: buildPlayer(player, INVENTAIRE_MENU, 0, [
+        "INVENTAIRE",
+        "----------",
+      ]),
+      activate: display,
+    }),
+  },
+  { desc: "2. action", todo: actionTodo },
+  { desc: "3. observer", todo: lookAtTodo },
+  { desc: "4. exit", todo: exit },
+];
+
+function display(state, event) {
   const {
     payload: { button },
   } = event;
-  if (!player.action) {
-    return {
-      activate: root,
-      player: { ...player, action: build(ROOT_OPTIONS, 0) },
-      ...rest,
-    };
+  const { player } = state;
+  const { action } = player;
+  const { active, options } = action;
+  const next = navigateOptions(button, state);
+  switch (button) {
+    case PAD_BUTTON.buttonY:
+      return options[active].todo(state);
+    default:
+      return { ...next, activate: display };
   }
+}
 
-  return navigateOptions(button, state, root);
+function root(state, event) {
+  return rootTodo(state);
 }
 
 export default root;

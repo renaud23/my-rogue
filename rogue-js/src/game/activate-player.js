@@ -24,8 +24,9 @@ function witchDirection(button) {
 
 function activateMove(state, action) {
   const { player, ...rest } = state;
+
   const np = movePlayer(witchDirection(action.payload.button), state);
-  return { activate, player: np, ...rest };
+  return { ...rest, activate, player: np };
 }
 
 function playTurn({ player, ...args }) {
@@ -41,23 +42,23 @@ function playTurn({ player, ...args }) {
  * @param {dungeon, player} state
  * @param {type, payload} action
  */
-function activate(state, action) {
-  const { type, payload } = action;
+function activate(state, event) {
+  const { type, payload } = event;
 
   if (type === EVENTS.PAD_EVENT) {
     const { button } = payload;
     switch (button) {
       case PAD_BUTTON.buttonX:
-        return activateHelp(state, action);
+        return activateHelp(state, event);
       case PAD_BUTTON.buttonY:
-        return activateMenu(state, action);
+        return activateMenu(state, event);
       case PAD_BUTTON.buttonA:
-        return activateAction(state, action);
+        return activateAction(state, event);
       case PAD_BUTTON.up:
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:
       case PAD_BUTTON.right:
-        return playTurn(activateMove(state, action));
+        return playTurn(activateMove(state, event));
       default:
         return { activate, ...state };
     }

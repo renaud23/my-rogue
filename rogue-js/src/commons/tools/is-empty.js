@@ -1,4 +1,4 @@
-import { TILES } from "../constantes";
+import { TILES } from "../tiles";
 
 function isEmpty({ dungeon, player }, pos) {
   const { currentLevel } = player;

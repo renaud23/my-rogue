@@ -6,7 +6,7 @@ import { dungeonState, playerState } from "../recoil";
 function peekMenu(state) {
   const { player } = state;
   const {
-    action: { options, active, header },
+    action: { options, active, header = [] },
   } = player;
   const messages = options.reduce(
     function (a, { desc }, i) {
@@ -34,6 +34,24 @@ function peekHelp(state) {
   return messages;
 }
 
+// function peekActions(state) {
+//   const { player } = state;
+//   const {
+//     action: { options, active, header = [] },
+//   } = player;
+//   const messages = options.reduce(function () {}, [...header]);
+//   return [];
+// }
+
+function peekPosition(state) {
+  const { player, dungeon } = state;
+  const { position, currentLevel } = player;
+  const data = dungeon.getData(currentLevel);
+  const tile = getTile(data[position]);
+
+  return [`Vous êtes sur ${tile.desc}`];
+}
+
 function peekMessages(state) {
   const { player } = state;
   const { action } = player;
@@ -43,11 +61,12 @@ function peekMessages(state) {
         return peekHelp(state);
       case PLAYER_ACTIONS.menu:
         return peekMenu(state);
+      case PLAYER_ACTIONS.action:
+        return peekMenu(state);
       default:
-        return [];
     }
   }
-  return [];
+  return peekPosition(state);
 }
 
 function ActionConsole() {
