@@ -10,7 +10,7 @@ import ActionConsole from "./action-log";
 import "./render-game.scss";
 
 function initialize() {
-  const dungeon = createDungeon(10, 30, 30);
+  const dungeon = createDungeon(10, 20, 20);
   const player = createPlayer(dungeon);
 
   return { dungeon, player, callback: cally };

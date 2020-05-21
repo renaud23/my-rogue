@@ -109,7 +109,7 @@ const joinPoints = ({ data, width }) => (a, b) => {
 
 const joinThem = ({ caves, data, width }) => {
   const [cave, ...rest] = caves;
-  if (rest.length > 1) {
+  if (rest.length > 0) {
     const { a, b } = findNearest(width)(cave, rest);
     const next = joinPoints({ data, width })(a, b);
     return joinThem({ caves: rest, data: next, width });
@@ -119,7 +119,7 @@ const joinThem = ({ caves, data, width }) => {
 
 /* */
 const removeLittleCaves = (limite) => (caves) =>
-  caves.filter((c) => c.length > limite);
+  caves.filter((c) => c.length >= limite);
 
 const fillSmallest = (limite) => ({ caves, data }) =>
   caves
@@ -139,5 +139,6 @@ export default ({ data, height, width }) => {
     width,
   });
   const finalData = fillSmallest(limite)({ data: joined, caves });
+
   return { data: finalData, height, width };
 };

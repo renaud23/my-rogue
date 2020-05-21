@@ -4,6 +4,7 @@ import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
 import { consumeMove, isTurnFinish, nextTurn } from "../player";
 import activateGame from "./activate-game";
+import activateAction from "./activate-action";
 import * as EVENTS from "./events";
 
 function witchDirection(button) {
@@ -50,6 +51,8 @@ function activate(state, action) {
         return activateHelp(state, action);
       case PAD_BUTTON.buttonY:
         return activateMenu(state, action);
+      case PAD_BUTTON.buttonA:
+        return activateAction(state, action);
       case PAD_BUTTON.up:
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:
