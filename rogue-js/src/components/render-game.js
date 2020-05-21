@@ -12,7 +12,10 @@ export function GlobalRender() {
   const [player] = useRecoilState(playerState);
 
   if (!dungeon) return null;
-  const { width, data } = dungeon;
+  const { currentLevel } = player;
+  // const { width, data } = dungeon;
+  const width = dungeon.getWidth(currentLevel);
+  const data = dungeon.getData(currentLevel);
   const stack = [...data];
   stack[player.position] = TILES.player.code;
   const { rows } = render(data, width);
@@ -53,13 +56,14 @@ function PlayerRender({ viewSize }) {
   const [player] = useRecoilState(playerState);
   if (!dungeon) return null;
 
-  const { position } = player;
-
+  const { position, currentLevel } = player;
+  const dungeonWidth = dungeon.getWidth(currentLevel);
+  const dungeonHeight = dungeon.getHeight(currentLevel);
   const width = viewSize * 2 + 1;
-  const dungX = position % dungeon.width;
-  const dungY = Math.trunc(position / dungeon.width);
-  const startX = maxMin(dungX - viewSize, 0, dungeon.width - viewSize);
-  const startY = maxMin(dungY - viewSize, 0, dungeon.height - viewSize);
+  const dungX = position % dungeonWidth;
+  const dungY = Math.trunc(position / dungeonWidth);
+  const startX = maxMin(dungX - viewSize, 0, dungeonWidth - viewSize);
+  const startY = maxMin(dungY - viewSize, 0, dungeonHeight - viewSize);
 
   const rect = {
     startX,

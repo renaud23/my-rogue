@@ -4,13 +4,15 @@ import RenderDungeon, { GlobalRender } from "./render-game";
 import { dungeonState, playerState, activateState } from "../recoil";
 import { activate as cally } from "../game";
 import Pad from "./pad";
-import { createCave } from "../dungeon";
+import { createCave, createDungeon } from "../dungeon";
 import { createPlayer } from "../player";
 import ActionConsole from "./action-log";
 import "./render-game.scss";
 
 function initialize() {
-  const dungeon = createCave(60, 30);
+  const dungeon = createDungeon(10, 30, 30);
+
+  // const dungeon = createCave(60, 30);
   const player = createPlayer(dungeon);
 
   return { dungeon, player, callback: cally };

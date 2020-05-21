@@ -3,10 +3,11 @@ import { TILES, PLAYER_ACTIONS } from "../commons";
 
 function fillHelp(tiles, state, rect) {
   const { dungeon, player } = state;
-  const { action } = player;
+  const { action, currentLevel } = player;
+  const dungeonWidth = dungeon.getWidth(currentLevel);
   const { startX, startY, width, height } = rect;
-  const xi = action.position % dungeon.width;
-  const yi = Math.trunc(action.position / dungeon.width);
+  const xi = action.position % dungeonWidth;
+  const yi = Math.trunc(action.position / dungeonWidth);
   if (
     xi >= startX &&
     xi <= startX + width &&
@@ -40,12 +41,13 @@ function fillAction(tiles, state, rect) {
 function fill(tiles, state, rect) {
   const { dungeon, player } = state;
   const { startX, startY, width } = rect;
-  const { position, visibles } = player;
+  const { position, visibles, currentLevel } = player;
+  const dungeonWidth = dungeon.getWidth(currentLevel);
 
   return tiles.map(function (tile, i) {
     const px = i % width;
     const py = Math.trunc(i / width);
-    const tilePos = startX + px + (startY + py) * dungeon.width;
+    const tilePos = startX + px + (startY + py) * dungeonWidth;
 
     if (tilePos === position) {
       return TILES.player;

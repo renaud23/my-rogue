@@ -1,13 +1,9 @@
-import { distanceEucl, getSegment } from "../commons/tools";
-
-function isEmpty({ dungeon }, pos) {
-  const { data, tiles } = dungeon;
-  return data[pos] === tiles.empty;
-}
+import { distanceEucl, getSegment, isEmpty } from "../commons";
 
 function getVisibles({ player, dungeon }) {
-  const { fov, position } = player;
-  const { width, height } = dungeon;
+  const { fov, position, currentLevel } = player;
+  const width = dungeon.getWidth(currentLevel);
+  const height = dungeon.getHeight(currentLevel);
 
   const px = position % width;
   const py = Math.trunc(position / width);
@@ -20,13 +16,13 @@ function getVisibles({ player, dungeon }) {
   const playerPoint = { x: px, y: py };
   const limite = fov * fov;
 
-  function isVisible(posPlayer, pos, dungeon) {
-    const { width } = dungeon;
-
+  function isVisible(posPlayer, pos, dungeon, player) {
     return getSegment(posPlayer, pos).reduce(function (a, { x, y }) {
       const p = x + y * width;
 
-      return a && (isEmpty({ dungeon }, p) || (x === pos.x && y === pos.y));
+      return (
+        a && (isEmpty({ dungeon, player }, p) || (x === pos.x && y === pos.y))
+      );
     }, true);
   }
 
@@ -37,12 +33,11 @@ function getVisibles({ player, dungeon }) {
       const iy = startY + Math.trunc(i / fovWidth);
       const point = { x: ix, y: iy };
       const dist = distanceEucl(playerPoint, point);
-      if (dist <= limite && isVisible(playerPoint, point, dungeon)) {
+      if (dist <= limite && isVisible(playerPoint, point, dungeon, player)) {
         return [...a, ix + iy * width];
       }
       return a;
     }, []);
-
   return viewed;
 }
 

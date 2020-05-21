@@ -12,6 +12,13 @@ export const PAD_BUTTON = {
 export const TILES = {
   player: { code: 10, char: "O", className: "tile-player", desc: "vous" },
   ground: { code: 0, char: "_", className: "tile-ground", desc: "le sol" },
+  stairsUp: { code: 33, char: ">", desc: "un escalier montant" },
+  stairsDown: { code: 34, char: "<", desc: "un escalier descendant" },
+  stairsUpDown: {
+    code: 35,
+    char: "=",
+    desc: "un escalier montant et descendant",
+  },
   rock: {
     code: 1,
     char: "X",

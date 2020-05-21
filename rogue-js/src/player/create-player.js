@@ -5,16 +5,14 @@ const DEFAULT_FOV = 5;
 const NB_MOVE = 2;
 
 function createPlayer(dungeon, fov = DEFAULT_FOV) {
-  const sac = [...dungeon.emptyTiles];
-  const position = peekOne(sac);
+  const currentLevel = 0;
+  const position = dungeon.peekEmptyTile(currentLevel);
   const player = {
     position,
     fov,
     action: null,
+    currentLevel,
     moveLeft: NB_MOVE,
-    life: 0,
-    xp: 0,
-    armor: 0,
   };
   return { ...player, visibles: getVisibles({ player, dungeon }) };
 }
