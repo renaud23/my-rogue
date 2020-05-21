@@ -16,8 +16,10 @@ function createCaves(nb, width, height) {
   return new Array(nb).fill({}).map(function (_, i) {
     const cave = createCave(width, height);
     const position = peekOne(cave.emptyTiles);
+    const tile = getStairsTile(i, nb);
+    cave.data[position] = tile.code;
 
-    return { ...cave, stairs: { position, tile: getStairsTile(i, nb) } };
+    return { ...cave, stairs: { position, tile } };
   });
 }
 

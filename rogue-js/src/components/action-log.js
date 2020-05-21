@@ -22,8 +22,8 @@ function peekMenu(state) {
 
 function peekHelp(state) {
   const { player, dungeon } = state;
-  const { data } = dungeon;
-  const { action, position } = player;
+  const { action, position, currentLevel } = player;
+  const data = dungeon.getData(currentLevel);
   const messages = ["Vous apercevez :"];
   if (action.position === position) {
     messages.push(TILES.player.desc);
@@ -35,7 +35,7 @@ function peekHelp(state) {
 }
 
 function peekMessages(state) {
-  const { player, dungeon } = state;
+  const { player } = state;
   const { action } = player;
   if (action) {
     switch (action.type) {

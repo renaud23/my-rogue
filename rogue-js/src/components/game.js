@@ -11,8 +11,6 @@ import "./render-game.scss";
 
 function initialize() {
   const dungeon = createDungeon(10, 30, 30);
-
-  // const dungeon = createCave(60, 30);
   const player = createPlayer(dungeon);
 
   return { dungeon, player, callback: cally };
@@ -41,6 +39,7 @@ function Game() {
         <RenderDungeon viewSize={fov + 1} />
         <ActionConsole />
       </div>
+      <GlobalRender />
     </>
   );
 }

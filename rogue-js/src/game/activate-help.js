@@ -21,10 +21,9 @@ function nextPosition(position, button, width) {
 }
 
 function movePosition(position, button, state) {
-  const {
-    dungeon: { width },
-    player: { fov, position: pp, visibles },
-  } = state;
+  const { dungeon, player } = state;
+  const { fov, position: pp, visibles, currentLevel } = player;
+  const width = dungeon.getWidth(currentLevel);
   const lim = fov * fov;
   const next = nextPosition(position, button, width);
 

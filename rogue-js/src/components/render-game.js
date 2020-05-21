@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { maxMin } from "../commons/tools";
 import { dungeonState, playerState } from "../recoil";
 import combine from "./combine-fill";
-import { TILES } from "../commons";
+import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
 import fillPlayer from "./fill-player";
 
@@ -13,12 +13,15 @@ export function GlobalRender() {
 
   if (!dungeon) return null;
   const { currentLevel } = player;
-  // const { width, data } = dungeon;
   const width = dungeon.getWidth(currentLevel);
   const data = dungeon.getData(currentLevel);
   const stack = [...data];
   stack[player.position] = TILES.player.code;
-  const { rows } = render(data, width);
+  const rows = render(
+    data.map((c) => ({ ...getTile(c), color: "blue" })),
+    width
+  );
+
   return <pre style={{ fontSize: 8 }}>{rows}</pre>;
 }
 
