@@ -15,6 +15,7 @@ function getStairsTile(level, dungeonSize) {
 function createCaves(nb, width, height) {
   return new Array(nb).fill({}).map(function (_, i) {
     const cave = createCave(width, height);
+    if (nb === 1) return cave;
     const position = peekOne(cave.emptyTiles);
     const tile = getStairsTile(i, nb);
     cave.data[position] = tile.code;

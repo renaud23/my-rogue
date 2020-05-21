@@ -16,9 +16,14 @@ export function GlobalRender() {
   const width = dungeon.getWidth(currentLevel);
   const data = dungeon.getData(currentLevel);
   const stack = [...data];
-  stack[player.position] = TILES.player.code;
+  // stack[player.position] = { ...TILES.player.code, color: "red" };
   const rows = render(
-    data.map((c) => ({ ...getTile(c), color: "blue" })),
+    stack.map((c, i) => {
+      if (i === player.position) {
+        return { ...TILES.player, color: "red" };
+      }
+      return { ...getTile(c), color: "blue" };
+    }),
     width
   );
 
@@ -65,9 +70,8 @@ function PlayerRender({ viewSize }) {
   const width = viewSize * 2 + 1;
   const dungX = position % dungeonWidth;
   const dungY = Math.trunc(position / dungeonWidth);
-  const startX = maxMin(dungX - viewSize, 0, dungeonWidth - viewSize);
-  const startY = maxMin(dungY - viewSize, 0, dungeonHeight - viewSize);
-
+  const startX = maxMin(dungX - viewSize, 0, dungeonWidth - width);
+  const startY = maxMin(dungY - viewSize, 0, dungeonHeight - width);
   const rect = {
     startX,
     startY,
