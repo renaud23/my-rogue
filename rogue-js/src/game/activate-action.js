@@ -1,4 +1,6 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
+import activateGame from "./activate-game";
+import { consumeMove } from "../player";
 import { navigateOptions } from "./commons";
 import activate from "./activate-player";
 
@@ -46,6 +48,11 @@ function actionTodo(state) {
   };
 }
 
+// function playMove(state) {
+//   const { player } = state;
+//   return { ...state, player: consumeMove(player) };
+// }
+
 function navigateMenu(state, event) {
   const {
     payload: { button },
@@ -62,7 +69,7 @@ function navigateMenu(state, event) {
     case PAD_BUTTON.right:
       return { ...next, activate: navigateMenu };
     case PAD_BUTTON.buttonA:
-      return { ...options[active].todo(state), activate };
+      return activateGame({ ...options[active].todo(state), activate });
     default:
       return { ...next, activate: navigateMenu };
   }

@@ -1,6 +1,16 @@
+import { consumeMove, isTurnFinish, nextTurn } from "../player";
+
 function activate(state) {
-  console.log("the game is playing...");
+  // console.log("the game is playing...");
   return state;
 }
 
-export default activate;
+function playTurn(state) {
+  const { player } = state;
+  if (isTurnFinish(player)) {
+    return activate({ ...state, player: nextTurn(player) });
+  }
+  return state;
+}
+
+export default playTurn;

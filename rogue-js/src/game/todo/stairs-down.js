@@ -1,16 +1,15 @@
 import { getVisibles, consumeMove } from "../../player";
 
-export function goUp(state) {
+export function goDown(state) {
   const { player, dungeon } = state;
-  const { currentLevel, moveLeft } = player;
-  const nextLevel = currentLevel + 1;
+  const { currentLevel } = player;
+  const nextLevel = currentLevel - 1;
   const stairs = dungeon.getStairs(nextLevel);
 
   const nextPlayer = {
     ...player,
     currentLevel: nextLevel,
-    moveLeft: moveLeft - 1,
-    position: stairs.down.position,
+    position: stairs.up.position,
   };
   const visibles = getVisibles({ dungeon, player: nextPlayer });
 
@@ -20,4 +19,4 @@ export function goUp(state) {
   };
 }
 
-export default [{ desc: "Monter l'escalier", todo: goUp }];
+export default [{ desc: "Descendre l'escalier", todo: goDown }];

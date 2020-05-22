@@ -12,10 +12,17 @@ export const TILES = {
   stairsUp: {
     code: 33,
     char: ">",
+    color: "yellow",
     desc: "un escalier montant",
     todo: todo.stairsUpTodo,
   },
-  stairsDown: { code: 34, char: "<", desc: "un escalier descendant" },
+  stairsDown: {
+    code: 34,
+    char: "<",
+    desc: "un escalier descendant",
+    color: "yellow",
+    todo: todo.stairsDownTodo,
+  },
   stairsUpDown: {
     code: 35,
     char: "=",
