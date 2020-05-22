@@ -1,6 +1,6 @@
 .game {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
   .game-screen {
     font-size: 12px;
     line-height: 12px;
@@ -14,5 +14,12 @@
     background-color: black;
     color: white;
     overflow-y: auto;
+    // overflow-x: visible;
+
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word;
   }
 }

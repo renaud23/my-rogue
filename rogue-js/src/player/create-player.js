@@ -1,4 +1,3 @@
-import { peekOne } from "../commons";
 import getVisibles from "./get-visibles";
 
 const DEFAULT_FOV = 5;

@@ -6,6 +6,7 @@ import combine from "./combine-fill";
 import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
 import fillPlayer from "./fill-player";
+import fillObjects from "./fill-objects";
 
 export function GlobalRender() {
   const [dungeon] = useRecoilState(dungeonState);
@@ -16,12 +17,9 @@ export function GlobalRender() {
   const width = dungeon.getWidth(currentLevel);
   const data = dungeon.getData(currentLevel);
   const stack = [...data];
-  // stack[player.position] = { ...TILES.player.code, color: "red" };
+
   const rows = render(
     stack.map((c, i) => {
-      // if(i ===9999){
-
-      // }
       if (i === player.position) {
         return { ...TILES.player, color: "red" };
       }
@@ -60,7 +58,7 @@ function render(data, width) {
   ).rows;
 }
 
-const fillStack = combine(fillDungeon, fillPlayer);
+const fillStack = combine(fillDungeon, fillObjects, fillPlayer);
 
 function PlayerRender({ viewSize }) {
   const [dungeon] = useRecoilState(dungeonState);

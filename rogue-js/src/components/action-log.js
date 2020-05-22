@@ -47,9 +47,19 @@ function peekPosition(state) {
   const { player, dungeon } = state;
   const { position, currentLevel } = player;
   const data = dungeon.getData(currentLevel);
+  const objects = dungeon
+    .getObjects(currentLevel)
+    .filter(({ position: p }) => p === position)
+    .reduce(function (a, { _, object }, i) {
+      const { desc } = object;
+      if (i === 0) {
+        return ["Posé à vos pied,", `. ${desc}`];
+      }
+      return [...a, `. ${desc}`];
+    }, []);
   const tile = getTile(data[position]);
 
-  return [`Vous êtes sur ${tile.desc}`];
+  return [`Vous êtes sur ${tile.desc}`, ...objects];
 }
 
 function peekMessages(state) {

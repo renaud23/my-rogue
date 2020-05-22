@@ -59,7 +59,7 @@ function fill(tiles, state, rect) {
       return TILES.player;
     }
     if (visibles.indexOf(tilePos) !== -1) {
-      return { ...tile, color: "orange" };
+      return { ...tile, color: tile.color || "orange" };
     }
 
     return TILES.unknow;

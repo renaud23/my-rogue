@@ -4,7 +4,6 @@ function getVisibles({ player, dungeon }) {
   const { fov, position, currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
   const height = dungeon.getHeight(currentLevel);
-
   const px = position % width;
   const py = Math.trunc(position / width);
   const startX = Math.max(px - fov, 0);
