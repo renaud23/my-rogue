@@ -1,6 +1,5 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
 import activateGame from "./activate-game";
-import { consumeMove } from "../player";
 import { navigateOptions } from "./commons";
 import activate from "./activate-player";
 
@@ -38,6 +37,7 @@ function actionTodo(state) {
       action: {
         type: PLAYER_ACTIONS.action,
         header: ["ACTIONS", "-------"],
+        footer: ["", "Validez avec le bouton A."],
         options: [
           ...options,
           { desc: `${options.length + 1}. exit`, todo: todoExit },
@@ -47,11 +47,6 @@ function actionTodo(state) {
     },
   };
 }
-
-// function playMove(state) {
-//   const { player } = state;
-//   return { ...state, player: consumeMove(player) };
-// }
 
 function navigateMenu(state, event) {
   const {

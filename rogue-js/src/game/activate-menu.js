@@ -9,10 +9,16 @@ function exit(state) {
   return { ...state, player: { ...player, action: null }, activate };
 }
 
-function buildPlayer(player, options, active, header = ["MENU", "----"]) {
+function buildPlayer(
+  player,
+  options,
+  active,
+  header = ["MENU", "----"],
+  footer = ["", "Validez avec le bouton Y."]
+) {
   return {
     ...player,
-    action: { type: PLAYER_ACTIONS.menu, options, active, header },
+    action: { type: PLAYER_ACTIONS.menu, options, active, header, footer },
   };
 }
 
@@ -29,9 +35,7 @@ function lookAtTodo(state) {
 function actionTodo(state) {
   const { player } = state;
   return {
-    ...state,
-    player: { ...player, action: null },
-    activate: activateAction,
+    ...activateAction(state),
   };
 }
 

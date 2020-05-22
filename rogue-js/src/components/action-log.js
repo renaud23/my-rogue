@@ -3,10 +3,25 @@ import { useRecoilState } from "recoil";
 import { PLAYER_ACTIONS, getTile, TILES } from "../commons";
 import { dungeonState, playerState } from "../recoil";
 
+function peekObjectMessages(state, position) {
+  const { player, dungeon } = state;
+  const { currentLevel } = player;
+  return dungeon
+    .getObjects(currentLevel)
+    .filter(({ position: p }) => p === position)
+    .reduce(function ([a], { _, object }, i) {
+      const { desc } = object;
+      if (i === 0) {
+        return [`Posé à même le sol, vous apercevez, ${desc}`];
+      }
+      return [`${a}, ${desc}`];
+    }, []);
+}
+
 function peekMenu(state) {
   const { player } = state;
   const {
-    action: { options, active, header = [] },
+    action: { options, active, header = [], footer = [] },
   } = player;
   const messages = options.reduce(
     function (a, { desc }, i) {
@@ -17,7 +32,7 @@ function peekMenu(state) {
     },
     [...header]
   );
-  return messages;
+  return [...messages, ...footer];
 }
 
 function peekHelp(state) {
@@ -30,33 +45,15 @@ function peekHelp(state) {
   }
   const tile = getTile(data[action.position]);
   messages.push(tile.desc);
-
-  return messages;
+  const objects = peekObjectMessages(state, action.position);
+  return [...messages, ...objects];
 }
-
-// function peekActions(state) {
-//   const { player } = state;
-//   const {
-//     action: { options, active, header = [] },
-//   } = player;
-//   const messages = options.reduce(function () {}, [...header]);
-//   return [];
-// }
 
 function peekPosition(state) {
   const { player, dungeon } = state;
   const { position, currentLevel } = player;
   const data = dungeon.getData(currentLevel);
-  const objects = dungeon
-    .getObjects(currentLevel)
-    .filter(({ position: p }) => p === position)
-    .reduce(function (a, { _, object }, i) {
-      const { desc } = object;
-      if (i === 0) {
-        return ["Posé à vos pied,", `. ${desc}`];
-      }
-      return [...a, `. ${desc}`];
-    }, []);
+  const objects = peekObjectMessages(state, position);
   const tile = getTile(data[position]);
 
   return [`Vous êtes sur ${tile.desc}`, ...objects];
