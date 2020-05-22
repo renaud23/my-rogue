@@ -1,4 +1,4 @@
-import { DIRECTION, isEmpty } from "../commons";
+import { DIRECTION, isEmpty } from "../../commons";
 import { consumeMove } from "../player";
 import getVisibles from "./get-visibles";
 

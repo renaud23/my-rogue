@@ -1,4 +1,4 @@
-import { distanceEucl, getSegment, isEmpty } from "../commons";
+import { distanceEucl, getSegment, isEmpty } from "../../commons";
 
 function getVisibles({ player, dungeon }) {
   const { fov, position, currentLevel } = player;

@@ -12,6 +12,20 @@ const SIMPLE = [
   },
   { code: 3, desc: "un briquet", size: 1, type: typeObject.simple, todo: [] },
   { code: 4, desc: "des os", size: 2, type: typeObject.simple, todo: [] },
+  {
+    code: 4,
+    desc: "une grosse pierre",
+    size: 2,
+    type: typeObject.simple,
+    todo: [],
+  },
+  {
+    code: 4,
+    desc: "un vulgaire cailloux",
+    size: 1,
+    type: typeObject.simple,
+    todo: [],
+  },
 ];
 
 export default SIMPLE;

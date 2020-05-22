@@ -1,4 +1,4 @@
-import { consumeMove, isTurnFinish, nextTurn } from "../player";
+import { isTurnFinish, nextTurn } from "./player";
 
 function activate(state) {
   // console.log("the game is playing...");

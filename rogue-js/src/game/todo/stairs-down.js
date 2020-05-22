@@ -1,4 +1,4 @@
-import { getVisibles, consumeMove } from "../../player";
+import { getVisibles, consumeMove } from "../player";
 
 export function goDown(state) {
   const { player, dungeon } = state;

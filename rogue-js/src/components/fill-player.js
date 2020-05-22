@@ -5,7 +5,7 @@ function fillHelp(tiles, state, rect, tile) {
   const { dungeon, player } = state;
   const { action, currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
-  const { startX, startY, width, height } = rect;
+  const { startX, startY, width } = rect;
   const xi = action.position % dungeonWidth;
   const yi = Math.trunc(action.position / dungeonWidth);
   // if (

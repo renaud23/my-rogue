@@ -1,5 +1,4 @@
 import { PAD_BUTTON, maxMin } from "../../commons";
-import activate from "../activate-player";
 
 function moveActive(player, how) {
   const { action } = player;
@@ -14,9 +13,6 @@ function moveActive(player, how) {
 function navigate(button, state) {
   const { player } = state;
 
-  const {
-    action: { options, active },
-  } = player;
   switch (button) {
     case PAD_BUTTON.up:
       return {

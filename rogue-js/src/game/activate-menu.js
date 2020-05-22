@@ -1,4 +1,4 @@
-import { PAD_BUTTON, PLAYER_ACTIONS, maxMin } from "../commons";
+import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
 import { navigateOptions } from "./commons";
 import activateHelp from "./activate-help";
 import activateAction from "./activate-action";
@@ -33,7 +33,6 @@ function lookAtTodo(state) {
 }
 
 function actionTodo(state) {
-  const { player } = state;
   return {
     ...activateAction(state),
   };

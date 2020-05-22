@@ -1,4 +1,4 @@
-import { movePlayer } from "../player";
+import { movePlayer } from "./player";
 import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";

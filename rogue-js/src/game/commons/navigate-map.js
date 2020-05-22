@@ -1,5 +1,4 @@
 import { PAD_BUTTON } from "../../commons";
-import activate from "../activate-player";
 
 function nextPosition(position, button, width) {
   switch (button) {
@@ -18,9 +17,8 @@ function nextPosition(position, button, width) {
 
 function movePosition(position, button, state) {
   const { dungeon, player } = state;
-  const { fov, position: pp, visibles, currentLevel } = player;
+  const { visibles, currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
-  const lim = fov * fov;
   const next = nextPosition(position, button, width);
 
   return visibles.indexOf(next) !== -1 ? next : position;

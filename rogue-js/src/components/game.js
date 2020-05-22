@@ -4,8 +4,8 @@ import RenderDungeon, { GlobalRender } from "./render-game";
 import { dungeonState, playerState, activateState } from "../recoil";
 import { activate as cally } from "../game";
 import Pad from "./pad";
-import { createCave, createDungeon } from "../dungeon";
-import { createPlayer } from "../player";
+import { createCave, createDungeon } from "../game/dungeon";
+import { createPlayer } from "../game/player";
 import ActionConsole from "./action-log";
 import "./render-game.scss";
 

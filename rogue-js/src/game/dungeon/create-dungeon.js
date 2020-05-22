@@ -1,5 +1,5 @@
 import createCave from "./cave";
-import { TILES, popOne, peekOne, randomInt } from "../commons";
+import { TILES, popOne, peekOne, randomInt } from "../../commons";
 import { simpleObjects } from "../objects";
 
 function getStairsUp(cave) {
