@@ -15,14 +15,10 @@ const getTile = (code, TILES) => {
 };
 
 /* */
-const createGameRenderer = ({
-  wView,
-  hView,
-  tileWidth,
-  tileHeight,
-  marge
-}) => game => (renderer, texture) => {
-  const { dungeon, player } = game;
+const createGameRenderer = ({ wView, hView, tileWidth, tileHeight, marge }) => (
+  game
+) => (renderer, texture) => {
+  const { dungeon, player, ennemies } = game;
   if (!dungeon || !player) return null;
   const { width, data, tiles, height } = dungeon;
   const { worldView, position } = player;
@@ -58,7 +54,7 @@ const createGameRenderer = ({
           memorisedTiles.push({
             ...getTile(data[inGamePos], tiles),
             x: xi,
-            y: yi
+            y: yi,
           });
         }
         return { drTiles, drPlayer, memorisedTiles };
@@ -129,9 +125,9 @@ export default ({ fov, marge = 2, screenWidth, screenHeight, canvas } = {}) => {
     hView,
     tileWidth,
     tileHeight,
-    marge
+    marge,
   });
-  return game => {
+  return (game) => {
     offscreen.clear();
     gameRenderer(game)(offscreen, texture);
     offscreen.render();

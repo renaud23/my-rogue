@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-export default ({ width = 512, height = 512, launch }) => {
+export default function Game({ width = 512, height = 512, launch }) {
   const ref = useRef(null);
   const mapRef = useRef(null);
   useEffect(() => {
@@ -18,4 +18,4 @@ export default ({ width = 512, height = 512, launch }) => {
       <canvas ref={mapRef} />
     </>
   );
-};
+}
