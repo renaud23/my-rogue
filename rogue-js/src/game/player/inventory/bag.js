@@ -16,9 +16,11 @@ export function putObject(bag, object) {
 
 export function removeObject(bag, object) {
   const { objects } = bag;
-  let find = false;
   const next = objects.reduce(function (a, o) {
-    if (o.id === object.id && !find) return [...a, o];
+    if (o.id === object.id) {
+      return a;
+    }
+    return [...a, o];
   }, []);
 
   return { ...bag, objects: next };

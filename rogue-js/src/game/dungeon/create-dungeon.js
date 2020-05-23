@@ -64,6 +64,9 @@ function createDungeon(nb = 10, width = 30, height = 30) {
         return [...a, o];
       }, []);
     },
+    putObject: function (current, object) {
+      levels[current].objects.push(object);
+    },
 
     //   return levels.map(function (level, i) {
     //     if (i === current) {
