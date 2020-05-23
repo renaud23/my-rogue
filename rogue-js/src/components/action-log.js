@@ -2,20 +2,15 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { PLAYER_ACTIONS, getTile, TILES } from "../commons";
 import { dungeonState, playerState } from "../recoil";
+import { getObjectsAt } from "../game/commons";
 
 function peekObjectMessages(state, position) {
-  const { player, dungeon } = state;
-  const { currentLevel } = player;
-  return dungeon
-    .getObjects(currentLevel)
-    .filter(({ position: p }) => p === position)
-    .reduce(function ([a], { _, object }, i) {
-      const { desc } = object;
-      if (i === 0) {
-        return [`Posé à même le sol, vous apercevez, ${desc}`];
-      }
-      return [`${a}, ${desc}`];
-    }, []);
+  return getObjectsAt(state, position).reduce(function ([a], { desc }, i) {
+    if (i === 0) {
+      return [`Posé à vos pieds, vous apercevez, ${desc}`];
+    }
+    return [`${a}, ${desc}`];
+  }, []);
 }
 
 function peekMenu(state) {

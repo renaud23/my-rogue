@@ -1,4 +1,5 @@
 import getVisibles from "./get-visibles";
+import createInventory from "./inventory";
 
 const DEFAULT_FOV = 5;
 const DEFAULT_NB_MOVE = 2;
@@ -17,7 +18,11 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
       maxMove: maxMove,
     },
   };
-  return { ...player, visibles: getVisibles({ player, dungeon }) };
+  return {
+    ...player,
+    visibles: getVisibles({ player, dungeon }),
+    inventory: createInventory(10),
+  };
 }
 
 export function nextTurn(player) {

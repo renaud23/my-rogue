@@ -1,6 +1,7 @@
 import createCave from "./cave";
 import { TILES, popOne, peekOne, randomInt } from "../../commons";
-import { simpleObjects } from "../objects";
+import { simpleObjects, createRandomSimple } from "../objects";
+let INDEX = new Date().getTime();
 
 function getStairsUp(cave) {
   return { tile: TILES.stairsUp, position: popOne(cave.emptyTiles) };
@@ -11,10 +12,9 @@ function getStairsDown(cave) {
 }
 
 function fillObject(cave) {
-  const simples = new Array(5).fill(null).map((_) => ({
-    position: peekOne(cave.emptyTiles),
-    object: simpleObjects[randomInt(simpleObjects.length)],
-  }));
+  const simples = new Array(5).fill(null).map(function () {
+    return { ...createRandomSimple(), position: peekOne(cave.emptyTiles) };
+  });
 
   return { ...cave, objects: [...simples] };
 }
@@ -56,8 +56,31 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getEmptyTiles: (current) => levels[current].emptyTiles,
     peekEmptyTile: (current) => popOne(levels[current].emptyTiles),
     getObjects: (current) => levels[current].objects,
-    getObject: (current, { position, object }) => null,
-    putObject: (current, { position, object }) => null,
+    removeObject: function (current, object) {
+      levels[current].objects = levels[current].objects.reduce(function (a, o) {
+        if (o.id === object.id) {
+          return a;
+        }
+        return [...a, o];
+      }, []);
+    },
+
+    //   return levels.map(function (level, i) {
+    //     if (i === current) {
+    //       const { objects } = level;
+    //       const no = objects.reduce(function (a, o) {
+    //         if (o.id === object.id) {
+    //           return a;
+    //         }
+    //         return [...a, o];
+    //       }, []);
+    //       return { ...level, objects: no };
+    //     }
+
+    //     return level;
+    //   });
+    // },
+    // putObject: (current, { position, object }) => null,
   };
 }
 
