@@ -1,8 +1,8 @@
-import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
-import { navigateOptions } from "./commons";
-import activateHelp from "./activate-help";
-import activateAction from "./activate-action";
-import activate from "./activate-player";
+// import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
+// import { navigateOptions } from "./commons";
+// import activateHelp from "./activate-help";
+// import activateAction from "./activate-action";
+// import activate from "./activate-player";
 import { activateRootMenu } from "./menu";
 
 // function exit(state) {

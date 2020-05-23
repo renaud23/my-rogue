@@ -1,6 +1,6 @@
-import activate from "../activate-player";
-import { buildPlayer, display, optionExit } from "./tools";
+import { buildPlayer, optionExit } from "./tools";
 import { createActivateInventoryMenu } from "./menu-inventory";
+import { displayMenu } from "./tools";
 
 const ROOT_MENU_OPTIONS = [
   {
@@ -17,7 +17,7 @@ function activateRootMenu(state, event) {
   return {
     ...state,
     player: buildPlayer({ player, options: ROOT_MENU_OPTIONS }),
-    activate: display,
+    activate: displayMenu,
   };
 }
 

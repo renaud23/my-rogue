@@ -1,5 +1,6 @@
 import activate from "../activate-player";
-import { buildPlayer, display } from "./tools";
+import { buildPlayer, displayMenu } from "./tools";
+
 import { getObjects } from "../player/inventory";
 
 function buildEndingOptions(backActivate) {
@@ -37,7 +38,7 @@ export function createActivateInventoryMenu(activateRoot) {
         options: [...optionsObject, ...endingOptions],
         header: INVENTAIRE_HEADER,
       }),
-      activate: display,
+      activate: displayMenu,
     };
   };
 }

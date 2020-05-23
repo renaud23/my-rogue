@@ -1,8 +1,8 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
-import activateGame from "./activate-game";
-import { navigateOptions, getObjectsAt } from "./commons";
+import { getObjectsAt } from "./commons";
 import activate from "./activate-player";
 import { createTakeObjectTodo } from "./todo";
+import { createDisplayMenu } from "./menu";
 
 function optionsDescNumber(options) {
   return options.map(function ({ desc, ...r }, i) {
@@ -22,21 +22,8 @@ function optionsTile(tile) {
   return [];
 }
 
-// function optionsObject(object) {
-//   const { todo = [] } = object;
-//   const options = todo.map(function (td) {
-//     return {
-//       desc: td.desc,
-//       todo: td.todo,
-//     };
-//   });
-
-//   return options;
-// }
-
 function optionsObjects(objects) {
   const options = objects.reduce(function (a, o) {
-    //
     return [
       ...a,
       ...o.todo,
@@ -73,7 +60,7 @@ function actionTodo(state) {
     player: {
       ...player,
       action: {
-        type: PLAYER_ACTIONS.action,
+        type: PLAYER_ACTIONS.menu,
         header: ["ACTIONS", "-------"],
         footer: ["", "Validez avec le bouton A."],
         options: [
@@ -86,30 +73,11 @@ function actionTodo(state) {
   };
 }
 
-function navigateMenu(state, event) {
-  const {
-    payload: { button },
-  } = event;
-  const { player } = state;
-  const { action } = player;
-  const { active, options } = action;
-  const next = navigateOptions(button, state);
-
-  switch (button) {
-    case PAD_BUTTON.up:
-    case PAD_BUTTON.down:
-    case PAD_BUTTON.left:
-    case PAD_BUTTON.right:
-      return { ...next, activate: navigateMenu };
-    case PAD_BUTTON.buttonA:
-      return activateGame({ ...options[active].todo(state), activate });
-    default:
-      return { ...next, activate: navigateMenu };
-  }
-}
-
 function activateAction(state, event) {
-  return { ...actionTodo(state), activate: navigateMenu };
+  return {
+    ...actionTodo(state),
+    activate: createDisplayMenu(PAD_BUTTON.buttonA, PAD_BUTTON.buttonB),
+  };
 }
 
 export default activateAction;

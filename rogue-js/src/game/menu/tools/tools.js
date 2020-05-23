@@ -8,22 +8,6 @@ export function addOptionsNumbers(options) {
   });
 }
 
-export function display(state, event) {
-  const {
-    payload: { button },
-  } = event;
-  const { player } = state;
-  const { action } = player;
-  const { active, options } = action;
-  const next = navigateOptions(button, state);
-  switch (button) {
-    case PAD_BUTTON.buttonY:
-      return options[active].todo(state);
-    default:
-      return { ...next, activate: display };
-  }
-}
-
 export function buildPlayer({
   player,
   options,
