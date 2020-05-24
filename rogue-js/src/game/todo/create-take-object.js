@@ -1,13 +1,15 @@
 import { cleanPlayerAction } from "../commons";
 import { putObject } from "../player/inventory";
+import { removeObjectDungeon } from "../objects";
 
 function createPrendreObjectTodo(object) {
   return function (state) {
-    const { player, dungeon } = state;
+    const { player, objects } = state;
     const { currentLevel, inventory } = player;
-    dungeon.removeObject(currentLevel, object);
+    const newObjects = removeObjectDungeon(objects, object, currentLevel);
     return cleanPlayerAction({
       ...state,
+      objects: newObjects,
       player: { ...player, inventory: putObject(inventory, object) },
     });
   };

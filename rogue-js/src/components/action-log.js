@@ -1,16 +1,21 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { PLAYER_ACTIONS, getTile, TILES } from "../commons";
-import { dungeonState, playerState } from "../recoil";
+import { dungeonState, playerState, objectsState } from "../recoil";
 import { getObjectsAt } from "../game/commons";
 
-function peekObjectMessages(state, position) {
-  return getObjectsAt(state, position).reduce(function ([a], { desc }, i) {
+function peekObjectMessages(state, level, position) {
+  return getObjectsAt(state, level, position).reduce(function (
+    [a],
+    { desc },
+    i
+  ) {
     if (i === 0) {
       return [`Posé à vos pieds, vous apercevez, ${desc}`];
     }
     return [`${a}, ${desc}`];
-  }, []);
+  },
+  []);
 }
 
 function peekMenu(state) {
@@ -40,7 +45,7 @@ function peekHelp(state) {
   }
   const tile = getTile(data[action.position]);
   messages.push(tile.desc);
-  const objects = peekObjectMessages(state, action.position);
+  const objects = peekObjectMessages(state, currentLevel, action.position);
   return [...messages, ...objects];
 }
 
@@ -48,7 +53,7 @@ function peekPosition(state) {
   const { player, dungeon } = state;
   const { position, currentLevel } = player;
   const data = dungeon.getData(currentLevel);
-  const objects = peekObjectMessages(state, position);
+  const objects = peekObjectMessages(state, currentLevel, position);
   const tile = getTile(data[position]);
 
   return [`Vous êtes sur ${tile.desc}`, ...objects];
@@ -74,9 +79,10 @@ function peekMessages(state) {
 function ActionConsole() {
   const [dungeon] = useRecoilState(dungeonState);
   const [player] = useRecoilState(playerState);
+  const [objects] = useRecoilState(objectsState);
 
   if (!dungeon) return null;
-  const messages = peekMessages({ player, dungeon });
+  const messages = peekMessages({ player, dungeon, objects });
 
   return (
     <pre className="action-console">

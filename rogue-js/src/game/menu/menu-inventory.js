@@ -1,6 +1,7 @@
 import activate from "../activate-player";
 import { buildPlayer, displayMenu, optionExit } from "./tools";
 import { getObjects, removeObject } from "../player/inventory";
+import { putObjectDungeon } from "../objects";
 
 function buildEndingOptions(backActivate) {
   return [{ desc: "retour", todo: backActivate }, optionExit];
@@ -13,16 +14,21 @@ function underligne(word) {
 
 function createThrowObject(object) {
   return function throwObject(state) {
-    const { player, dungeon } = state;
+    const { player, objects } = state;
     const { inventory, currentLevel, position } = player;
 
-    // side effect
-    dungeon.putObject(currentLevel, { ...object, position });
+    const newObjects = putObjectDungeon(
+      objects,
+      { ...object, position, lui: "lui" },
+      currentLevel
+    );
 
     return {
       ...state,
+      objects: newObjects,
       player: {
         ...player,
+
         inventory: removeObject(inventory, object),
         action: null,
       },

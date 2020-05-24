@@ -6,7 +6,9 @@ import {
   playerState,
   activateState,
   ennemiesState,
+  objectsState,
 } from "../recoil";
+import { createObjectDungeon } from "../game/objects";
 import { activate as cally } from "../game";
 import Pad from "./pad";
 import { createDungeon } from "../game/dungeon";
@@ -17,25 +19,34 @@ import "./render-game.scss";
 function initialize() {
   const dungeon = createDungeon(10, 20, 20);
   const player = createPlayer(dungeon, 8);
+  const objects = createObjectDungeon({ dungeon });
 
-  return { dungeon, player, callback: cally };
+  return { dungeon, player, objects, callback: cally };
 }
 
 function Game() {
-  const [dungeon, setDungeon] = useRecoilState(dungeonState);
+  const setDungeon = useRecoilState(dungeonState)[1];
   const [player, setPlayer] = useRecoilState(playerState);
-  const [activate, setActivate] = useRecoilState(activateState);
-  const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
+  const setActivate = useRecoilState(activateState)[1];
+  const setEnnemies = useRecoilState(ennemiesState)[1];
+  const setObjects = useRecoilState(objectsState)[1];
   const { fov } = player;
   return (
     <>
       <Pad />
       <button
         onClick={function () {
-          const { dungeon: dung, player, ennemies, callback } = initialize();
+          const {
+            dungeon: dung,
+            player,
+            ennemies,
+            objects,
+            callback,
+          } = initialize();
           setDungeon(dung);
           setPlayer(player);
           setEnnemies(ennemies);
+          setObjects(objects);
           setActivate({ cally: callback });
         }}
       >

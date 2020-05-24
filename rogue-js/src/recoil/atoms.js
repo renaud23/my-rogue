@@ -23,3 +23,8 @@ export const ennemiesState = atom({
   key: "ennemiesState",
   default: [],
 });
+
+export const objectsState = atom({
+  key: "objectsState",
+  default: [],
+});

@@ -1,9 +1,13 @@
 import { TILES, antecedantPoint, pointProjection } from "../commons";
 
-function fillDungeon(tiles, { dungeon, player }, rect) {
+function fillDungeon(
+  tiles,
+  { dungeon, player, objects: dungeonObjects },
+  rect
+) {
   const { startX, startY, width } = rect;
   const { currentLevel, visibles } = player;
-  const objects = dungeon.getObjects(currentLevel);
+  const objects = dungeonObjects[currentLevel];
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const visibleObjects = objects.reduce(function (a, o) {
     const { position } = o;

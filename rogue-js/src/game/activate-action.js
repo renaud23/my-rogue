@@ -40,7 +40,8 @@ function getOptions(state) {
   const { currentLevel } = player;
   const data = dungeon.getData(currentLevel);
   const tile = getTile(data[position]);
-  const objects = getObjectsAt(state, position);
+
+  const objects = getObjectsAt(state, currentLevel, position);
   const opt = optionsTile(tile);
   const opo = optionsObjects(objects);
 

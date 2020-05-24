@@ -1,5 +1,11 @@
 import React from "react";
-import { dungeonState, playerState, activateState } from "../recoil";
+import {
+  dungeonState,
+  playerState,
+  objectsState,
+  ennemiesState,
+  activateState,
+} from "../recoil";
 import { useRecoilState } from "recoil";
 import { padEvent } from "../game";
 import { PAD_BUTTON } from "../commons";
@@ -8,13 +14,20 @@ import "./pad.scss";
 function Pad() {
   const [dungeon, setDungeon] = useRecoilState(dungeonState);
   const [player, setPlayer] = useRecoilState(playerState);
+  const [objects, setObjects] = useRecoilState(objectsState);
+  const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
   const [activate, setActivate] = useRecoilState(activateState);
 
   const on = function (button) {
-    const what = activate.cally({ dungeon, player }, padEvent(button));
+    const what = activate.cally(
+      { dungeon, player, objects, ennemies },
+      padEvent(button)
+    );
     setActivate({ cally: what.activate });
     setDungeon(what.dungeon);
     setPlayer(what.player);
+    setObjects(what.objects);
+    setEnnemies(what.ennemies);
   };
 
   if (!dungeon) return null;

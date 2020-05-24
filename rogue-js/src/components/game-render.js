@@ -1,7 +1,12 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { maxMin } from "../commons/tools";
-import { dungeonState, playerState } from "../recoil";
+import {
+  dungeonState,
+  playerState,
+  objectsState,
+  ennemiesState,
+} from "../recoil";
 import combine from "./combine-fill";
 import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
@@ -12,6 +17,7 @@ import fillEnnemies from "./fill-ennemies";
 export function GlobalRender() {
   const [dungeon] = useRecoilState(dungeonState);
   const [player] = useRecoilState(playerState);
+  const [ennemies] = useRecoilState(ennemiesState);
 
   if (!dungeon) return null;
   const { currentLevel } = player;
@@ -64,6 +70,8 @@ const fillStack = combine(fillDungeon, fillObjects, fillEnnemies, fillPlayer);
 function PlayerRender({ viewSize }) {
   const [dungeon] = useRecoilState(dungeonState);
   const [player] = useRecoilState(playerState);
+  const [ennemies] = useRecoilState(ennemiesState);
+  const [objects] = useRecoilState(objectsState);
   if (!dungeon) return null;
 
   const { position, currentLevel, fov } = player;
@@ -83,7 +91,7 @@ function PlayerRender({ viewSize }) {
 
   const tiles = fillStack(
     Array(width * width).fill(-1),
-    { dungeon, player },
+    { dungeon, player, ennemies, objects },
     rect
   );
 

@@ -54,35 +54,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getStairs: (current) => levels[current].stairs,
     getEmptyTiles: (current) => levels[current].emptyTiles,
     peekEmptyTile: (current) => popOne(levels[current].emptyTiles),
-    getObjects: (current) => levels[current].objects,
-    removeObject: function (current, object) {
-      levels[current].objects = levels[current].objects.reduce(function (a, o) {
-        if (o.id === object.id) {
-          return a;
-        }
-        return [...a, o];
-      }, []);
-    },
-    putObject: function (current, object) {
-      levels[current].objects.push(object);
-    },
-
-    //   return levels.map(function (level, i) {
-    //     if (i === current) {
-    //       const { objects } = level;
-    //       const no = objects.reduce(function (a, o) {
-    //         if (o.id === object.id) {
-    //           return a;
-    //         }
-    //         return [...a, o];
-    //       }, []);
-    //       return { ...level, objects: no };
-    //     }
-
-    //     return level;
-    //   });
-    // },
-    // putObject: (current, { position, object }) => null,
+    getDungeonHeight: () => nb,
   };
 }
 

@@ -1,4 +1,6 @@
-function createRat() {
+function createRat(state) {
+  const { dungeon } = state;
+
   return {};
 }
 

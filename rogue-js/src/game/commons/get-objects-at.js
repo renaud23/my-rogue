@@ -1,9 +1,6 @@
-function getObjectsAt(state, position) {
-  const { player, dungeon } = state;
-  const { currentLevel } = player;
-  return dungeon
-    .getObjects(currentLevel)
-    .filter(({ position: p }) => p === position);
+function getObjectsAt(state, level, position) {
+  const { objects } = state;
+  return objects[level].filter(({ position: p }) => p === position);
 }
 
 export default getObjectsAt;
