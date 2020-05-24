@@ -11,7 +11,7 @@ import "./render-game.scss";
 
 function initialize() {
   const dungeon = createDungeon(10, 20, 20);
-  const player = createPlayer(dungeon);
+  const player = createPlayer(dungeon, 8);
 
   return { dungeon, player, callback: cally };
 }

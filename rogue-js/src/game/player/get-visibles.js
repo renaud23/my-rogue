@@ -1,4 +1,5 @@
-import { distanceEucl, getSegment, isEmpty } from "../../commons";
+import { distanceEucl, getSegment } from "../../commons";
+import { isEmptyPosition } from "../commons";
 
 function getVisibles({ player, dungeon }) {
   const { fov, position, currentLevel } = player;
@@ -20,7 +21,9 @@ function getVisibles({ player, dungeon }) {
       const p = x + y * width;
 
       return (
-        a && (isEmpty({ dungeon, player }, p) || (x === pos.x && y === pos.y))
+        a &&
+        (isEmptyPosition({ dungeon, player }, p) ||
+          (x === pos.x && y === pos.y))
       );
     }, true);
   }

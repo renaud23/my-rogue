@@ -1,9 +1,10 @@
-import { TILES } from "../tiles";
+import { TILES } from "../../commons";
 
-function isEmpty({ dungeon, player }, pos) {
+function isEmpty(state, position) {
+  const { dungeon, player } = state;
   const { currentLevel } = player;
   const data = dungeon.getData(currentLevel);
-  switch (data[pos]) {
+  switch (data[position]) {
     case TILES.ground.code:
     case TILES.stairsDown.code:
     case TILES.stairsUp.code:

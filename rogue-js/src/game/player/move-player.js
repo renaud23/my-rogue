@@ -1,4 +1,5 @@
-import { DIRECTION, isEmpty } from "../../commons";
+import { DIRECTION } from "../../commons";
+import { isEmptyPosition } from "../commons";
 import { consumeMove } from "../player";
 import getVisibles from "./get-visibles";
 
@@ -11,25 +12,25 @@ function movePlayer(direction, state) {
   switch (direction) {
     case DIRECTION.NORTH: {
       const next = position - width;
-      return isEmpty({ dungeon, player }, next)
+      return isEmptyPosition(state, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
     case DIRECTION.SOUTH: {
       const next = position + width;
-      return isEmpty({ dungeon, player }, next)
+      return isEmptyPosition(state, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
     case DIRECTION.EAST: {
       const next = position + 1;
-      return isEmpty({ dungeon, player }, next)
+      return isEmptyPosition(state, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
     case DIRECTION.WEST: {
       const next = position - 1;
-      return isEmpty({ dungeon, player }, next)
+      return isEmptyPosition(state, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }

@@ -7,6 +7,7 @@ import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
 import fillPlayer from "./fill-player";
 import fillObjects from "./fill-objects";
+import fillEnnemies from "./fill-ennemies";
 
 export function GlobalRender() {
   const [dungeon] = useRecoilState(dungeonState);
@@ -58,17 +59,18 @@ function render(data, width) {
   ).rows;
 }
 
-const fillStack = combine(fillDungeon, fillObjects, fillPlayer);
+const fillStack = combine(fillDungeon, fillObjects, fillEnnemies, fillPlayer);
 
 function PlayerRender({ viewSize }) {
   const [dungeon] = useRecoilState(dungeonState);
   const [player] = useRecoilState(playerState);
   if (!dungeon) return null;
 
-  const { position, currentLevel } = player;
+  const { position, currentLevel, fov } = player;
+
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const dungeonHeight = dungeon.getHeight(currentLevel);
-  const width = viewSize * 2 + 1;
+  const width = Math.max(viewSize, fov) * 2 + 1;
   const dungX = position % dungeonWidth;
   const dungY = Math.trunc(position / dungeonWidth);
   const startX = maxMin(dungX - viewSize, 0, dungeonWidth - width);
