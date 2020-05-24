@@ -1,25 +1,20 @@
-import { MAP_SIMPLE } from "./simple";
+// import { MAP_SIMPLE } from "./simple";
 import { cleanPlayerAction } from "../commons";
 
 const manger = (object) => (state) => {
-  console.log("manger");
-  // TODO destroy from inventory or dungeon
+  // const { player, dungeon } = state;
+  //   const { currentLevel } = player;
+  //   switch (object.code) {
+  //     case MAP_SIMPLE.bread.code:
+  //       // TODO something more
+  //       //TODO : side effect
+  //       dungeon.removeObject(currentLevel, object);
+  //       break;
+  //     default:
+  //       console.log("Vous n'allez quand même pas avaler n'importe quoi !");
+  //   }
   return cleanPlayerAction(state);
 };
-// return function (state) {
-//   const { player, dungeon } = state;
-//   const { currentLevel } = player;
-//   switch (object.code) {
-//     case MAP_SIMPLE.bread.code:
-//       // TODO something more
-//       //TODO : side effect
-//       dungeon.removeObject(currentLevel, object);
-//       break;
-//     default:
-//       console.log("Vous n'allez quand même pas avaler n'importe quoi !");
-//   }
-//   return cleanPlayerAction(state);
-// };
 
 export const createMangerTodo = function (object) {
   const { desc } = object;

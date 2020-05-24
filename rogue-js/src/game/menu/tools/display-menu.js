@@ -1,4 +1,4 @@
-import { PAD_BUTTON, PLAYER_ACTIONS } from "../../../commons";
+import { PAD_BUTTON } from "../../../commons";
 import activate from "../../activate-player";
 import { navigateOptions } from "../../commons";
 

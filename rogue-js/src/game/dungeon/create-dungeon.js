@@ -1,7 +1,6 @@
 import createCave from "./cave";
-import { TILES, popOne, peekOne, randomInt } from "../../commons";
-import { simpleObjects, createRandomSimple } from "../objects";
-let INDEX = new Date().getTime();
+import { TILES, popOne, peekOne } from "../../commons";
+import { createRandomSimple } from "../objects";
 
 function getStairsUp(cave) {
   return { tile: TILES.stairsUp, position: popOne(cave.emptyTiles) };

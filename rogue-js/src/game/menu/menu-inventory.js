@@ -52,7 +52,7 @@ function createObjectMenu(object, cally) {
 
 function buildOptionsObjects(objects, cally) {
   return objects.reduce(function (a, o) {
-    const { todo, desc } = o;
+    const { desc } = o;
     return [...a, { desc, todo: createObjectMenu(o, cally) }];
   }, []);
 }

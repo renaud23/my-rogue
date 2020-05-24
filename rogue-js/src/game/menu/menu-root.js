@@ -1,14 +1,33 @@
-import { buildPlayer, optionExit } from "./tools";
+import { buildPlayer, optionExit, displayMenu } from "./tools";
 import { createActivateInventoryMenu } from "./menu-inventory";
-import { displayMenu } from "./tools";
+import activateHelp from "../activate-help";
+import activateAction from "../activate-action";
+import { PLAYER_ACTIONS } from "../../commons";
+
+function lookAtTodo(state) {
+  const { player } = state;
+  const { position } = player;
+  return {
+    ...state,
+    player: { ...player, action: { type: PLAYER_ACTIONS.help, position } },
+    activate: activateHelp,
+  };
+}
+
+/** */
+function actionTodo(state) {
+  return {
+    ...activateAction(state),
+  };
+}
 
 const ROOT_MENU_OPTIONS = [
   {
     desc: "inventaire",
     todo: createActivateInventoryMenu(activateRootMenu),
   },
-  //   { desc: "2. action", todo: actionTodo },
-  //   { desc: "3. observer", todo: lookAtTodo },
+  { desc: "action", todo: actionTodo },
+  { desc: "observer", todo: lookAtTodo },
   optionExit,
 ];
 

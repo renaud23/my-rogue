@@ -1,5 +1,4 @@
-import { PAD_BUTTON, PLAYER_ACTIONS } from "../../../commons";
-import { navigateOptions } from "../../commons";
+import { PLAYER_ACTIONS } from "../../../commons";
 
 export function addOptionsNumbers(options) {
   return options.map(function (o, i) {
