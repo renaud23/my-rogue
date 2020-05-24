@@ -67,7 +67,6 @@ function PlayerRender({ viewSize }) {
   if (!dungeon) return null;
 
   const { position, currentLevel, fov } = player;
-
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const dungeonHeight = dungeon.getHeight(currentLevel);
   const width = Math.max(viewSize, fov) * 2 + 1;

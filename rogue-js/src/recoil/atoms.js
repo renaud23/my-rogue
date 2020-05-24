@@ -18,3 +18,8 @@ export const activateState = atom({
   key: "activateState",
   default: null,
 });
+
+export const ennemiesState = atom({
+  key: "ennemiesState",
+  default: [],
+});

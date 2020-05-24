@@ -1,7 +1,8 @@
 import { distanceEucl, getSegment } from "../../commons";
 import { isEmptyPosition } from "../commons";
 
-function getVisibles({ player, dungeon }) {
+function getVisibles(state) {
+  const { player, dungeon } = state;
   const { fov, position, currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
   const height = dungeon.getHeight(currentLevel);
