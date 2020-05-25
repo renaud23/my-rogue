@@ -1,25 +1,24 @@
 import { peekOne, randomInt } from "../../commons";
 import {
   getSegment,
-  antecedantPoint,
+  antecedentPoint,
   distanceEucl2,
   pointProjection,
 } from "../../commons";
-import { isVisiblePosition } from "../commons";
+import { buildTurnPlay } from "../commons";
+import { isVisiblePosition, isEmptyPosition } from "../commons";
 
 let INDEX = 0;
 
-const fuck = ([x, y]) => ({ x, y });
-
-function canSeePlayer(state, rat) {
+function canSeePlayer(state, ennemy) {
   const { dungeon, player } = state;
   const { currentLevel, position: ppos } = player;
-  const { fov, position: rpos, level: ratLevel } = rat;
-  if (ratLevel !== currentLevel) return false;
+  const { fov, position: rpos, level } = ennemy;
+  if (level !== currentLevel) return false;
   const dw = dungeon.getWidth(currentLevel);
 
-  const a = antecedantPoint(rpos, dw);
-  const b = antecedantPoint(ppos, dw);
+  const a = antecedentPoint(rpos, dw);
+  const b = antecedentPoint(ppos, dw);
   const dist = distanceEucl2(a, b);
 
   if (dist <= fov * fov) {
@@ -30,57 +29,81 @@ function canSeePlayer(state, rat) {
       if (i === 0) {
         return true;
       }
-      return a && isVisiblePosition(state, ratLevel, pos);
+      return a && isVisiblePosition(state, level, pos);
     }, true);
   }
   return false;
 }
 
-function follow(state, rat) {
-  console.log("follow", rat);
-  return state;
+function canBite(state, rat) {
+  return false;
 }
 
-function switchEnnemyActivate(ennemies, ennemy, cally) {
-  const { id, level } = ennemy;
-  return ennemies.map(function (level, i) {
-    if (i === level) {
-      return level.map(function (r) {
-        if (r.id === id) {
-          return { ...r, activate: cally };
-        }
+function getVariation(delta) {
+  if (delta === 0) {
+    return 0;
+  }
+  if (delta < 0) {
+    return -1;
+  }
+  return 1;
+}
 
-        return r;
-      });
-    }
-    return level;
-  });
+function moveToPlayer(state, ennemy) {
+  const { dungeon, player } = state;
+  const { currentLevel, position: pPos } = player;
+  const { position: ePos } = ennemy;
+  const dw = dungeon.getWidth(currentLevel);
+  const [px, py] = antecedentPoint(pPos, dw);
+  const [ex, ey] = antecedentPoint(ePos, dw);
+
+  const dx = px - ex;
+  const vx = getVariation(dx);
+  const dy = py - ey;
+  const vy = getVariation(dy);
+
+  if (
+    Math.abs(dx) > Math.abs(dy) &&
+    isEmptyPosition(state, currentLevel, pointProjection([ex + vx, ey], dw))
+  ) {
+    return [ex + vx, ey];
+  }
+  if (
+    isEmptyPosition(state, currentLevel, pointProjection([ex, ey + vy], dw))
+  ) {
+    return [ex, ey + vy];
+  }
+  return [ex, ey];
+}
+
+function follow(state, ennemy) {
+  const { dungeon, player } = state;
+  const { currentLevel, position: pPos } = player;
+  const { position: ePos } = ennemy;
+  const dw = dungeon.getWidth(currentLevel);
+
+  //
+  const [nx, ny] = moveToPlayer(state, ennemy);
+  const nePos = nx + ny * dw;
+
+  if (nePos === ePos || nePos === pPos) {
+    return [state, { ...ennemy, activate: sleep }];
+  }
+
+  return [state, { ...ennemy, position: nePos, activate: follow }];
 }
 
 function sleep(state, rat) {
   const { player, ennemies } = state;
   const { position: pp } = player;
   if (canSeePlayer(state, rat)) {
-    const ne = ennemies.map(function (level, i) {
-      if (i === rat.level) {
-        return level.map(function (r) {
-          if (r.id === rat.id) {
-            return { ...r, activate: follow };
-          }
-
-          return r;
-        });
-      }
-      return level;
-    });
-    return { ...state, ennemies: ne };
+    return follow(state, rat);
   }
-
-  return state;
+  return [state, rat];
 }
 
 function createRat() {
-  return { activate: sleep, fov: 5, data: { desc: "un rat puant" } };
+  return { activate: sleep, fov: 8, turn: buildTurnPlay(2) };
 }
 
 function createLevelRat(state, level) {

@@ -1,4 +1,4 @@
-import { TILES, antecedantPoint, pointProjection } from "../commons";
+import { TILES, antecedentPoint, pointProjection } from "../commons";
 
 function fillEnnemies(tiles, state, rect) {
   const { ennemies, player, dungeon } = state;
@@ -15,7 +15,7 @@ function fillEnnemies(tiles, state, rect) {
 
   visibleEnnemies.forEach(function (tile) {
     const { position } = tile;
-    const [x, y] = antecedantPoint(position, dungeonWidth);
+    const [x, y] = antecedentPoint(position, dungeonWidth);
     const tilePos = pointProjection([x - startX, y - startY], width);
     tiles[tilePos] = { ...TILES.ennemy, color: "magenta" };
   });

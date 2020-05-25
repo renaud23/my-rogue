@@ -7,7 +7,7 @@ export function distanceEucl2([x1, y1], [x2, y2]) {
   return Math.pow(xx, 2) + Math.pow(yy, 2);
 }
 
-export function antecedantPoint(position, width) {
+export function antecedentPoint(position, width) {
   return [position % width, Math.trunc(position / width)];
 }
 

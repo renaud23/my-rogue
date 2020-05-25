@@ -1,4 +1,4 @@
-import { TILES, antecedantPoint, pointProjection } from "../commons";
+import { TILES, antecedentPoint, pointProjection } from "../commons";
 
 function fillDungeon(
   tiles,
@@ -16,7 +16,7 @@ function fillDungeon(
 
   visibleObjects.forEach(function (tile) {
     const { position } = tile;
-    const [x, y] = antecedantPoint(position, dungeonWidth);
+    const [x, y] = antecedentPoint(position, dungeonWidth);
     const tilePos = pointProjection([x - startX, y - startY], width);
     tiles[tilePos] = { ...TILES.simpleObject };
   });

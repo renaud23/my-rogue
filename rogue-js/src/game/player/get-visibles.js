@@ -1,4 +1,4 @@
-import { antecedantPoint, distanceEucl2, getSegment } from "../../commons";
+import { antecedentPoint, distanceEucl2, getSegment } from "../../commons";
 import { isVisiblePosition } from "../commons";
 import isVisible from "../commons/is-visible-position";
 
@@ -35,7 +35,7 @@ function getVisibles(state) {
   const visibles = new Array(fovWidth * fovHeight)
     .fill(null)
     .reduce(function (a, _, i) {
-      const [ix, iy] = antecedantPoint(i, fovWidth);
+      const [ix, iy] = antecedentPoint(i, fovWidth);
       const x = ix + startX;
       const y = iy + startY;
       const candidat = [x, y];
