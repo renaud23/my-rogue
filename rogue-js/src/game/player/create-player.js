@@ -20,7 +20,7 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
   };
   return {
     ...player,
-    visibles: getVisibles({ player, dungeon }),
+    visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
     inventory: createInventory(10),
   };
 }

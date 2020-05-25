@@ -13,6 +13,7 @@ import { activate as cally } from "../game";
 import Pad from "./pad";
 import { createDungeon } from "../game/dungeon";
 import { createPlayer } from "../game/player";
+import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
 import "./render-game.scss";
 
@@ -20,8 +21,9 @@ function initialize() {
   const dungeon = createDungeon(10, 20, 20);
   const player = createPlayer(dungeon, 8);
   const objects = createObjectDungeon({ dungeon });
+  const ennemies = createEnnemiesDungeon({ dungeon });
 
-  return { dungeon, player, objects, callback: cally };
+  return { dungeon, player, objects, ennemies, callback: cally };
 }
 
 function Game() {

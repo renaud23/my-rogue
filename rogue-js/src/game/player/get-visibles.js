@@ -1,5 +1,20 @@
-import { distanceEucl, getSegment } from "../../commons";
-import { isEmptyPosition } from "../commons";
+import { antecedantPoint, distanceEucl2, getSegment } from "../../commons";
+import { isVisiblePosition } from "../commons";
+import isVisible from "../commons/is-visible-position";
+
+function isVisibleSegment(state, segment) {
+  const { dungeon, player } = state;
+  const { currentLevel } = player;
+  const dw = dungeon.getWidth(currentLevel);
+  // console.log(segment, player.position);
+  return segment.reduce(function (a, [x, y], i) {
+    if (i === 0 || i === segment.length - 1) {
+      return a;
+    }
+    const pos = x + y * dw;
+    return a && isVisiblePosition(state, currentLevel, pos);
+  }, true);
+}
 
 function getVisibles(state) {
   const { player, dungeon } = state;
@@ -14,34 +29,64 @@ function getVisibles(state) {
   const stopY = Math.min(py + fov, height - 1);
   const fovWidth = stopX - startX + 1;
   const fovHeight = stopY - startY + 1;
-  const playerPoint = { x: px, y: py };
+  const playerPoint = [px, py];
   const limite = fov * fov;
 
-  function isVisible(posPlayer, pos, dungeon, player) {
-    return getSegment(posPlayer, pos).reduce(function (a, { x, y }) {
-      const p = x + y * width;
-
-      return (
-        a &&
-        (isEmptyPosition({ dungeon, player }, p) ||
-          (x === pos.x && y === pos.y))
-      );
-    }, true);
-  }
-
-  const viewed = new Array(fovWidth * fovHeight)
-    .fill(-1)
+  const visibles = new Array(fovWidth * fovHeight)
+    .fill(null)
     .reduce(function (a, _, i) {
-      const ix = startX + (i % fovWidth);
-      const iy = startY + Math.trunc(i / fovWidth);
-      const point = { x: ix, y: iy };
-      const dist = distanceEucl(playerPoint, point);
-      if (dist <= limite && isVisible(playerPoint, point, dungeon, player)) {
-        return [...a, ix + iy * width];
+      const [ix, iy] = antecedantPoint(i, fovWidth);
+      const x = ix + startX;
+      const y = iy + startY;
+      const candidat = [x, y];
+      // const candidat = startX + ix + (startY + iy) * width;
+      // if (px === x || py === y) {
+      //   return [...a, startX + ix + (startY + iy) * width];
+      // }
+      const distance = distanceEucl2(playerPoint, candidat);
+
+      if (distance <= limite) {
+        const segment = getSegment(playerPoint, [x, y]);
+        if (isVisibleSegment(state, segment)) {
+          return [...a, startX + ix + (startY + iy) * width];
+        }
       }
+
       return a;
     }, []);
-  return viewed;
+
+  // function isVisible(posPlayer, pos) {
+  //   console.log(
+  //     getSegment(posPlayer, pos),
+  //     getSegment2(fuck(posPlayer), fuck(pos))
+  //   );
+  //   return getSegment2(posPlayer, pos).reduce(function (a, [x, y]) {
+  //     const p = x + y * width;
+
+  //     return (
+  //       a &&
+  //       (isVisiblePosition(state, currentLevel, p) ||
+  //         (x === pos.x && y === pos.y))
+  //     );
+  //   }, true);
+  // }
+
+  // const viewed = new Array(fovWidth * fovHeight)
+  //   .fill(-1)
+  //   .reduce(function (a, _, i) {
+  //     const ix = startX + (i % fovWidth);
+  //     const iy = startY + Math.trunc(i / fovWidth);
+  //     const point = [ix, iy];
+  //     const dist = distanceEucl2(playerPoint, point);
+  //     if (dist <= limite && isVisible(playerPoint, point, dungeon, player)) {
+  //       return [...a, ix + iy * width];
+  //     }
+  //     return a;
+  //   }, []);
+
+  // return viewed;
+
+  return visibles;
 }
 
 export default getVisibles;

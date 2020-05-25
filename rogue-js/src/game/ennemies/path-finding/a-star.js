@@ -1,9 +1,12 @@
-import { distanceEucl, posToCoord } from "../../commons";
-import { refillPath, getNeighbors } from "./common";
+import { distanceEucl } from "../../commons";
+import { refillPath, getNeighbors, posToCoord } from "./common";
 import Queue from "../../commons/priority-queue";
 
-export const astarPath = game => (from, to) => {
-  const { dungeon } = game;
+// isEmpty(state, level, position)
+
+export const astarPath = (state) => (from, to) => {
+  const { dungeon, player } = state;
+
   const { width } = dungeon;
   const visited = {};
   const costMap = {};
@@ -19,9 +22,9 @@ export const astarPath = game => (from, to) => {
     if (current === to) {
       break;
     }
-    const neightbors = getNeighbors(game)(current);
+    const neightbors = getNeighbors(state)(current);
 
-    neightbors.forEach(n => {
+    neightbors.forEach((n) => {
       if (!(n in visited)) {
         const dist = distanceEucl(posToCoord(width)(n), toCoord) + newCost;
         frontiere.put(n, dist);

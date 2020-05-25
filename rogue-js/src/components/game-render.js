@@ -23,12 +23,16 @@ export function GlobalRender() {
   const { currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
   const data = dungeon.getData(currentLevel);
+  const ennemiesPos = ennemies[currentLevel].map(({ position }) => position);
   const stack = [...data];
 
   const rows = render(
     stack.map((c, i) => {
       if (i === player.position) {
         return { ...TILES.player, color: "red" };
+      }
+      if (ennemiesPos.indexOf(i) !== -1) {
+        return { ...TILES.ennemy, color: "magenta" };
       }
       return { ...getTile(c), color: "blue" };
     }),

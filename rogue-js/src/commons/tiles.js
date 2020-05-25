@@ -29,6 +29,10 @@ export const TILES = {
     char: "=",
     desc: "un escalier montant et descendant",
   },
+  ennemy: {
+    code: 100,
+    char: "@",
+  },
 
   ironSight: { code: 666, char: "$" },
   unknow: {

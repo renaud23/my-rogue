@@ -3,7 +3,7 @@ import { createRandomSimple } from "./simple";
 
 function createLevelObject(state, level) {
   const { dungeon } = state;
-  const how = 3 + randomInt(7);
+  const how = 3 + randomInt(3);
   return new Array(how).fill(null).map(function () {
     const position = peekOne(dungeon.getEmptyTiles(level));
     return { ...createRandomSimple(), position, level };

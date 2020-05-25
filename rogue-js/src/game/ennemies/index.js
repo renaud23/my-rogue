@@ -1,3 +1,2 @@
-export { createBerserk } from "./berserk";
-export { createWorm } from "./worm";
+export { default as createEnnemiesDungeon } from "./create-ennemies-dungeon";
 export * from "./commons";

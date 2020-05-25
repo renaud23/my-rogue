@@ -14,42 +14,40 @@ const deltaX = ({ x, dx, xinc, y, dy, yinc, cumul, points = [], count }) => {
         xinc,
         dy,
         yinc,
-        points: [...points, { x, y }],
+        points: [...points, [x, y]],
       })
-    : [...points, { x, y }];
+    : [...points, [x, y]];
 };
 
-const reverse = (points) => points.map(({ x, y }) => ({ y: x, x: y }));
+const reverse = (points) => points.map(([x, y]) => [y, x]);
 
-export const getSegment = function (a, b) {
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
+export function getSegment([ax, ay], [bx, by]) {
+  const dx = bx - ax;
+  const dy = by - ay;
   const xinc = dx > 0 ? 1 : -1;
   const yinc = dy > 0 ? 1 : -1;
-
   if (Math.abs(dx) > Math.abs(dy)) {
     return deltaX({
-      x: a.x,
+      x: ax,
       dx: Math.abs(dx),
       xinc,
-      y: a.y,
+      y: ay,
       dy: Math.abs(dy),
       yinc,
       count: Math.abs(dx),
       cumul: Math.abs(dx / 2),
     });
   }
-
   return reverse(
     deltaX({
-      x: a.y,
+      x: ay,
       count: Math.abs(dy),
       dx: Math.abs(dy),
       xinc: yinc,
-      y: a.x,
+      y: ax,
       dy: Math.abs(dx),
       yinc: xinc,
       cumul: Math.abs(dy / 2),
     })
   );
-};
+}

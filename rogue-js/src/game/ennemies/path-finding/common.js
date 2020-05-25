@@ -1,10 +1,10 @@
 import { isEmptyPosition } from "../../commons";
 
-export const refillPath = visited => last => {
+export const refillPath = (visited) => (last) => {
   return visited[last] ? [...refillPath(visited)(visited[last]), last] : [last];
 };
 
-export const getNeighbors = game => pos => {
+export const getNeighbors = (game) => (pos) => {
   const { dungeon } = game;
   const { width } = dungeon;
   const neighbors = [];
@@ -22,3 +22,8 @@ export const getNeighbors = game => pos => {
   }
   return neighbors;
 };
+
+export const posToCoord = (width) => (pos) => ({
+  x: pos % width,
+  y: Math.trunc(pos / width),
+});

@@ -1,9 +1,24 @@
 import { TILES } from "../../commons";
 
-function isEmpty(state, position) {
-  const { dungeon, player } = state;
-  const { currentLevel } = player;
-  const data = dungeon.getData(currentLevel);
+function isEnnemy(state, level, position) {
+  const { ennemies } = state;
+  if (!ennemies || ennemies.length === 0) {
+    return false;
+  }
+  return ennemies[level].reduce(function (a, ennemy) {
+    const { position: ennemyPosition } = ennemy;
+
+    return a || position === ennemyPosition;
+  }, false);
+}
+
+function isEmpty(state, level, position) {
+  const { dungeon, ennemies } = state;
+  if (isEnnemy(state, level, position)) {
+    return false;
+  }
+
+  const data = dungeon.getData(level);
   switch (data[position]) {
     case TILES.ground.code:
     case TILES.stairsDown.code:

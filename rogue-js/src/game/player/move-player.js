@@ -12,25 +12,25 @@ function movePlayer(direction, state) {
   switch (direction) {
     case DIRECTION.NORTH: {
       const next = position - width;
-      return isEmptyPosition(state, next)
+      return isEmptyPosition(state, currentLevel, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
     case DIRECTION.SOUTH: {
       const next = position + width;
-      return isEmptyPosition(state, next)
+      return isEmptyPosition(state, currentLevel, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
     case DIRECTION.EAST: {
       const next = position + 1;
-      return isEmptyPosition(state, next)
+      return isEmptyPosition(state, currentLevel, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
     case DIRECTION.WEST: {
       const next = position - 1;
-      return isEmptyPosition(state, next)
+      return isEmptyPosition(state, currentLevel, next)
         ? consumeMove({ ...player, position: next })
         : player;
     }
