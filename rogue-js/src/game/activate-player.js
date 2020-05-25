@@ -1,4 +1,5 @@
 import { movePlayer } from "./player";
+import { isTurnFinish, nextTurn } from "./commons";
 import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
@@ -32,7 +33,7 @@ function activateMove(state, action) {
  * @param {dungeon, player} state
  * @param {type, payload} action
  */
-function activate(state, event) {
+function activatePlayer(state, event) {
   const { type, payload } = event;
 
   if (type === EVENTS.PAD_EVENT) {
@@ -48,7 +49,7 @@ function activate(state, event) {
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:
       case PAD_BUTTON.right:
-        return activateGame(activateMove(state, event));
+        return activateMove(state, event);
       default:
         return { activate, ...state };
     }
@@ -57,4 +58,31 @@ function activate(state, event) {
   return { activate, ...state };
 }
 
+// export default activatePlayer;
+
+function activate(state, event) {
+  const { player, ennemies } = state;
+  if (!isTurnFinish(player)) {
+    return activatePlayer(state, event);
+  }
+
+  const [nextState, endTurn] = activateGame(state);
+  if (endTurn) {
+    const np = nextTurn(player);
+    return { ...nextState, player: { ...np }, activate };
+  }
+  return { ...nextState, activate };
+}
+
 export default activate;
+
+/*
+function mainActivate(state, event){
+  const {  player,ennemies } = state
+   if(isTurnFinish(player) ){
+
+   }
+}
+
+
+*/

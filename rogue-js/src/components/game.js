@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { isTurnFinish } from "../game/commons";
+import { padEvent } from "../game";
 import RenderDungeon, { GlobalRender } from "./game-render";
 import {
   dungeonState,
@@ -18,7 +20,7 @@ import ActionConsole from "./action-log";
 import "./render-game.scss";
 
 function initialize() {
-  const dungeon = createDungeon(10, 20, 20);
+  const dungeon = createDungeon(10, 40, 40);
   const player = createPlayer(dungeon, 8);
   const objects = createObjectDungeon({ dungeon });
   const ennemies = createEnnemiesDungeon({ dungeon });
@@ -27,12 +29,41 @@ function initialize() {
 }
 
 function Game() {
-  const setDungeon = useRecoilState(dungeonState)[1];
+  const [dungeon, setDungeon] = useRecoilState(dungeonState);
   const [player, setPlayer] = useRecoilState(playerState);
-  const setActivate = useRecoilState(activateState)[1];
-  const setEnnemies = useRecoilState(ennemiesState)[1];
-  const setObjects = useRecoilState(objectsState)[1];
+  const [activate, setActivate] = useRecoilState(activateState);
+  const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
+  const [objects, setObjects] = useRecoilState(objectsState);
   const { fov } = player;
+
+  useEffect(
+    function () {
+      if (dungeon && isTurnFinish(player)) {
+        const what = activate.cally(
+          { dungeon, player, objects, ennemies },
+          padEvent(null)
+        );
+        setActivate({ cally: what.activate });
+        setDungeon(what.dungeon);
+        setPlayer(what.player);
+        setObjects(what.objects);
+        setEnnemies(what.ennemies);
+      }
+    },
+    [
+      player,
+      setActivate,
+      dungeon,
+      objects,
+      activate,
+      ennemies,
+      setDungeon,
+      setObjects,
+      setPlayer,
+      setEnnemies,
+    ]
+  );
+
   return (
     <>
       <Pad />
