@@ -103,7 +103,12 @@ function sleep(state, rat) {
 }
 
 function createRat() {
-  return { activate: sleep, fov: 8, turn: buildTurnPlay(2) };
+  return {
+    activate: sleep,
+    fov: 8,
+    turn: buildTurnPlay(2),
+    desc: "un vilain rat",
+  };
 }
 
 function createLevelRat(state, level) {

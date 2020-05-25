@@ -1,8 +1,24 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { PLAYER_ACTIONS, getTile, TILES } from "../commons";
-import { dungeonState, playerState, objectsState } from "../recoil";
+import {
+  dungeonState,
+  playerState,
+  objectsState,
+  ennemiesState,
+} from "../recoil";
 import { getObjectsAt } from "../game/commons";
+
+function peekEnnemiesMessages(state, level, position) {
+  const { ennemies } = state;
+  return ennemies[level].reduce(function (a, e) {
+    const { position: ePos, desc } = e;
+    if (ePos === position) {
+      return [...a, `${desc} vous dévisage.`];
+    }
+    return a;
+  }, []);
+}
 
 function peekObjectMessages(state, level, position) {
   return getObjectsAt(state, level, position).reduce(function (
@@ -39,14 +55,15 @@ function peekHelp(state) {
   const { player, dungeon } = state;
   const { action, position, currentLevel } = player;
   const data = dungeon.getData(currentLevel);
-  const messages = ["Vous apercevez :"];
+  const messages = ["OBSERVER", "--------"];
   if (action.position === position) {
     messages.push(TILES.player.desc);
   }
   const tile = getTile(data[action.position]);
   messages.push(tile.desc);
   const objects = peekObjectMessages(state, currentLevel, action.position);
-  return [...messages, ...objects];
+  const ennemies = peekEnnemiesMessages(state, currentLevel, action.position);
+  return [...messages, ...objects, ...ennemies];
 }
 
 function peekPosition(state) {
@@ -56,7 +73,7 @@ function peekPosition(state) {
   const objects = peekObjectMessages(state, currentLevel, position);
   const tile = getTile(data[position]);
 
-  return [`Vous êtes sur ${tile.desc}`, ...objects];
+  return [`Vous marché sur ${tile.desc}.`, ...objects];
 }
 
 function peekMessages(state) {
@@ -80,9 +97,10 @@ function ActionConsole() {
   const [dungeon] = useRecoilState(dungeonState);
   const [player] = useRecoilState(playerState);
   const [objects] = useRecoilState(objectsState);
+  const [ennemies] = useRecoilState(ennemiesState);
 
   if (!dungeon) return null;
-  const messages = peekMessages({ player, dungeon, objects });
+  const messages = peekMessages({ player, dungeon, objects, ennemies });
 
   return (
     <pre className="action-console">
