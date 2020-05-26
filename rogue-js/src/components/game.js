@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { isTurnFinish } from "../game/commons";
 import { padEvent } from "../game";
 import RenderDungeon, { GlobalRender } from "./game-render";
+import RenderDungeon2 from "./game-render-2";
 import {
   dungeonState,
   playerState,
@@ -86,10 +87,12 @@ function Game() {
         renew
       </button>
       <div className="game">
-        <RenderDungeon viewSize={fov + 1} />
+        {/* <RenderDungeon viewSize={fov + 1} /> */}
+        <RenderDungeon2 viewSize={fov + 1} />
         <ActionConsole />
       </div>
-      <GlobalRender />
+
+      {/* <GlobalRender /> */}
     </>
   );
 }
