@@ -7,8 +7,8 @@ function createActivateMenu({
   options = [optionExit],
   active = 0,
   header = ["MENU", "----"],
-  footer = [" ", "Validez avec le bouton Y."],
-  activateButton = PAD_BUTTON.buttonY,
+  footer = [" ", "Validez avec le bouton A.", "Sortir avec le bouton B."],
+  activateButton = PAD_BUTTON.buttonA,
   exitButton = PAD_BUTTON.buttonB,
 }) {
   const display = createDisplayMenu(activateButton, exitButton);

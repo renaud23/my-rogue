@@ -85,6 +85,7 @@ function Pad() {
             <span className="button-blank"></span>
             <span
               className="pad-button blue"
+              title="menu"
               onClick={function (e) {
                 e.stopPropagation();
                 on(PAD_BUTTON.buttonY);
@@ -95,6 +96,7 @@ function Pad() {
           <div className="pad-row-button">
             <span
               className="pad-button green"
+              title="help"
               onClick={function (e) {
                 e.stopPropagation();
                 on(PAD_BUTTON.buttonX);
@@ -103,6 +105,7 @@ function Pad() {
             <span className="button-blank"></span>
             <span
               className="pad-button red"
+              title="tir"
               onClick={function (e) {
                 e.stopPropagation();
                 on(PAD_BUTTON.buttonB);
@@ -113,6 +116,7 @@ function Pad() {
             <span className="button-blank"></span>
             <span
               className="pad-button yellow"
+              title="action"
               onClick={function (e) {
                 e.stopPropagation();
                 on(PAD_BUTTON.buttonA);

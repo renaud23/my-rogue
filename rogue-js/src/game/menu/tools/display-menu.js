@@ -3,7 +3,7 @@ import activate from "../../activate-player";
 import { navigateOptions } from "../../commons";
 
 export function createDisplayMenu(
-  activateButton = PAD_BUTTON.buttonY,
+  activateButton = PAD_BUTTON.buttonA,
   exitButton = PAD_BUTTON.buttonB
 ) {
   return function display(state, event) {

@@ -1,5 +1,6 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
 import { getObjectsAt } from "./commons";
+import { buildPlayer } from "./menu/tools";
 import activate from "./activate-player";
 import { createTakeObjectTodo } from "./todo";
 import { createDisplayMenu } from "./menu";
@@ -55,22 +56,11 @@ function todoExit(state) {
 
 function actionTodo(state) {
   const { player } = state;
-  const options = getOptions(state);
+  const options = [...getOptions(state), { desc: `exit`, todo: todoExit }];
+
   return {
     ...state,
-    player: {
-      ...player,
-      action: {
-        type: PLAYER_ACTIONS.menu,
-        header: ["ACTIONS", "-------"],
-        footer: ["", "Validez avec le bouton A."],
-        options: [
-          ...options,
-          { desc: `${options.length + 1}. exit`, todo: todoExit },
-        ],
-        active: 0,
-      },
-    },
+    player: buildPlayer({ player, header: ["ACTIONS", "-------"], options }),
   };
 }
 

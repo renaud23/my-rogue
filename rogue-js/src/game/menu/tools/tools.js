@@ -12,7 +12,7 @@ export function buildPlayer({
   options,
   active = 0,
   header = ["MENU", "----"],
-  footer = [" ", "Validez avec le bouton Y."],
+  footer = [" ", "Validez avec le bouton A.", "Sortir avec le boutton B."],
 }) {
   return {
     ...player,
