@@ -5,6 +5,7 @@ import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
 import activateAction from "./activate-action";
 import activateGame from "./activate-game";
+import activateShoot from "./activate-shoot";
 import * as EVENTS from "./events";
 
 function witchDirection(button) {
@@ -45,6 +46,8 @@ function activatePlayer(state, event) {
         return activateMenu(state, event);
       case PAD_BUTTON.buttonA:
         return activateAction(state, event);
+      case PAD_BUTTON.buttonB:
+        return activateShoot(state, event);
       case PAD_BUTTON.up:
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:
@@ -58,14 +61,11 @@ function activatePlayer(state, event) {
   return { activate, ...state };
 }
 
-// export default activatePlayer;
-
 function activate(state, event) {
-  const { player, ennemies } = state;
+  const { player } = state;
   if (!isTurnFinish(player)) {
     return activatePlayer(state, event);
   }
-
   const [nextState, endTurn] = activateGame(state);
   if (endTurn) {
     const np = nextTurn(player);
@@ -75,14 +75,3 @@ function activate(state, event) {
 }
 
 export default activate;
-
-/*
-function mainActivate(state, event){
-  const {  player,ennemies } = state
-   if(isTurnFinish(player) ){
-
-   }
-}
-
-
-*/
