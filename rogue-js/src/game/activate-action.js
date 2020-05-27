@@ -1,9 +1,10 @@
-import { PAD_BUTTON, getTile } from "../commons";
+import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
 import { getObjectsAt } from "./commons";
 import { buildPlayer } from "./menu/tools";
 import activate from "./activate-player";
 import { createTakeObjectTodo } from "./todo";
-import { createDisplayMenu } from "./menu";
+import { navigateMap } from "./commons";
+import displayMenu from "./menu/tools/display-menu";
 
 function optionsDescNumber(options) {
   return options.map(function ({ desc, ...r }, i) {
@@ -37,7 +38,8 @@ function optionsObjects(objects) {
 
 function getOptions(state) {
   const { player, dungeon } = state;
-  const { position } = player;
+  const { action } = player;
+  const { position } = action;
   const { currentLevel } = player;
   const data = dungeon.getData(currentLevel);
   const tile = getTile(data[position]);
@@ -56,18 +58,59 @@ function todoExit(state) {
 
 function actionTodo(state) {
   const { player } = state;
+  const { action } = player;
+  const { position } = action;
   const options = [...getOptions(state), { desc: `exit`, todo: todoExit }];
 
   return {
     ...state,
-    player: buildPlayer({ player, header: ["ACTIONS", "-------"], options }),
+    player: buildPlayer({
+      player,
+      header: ["ACTIONS", "-------"],
+      options,
+      position,
+    }),
   };
 }
 
-function activateAction(state, event) {
+function activateMenuAction(state, event) {
   return {
     ...actionTodo(state),
-    activate: createDisplayMenu(PAD_BUTTON.buttonA, PAD_BUTTON.buttonB),
+    activate: displayMenu, //createDisplayMenu(PAD_BUTTON.buttonA, PAD_BUTTON.buttonB),
+  };
+}
+
+function moveIronSight(state, event) {
+  const { player } = state;
+  const {
+    payload: { button },
+  } = event;
+  const next = navigateMap(state, event, 1);
+  switch (button) {
+    case PAD_BUTTON.buttonB:
+      return { ...state, activate, player: { ...player, action: null } };
+    case PAD_BUTTON.buttonA:
+      return { ...activateMenuAction(next, event) };
+    case PAD_BUTTON.up:
+    case PAD_BUTTON.down:
+    case PAD_BUTTON.left:
+    case PAD_BUTTON.right:
+    default:
+      return { ...next, activate: moveIronSight };
+  }
+}
+
+function activateAction(state, event) {
+  const { player } = state;
+  const { position } = player;
+
+  return {
+    ...state,
+    player: {
+      ...player,
+      action: { type: PLAYER_ACTIONS.navigate, position, color: "blue" },
+    },
+    activate: moveIronSight,
   };
 }
 

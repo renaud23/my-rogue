@@ -3,17 +3,18 @@ import { navigateMap } from "./commons";
 import activate from "./activate-player";
 import { shootTodo } from "./todo";
 
-export function buildPlayer({ player, position }) {
+export function buildPlayer({ player, position, color }) {
   const { weapon } = player;
 
   return {
     ...player,
-    action: { type: PLAYER_ACTIONS.shoot, position, weapon },
+    action: { type: PLAYER_ACTIONS.navigate, position, weapon, color },
   };
 }
 
 function moveIronSight(state, event) {
-  const { player, weapon } = state;
+  const { player } = state;
+  const { weapon } = player;
   const { range = 1 } = weapon;
   const {
     payload: { button },
@@ -44,7 +45,7 @@ function activateShoot(state, event) {
   if (weapon) {
     return {
       ...state,
-      player: buildPlayer({ player, position }),
+      player: buildPlayer({ player, position, color: "red" }),
       activate: moveIronSight,
     };
   }

@@ -31,6 +31,17 @@ function fillAction(tiles, state, rect) {
           ...TILES.unknow,
           color: "red",
         });
+      case PLAYER_ACTIONS.navigate: {
+        const {
+          player: {
+            action: { color },
+          },
+        } = state;
+        return fillHelp(tiles, state, rect, {
+          ...TILES.ironSight,
+          color,
+        });
+      }
       case PLAYER_ACTIONS.shoot: {
         return fillHelp(tiles, state, rect, {
           ...TILES.ironSight,

@@ -21,4 +21,5 @@ export const PLAYER_ACTIONS = {
   menu: "player-action/menu",
   action: "player-action/action",
   shoot: "player-action/shoot",
+  navigate: "player-action/navigate",
 };
