@@ -13,6 +13,7 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
     fov,
     action: null,
     inventory: null,
+    weapon: null,
     currentLevel,
     turn: {
       moveLeft: maxMove,

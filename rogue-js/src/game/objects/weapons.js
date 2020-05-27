@@ -1,6 +1,7 @@
 import typeObject from "./type-object";
 import { randomInt } from "../../commons";
 import { createMangerTodo } from "./create-simple-todo";
+import { putObject, removeObject } from "../player/inventory";
 
 let INDEX = 0;
 
@@ -10,7 +11,6 @@ export const WEAPONS_MAP = {
     desc: "un couteau",
     size: 1,
     type: typeObject.weapon,
-    todo: [],
   },
   sword: {
     code: 1001,
@@ -33,5 +33,11 @@ export const WEAPONS_CODE_TO_OBJECT = Object.keys(WEAPONS_MAP).reduce(function (
 export const WEAPONS_LIST = Object.values(WEAPONS_MAP);
 
 export function createKnife() {
-  return { ...WEAPONS_MAP.knife, id: `knife-${INDEX++}` };
+  const knife = {
+    ...WEAPONS_MAP.knife,
+    id: `knife-${INDEX++}`,
+  };
+
+  const todo = [];
+  return { ...knife, todo };
 }

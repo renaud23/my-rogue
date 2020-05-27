@@ -27,6 +27,7 @@ export function createDisplayMenu(
       case activateButton: {
         const next = options[active].todo(state);
         const { activate: cally } = next;
+
         return { ...next, activate: cally || activate };
       }
       default:

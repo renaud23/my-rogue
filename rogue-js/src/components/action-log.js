@@ -73,7 +73,7 @@ function peekPosition(state) {
   const objects = peekObjectMessages(state, currentLevel, position);
   const tile = getTile(data[position]);
 
-  return [`Vous marché sur ${tile.desc}.`, ...objects];
+  return [`Vous marchez sur ${tile.desc}.`, ...objects];
 }
 
 function peekMessages(state) {
