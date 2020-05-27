@@ -1,11 +1,10 @@
 import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
 import { navigateMap } from "./commons";
 import activate from "./activate-player";
-// import { createDisplayMenu } from "./menu";
 import { shootTodo } from "./todo";
 
 export function buildPlayer({ player, position }) {
-  const { action, weapon } = player;
+  const { weapon } = player;
 
   return {
     ...player,
@@ -14,11 +13,12 @@ export function buildPlayer({ player, position }) {
 }
 
 function moveIronSight(state, event) {
-  const { player } = state;
+  const { player, weapon } = state;
+  const { range = 1 } = weapon;
   const {
     payload: { button },
   } = event;
-  const next = navigateMap(state, event, 2);
+  const next = navigateMap(state, event, range);
   switch (button) {
     case PAD_BUTTON.buttonB:
       return { ...state, activate, player: { ...player, action: null } };
