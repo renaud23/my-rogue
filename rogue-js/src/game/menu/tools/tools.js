@@ -11,14 +11,15 @@ export function buildPlayer({
   player,
   options,
   active = 0,
+  type = PLAYER_ACTIONS.menu,
   header = ["MENU", "----"],
-  footer = [" ", "Validez avec le bouton A.", "Sortir avec le boutton B."],
+  footer = [" ", "Validez avec le bouton A.", "Sortir avec le bouton B."],
   ...args
 }) {
   return {
     ...player,
     action: {
-      type: PLAYER_ACTIONS.menu,
+      type,
       options: addOptionsNumbers(options),
       active,
       header,

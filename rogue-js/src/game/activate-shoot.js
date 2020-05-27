@@ -5,10 +5,24 @@ import { shootTodo } from "./todo";
 
 export function buildPlayer({ player, position, color }) {
   const { weapon } = player;
+  const { desc } = weapon;
 
   return {
     ...player,
-    action: { type: PLAYER_ACTIONS.navigate, position, weapon, color },
+    action: {
+      type: PLAYER_ACTIONS.shoot,
+      position,
+      weapon,
+      color,
+      options: [],
+      header: [
+        "SHOOT",
+        "----",
+        "",
+        `Utiliser ${desc} avec le bouton A`,
+        "Sortir avec le bouton B",
+      ],
+    },
   };
 }
 

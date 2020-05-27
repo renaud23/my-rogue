@@ -76,8 +76,17 @@ function actionTodo(state) {
 function activateMenuAction(state, event) {
   return {
     ...actionTodo(state),
-    activate: displayMenu, //createDisplayMenu(PAD_BUTTON.buttonA, PAD_BUTTON.buttonB),
+    activate: displayMenu,
   };
+}
+
+function getActionPosition(state) {
+  const {
+    player: {
+      action: { position },
+    },
+  } = state;
+  return position;
 }
 
 function moveIronSight(state, event) {
@@ -96,7 +105,20 @@ function moveIronSight(state, event) {
     case PAD_BUTTON.left:
     case PAD_BUTTON.right:
     default:
-      return { ...next, activate: moveIronSight };
+      return {
+        ...next,
+        activate: moveIronSight,
+        player: buildPlayer({
+          player,
+          type: PLAYER_ACTIONS.navigate,
+          header: ["ACTIONS", "-------"],
+          footer: [" ", "Sortir avec le bouton B."],
+          options: getOptions(next),
+          position: getActionPosition(next),
+          color: "blue",
+          active: -1,
+        }),
+      };
   }
 }
 
@@ -104,12 +126,22 @@ function activateAction(state, event) {
   const { player } = state;
   const { position } = player;
 
+  const action = { type: PLAYER_ACTIONS.navigate, position, color: "blue" };
+  const np = { ...player, action };
+  const ns = { ...state, player: np };
+
   return {
     ...state,
-    player: {
-      ...player,
-      action: { type: PLAYER_ACTIONS.navigate, position, color: "blue" },
-    },
+    player: buildPlayer({
+      player,
+      type: PLAYER_ACTIONS.navigate,
+      header: ["ACTIONS", "-------"],
+      footer: [" ", "Sortir avec le bouton B."],
+      options: getOptions(ns),
+      position: getActionPosition(ns),
+      color: "blue",
+      active: -1,
+    }),
     activate: moveIronSight,
   };
 }

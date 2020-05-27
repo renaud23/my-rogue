@@ -97,7 +97,9 @@ function peekMessages(state) {
         return peekHelp(state);
       case PLAYER_ACTIONS.menu:
         return peekMenu(state);
+      case PLAYER_ACTIONS.navigate:
       case PLAYER_ACTIONS.action:
+      case PLAYER_ACTIONS.shoot:
         return peekMenu(state);
       case PLAYER_ACTIONS.shoot:
         return peekShootMessage(state);
