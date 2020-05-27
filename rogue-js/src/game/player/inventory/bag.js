@@ -30,4 +30,10 @@ export function getObjects({ objects } = { objects: null }) {
   return objects;
 }
 
+export function hasEnoughSpaceFor(inventory, required) {
+  const { size, max } = inventory;
+
+  return size + required <= max;
+}
+
 export default createInventory;

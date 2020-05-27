@@ -1,6 +1,6 @@
 import getVisibles from "./get-visibles";
 import createInventory, { putObject } from "./inventory";
-import { createKnife } from "../objects";
+import { createKnife, createSword } from "../objects";
 
 const DEFAULT_FOV = 10;
 const DEFAULT_NB_MOVE = 2;
@@ -24,11 +24,12 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
 
   const inventory = createInventory(10);
   const knife = createKnife();
+  const sword = createSword();
 
   return {
     ...player,
     visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
-    inventory: putObject(inventory, knife),
+    inventory: putObject(putObject(inventory, knife), sword),
   };
 }
 

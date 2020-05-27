@@ -15,7 +15,7 @@ export const WEAPONS_MAP = {
   sword: {
     code: 1001,
     desc: "une épée",
-    size: 1,
+    size: 2,
     type: typeObject.weapon,
     todo: [],
   },
@@ -40,4 +40,14 @@ export function createKnife() {
 
   const todo = [];
   return { ...knife, todo };
+}
+
+export function createSword() {
+  const sword = {
+    ...WEAPONS_MAP.sword,
+    id: `sword-${INDEX++}`,
+  };
+
+  const todo = [];
+  return { ...sword, todo };
 }
