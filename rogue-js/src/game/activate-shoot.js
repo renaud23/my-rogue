@@ -5,8 +5,8 @@ import activate from "./activate-player";
 import { shootTodo } from "./todo";
 
 export function buildPlayer({ player, position }) {
-  const { action } = player;
-  const { weapon } = action;
+  const { action, weapon } = player;
+
   return {
     ...player,
     action: { type: PLAYER_ACTIONS.shoot, position, weapon },
@@ -21,8 +21,13 @@ function moveIronSight(state, event) {
   const next = navigateMap(state, event, 2);
   switch (button) {
     case PAD_BUTTON.buttonB:
-    case PAD_BUTTON.buttonA:
       return { ...state, activate, player: { ...player, action: null } };
+    case PAD_BUTTON.buttonA:
+      return {
+        ...shootTodo(next),
+        activate,
+        player: { ...player, action: null },
+      };
     case PAD_BUTTON.up:
     case PAD_BUTTON.down:
     case PAD_BUTTON.left:
@@ -35,11 +40,15 @@ function moveIronSight(state, event) {
 function activateShoot(state, event) {
   const { player } = state;
   const { position } = player;
-  return {
-    ...state,
-    player: buildPlayer({ player, position }),
-    activate: moveIronSight,
-  };
+  const { weapon } = player;
+  if (weapon) {
+    return {
+      ...state,
+      player: buildPlayer({ player, position }),
+      activate: moveIronSight,
+    };
+  }
+  return { ...state, player: { ...player, action: null }, activate };
 }
 
 export default activateShoot;

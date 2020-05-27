@@ -1,7 +1,4 @@
-import activate from "../activate-player";
 import { buildPlayer, displayMenu, optionExit } from "./tools";
-import { getObjects, removeObject } from "../player/inventory";
-import { putObjectDungeon } from "../objects";
 import { equipWeaponTodo, throwObjectTodo } from "../todo";
 import { TYPE_OBJECT } from "../objects";
 

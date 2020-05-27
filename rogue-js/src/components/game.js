@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isTurnFinish } from "../game/commons";
 import { padEvent } from "../game";
-import RenderDungeon, { GlobalRender } from "./game-render";
+// import RenderDungeon, { GlobalRender } from "./game-render";
 import RenderDungeon2 from "./game-render-2";
 import {
   dungeonState,

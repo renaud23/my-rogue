@@ -13,7 +13,7 @@ function isEnnemy(state, level, position) {
 }
 
 function isEmpty(state, level, position) {
-  const { dungeon, ennemies } = state;
+  const { dungeon } = state;
   if (isEnnemy(state, level, position)) {
     return false;
   }

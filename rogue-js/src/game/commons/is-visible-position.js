@@ -7,7 +7,6 @@ function isVisible(state, level, position) {
   switch (data[position]) {
     case TILES.ground.code:
     case TILES.stairsDown.code:
-    // case TILES.stairsUp.code:
     case TILES.stairsUpDown.code:
       return true;
 

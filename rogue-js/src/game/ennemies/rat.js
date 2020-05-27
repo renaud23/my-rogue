@@ -94,7 +94,7 @@ function follow(state, ennemy) {
 }
 
 function sleep(state, rat) {
-  const { player, ennemies } = state;
+  const { player } = state;
   const { position: pp } = player;
   if (canSeePlayer(state, rat)) {
     return follow(state, rat);
@@ -107,7 +107,7 @@ function createRat() {
     activate: sleep,
     fov: 8,
     turn: buildTurnPlay(2),
-    desc: "un vilain rat",
+    desc: "un rat",
   };
 }
 

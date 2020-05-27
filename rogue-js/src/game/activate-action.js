@@ -1,4 +1,4 @@
-import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
+import { PAD_BUTTON, getTile } from "../commons";
 import { getObjectsAt } from "./commons";
 import { buildPlayer } from "./menu/tools";
 import activate from "./activate-player";

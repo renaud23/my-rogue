@@ -1,6 +1,5 @@
 import { antecedentPoint, distanceEucl2, getSegment } from "../../commons";
 import { isVisiblePosition } from "../commons";
-import isVisible from "../commons/is-visible-position";
 
 function isVisibleSegment(state, segment) {
   const { dungeon, player } = state;

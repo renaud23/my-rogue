@@ -7,7 +7,7 @@ import {
   objectsState,
   ennemiesState,
 } from "../recoil";
-import { isVisiblePosition } from "../game/commons";
+// import { isVisiblePosition } from "../game/commons";
 import combine from "./combine-fill";
 import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
