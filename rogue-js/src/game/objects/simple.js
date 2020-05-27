@@ -7,13 +7,13 @@ let INDEX = new Date().getTime();
 export const MAP_SIMPLE = {
   thread: {
     code: 1,
-    desc: "du fil",
+    desc: "une pomme",
     size: 1,
     type: typeObject.simple,
   },
   bread: {
     code: 2,
-    desc: "un morceau de pain",
+    desc: "un clou",
     size: 1,
     type: typeObject.simple,
   },
@@ -30,14 +30,14 @@ export const MAP_SIMPLE = {
     type: typeObject.simple,
   },
   stone: {
-    code: 4,
+    code: 5,
     desc: "une grosse pierre",
     size: 2,
     type: typeObject.simple,
   },
   rock: {
-    code: 4,
-    desc: "un vulgaire cailloux",
+    code: 6,
+    desc: "un cailloux",
     size: 1,
     type: typeObject.simple,
   },
