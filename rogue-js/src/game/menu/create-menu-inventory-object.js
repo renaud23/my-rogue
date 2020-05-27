@@ -2,7 +2,7 @@ import activate from "../activate-player";
 import { buildPlayer, displayMenu, optionExit } from "./tools";
 import { getObjects, removeObject } from "../player/inventory";
 import { putObjectDungeon } from "../objects";
-import { createEquipWeaponTodo, createThrowObjectTodo } from "../todo";
+import { equipWeaponTodo, throwObjectTodo } from "../todo";
 import { TYPE_OBJECT } from "../objects";
 
 function underligne(word) {
@@ -15,8 +15,8 @@ function createOptions(object, cally) {
     case TYPE_OBJECT.weapon:
       return [
         ...object.todo,
-        { desc: `équiper ${desc}`, todo: createEquipWeaponTodo(object) },
-        { desc: `poser ${desc}`, todo: createThrowObjectTodo(object) },
+        { desc: `équiper ${desc}`, todo: equipWeaponTodo },
+        { desc: `poser ${desc}`, todo: throwObjectTodo },
         { desc: "retour", todo: cally },
         optionExit,
       ];
@@ -24,7 +24,7 @@ function createOptions(object, cally) {
     default:
       return [
         ...object.todo,
-        { desc: `poser ${desc}`, todo: createThrowObjectTodo(object) },
+        { desc: `poser ${desc}`, todo: throwObjectTodo },
         optionExit,
       ];
   }
@@ -39,6 +39,7 @@ function createObjectMenu(object, cally) {
         player,
         options: createOptions(object, cally),
         header: [object.desc, underligne(object.desc)],
+        object,
       }),
       activate: displayMenu,
     };

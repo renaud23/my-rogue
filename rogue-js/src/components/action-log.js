@@ -84,6 +84,10 @@ function peekPosition(state) {
   return [`Vous marchez sur ${tile.desc}${weaponMsg}.`, ...objects];
 }
 
+function peekShootMessage(state) {
+  return ["Shoot action, todo !"];
+}
+
 function peekMessages(state) {
   const { player } = state;
   const { action } = player;
@@ -95,6 +99,8 @@ function peekMessages(state) {
         return peekMenu(state);
       case PLAYER_ACTIONS.action:
         return peekMenu(state);
+      case PLAYER_ACTIONS.shoot:
+        return peekShootMessage(state);
       default:
     }
   }

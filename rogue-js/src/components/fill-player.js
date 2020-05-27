@@ -31,12 +31,13 @@ function fillAction(tiles, state, rect) {
           ...TILES.unknow,
           color: "red",
         });
-      case PLAYER_ACTIONS.action: {
+      case PLAYER_ACTIONS.shoot: {
         return fillHelp(tiles, state, rect, {
           ...TILES.ironSight,
-          color: "yellow",
+          color: "red",
         });
       }
+
       default:
         return tiles;
     }

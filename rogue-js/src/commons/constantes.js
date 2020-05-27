@@ -20,4 +20,5 @@ export const PLAYER_ACTIONS = {
   help: "player-action/help",
   menu: "player-action/menu",
   action: "player-action/action",
+  shoot: "player-action/shoot",
 };

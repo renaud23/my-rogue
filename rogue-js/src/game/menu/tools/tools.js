@@ -13,6 +13,7 @@ export function buildPlayer({
   active = 0,
   header = ["MENU", "----"],
   footer = [" ", "Validez avec le bouton A.", "Sortir avec le boutton B."],
+  ...args
 }) {
   return {
     ...player,
@@ -22,6 +23,7 @@ export function buildPlayer({
       active,
       header,
       footer,
+      ...args,
     },
   };
 }

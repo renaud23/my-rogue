@@ -22,22 +22,21 @@ function checkInventory(inventory, currentWeapon, nextWeapon) {
   return [removeObject(inventory, nextWeapon), true];
 }
 
-function createEquipWeapon(weapon) {
-  return function (state) {
-    const { player } = state;
-    const { inventory, weapon: current } = player;
-    const [nextInventory, done] = checkInventory(inventory, current, weapon);
-    const nextPlayer = {
-      ...player,
-      weapon,
-      inventory: nextInventory,
-      action: null,
-    };
-    return {
-      ...state,
-      player: done ? consumeMove(nextPlayer) : { ...player, action: null },
-    };
+function equipWeaponTodo(state) {
+  const { player } = state;
+  const { inventory, weapon: current, action } = player;
+  const { object: weapon } = action;
+  const [nextInventory, done] = checkInventory(inventory, current, weapon);
+  const nextPlayer = {
+    ...player,
+    weapon,
+    inventory: nextInventory,
+    action: null,
+  };
+  return {
+    ...state,
+    player: done ? consumeMove(nextPlayer) : { ...player, action: null },
   };
 }
 
-export default createEquipWeapon;
+export default equipWeaponTodo;

@@ -25,7 +25,7 @@ function activateHelp(state, event) {
     case PAD_BUTTON.down:
     case PAD_BUTTON.left:
     case PAD_BUTTON.right:
-      return next;
+      return { ...next, activate: activateHelp };
     default:
       return { activate, player: { ...player, action: null }, ...rest };
   }
