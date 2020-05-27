@@ -66,14 +66,22 @@ function peekHelp(state) {
   return [...messages, ...objects, ...ennemies];
 }
 
+function peekWeaponMessage(weapon) {
+  // const {desc} = weapon
+  return weapon
+    ? `, ${weapon.desc} à la main`
+    : ", sans rien pour vous défendre";
+}
+
 function peekPosition(state) {
   const { player, dungeon } = state;
-  const { position, currentLevel } = player;
+  const { position, currentLevel, weapon } = player;
   const data = dungeon.getData(currentLevel);
   const objects = peekObjectMessages(state, currentLevel, position);
   const tile = getTile(data[position]);
+  const weaponMsg = peekWeaponMessage(weapon);
 
-  return [`Vous marchez sur ${tile.desc}.`, ...objects];
+  return [`Vous marchez sur ${tile.desc}${weaponMsg}.`, ...objects];
 }
 
 function peekMessages(state) {
