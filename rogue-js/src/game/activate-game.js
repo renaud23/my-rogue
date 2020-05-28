@@ -59,27 +59,8 @@ function activateEnnemies(state) {
   return [nextState, nextEnnemies, end];
 }
 
-// function activate(state) {
-//   const [nextState, nextEnnemies, end] = activateEnnemies(state);
-//   if (end) {
-//     return { ...nextState, ennemies: nextEnnemies };
-//   }
-//   return activate({ ...nextState, ennemies: nextEnnemies });
-// }
-
-// function playTurn(state) {
-//   const { player } = state;
-//   if (isTurnFinish(player)) {
-//     return activate({ ...state, player: nextTurn(player) });
-//   }
-//   return [state];
-// }
-
-// export default playTurn;
-
 function activateGame(state) {
   const [nextState, nextEnnemies, end] = activateEnnemies(state);
-
   return [{ ...nextState, ennemies: nextEnnemies }, end];
 }
 

@@ -61,13 +61,21 @@ function activatePlayer(state, event) {
   return { activate, ...state };
 }
 
+/**
+ * Main loop
+ * @param {*} state
+ * @param {*} event
+ */
 function activate(state, event) {
   const { player } = state;
   if (!isTurnFinish(player)) {
+    // TODO remove dead ennemies.
     return activatePlayer(state, event);
   }
   const [nextState, endTurn] = activateGame(state);
+  // TODO check status player : dead ?
   if (endTurn) {
+    // TODO activate other things if necessary.
     const np = nextTurn(player);
     return { ...nextState, player: { ...np }, activate };
   }
