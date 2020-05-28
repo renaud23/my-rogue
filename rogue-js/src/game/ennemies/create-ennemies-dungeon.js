@@ -25,7 +25,6 @@ export function createRatsDungeon(state) {
     .reduce(function (a, _, level) {
       return [...a, createLevelRat(state, level)];
     }, []);
-
   return rats;
 }
 

@@ -2,7 +2,8 @@ $buttonSize: 20px;
 $directionSize: 15px;
 
 .pad {
- display:inline-block;
+  background-color: black;
+ display:block;
   .pad-container {
     background-color: lightgrey;
     padding: 10px 10px;

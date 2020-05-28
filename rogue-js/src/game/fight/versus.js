@@ -1,5 +1,7 @@
 import { randomInt } from "../../commons";
 
+// ("toto est un gros <blue>con</blue>");
+
 function computeAR(o) {
   const { stats } = o;
   const { strength, luck, level } = stats;
@@ -21,8 +23,9 @@ function computeDR(o) {
 function versus(attacker, defender, weapon) {
   const AR = computeAR(attacker);
   const DR = computeDR(defender);
+  console.log("fight", attacker.stats, defender.stats);
   if (AR > DR) {
-    console.log("attack success !", attacker, defender);
+    console.log("attack success !");
     // remove life
   }
 

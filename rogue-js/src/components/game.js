@@ -18,6 +18,7 @@ import { createDungeon } from "../game/dungeon";
 import { createPlayer } from "../game/player";
 import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
+import ConsoleLog from "./console-log";
 import "./render-game.scss";
 
 function initialize() {
@@ -67,32 +68,34 @@ function Game() {
 
   return (
     <>
-      <Pad />
-      <button
-        onClick={function () {
-          const {
-            dungeon: dung,
-            player,
-            ennemies,
-            objects,
-            callback,
-          } = initialize();
-          setDungeon(dung);
-          setPlayer(player);
-          setEnnemies(ennemies);
-          setObjects(objects);
-          setActivate({ cally: callback });
-        }}
-      >
-        renew
-      </button>
       <div className="game">
-        {/* <RenderDungeon viewSize={fov + 1} /> */}
-        <RenderDungeon2 viewSize={fov + 1} />
-        <ActionConsole />
+        <div className="game-row">
+          <RenderDungeon2 viewSize={fov + 1} />
+          <ActionConsole />
+          <div className="game-paddle">
+            <Pad />
+            <button
+              onClick={function () {
+                const {
+                  dungeon: dung,
+                  player,
+                  ennemies,
+                  objects,
+                  callback,
+                } = initialize();
+                setDungeon(dung);
+                setPlayer(player);
+                setEnnemies(ennemies);
+                setObjects(objects);
+                setActivate({ cally: callback });
+              }}
+            >
+              renew
+            </button>
+          </div>
+        </div>
+        <ConsoleLog />
       </div>
-
-      {/* <GlobalRender /> */}
     </>
   );
 }

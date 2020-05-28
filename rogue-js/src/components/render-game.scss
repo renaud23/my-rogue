@@ -1,25 +1,50 @@
+@mixin preRender {
+  background-color: black;
+  color: white;
+  overflow-y: auto;
+  // overflow-x: visible;
+
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word;
+
+  margin: 0;
+}
+
+$backgroundColor:  black ;
+
 .game {
-  display: flex;
-  flex-direction: row;
-  .game-screen {
-    font-size: 12px;
-    line-height: 12px;
-    font-family: Consolas, monaco, monospace;
-    background-color: black;
+  display: inline-block;
+  .game-row {
+    display: flex;
+    flex-direction: row;
+    .game-screen {
+      font-size: 12px;
+      line-height: 12px;
+      font-family: Consolas, monaco, monospace;
+      background-color: $backgroundColor;
+      @include preRender();
+      overflow: visible;
+    }
+
+    .action-console {
+      width: 350px;
+
+      @include preRender();
+    }
+    .game-paddle {
+      float: left;
+      background-color: $backgroundColor;
+    }
   }
 
-  .action-console {
-    width: 350px;
-    // height: 200px;
-    background-color: black;
-    color: white;
-    overflow-y: auto;
-    // overflow-x: visible;
+ 
 
-    white-space: pre-wrap; /* css-3 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word;
+  .console-log {
+    @include preRender();
+
+    height: 150px;
   }
 }
