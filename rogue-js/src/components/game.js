@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { isTurnFinish } from "../game/commons";
 import { padEvent } from "../game";
-// import RenderDungeon, { GlobalRender } from "./game-render";
 import RenderDungeon2 from "./game-render-2";
 import {
   dungeonState,
@@ -10,6 +9,7 @@ import {
   activateState,
   ennemiesState,
   objectsState,
+  messagesState,
 } from "../recoil";
 import { createObjectDungeon } from "../game/objects";
 import { activate as cally } from "../game";
@@ -26,8 +26,11 @@ function initialize() {
   const player = createPlayer(dungeon, 8);
   const objects = createObjectDungeon({ dungeon });
   const ennemies = createEnnemiesDungeon({ dungeon });
+  const messages = [
+    "Un cri déchire la nuit. Vous frémissez à cet écho sinistre, dépourvu de la moindre humanité.",
+  ];
 
-  return { dungeon, player, objects, ennemies, callback: cally };
+  return { dungeon, player, objects, ennemies, messages, callback: cally };
 }
 
 function Game() {
@@ -36,13 +39,14 @@ function Game() {
   const [activate, setActivate] = useRecoilState(activateState);
   const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
   const [objects, setObjects] = useRecoilState(objectsState);
+  const [messages, setMessages] = useRecoilState(messagesState);
   const { fov } = player;
 
   useEffect(
     function () {
       if (dungeon && isTurnFinish(player)) {
         const what = activate.cally(
-          { dungeon, player, objects, ennemies },
+          { dungeon, player, objects, ennemies, messages },
           padEvent(null)
         );
         setActivate({ cally: what.activate });
@@ -50,6 +54,7 @@ function Game() {
         setPlayer(what.player);
         setObjects(what.objects);
         setEnnemies(what.ennemies);
+        setMessages(what.messages);
       }
     },
     [
@@ -63,6 +68,8 @@ function Game() {
       setObjects,
       setPlayer,
       setEnnemies,
+      messages,
+      setMessages,
     ]
   );
 
@@ -81,12 +88,14 @@ function Game() {
                   player,
                   ennemies,
                   objects,
+                  messages,
                   callback,
                 } = initialize();
                 setDungeon(dung);
                 setPlayer(player);
                 setEnnemies(ennemies);
                 setObjects(objects);
+                setMessages(messages);
                 setActivate({ cally: callback });
               }}
             >

@@ -2,6 +2,14 @@ import { randomInt } from "../../commons";
 
 // ("toto est un gros <blue>con</blue>");
 
+function getWin(att, deff) {
+  return `<yellow>Attaque réussie, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.`;
+}
+
+function getLoose(att, deff) {
+  return `<yellow>Attaque échec, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.`;
+}
+
 function computeAR(o) {
   const { stats } = o;
   const { strength, luck, level } = stats;
@@ -23,13 +31,12 @@ function computeDR(o) {
 function versus(attacker, defender, weapon) {
   const AR = computeAR(attacker);
   const DR = computeDR(defender);
-  console.log("fight", attacker.stats, defender.stats);
   if (AR > DR) {
-    console.log("attack success !");
     // remove life
+    return [attacker, defender, getWin(attacker, defender)];
   }
 
-  return [attacker, defender];
+  return [attacker, defender, getLoose(attacker, defender)];
 }
 
 export default versus;

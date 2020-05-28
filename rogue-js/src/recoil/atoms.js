@@ -28,3 +28,8 @@ export const objectsState = atom({
   key: "objectsState",
   default: [],
 });
+
+export const messagesState = atom({
+  key: "messagesState",
+  default: [],
+});

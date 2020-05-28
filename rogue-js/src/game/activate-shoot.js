@@ -41,7 +41,6 @@ function moveIronSight(state, event) {
       return {
         ...shootTodo(next),
         activate,
-        player: { ...player, action: null },
       };
     case PAD_BUTTON.up:
     case PAD_BUTTON.down:

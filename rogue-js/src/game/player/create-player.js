@@ -10,6 +10,7 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
   const currentLevel = 0;
   const position = dungeon.peekEmptyTile(currentLevel);
   const player = {
+    desc: "Fitz",
     position,
     fov,
     action: null,
