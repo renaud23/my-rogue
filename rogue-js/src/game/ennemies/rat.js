@@ -1,4 +1,3 @@
-import { peekOne, randomInt } from "../../commons";
 import {
   getSegment,
   antecedentPoint,
@@ -6,9 +5,9 @@ import {
   pointProjection,
 } from "../../commons";
 import { buildTurnPlay } from "../commons";
-import { isVisiblePosition, isEmptyPosition } from "../commons";
-
-let INDEX = 0;
+import { versus } from "../fight";
+import { createStats } from "../fight";
+import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
 
 function canSeePlayer(state, ennemy) {
   const { dungeon, player } = state;
@@ -35,8 +34,14 @@ function canSeePlayer(state, ennemy) {
   return false;
 }
 
-function canBite(state, rat) {
-  return false;
+function canBite(state, enemy) {
+  const { player } = state;
+  const { position: pp } = player;
+  const { position } = enemy;
+  const vois = getPositions(state, position, 1);
+  return vois.reduce(function (a, pos) {
+    return a || pos === pp;
+  }, false);
 }
 
 function getVariation(delta) {
@@ -76,59 +81,59 @@ function moveToPlayer(state, ennemy) {
   return [ex, ey];
 }
 
-function follow(state, ennemy) {
+function follow(state, enemy) {
   const { dungeon, player } = state;
   const { currentLevel, position: pPos } = player;
-  const { position: ePos } = ennemy;
+  const { position: ePos } = enemy;
   const dw = dungeon.getWidth(currentLevel);
 
   //
-  const [nx, ny] = moveToPlayer(state, ennemy);
+  const [nx, ny] = moveToPlayer(state, enemy);
   const nePos = nx + ny * dw;
 
   if (nePos === ePos || nePos === pPos) {
-    return [state, { ...ennemy, activate: sleep }];
+    return [state, { ...enemy, activate: sleep }];
   }
 
-  return [state, { ...ennemy, position: nePos, activate: follow }];
+  return [state, { ...enemy, position: nePos, activate: follow }];
 }
 
 function sleep(state, rat) {
   const { player } = state;
   const { position: pp } = player;
   if (canSeePlayer(state, rat)) {
+    if (canBite(state, rat)) {
+      const [nextRat, nextPlayer] = versus(rat, player, {
+        /** TODO */
+      });
+      return [{ ...state, player: nextPlayer }, nextRat];
+    }
     return follow(state, rat);
   }
   return [state, rat];
 }
 
-function createRat() {
+export function createRat(xpLevel = 1) {
   return {
     activate: sleep,
     fov: 8,
     turn: buildTurnPlay(2),
     desc: "un rat",
+    stats: { ...createStats(), level: xpLevel, life: 100 },
   };
 }
 
-function createLevelRat(state, level) {
-  const { dungeon } = state;
-  const how = 2 + randomInt(3);
-  return new Array(how).fill(null).map(function () {
-    const position = peekOne(dungeon.getEmptyTiles(level));
-    return { id: `rat-${INDEX++}`, position, level, ...createRat() };
-  });
-}
+/*
 
-export function createRatsDungeon(state) {
-  const { dungeon } = state;
-  const dungeonHeight = dungeon.getDungeonHeight();
-
-  const rats = new Array(dungeonHeight)
-    .fill(null)
-    .reduce(function (a, _, level) {
-      return [...a, createLevelRat(state, level)];
-    }, []);
-
-  return rats;
-}
+if seePlayer
+  path = []
+  lastPos = posPlayer
+  return moveTo(lastPos)
+if lastPos !== null
+  path = A*(lastPos)
+  lastPos = undefined
+  return consume(path)
+if path not empty
+  return consume(path)
+return sleep
+*/
