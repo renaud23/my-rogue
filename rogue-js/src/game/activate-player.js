@@ -1,5 +1,6 @@
 import { movePlayer } from "./player";
-import { isTurnFinish, nextTurn } from "./commons";
+import { isTurnFinish, nextTurn, appendMessages, fillMessage } from "./commons";
+import PATTERNS from "./message-patterns";
 import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
@@ -66,6 +67,7 @@ function activatePlayer(state, event) {
  * @param {*} state
  * @param {*} event
  */
+
 function activate(state, event) {
   const { player } = state;
   if (!isTurnFinish(player)) {
@@ -77,7 +79,11 @@ function activate(state, event) {
   if (endTurn) {
     // TODO activate other things if necessary.
     const np = nextTurn(player);
-    return { ...nextState, player: { ...np }, activate };
+    return {
+      ...appendMessages(nextState, fillMessage(PATTERNS.nextTurn, np)),
+      player: { ...np },
+      activate,
+    };
   }
   return { ...nextState, activate };
 }

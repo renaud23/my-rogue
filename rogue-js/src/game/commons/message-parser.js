@@ -39,3 +39,16 @@ export function fillMessage(message, params) {
 
   return transformation.join("");
 }
+
+/**
+ *
+ * @param {*} state
+ * @param {*} message
+ */
+export function appendMessages(state, message) {
+  if (!message) {
+    return state;
+  }
+  const { messages } = state;
+  return { ...state, messages: [...messages, message] };
+}
