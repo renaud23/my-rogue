@@ -136,7 +136,11 @@ function activateAction(state, event) {
       player,
       type: PLAYER_ACTIONS.navigate,
       header: ["ACTIONS", "-------"],
-      footer: [" ", "Sortir avec le bouton B."],
+      footer: [
+        " ",
+        "Entrer dans le menu avec le bouton A.",
+        "Sortir avec le bouton B.",
+      ],
       options: getOptions(ns),
       position: getActionPosition(ns),
       color: "blue",

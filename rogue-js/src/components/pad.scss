@@ -1,16 +1,50 @@
 $buttonSize: 20px;
 $directionSize: 15px;
+$paddleColor: Gainsboro;
 
 .pad {
   background-color: black;
- display:block;
+  display: block;
   .pad-container {
-    background-color: lightgrey;
+    position: relative;
+    .pad-block-left {
+      position: absolute;
+      left: 0;
+      z-index: 0;
+      background-color: $paddleColor;
+      width: 20%;
+      border-radius: 50% 0 0 50%;
+      height: 100%;
+    }
+    .pad-block-right {
+      position: absolute;
+      right: 0;
+      z-index: 0;
+      background-color: $paddleColor;
+      width: 20%;
+      border-radius: 0 50%  50% 0;
+      height: 100%;
+    }
+    .pad-block-center {
+      // display: none;
+      position: absolute;
+      left: 0;
+      z-index: 0;
+      margin-left: 20%;
+      background-color: $paddleColor;
+      width: 60%; 
+      height: 100%;
+    }
+
+    background-color: transparent;
+    border-radius: 50%;
     padding: 10px 10px;
     border-radius: 2px 2px;
     display: flex;
-  flex-direction: row;
+    flex-direction: row;
     .pad-cross {
+      z-index: 1;
+      margin-top: 10%;
       display: inline-block;
       padding: 10px 10px;
       height: 45px;
@@ -54,6 +88,8 @@ $directionSize: 15px;
       width: 50px;
     }
     .pad-buttons {
+      z-index: 1;
+      margin-top: 10%;
       background-color: darkgray;
       padding: 5px 5px;
       border-radius: 50%;
@@ -63,6 +99,7 @@ $directionSize: 15px;
         margin: 0;
         padding: 0;
         height: $buttonSize;
+        padding: 3px 0 0 3px;
         .button-blank {
           display: inline-block;
           width: $buttonSize;
@@ -70,6 +107,7 @@ $directionSize: 15px;
           background-color: transparent;
         }
         .pad-button {
+         
           display: inline-block;
           width: $buttonSize;
           height: $buttonSize;

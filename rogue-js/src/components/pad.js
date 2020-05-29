@@ -37,6 +37,9 @@ function Pad() {
   return (
     <div className="pad">
       <div className="pad-container">
+        <span className="pad-block-left"></span>
+        <span className="pad-block-center"></span>
+        <span className="pad-block-right"></span>
         <div className="pad-cross">
           <div className="pad-row">
             <span className="blank"></span>

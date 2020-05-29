@@ -27,7 +27,7 @@ function initialize() {
   const objects = createObjectDungeon({ dungeon });
   const ennemies = createEnnemiesDungeon({ dungeon });
   const messages = [
-    "Un cri déchire la nuit. Son echo sinistre vous plonge dans la torpeur. (tu flippes comme une tarlouze)",
+    "<red>Un cri déchire la nuit. Son echo sinistre vous plonge dans la torpeur.</red> (tu flippes comme une tarlouze)",
   ];
 
   return { dungeon, player, objects, ennemies, messages, callback: cally };
@@ -42,37 +42,6 @@ function Game() {
   const [messages, setMessages] = useRecoilState(messagesState);
   const { fov } = player;
 
-  // useEffect(
-  //   function () {
-  //     if (dungeon && isTurnFinish(player)) {
-  //       const what = activate.cally(
-  //         { dungeon, player, objects, ennemies, messages },
-  //         padEvent({ button: "fictif" })
-  //       );
-  //       setActivate({ cally: what.activate });
-  //       setDungeon(what.dungeon);
-  //       setPlayer(what.player);
-  //       setObjects(what.objects);
-  //       setEnnemies(what.ennemies);
-  //       setMessages(what.messages);
-  //     }
-  //   },
-  //   [
-  //     player,
-  //     setActivate,
-  //     dungeon,
-  //     objects,
-  //     activate,
-  //     ennemies,
-  //     setDungeon,
-  //     setObjects,
-  //     setPlayer,
-  //     setEnnemies,
-  //     messages,
-  //     setMessages,
-  //   ]
-  // );
-
   return (
     <>
       <div className="game">
@@ -81,29 +50,29 @@ function Game() {
           <ActionConsole />
           <div className="game-paddle">
             <Pad />
-            <button
-              onClick={function () {
-                const {
-                  dungeon: dung,
-                  player,
-                  ennemies,
-                  objects,
-                  messages,
-                  callback,
-                } = initialize();
-                setDungeon(dung);
-                setPlayer(player);
-                setEnnemies(ennemies);
-                setObjects(objects);
-                setMessages(messages);
-                setActivate({ cally: callback });
-              }}
-            >
-              renew
-            </button>
           </div>
         </div>
         <ConsoleLog />
+        <button
+          onClick={function () {
+            const {
+              dungeon: dung,
+              player,
+              ennemies,
+              objects,
+              messages,
+              callback,
+            } = initialize();
+            setDungeon(dung);
+            setPlayer(player);
+            setEnnemies(ennemies);
+            setObjects(objects);
+            setMessages(messages);
+            setActivate({ cally: callback });
+          }}
+        >
+          renew
+        </button>
       </div>
     </>
   );
