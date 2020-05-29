@@ -12,7 +12,7 @@ function resolveLevel({ level, player, action }) {
       }
       return [[...currLevel, ennemy], currPlayer, currMsg];
     },
-    [[], player]
+    [[], player, []]
   );
 }
 
@@ -32,11 +32,11 @@ function shootTodo(state) {
       }
       return [[...currEnnemies, level], currPlayer, currMsg];
     },
-    [[], player]
+    [[], player, []]
   );
   return {
     ...state,
-    messages: newMessage ? [...messages, newMessage] : messages,
+    messages: [...messages, ...newMessage],
     ennemies: nextEnnemies,
     player: consumeMove({ ...nextPlayer, action: null }),
   };

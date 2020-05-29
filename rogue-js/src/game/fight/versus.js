@@ -1,13 +1,33 @@
 import { randomInt } from "../../commons";
+import { fillMessage } from "../commons";
 
-// ("toto est un gros <blue>con</blue>");
+// const test = {
+//   att: { desc: "Renaud" },
+//   deff: { desc: "un rat", stats: { level: 10 } },
+// };
+// console.log(
+//   interpreter(
+//     "<yellow>Attaque réussie, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.",
+//     test
+//   )
+// );
 
 function getWin(att, deff) {
-  return `<yellow>Attaque réussie, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.`;
+  return [
+    fillMessage(
+      "<yellow>Attaque réussie, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.",
+      { att, deff }
+    ),
+  ];
 }
 
 function getLoose(att, deff) {
-  return `<yellow>Attaque échec, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.`;
+  return [
+    fillMessage(
+      "<yellow>Attaque échec, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.",
+      { att, deff }
+    ),
+  ];
 }
 
 function computeAR(o) {

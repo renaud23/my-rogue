@@ -110,7 +110,7 @@ function sleep(state, rat) {
         {
           ...state,
           player: nextPlayer,
-          messages: nm ? [...messages, nm] : messages,
+          messages: [...messages, ...nm],
         },
         nextRat,
       ];
