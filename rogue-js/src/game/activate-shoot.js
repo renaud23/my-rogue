@@ -2,6 +2,7 @@ import { PAD_BUTTON, PLAYER_ACTIONS } from "../commons";
 import { navigateMap } from "./commons";
 import activate from "./activate-player";
 import { shootTodo } from "./todo";
+import { isNeedWait } from "./activate-wait";
 
 export function buildPlayer({ player, position, color }) {
   const { weapon } = player;
@@ -38,10 +39,10 @@ function moveIronSight(state, event) {
     case PAD_BUTTON.buttonB:
       return { ...state, activate, player: { ...player, action: null } };
     case PAD_BUTTON.buttonA:
-      return {
+      return isNeedWait({
         ...shootTodo(next),
         activate,
-      };
+      });
     case PAD_BUTTON.up:
     case PAD_BUTTON.down:
     case PAD_BUTTON.left:

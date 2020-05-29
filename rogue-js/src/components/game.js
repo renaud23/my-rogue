@@ -42,36 +42,36 @@ function Game() {
   const [messages, setMessages] = useRecoilState(messagesState);
   const { fov } = player;
 
-  useEffect(
-    function () {
-      if (dungeon && isTurnFinish(player)) {
-        const what = activate.cally(
-          { dungeon, player, objects, ennemies, messages },
-          padEvent(null)
-        );
-        setActivate({ cally: what.activate });
-        setDungeon(what.dungeon);
-        setPlayer(what.player);
-        setObjects(what.objects);
-        setEnnemies(what.ennemies);
-        setMessages(what.messages);
-      }
-    },
-    [
-      player,
-      setActivate,
-      dungeon,
-      objects,
-      activate,
-      ennemies,
-      setDungeon,
-      setObjects,
-      setPlayer,
-      setEnnemies,
-      messages,
-      setMessages,
-    ]
-  );
+  // useEffect(
+  //   function () {
+  //     if (dungeon && isTurnFinish(player)) {
+  //       const what = activate.cally(
+  //         { dungeon, player, objects, ennemies, messages },
+  //         padEvent({ button: "fictif" })
+  //       );
+  //       setActivate({ cally: what.activate });
+  //       setDungeon(what.dungeon);
+  //       setPlayer(what.player);
+  //       setObjects(what.objects);
+  //       setEnnemies(what.ennemies);
+  //       setMessages(what.messages);
+  //     }
+  //   },
+  //   [
+  //     player,
+  //     setActivate,
+  //     dungeon,
+  //     objects,
+  //     activate,
+  //     ennemies,
+  //     setDungeon,
+  //     setObjects,
+  //     setPlayer,
+  //     setEnnemies,
+  //     messages,
+  //     setMessages,
+  //   ]
+  // );
 
   return (
     <>

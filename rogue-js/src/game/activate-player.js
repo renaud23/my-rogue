@@ -1,13 +1,14 @@
 import { movePlayer } from "./player";
 import { isTurnFinish, nextTurn, appendMessages, fillMessage } from "./commons";
 import PATTERNS from "./message-patterns";
-import { PAD_BUTTON, DIRECTION } from "../commons";
+import { PAD_BUTTON, DIRECTION, PLAYER_ACTIONS } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
 import activateAction from "./activate-action";
 import activateGame from "./activate-game";
 import activateShoot from "./activate-shoot";
 import * as EVENTS from "./events";
+import { isNeedWait } from "./activate-wait";
 
 function witchDirection(button) {
   switch (button) {
@@ -37,29 +38,28 @@ function activateMove(state, action) {
  */
 function activatePlayer(state, event) {
   const { type, payload } = event;
-
   if (type === EVENTS.PAD_EVENT) {
     const { button } = payload;
     switch (button) {
       case PAD_BUTTON.buttonX:
         return activateHelp(state, event);
       case PAD_BUTTON.buttonY:
-        return activateMenu(state, event);
+        return isNeedWait(activateMenu(state, event));
       case PAD_BUTTON.buttonA:
-        return activateAction(state, event);
+        return isNeedWait(activateAction(state, event));
       case PAD_BUTTON.buttonB:
         return activateShoot(state, event);
       case PAD_BUTTON.up:
       case PAD_BUTTON.down:
       case PAD_BUTTON.left:
       case PAD_BUTTON.right:
-        return activateMove(state, event);
+        return isNeedWait(activateMove(state, event));
       default:
-        return { activate, ...state };
+        return { ...state, activate };
     }
   }
 
-  return { activate, ...state };
+  return { ...state, activate };
 }
 
 /**
@@ -85,7 +85,7 @@ function activate(state, event) {
       activate,
     };
   }
-  return { ...nextState, activate };
+  return activate({ ...nextState, activate });
 }
 
 export default activate;

@@ -3,6 +3,7 @@ import { putObject, hasEnoughSpaceFor } from "../player/inventory";
 import { removeObjectDungeon } from "../objects";
 import { fillMessage } from "../commons";
 import PATTERNS from "../message-patterns";
+import { consumeMove } from "../commons";
 
 function createPrendreObjectTodo(object) {
   return function (state) {
@@ -20,7 +21,10 @@ function createPrendreObjectTodo(object) {
         ...state,
         objects: newObjects,
         messages: newMsg,
-        player: { ...player, inventory: putObject(inventory, object) },
+        player: {
+          ...consumeMove(player),
+          inventory: putObject(inventory, object),
+        },
       });
     }
     // TODO msg inventaire plein

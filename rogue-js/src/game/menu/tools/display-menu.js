@@ -1,6 +1,7 @@
 import { PAD_BUTTON } from "../../../commons";
 import activate from "../../activate-player";
 import { navigateOptions } from "../../commons";
+import { isNeedWait } from "../../activate-wait";
 
 export function createDisplayMenu(
   activateButton = PAD_BUTTON.buttonA,
@@ -28,7 +29,7 @@ export function createDisplayMenu(
         const next = options[active].todo(state);
         const { activate: cally } = next;
 
-        return { ...next, activate: cally || activate };
+        return isNeedWait({ ...next, activate: cally || activate });
       }
       default:
         return { ...state, activate: display };

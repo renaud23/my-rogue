@@ -9,7 +9,7 @@ export function addOptionsNumbers(options) {
 
 export function buildPlayer({
   player,
-  options,
+  options = [],
   active = 0,
   type = PLAYER_ACTIONS.menu,
   header = ["MENU", "----"],
