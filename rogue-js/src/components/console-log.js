@@ -53,9 +53,12 @@ function ConsoleLog() {
   const [messages] = useRecoilState(messagesState);
   return (
     <pre className="console-log">
-      {messages.map(function (m, i) {
-        return <div key={i}>{parseMessage(m)}</div>;
-      })}
+      {[...messages]
+        .reverse()
+        .filter((_, i) => i < 100)
+        .map(function (m, i) {
+          return <div key={i}>{parseMessage(m)}</div>;
+        })}
     </pre>
   );
 }

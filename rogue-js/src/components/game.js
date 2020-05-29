@@ -27,7 +27,7 @@ function initialize() {
   const objects = createObjectDungeon({ dungeon });
   const ennemies = createEnnemiesDungeon({ dungeon });
   const messages = [
-    "Un cri déchire la nuit. Vous frémissez à cet écho sinistre, dépourvu de la moindre humanité.",
+    "Un cri déchire la nuit. Son echo sinistre vous plonge dans la torpeur. (tu flippes comme une tarlouze)",
   ];
 
   return { dungeon, player, objects, ennemies, messages, callback: cally };

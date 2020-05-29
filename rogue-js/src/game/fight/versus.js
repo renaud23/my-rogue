@@ -1,33 +1,17 @@
 import { randomInt } from "../../commons";
 import { fillMessage } from "../commons";
-
-// const test = {
-//   att: { desc: "Renaud" },
-//   deff: { desc: "un rat", stats: { level: 10 } },
-// };
-// console.log(
-//   interpreter(
-//     "<yellow>Attaque réussie, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.",
-//     test
-//   )
-// );
+import PATTERNS from "../message-patterns";
 
 function getWin(att, deff) {
-  return [
-    fillMessage(
-      "<yellow>Attaque réussie, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.",
-      { att, deff }
-    ),
-  ];
+  return fillMessage(PATTERNS.attackSuccess, { att, deff });
 }
 
 function getLoose(att, deff) {
-  return [
-    fillMessage(
-      "<yellow>Attaque échec, ${att.desc} sur </yellow><blue>${deff.desc} level ${deff.stats.level}</blue>.",
-      { att, deff }
-    ),
-  ];
+  return fillMessage(PATTERNS.attackFailure, { att, deff });
+}
+
+function getDamages(att, deff, how) {
+  return fillMessage(PATTERNS.damages, { att, deff, how });
 }
 
 function computeAR(o) {
@@ -53,10 +37,14 @@ function versus(attacker, defender, weapon) {
   const DR = computeDR(defender);
   if (AR > DR) {
     // remove life
-    return [attacker, defender, getWin(attacker, defender)];
+    return [
+      attacker,
+      defender,
+      [getWin(attacker, defender), getDamages(attacker, defender, 0)],
+    ];
   }
 
-  return [attacker, defender, getLoose(attacker, defender)];
+  return [attacker, defender, [getLoose(attacker, defender)]];
 }
 
 export default versus;

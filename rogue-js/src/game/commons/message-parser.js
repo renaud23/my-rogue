@@ -14,7 +14,7 @@ function parseOne(match, params) {
   const index = match.index;
   const path = match[1];
   const value = findInPath(path.split("."), params);
-  return [index, length, value || "$"];
+  return [index, length, value === undefined ? "[?]" : value];
 }
 
 export function fillMessage(message, params) {
