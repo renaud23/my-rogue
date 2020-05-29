@@ -10,11 +10,30 @@ function mergeParts(...args) {
   }, "");
 }
 
+function printStats(name, color) {
+  return `<${color}>(\${${name}.stats.strength},\${${name}.stats.agility},\${${name}.stats.luck},\${${name}.stats.endurance})</${color}>`;
+}
+
+function printPlayer(name, colorA = "yellow", colorB = "DodgerBlue") {
+  return `<${colorA}>\${${name}.desc}</${colorA}>${printStats(name, colorB)}`;
+}
+
 export default {
-  attackSuccess:
-    "<yellow>Attaque réussie, </yellow><OrangeRed>${att.desc}</OrangeRed><yellow> sur </yellow><MediumTurquoise>${deff.desc} level ${deff.stats.level}</MediumTurquoise>.",
-  attackFailure:
-    "<yellow>Attaque échec, </yellow><OrangeRed>${att.desc}</OrangeRed><yellow> sur </yellow><MediumTurquoise>${deff.desc} level ${deff.stats.level}</MediumTurquoise>.",
+  attack: mergeParts(
+    printPlayer("att"),
+    yellow(" attaque "),
+    printPlayer("deff")
+  ),
+  attackSuccess: mergeParts(
+    printPlayer("att"),
+    yellow(" réussi son attaque sur "),
+    printPlayer("deff")
+  ),
+  attackFailure: mergeParts(
+    printPlayer("att"),
+    yellow(" rate son attaque sur "),
+    printPlayer("deff")
+  ),
   damages:
     "<yellow>${att.desc} inflige </yellow><red>${how}</red><yellow> a ${deff.desc}</yellow>",
   nextTurn: mergeParts(
