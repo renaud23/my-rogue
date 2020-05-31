@@ -1,4 +1,4 @@
-import { movePlayer } from "./player";
+import { movePlayer, updateMemory } from "./player";
 import { isTurnFinish, nextTurn, appendMessages, fillMessage } from "./commons";
 import PATTERNS from "./message-patterns";
 import { PAD_BUTTON, DIRECTION } from "../commons";
@@ -26,9 +26,9 @@ function witchDirection(button) {
 }
 
 function activateMove(state, action) {
-  const { player, ...rest } = state;
-  const np = movePlayer(witchDirection(action.payload.button), state);
-  return { ...rest, activate, player: np };
+  const newPlayer = movePlayer(witchDirection(action.payload.button), state);
+  const playerMemory = updateMemory({ ...state, player: newPlayer });
+  return { ...state, activate, player: playerMemory };
 }
 
 /**
@@ -61,11 +61,6 @@ function activatePlayer(state, event) {
 
   return { ...state, activate };
 }
-
-// function activateWaitEnnemies(state) {
-//   console.log("wait");
-//   return { ...state, activateWaitEnnemies };
-// }
 
 /**
  * Main loop

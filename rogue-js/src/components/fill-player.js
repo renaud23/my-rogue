@@ -59,7 +59,7 @@ function fillAction(tiles, state, rect) {
 function fill(tiles, state, rect) {
   const { dungeon, player } = state;
   const { startX, startY, width } = rect;
-  const { position, visibles, currentLevel } = player;
+  const { position, visibles, currentLevel, memory } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
 
   return tiles.map(function (tile, i) {
@@ -71,7 +71,10 @@ function fill(tiles, state, rect) {
       return TILES.player;
     }
     if (visibles.indexOf(tilePos) !== -1) {
-      return { ...tile, color: tile.color || "orange" };
+      return { ...tile, color: tile.color || "Gold" };
+    }
+    if (memory && memory[currentLevel] && tilePos in memory[currentLevel]) {
+      return { ...tile, color: "Indigo" };
     }
 
     return TILES.unknow;

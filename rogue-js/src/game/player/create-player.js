@@ -13,6 +13,7 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
     desc: "Fitz",
     position,
     fov,
+    memory: [],
     action: null,
     inventory: null,
     weapon: null,

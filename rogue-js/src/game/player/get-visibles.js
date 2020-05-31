@@ -38,10 +38,6 @@ function getVisibles(state) {
       const x = ix + startX;
       const y = iy + startY;
       const candidat = [x, y];
-      // const candidat = startX + ix + (startY + iy) * width;
-      // if (px === x || py === y) {
-      //   return [...a, startX + ix + (startY + iy) * width];
-      // }
       const distance = distanceEucl2(playerPoint, candidat);
 
       if (distance <= limite) {
@@ -53,37 +49,6 @@ function getVisibles(state) {
 
       return a;
     }, []);
-
-  // function isVisible(posPlayer, pos) {
-  //   console.log(
-  //     getSegment(posPlayer, pos),
-  //     getSegment2(fuck(posPlayer), fuck(pos))
-  //   );
-  //   return getSegment2(posPlayer, pos).reduce(function (a, [x, y]) {
-  //     const p = x + y * width;
-
-  //     return (
-  //       a &&
-  //       (isVisiblePosition(state, currentLevel, p) ||
-  //         (x === pos.x && y === pos.y))
-  //     );
-  //   }, true);
-  // }
-
-  // const viewed = new Array(fovWidth * fovHeight)
-  //   .fill(-1)
-  //   .reduce(function (a, _, i) {
-  //     const ix = startX + (i % fovWidth);
-  //     const iy = startY + Math.trunc(i / fovWidth);
-  //     const point = [ix, iy];
-  //     const dist = distanceEucl2(playerPoint, point);
-  //     if (dist <= limite && isVisible(playerPoint, point, dungeon, player)) {
-  //       return [...a, ix + iy * width];
-  //     }
-  //     return a;
-  //   }, []);
-
-  // return viewed;
 
   return visibles;
 }
