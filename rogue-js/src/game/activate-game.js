@@ -1,62 +1,51 @@
 import { isTurnFinish, nextTurn, consumeMove } from "./commons";
 
-function refillEnnemy(state, ennemy) {
-  const { ennemies, player } = state;
-  const { currentLevel } = player;
-  const ne = ennemies.map(function (level, i) {
-    if (i === currentLevel) {
+function refillEnemy(ennemies, enemy, index) {
+  return ennemies.map(function (level, i) {
+    if (i === index) {
       return level.map(function (e) {
-        if (e.id === ennemy.id) {
-          return ennemy;
+        if (e.id === enemy.id) {
+          return enemy;
         }
         return e;
       });
     }
     return level;
   });
-
-  return { ...state, ennemies: ne };
 }
 
-function activateLevel(state, level) {
-  return level.reduce(
-    function ([currState, currLevel, currEnd], ennemy) {
-      const [newState, newEnnemy] = ennemy.activate(
-        currState,
-        consumeMove(ennemy)
-      );
-      if (isTurnFinish(newEnnemy)) {
-        return [
-          refillEnnemy(newState, newEnnemy),
-          [...currLevel, nextTurn(newEnnemy)],
-          true,
-        ];
-      }
-      return [
-        refillEnnemy(newState, newEnnemy),
-        [...currLevel, newEnnemy],
-        false,
-      ];
-    },
-    [state, [], true]
-  );
+function nextTurnLevel(ennemies, index) {
+  return ennemies.map(function (level, i) {
+    if (i === index) {
+      return level.map(function (e) {
+        return nextTurn(e);
+      });
+    }
+    return level;
+  });
 }
 
 function activateEnnemies(state) {
   const { ennemies, player } = state;
   const { currentLevel } = player;
+  const level = ennemies[currentLevel];
 
-  const [nextState, nextEnnemies, end] = ennemies.reduce(
-    function ([currState, levels, currEnd], level, i) {
-      if (i === currentLevel) {
-        const [ns, nextLevel, nextEnd] = activateLevel(currState, level);
-        return [ns, [...levels, nextLevel], currEnd && nextEnd];
-      }
-      return [currState, [...levels, level], currEnd];
-    },
-    [state, [], true]
-  );
-  return [nextState, nextEnnemies, end];
+  const nextEnemyToPlay = level.find(function (e) {
+    return !isTurnFinish(e);
+  });
+
+  if (nextEnemyToPlay) {
+    const [newState, newEnemy] = nextEnemyToPlay.activate(
+      state,
+      consumeMove(nextEnemyToPlay)
+    );
+
+    const newEnnemies = refillEnemy(ennemies, newEnemy, currentLevel);
+
+    return [newState, newEnnemies, false];
+  }
+
+  return [state, nextTurnLevel(ennemies, currentLevel), true];
 }
 
 function activateGame(state) {

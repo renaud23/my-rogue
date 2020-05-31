@@ -3,26 +3,6 @@ import activate from "./activate-player";
 import { isTurnFinish } from "./commons";
 import { buildPlayer } from "./menu/tools";
 
-function activateWait(state, event) {
-  const { player } = state;
-  const { payload } = event;
-  const { button } = payload;
-
-  switch (button) {
-    case PAD_BUTTON.buttonA:
-      return activate({
-        ...state,
-        activate,
-        player: { ...player, action: null },
-      });
-    default:
-      return {
-        ...state,
-        activate: activateWait,
-      };
-  }
-}
-
 export function isNeedWait(
   state,
   messages = [
@@ -44,6 +24,26 @@ export function isNeedWait(
     };
   }
   return state;
+}
+
+function activateWait(state, event) {
+  const { player } = state;
+  const { payload } = event;
+  const { button } = payload;
+
+  switch (button) {
+    case PAD_BUTTON.buttonA:
+      return activate({
+        ...state,
+        activate,
+        player: { ...player, action: null },
+      });
+    default:
+      return {
+        ...state,
+        activate: activateWait,
+      };
+  }
 }
 
 export default activateWait;

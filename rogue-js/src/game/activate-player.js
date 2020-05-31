@@ -1,7 +1,7 @@
 import { movePlayer } from "./player";
 import { isTurnFinish, nextTurn, appendMessages, fillMessage } from "./commons";
 import PATTERNS from "./message-patterns";
-import { PAD_BUTTON, DIRECTION, PLAYER_ACTIONS } from "../commons";
+import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
 import activateAction from "./activate-action";
