@@ -1,11 +1,13 @@
 ## à court terme :
+- mémoire du joueur (dungeon's tiles)
 - life & experience
 - coffre et loot
-- dungeon plus complexe
+- donjons plus complexes
 - portes et clés
 - a* à refactor
 - ia rat
 - un autre type d'ennemi
+- keys events listener
 
 ## à moyen terme :
 - kraft
