@@ -97,7 +97,7 @@ function follow(state, enemy) {
     return [state, { ...enemy, activate: sleep }];
   }
 
-  return [state, { ...enemy, position: nePos, activate: follow }];
+  return [state, { ...enemy, position: nePos, activate: sleep }];
 }
 
 function sleep(state, rat) {

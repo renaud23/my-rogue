@@ -37,25 +37,4 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
   };
 }
 
-// export function nextTurn(player) {
-//   const { turn } = player;
-//   const { turnPlay, maxMove } = turn;
-//   return {
-//     ...player,
-//     turn: { ...turn, moveLeft: maxMove, turnPlay: turnPlay + 1 },
-//   };
-// }
-
-// export function consumeMove(player) {
-//   const { turn } = player;
-//   const { moveLeft } = turn;
-//   return { ...player, turn: { ...turn, moveLeft: moveLeft - 1 } };
-// }
-
-// export function isTurnFinish(player) {
-//   const { turn } = player;
-//   const { moveLeft } = turn;
-//   return moveLeft <= 0;
-// }
-
 export default createPlayer;
