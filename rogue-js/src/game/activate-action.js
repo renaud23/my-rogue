@@ -36,10 +36,8 @@ function optionsObjects(objects) {
   return [...options];
 }
 
-function getOptions(state) {
+function getOptions(state, position) {
   const { player, dungeon } = state;
-  const { action } = player;
-  const { position } = action;
   const { currentLevel } = player;
   const data = dungeon.getData(currentLevel);
   const tile = getTile(data[position]);
@@ -60,7 +58,10 @@ function actionTodo(state) {
   const { player } = state;
   const { action } = player;
   const { position } = action;
-  const options = [...getOptions(state), { desc: `exit`, todo: todoExit }];
+  const options = [
+    ...getOptions(state, position),
+    { desc: `exit`, todo: todoExit },
+  ];
 
   return {
     ...state,
@@ -95,6 +96,11 @@ function moveIronSight(state, event) {
     payload: { button },
   } = event;
   const next = navigateMap(state, event, 1);
+  const {
+    player: { action },
+  } = next;
+  const { position } = action;
+
   switch (button) {
     case PAD_BUTTON.buttonB:
       return { ...state, activate, player: { ...player, action: null } };
@@ -113,8 +119,8 @@ function moveIronSight(state, event) {
           type: PLAYER_ACTIONS.navigate,
           header: ["ACTIONS", "-------"],
           footer: [" ", "Sortir avec le bouton B."],
-          options: getOptions(next),
-          position: getActionPosition(next),
+          options: getOptions(state, position),
+          position,
           color: "blue",
           active: -1,
         }),
@@ -125,10 +131,11 @@ function moveIronSight(state, event) {
 function activateAction(state, event) {
   const { player } = state;
   const { position } = player;
+  const options = getOptions(state, position);
 
-  const action = { type: PLAYER_ACTIONS.navigate, position, color: "blue" };
-  const np = { ...player, action };
-  const ns = { ...state, player: np };
+  // const action = { type: PLAYER_ACTIONS.navigate, position, color: "blue" };
+  // const np = { ...player, action };
+  // const ns = { ...state, player: np };
 
   return {
     ...state,
@@ -141,8 +148,8 @@ function activateAction(state, event) {
         "Entrer dans le menu avec le bouton A.",
         "Sortir avec le bouton B.",
       ],
-      options: getOptions(ns),
-      position: getActionPosition(ns),
+      options,
+      position,
       color: "blue",
       active: -1,
     }),
