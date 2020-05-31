@@ -32,6 +32,7 @@ export const WEAPONS_LIST = Object.values(WEAPONS_MAP);
 export function createKnife() {
   const knife = {
     ...WEAPONS_MAP.knife,
+    takeable: true,
     id: `knife-${INDEX++}`,
   };
 
@@ -42,6 +43,7 @@ export function createKnife() {
 export function createSword() {
   const sword = {
     ...WEAPONS_MAP.sword,
+    takeable: true,
     id: `sword-${INDEX++}`,
   };
 

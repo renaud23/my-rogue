@@ -1,7 +1,6 @@
 ## à court terme :
-- mémoire du joueur (dungeon's tiles)
 - life & experience
-- coffre et loot
+- coffre et loot [*]
 - donjons plus complexes
 - portes et clés
 - a* à refactor

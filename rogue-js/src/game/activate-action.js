@@ -26,11 +26,11 @@ function optionsTile(tile) {
 
 function optionsObjects(objects) {
   const options = objects.reduce(function (a, o) {
-    return [
-      ...a,
-      ...o.todo,
-      { desc: `prendre ${o.desc}`, todo: createTakeObjectTodo(o) },
-    ];
+    const { takeable, todo } = o;
+    const todos = [...a, ...todo];
+    return takeable
+      ? [...todos, { desc: `prendre ${o.desc}`, todo: createTakeObjectTodo(o) }]
+      : todos;
   }, []);
 
   return [...options];

@@ -67,6 +67,7 @@ export function createSimple(code, { ...args }) {
     const simple = {
       id: INDEX++,
       ...model,
+      takeable: true,
       ...args,
     };
     simple.todo = [...todo, createMangerTodo(simple)];
