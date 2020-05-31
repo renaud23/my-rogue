@@ -26,11 +26,10 @@ export function isNeedWait(
   return state;
 }
 
-function activateWait(state, event) {
+function activateWait(state, event = { payload: {} }) {
   const { player } = state;
   const { payload } = event;
   const { button } = payload;
-
   switch (button) {
     case PAD_BUTTON.buttonA:
       return activate({

@@ -37,7 +37,7 @@ function peekObjectMessages(state, level, position) {
 function peekMenu(state) {
   const { player } = state;
   const {
-    action: { options, active, header = [], footer = [] },
+    action: { options = [], active, header = [], footer = [] },
   } = player;
   const messages = options.reduce(
     function (a, { desc }, i) {

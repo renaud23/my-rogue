@@ -39,9 +39,7 @@ function activateEnnemies(state) {
       state,
       consumeMove(nextEnemyToPlay)
     );
-
     const newEnnemies = refillEnemy(ennemies, newEnemy, currentLevel);
-
     return [newState, newEnnemies, false];
   }
 

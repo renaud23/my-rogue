@@ -4,10 +4,12 @@ import {
   distanceEucl2,
   pointProjection,
 } from "../../commons";
+import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
 import { versus } from "../fight";
 import { createStats } from "../fight";
 import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
+import { PLAYER_ACTIONS } from "../../commons";
 
 function canSeePlayer(state, ennemy) {
   const { dungeon, player } = state;
@@ -109,7 +111,14 @@ function sleep(state, rat) {
       return [
         {
           ...state,
-          player: nextPlayer,
+          activate: activateWait,
+          player: {
+            ...nextPlayer,
+            action: {
+              type: PLAYER_ACTIONS.menu,
+              header: ["Appuyer sur le bouton A"],
+            },
+          },
           messages: [...messages, ...nm],
         },
         nextRat,

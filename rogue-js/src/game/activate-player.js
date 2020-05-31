@@ -62,6 +62,11 @@ function activatePlayer(state, event) {
   return { ...state, activate };
 }
 
+// function activateWaitEnnemies(state) {
+//   console.log("wait");
+//   return { ...state, activateWaitEnnemies };
+// }
+
 /**
  * Main loop
  * @param {*} state
@@ -74,7 +79,7 @@ function activate(state, event) {
     // TODO remove dead ennemies.
     return activatePlayer(state, event);
   }
-  const [nextState, endTurn] = activateGame(state);
+  const [nextState, endTurn] = activateGame(state, event);
   // TODO check status player : dead ?
   if (endTurn) {
     // TODO activate other things if necessary.
@@ -85,7 +90,8 @@ function activate(state, event) {
       activate,
     };
   }
-  return activate({ ...nextState, activate });
+  const { activate: nextActivate = activate } = nextState;
+  return nextActivate(nextState, event);
 }
 
 export default activate;
