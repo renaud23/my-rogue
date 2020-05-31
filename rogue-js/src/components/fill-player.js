@@ -74,7 +74,7 @@ function fill(tiles, state, rect) {
       return { ...tile, color: tile.color || "Gold" };
     }
     if (memory && memory[currentLevel] && tilePos in memory[currentLevel]) {
-      return { ...tile, color: "Indigo" };
+      return { ...tile, color: "MediumBlue" };
     }
 
     return TILES.unknow;

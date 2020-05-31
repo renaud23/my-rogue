@@ -4,7 +4,7 @@ export const TILES = {
   ground: { code: 0, char: "_", className: "tile-ground", desc: "le sol" },
   rock: {
     code: 1,
-    char: "X",
+    char: "\u2588",
     className: "tile-rock",
     desc: "un mur de pierre",
   },

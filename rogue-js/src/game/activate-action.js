@@ -81,15 +81,6 @@ function activateMenuAction(state, event) {
   };
 }
 
-function getActionPosition(state) {
-  const {
-    player: {
-      action: { position },
-    },
-  } = state;
-  return position;
-}
-
 function moveIronSight(state, event) {
   const { player } = state;
   const {
