@@ -1,6 +1,6 @@
 const colorPart = (color) => (text) => `<${color}>${text}</${color}>`;
 const yellow = colorPart("yellow");
-const red = colorPart("red");
+// const red = colorPart("red");
 const mediumOrchid = colorPart("MediumOrchid");
 const chartreuse = colorPart("Chartreuse");
 
@@ -11,11 +11,11 @@ function mergeParts(...args) {
 }
 
 function printStats(name, color) {
-  return `<${color}>(\${${name}.stats.strength},\${${name}.stats.agility},\${${name}.stats.luck},\${${name}.stats.endurance})</${color}>`;
+  return `<${color}>($[${name}.stats.strength],$[${name}.stats.agility],$[${name}.stats.luck],$[${name}.stats.endurance])</${color}>`;
 }
 
 function printPlayer(name, colorA = "yellow", colorB = "DodgerBlue") {
-  return `<${colorA}>\${${name}.desc}</${colorA}>${printStats(name, colorB)}`;
+  return `<${colorA}>$[${name}.desc]</${colorA}>${printStats(name, colorB)}`;
 }
 
 export default {
@@ -35,15 +35,15 @@ export default {
     printPlayer("deff")
   ),
   damages:
-    "<yellow>${att.desc} inflige </yellow><red>${how}</red><yellow> a ${deff.desc}</yellow>",
+    "<yellow>$[att.desc] inflige </yellow><red>$[how]</red><yellow> a $[deff.desc]</yellow>",
   nextTurn: mergeParts(
     yellow("Tour suivant : "),
-    mediumOrchid("${turn.turnPlay}")
+    mediumOrchid("$[turn.turnPlay]")
   ),
   takeObject: mergeParts(
     yellow("vous ramassez "),
-    chartreuse("${object.desc}")
+    chartreuse("$[object.desc]")
   ),
-  throwObject: mergeParts(yellow("vous posez "), chartreuse("${object.desc}")),
+  throwObject: mergeParts(yellow("vous posez "), chartreuse("$[object.desc]")),
   inventoryFull: yellow("Votre inventaire est plein."),
 };

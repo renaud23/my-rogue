@@ -8,8 +8,6 @@ function parse(matchAll, message) {
   }
   const [data] = matchAll.reduce(
     function ([data, index], e, i) {
-      const p = e[0];
-      const v = e[2];
       const idx = e.index;
       const newIndex = idx + e[0].length;
       const part = message.substr(index, idx - index);
@@ -57,7 +55,12 @@ function ConsoleLog() {
         .reverse()
         .filter((_, i) => i < 100)
         .map(function (m, i) {
-          return <div key={i}>{parseMessage(m)}</div>;
+          return (
+            <div key={i}>
+              <span className="console-log-prompt">></span>
+              {parseMessage(m)}
+            </div>
+          );
         })}
     </pre>
   );

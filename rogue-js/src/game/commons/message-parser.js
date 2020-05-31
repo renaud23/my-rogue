@@ -18,7 +18,7 @@ function parseOne(match, params) {
 }
 
 export function fillMessage(message, params) {
-  const regexp = /\${(.*?)}/g;
+  const regexp = /\$\[(.*?)\]/g;
   const matches = [...message.matchAll(regexp)];
   const operations = matches.map(function (match) {
     return parseOne(match, params);

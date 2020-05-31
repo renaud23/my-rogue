@@ -1,7 +1,4 @@
 import typeObject from "./type-object";
-import { randomInt } from "../../commons";
-import { createMangerTodo } from "./create-simple-todo";
-import { putObject, removeObject } from "../player/inventory";
 
 let INDEX = 0;
 

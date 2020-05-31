@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
-import { isTurnFinish } from "../game/commons";
-import { padEvent } from "../game";
 import RenderDungeon2 from "./game-render-2";
 import {
   dungeonState,
@@ -34,12 +32,12 @@ function initialize() {
 }
 
 function Game() {
-  const [dungeon, setDungeon] = useRecoilState(dungeonState);
+  const setDungeon = useRecoilState(dungeonState)[1];
   const [player, setPlayer] = useRecoilState(playerState);
-  const [activate, setActivate] = useRecoilState(activateState);
-  const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
-  const [objects, setObjects] = useRecoilState(objectsState);
-  const [messages, setMessages] = useRecoilState(messagesState);
+  const setActivate = useRecoilState(activateState)[1];
+  const setEnnemies = useRecoilState(ennemiesState)[1];
+  const setObjects = useRecoilState(objectsState)[1];
+  const setMessages = useRecoilState(messagesState)[1];
   const { fov } = player;
 
   return (

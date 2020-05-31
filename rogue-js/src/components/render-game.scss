@@ -45,6 +45,10 @@ $backgroundColor:  black ;
   .console-log {
     @include preRender();
 
+    .console-log-prompt{
+      margin-right:3px;
+    }
+
     height: 150px;
   }
 }

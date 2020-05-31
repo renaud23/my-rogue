@@ -100,8 +100,6 @@ function peekMessages(state) {
       case PLAYER_ACTIONS.navigate:
       case PLAYER_ACTIONS.action:
       case PLAYER_ACTIONS.shoot:
-        return peekMenu(state);
-      case PLAYER_ACTIONS.shoot:
         return peekShootMessage(state);
       default:
     }

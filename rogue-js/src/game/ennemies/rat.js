@@ -102,7 +102,6 @@ function follow(state, enemy) {
 
 function sleep(state, rat) {
   const { player, messages } = state;
-  const { position: pp } = player;
   if (canSeePlayer(state, rat)) {
     if (canBite(state, rat)) {
       const [nextRat, nextPlayer, nm] = versus(rat, player, {
