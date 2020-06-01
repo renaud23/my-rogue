@@ -1,5 +1,6 @@
 import { randomInt } from "../../commons";
 import { fillMessage } from "../commons";
+import inflictDamages from "./inflict-damages";
 import PATTERNS from "../message-patterns";
 
 function getWinMessage(att, deff, damages) {
@@ -7,11 +8,7 @@ function getWinMessage(att, deff, damages) {
 }
 
 function getLooseMessage(att, deff) {
-  return fillMessage(PATTERNS.attackFailure, { att, deff });
-}
-
-function getDamagesMessage(att, deff, how) {
-  return fillMessage(PATTERNS.damages, { att, deff, how });
+  return PATTERNS.attackFailure;
 }
 
 function computeAR(o) {
@@ -52,13 +49,12 @@ function versus(attacker, defender, weapon) {
   });
 
   if (AR >= DR) {
-    // remove life
     const damages = computeDamages(attacker, weapon);
-
+    const nextDefender = inflictDamages(defender, damages);
     return [
       attacker,
-      defender,
-      [attackMessage, getWinMessage(attacker, defender, damages)],
+      nextDefender,
+      [attackMessage, getWinMessage(attacker, nextDefender, damages)],
     ];
   }
 

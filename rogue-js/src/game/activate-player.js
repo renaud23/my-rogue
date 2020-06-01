@@ -62,19 +62,56 @@ function activatePlayer(state, event) {
   return { ...state, activate };
 }
 
+/* ********* */
+
+function removeDeadEnnemies(state) {
+  const { player, ennemies, messages } = state;
+  const { currentLevel } = player;
+
+  const [nextEnnemies, nextMessages] = ennemies.reduce(
+    function ([currEnnemies, currMessages], level, i) {
+      if (i === currentLevel) {
+        const [newLevel, levelMsg] = level.reduce(
+          function ([a, b], enn) {
+            const { stats } = enn;
+            const { life } = stats;
+            if (life <= 0) {
+              //
+              return [a, [...b, fillMessage(PATTERNS.deadEnemy, { att: enn })]];
+            }
+            return [[...a, enn], b];
+          },
+          [[], []]
+        );
+        return [
+          [...currEnnemies, newLevel],
+          [...currMessages, ...levelMsg],
+        ];
+      }
+      return [[...currEnnemies, level], currMessages];
+    },
+    [[], []]
+  );
+
+  return {
+    ...state,
+    ennemies: nextEnnemies,
+    messages: [...messages, ...nextMessages],
+  };
+}
+
 /**
  * Main loop
  * @param {*} state
  * @param {*} event
  */
-
 function activate(state, event) {
   const { player } = state;
   if (!isTurnFinish(player)) {
     // TODO remove dead ennemies.
-    return activatePlayer(state, event);
+    return removeDeadEnnemies(activatePlayer(state, event));
   }
-  const [nextState, endTurn] = activateGame(state, event);
+  const [nextState, endTurn] = activateGame(removeDeadEnnemies(state), event);
   // TODO check status player : dead ?
   if (endTurn) {
     // TODO activate other things if necessary.

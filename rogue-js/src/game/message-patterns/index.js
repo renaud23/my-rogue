@@ -23,6 +23,10 @@ function printPlayer(name, colorA = "yellow", colorB = "DodgerBlue") {
   )}`;
 }
 
+function snowBrackets(text) {
+  return mergeParts(snow("["), text, snow("]"));
+}
+
 export default {
   attack: mergeParts(
     printPlayer("att"),
@@ -34,9 +38,9 @@ export default {
     yellow("Attaque "),
     springGreen("succès"),
     yellow(" dégâts "),
-    snow("["),
-    red("$[damages]"),
-    snow("]")
+    snowBrackets(red("$[damages]")),
+    yellow(" vie restante "),
+    snowBrackets(springGreen("$[deff.stats.life]"))
   ),
   attackFailure: mergeParts(yellow("Attaque "), red("échec")),
   damages:
@@ -62,4 +66,5 @@ export default {
     chartreuse("$[chest.desc]"),
     yellow(". Il est vide.")
   ),
+  deadEnemy: mergeParts(printPlayer("att"), yellow(" est mort.")),
 };

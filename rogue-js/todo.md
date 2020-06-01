@@ -1,5 +1,6 @@
 ## à court terme :
-- life & experience [+]
+- progression experience et niveau 
+- utiliser clef, ajouter un menu supp et une option par objet de case [+]
 - contenu des coffres
 - donjons plus complexes
 - portes et clés
