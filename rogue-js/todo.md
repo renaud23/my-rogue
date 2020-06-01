@@ -1,6 +1,6 @@
 ## à court terme :
-- life & experience
-- coffre et loot [*]
+- life & experience [+]
+- contenu des coffres
 - donjons plus complexes
 - portes et clés
 - a* à refactor

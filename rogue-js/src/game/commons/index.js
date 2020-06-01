@@ -7,3 +7,4 @@ export { default as isVisiblePosition } from "./is-visible-position";
 export { default as getPositions } from "./get-positions-around";
 export * from "./message-parser";
 export * from "./turn-play";
+export * from "./dices";

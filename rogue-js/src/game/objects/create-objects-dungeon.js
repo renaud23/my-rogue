@@ -7,7 +7,6 @@ const NB_CHEST = 2;
 function createLevelObject(state, level) {
   const { dungeon } = state;
   const emptyTiles = dungeon.getEmptyTiles(level);
-
   const chestsAnKeys = new Array(NB_CHEST).fill(null).reduce(function (a) {
     const posChest = popOne(emptyTiles);
     const posKey = peekOne(emptyTiles);

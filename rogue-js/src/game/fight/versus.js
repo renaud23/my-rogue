@@ -2,15 +2,15 @@ import { randomInt } from "../../commons";
 import { fillMessage } from "../commons";
 import PATTERNS from "../message-patterns";
 
-function getWin(att, deff) {
-  return fillMessage(PATTERNS.attackSuccess, { att, deff });
+function getWinMessage(att, deff, damages) {
+  return fillMessage(PATTERNS.attackSuccess, { att, deff, damages });
 }
 
-function getLoose(att, deff) {
+function getLooseMessage(att, deff) {
   return fillMessage(PATTERNS.attackFailure, { att, deff });
 }
 
-function getDamages(att, deff, how) {
+function getDamagesMessage(att, deff, how) {
   return fillMessage(PATTERNS.damages, { att, deff, how });
 }
 
@@ -32,19 +32,37 @@ function computeDR(o) {
   return randomInt(effectiveAgility) + lucky * level;
 }
 
+function computeDamages(attacker, weapon) {
+  const { stats } = attacker;
+  const { level, luck } = stats;
+  const { getDamages } = weapon;
+  const damages = (getDamages() + randomInt(luck)) * level;
+
+  return damages;
+}
+
 function versus(attacker, defender, weapon) {
   const AR = computeAR(attacker);
   const DR = computeDR(defender);
-  if (AR > DR) {
+
+  const attackMessage = fillMessage(PATTERNS.attack, {
+    att: attacker,
+    deff: defender,
+    weapon,
+  });
+
+  if (AR >= DR) {
     // remove life
+    const damages = computeDamages(attacker, weapon);
+
     return [
       attacker,
       defender,
-      [getWin(attacker, defender), getDamages(attacker, defender, 0)],
+      [attackMessage, getWinMessage(attacker, defender, damages)],
     ];
   }
 
-  return [attacker, defender, [getLoose(attacker, defender)]];
+  return [attacker, defender, [attackMessage, getLooseMessage(attacker)]];
 }
 
 export default versus;

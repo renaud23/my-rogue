@@ -1,8 +1,10 @@
 const colorPart = (color) => (text) => `<${color}>${text}</${color}>`;
 const yellow = colorPart("yellow");
-// const red = colorPart("red");
+const red = colorPart("red");
 const mediumOrchid = colorPart("MediumOrchid");
+const springGreen = colorPart("SpringGreen");
 const chartreuse = colorPart("Chartreuse");
+const snow = colorPart("Snow");
 
 function mergeParts(...args) {
   return args.reduce(function (a, p) {
@@ -15,25 +17,28 @@ function printStats(name, color) {
 }
 
 function printPlayer(name, colorA = "yellow", colorB = "DodgerBlue") {
-  return `<${colorA}>$[${name}.desc]</${colorA}>${printStats(name, colorB)}`;
+  return `<${colorA}>$[${name}.desc] level $[${name}.stats.level]</${colorA}>${printStats(
+    name,
+    colorB
+  )}`;
 }
 
 export default {
   attack: mergeParts(
     printPlayer("att"),
     yellow(" attaque "),
-    printPlayer("deff")
+    printPlayer("deff"),
+    yellow(" avec $[weapon.desc].")
   ),
   attackSuccess: mergeParts(
-    printPlayer("att"),
-    yellow(" réussi son attaque sur "),
-    printPlayer("deff")
+    yellow("Attaque "),
+    springGreen("succès"),
+    yellow(" dégâts "),
+    snow("["),
+    red("$[damages]"),
+    snow("]")
   ),
-  attackFailure: mergeParts(
-    printPlayer("att"),
-    yellow(" rate son attaque sur "),
-    printPlayer("deff")
-  ),
+  attackFailure: mergeParts(yellow("Attaque "), red("échec")),
   damages:
     "<yellow>$[att.desc] inflige </yellow><red>$[how]</red><yellow> a $[deff.desc]</yellow>",
   nextTurn: mergeParts(

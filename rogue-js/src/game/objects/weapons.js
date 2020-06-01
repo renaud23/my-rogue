@@ -1,4 +1,5 @@
 import typeObject from "./type-object";
+import { one6SidesDice, two6SidesDice } from "../commons";
 
 let INDEX = 0;
 
@@ -8,13 +9,14 @@ export const WEAPONS_MAP = {
     desc: "un couteau",
     size: 1,
     type: typeObject.weapon,
+    getDamages: one6SidesDice,
   },
   sword: {
     code: 1001,
     desc: "une épée",
     size: 2,
     type: typeObject.weapon,
-    todo: [],
+    getDamages: two6SidesDice,
   },
 };
 
