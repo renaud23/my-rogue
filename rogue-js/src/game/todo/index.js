@@ -4,4 +4,5 @@ export { default as stairsDownTodo } from "./stairs-down";
 export { default as createTakeObjectTodo } from "./create-take-object-todo";
 export { default as equipWeaponTodo } from "./equip-weapon-todo";
 export { default as throwObjectTodo } from "./throw-object-todo";
+export { default as createUseKeyTodo } from "./create-use-key-todo";
 export { default as shootTodo } from "./shoot-todo";

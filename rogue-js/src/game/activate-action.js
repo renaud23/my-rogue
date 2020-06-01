@@ -124,10 +124,6 @@ function activateAction(state, event) {
   const { position } = player;
   const options = getOptions(state, position);
 
-  // const action = { type: PLAYER_ACTIONS.navigate, position, color: "blue" };
-  // const np = { ...player, action };
-  // const ns = { ...state, player: np };
-
   return {
     ...state,
     player: buildPlayer({

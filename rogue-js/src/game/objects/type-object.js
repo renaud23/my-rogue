@@ -4,4 +4,5 @@ export default {
   ammunition: "object/ammunition",
   armor: "object/armor",
   chest: "object/chest",
+  key: "object/key",
 };

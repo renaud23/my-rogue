@@ -4,7 +4,7 @@ import { createKnife, createSword } from "../objects";
 import { createStats } from "../fight";
 
 const DEFAULT_FOV = 8;
-const DEFAULT_NB_MOVE = 20;
+const DEFAULT_NB_MOVE = 2;
 
 function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
   const currentLevel = 0;

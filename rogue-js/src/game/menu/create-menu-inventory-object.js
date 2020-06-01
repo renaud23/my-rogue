@@ -1,5 +1,5 @@
 import { buildPlayer, displayMenu, optionExit } from "./tools";
-import { equipWeaponTodo, throwObjectTodo } from "../todo";
+import { equipWeaponTodo, throwObjectTodo, createUseKeyTodo } from "../todo";
 import { TYPE_OBJECT } from "../objects";
 
 function underligne(word) {
@@ -13,6 +13,14 @@ function createOptions(object, cally) {
       return [
         ...object.todo,
         { desc: `équiper ${desc}`, todo: equipWeaponTodo },
+        { desc: `poser ${desc}`, todo: throwObjectTodo },
+        { desc: "retour", todo: cally },
+        optionExit,
+      ];
+    case TYPE_OBJECT.key:
+      return [
+        ...object.todo,
+        { desc: `utiliser ${desc}`, todo: createUseKeyTodo(object) },
         { desc: `poser ${desc}`, todo: throwObjectTodo },
         { desc: "retour", todo: cally },
         optionExit,

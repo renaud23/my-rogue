@@ -52,7 +52,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getHeight: (current) => levels[current].height,
     getData: (current) => levels[current].data,
     getStairs: (current) => levels[current].stairs,
-    getEmptyTiles: (current) => levels[current].emptyTiles,
+    getEmptyTiles: (current) => [...levels[current].emptyTiles],
     peekEmptyTile: (current) => popOne(levels[current].emptyTiles),
     getDungeonHeight: () => nb,
   };

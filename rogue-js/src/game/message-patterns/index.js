@@ -46,4 +46,15 @@ export default {
   ),
   throwObject: mergeParts(yellow("vous posez "), chartreuse("$[object.desc]")),
   inventoryFull: yellow("Votre inventaire est plein."),
+  nothingToOpen: mergeParts(
+    yellow("Il n'y a rien à ouvrir avec "),
+    chartreuse("$[desc]"),
+    yellow(" ici.")
+  ),
+  badKey: yellow("Ce n'est pas la bonne clef."),
+  chestOpened: mergeParts(
+    yellow("vous ouvrez "),
+    chartreuse("$[chest.desc]"),
+    yellow(". Il est vide.")
+  ),
 };
