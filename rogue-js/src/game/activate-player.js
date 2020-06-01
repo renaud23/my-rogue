@@ -1,6 +1,7 @@
 import { movePlayer, updateMemory } from "./player";
 import { isTurnFinish, nextTurn, appendMessages, fillMessage } from "./commons";
 import PATTERNS from "./message-patterns";
+import { removeDeadEnnemies } from "./ennemies";
 import { PAD_BUTTON, DIRECTION } from "../commons";
 import activateHelp from "./activate-help";
 import activateMenu from "./activate-menu";
@@ -64,42 +65,6 @@ function activatePlayer(state, event) {
 
 /* ********* */
 
-function removeDeadEnnemies(state) {
-  const { player, ennemies, messages } = state;
-  const { currentLevel } = player;
-
-  const [nextEnnemies, nextMessages] = ennemies.reduce(
-    function ([currEnnemies, currMessages], level, i) {
-      if (i === currentLevel) {
-        const [newLevel, levelMsg] = level.reduce(
-          function ([a, b], enn) {
-            const { stats } = enn;
-            const { life } = stats;
-            if (life <= 0) {
-              //
-              return [a, [...b, fillMessage(PATTERNS.deadEnemy, { att: enn })]];
-            }
-            return [[...a, enn], b];
-          },
-          [[], []]
-        );
-        return [
-          [...currEnnemies, newLevel],
-          [...currMessages, ...levelMsg],
-        ];
-      }
-      return [[...currEnnemies, level], currMessages];
-    },
-    [[], []]
-  );
-
-  return {
-    ...state,
-    ennemies: nextEnnemies,
-    messages: [...messages, ...nextMessages],
-  };
-}
-
 /**
  * Main loop
  * @param {*} state
@@ -108,10 +73,9 @@ function removeDeadEnnemies(state) {
 function activate(state, event) {
   const { player } = state;
   if (!isTurnFinish(player)) {
-    // TODO remove dead ennemies.
-    return removeDeadEnnemies(activatePlayer(state, event));
+    return activatePlayer(state, event);
   }
-  const [nextState, endTurn] = activateGame(removeDeadEnnemies(state), event);
+  const [nextState, endTurn] = activateGame(state, event);
   // TODO check status player : dead ?
   if (endTurn) {
     // TODO activate other things if necessary.
