@@ -52,7 +52,7 @@ function versus(attacker, defender, weapon) {
     const nextDefender = inflictDamages(defender, damages);
     return [
       attacker,
-      nextDefender,
+      { ...nextDefender, path: undefined },
       [attackMessage, getWinMessage(attacker, nextDefender, damages)],
     ];
   }

@@ -1,7 +1,7 @@
 import activateAutoPlay from "../activate-auto-play";
-import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../../commons";
+import { PAD_BUTTON, PLAYER_ACTIONS } from "../../commons";
 import activate from "../activate-player";
-import navigateMap, { createNavigate } from "../commons/navigate-map";
+import navigateMap from "../commons/navigate-map";
 import { aStarPath } from "../ennemies/path-finding";
 
 function initializePlayer(state) {
@@ -15,8 +15,7 @@ function initializePlayer(state) {
 
 function activateChoice(state) {
   const { player } = state;
-  const { position: posPlayer, action } = player;
-  const { position: targetPos } = action;
+  const { action } = player;
   const { path } = action;
   if (path.length) {
     return activateAutoPlay({
@@ -42,15 +41,10 @@ function checkPath(state) {
 
 function navigateFunction(state, event) {
   const { player } = state;
-  const { position } = player;
   const {
     payload: { button },
   } = event;
   const next = navigateMap(state, event);
-  const {
-    player: { action },
-  } = next;
-  const { position: target } = action;
   switch (button) {
     case PAD_BUTTON.buttonB:
       return { ...state, activate, player: { ...player, action: null } };

@@ -11,10 +11,6 @@ function antecedentPoint(position, width) {
   return [position % width, Math.trunc(position / width)];
 }
 
-function pointProjection([x, y], width) {
-  return x + width * y;
-}
-
 const refillPath = (visited) => (last) => {
   return last in visited
     ? [...refillPath(visited)(visited[last]), last]
@@ -55,7 +51,7 @@ export default function astarPath(state) {
         }
       });
     }
-    const [first, ...path] = refillPath(visited)(to);
+    const [_, ...path] = refillPath(visited)(to);
     return path;
   };
 }

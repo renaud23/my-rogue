@@ -9,6 +9,13 @@ import activateGame from "./activate-game";
 import activateShoot from "./activate-shoot";
 import * as EVENTS from "./events";
 import { isNeedWait } from "./activate-wait";
+import activateAutoPlay from "./activate-auto-play";
+
+function isAutoPlay(state) {
+  const { player } = state;
+  const { path } = player;
+  return path && path.length > 0;
+}
 
 function witchDirection(button) {
   switch (button) {
@@ -72,18 +79,29 @@ function activatePlayer(state, event) {
 function activate(state, event) {
   const { player } = state;
   if (!isTurnFinish(player)) {
-    return activatePlayer(state, event);
+    if (isAutoPlay(state)) {
+      return activateAutoPlay(state);
+    }
+    if (event) {
+      return activatePlayer(state, event);
+    }
+
+    return state;
   }
   const [nextState, endTurn] = activateGame(state);
   // TODO check status player : dead ?
   if (endTurn) {
     // TODO activate other things if necessary.
     const np = nextTurn(player);
-    return {
+    const next = {
       ...appendMessages(nextState, fillMessage(PATTERNS.nextTurn, np)),
       player: { ...np },
       activate,
     };
+    if (isAutoPlay(next)) {
+      return activateAutoPlay(next);
+    }
+    return next;
   }
   const { activate: nextActivate = activate } = nextState;
   return nextActivate(nextState, event);

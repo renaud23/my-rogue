@@ -85,9 +85,7 @@ export function createNavigate(successCallback, limite) {
       payload: { button },
     } = event;
     const next = navigate(state, event, limite);
-    const {
-      player: { action },
-    } = next;
+
     switch (button) {
       case PAD_BUTTON.buttonB:
         return { ...state, activate, player: { ...player, action: null } };
