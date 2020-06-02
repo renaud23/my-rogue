@@ -37,6 +37,7 @@ function createChest() {
     ...TYPES.chest,
     desc: `un coffre ${kind}`,
     id: chestId,
+    kind,
     takeable: false,
     todo: [],
   };
@@ -45,7 +46,7 @@ function createChest() {
     ...TYPES.chestKey,
     id: `chest-key-id-${INDEX++}`,
     desc: `une clef ${kind}`,
-    target: chestId,
+    target: kind,
     takeable: true,
     todo: [],
   };

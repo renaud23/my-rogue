@@ -4,14 +4,17 @@ import { getObjects } from "../player/inventory";
 import createMenuInventoryObject from "./create-menu-inventory-object";
 
 function buildEndingOptions(backActivate) {
-  return [{ desc: "retour", todo: backActivate }, optionExit];
+  return [{ desc: "retour", todo: backActivate }];
 }
 const INVENTAIRE_HEADER = ["INVENTAIRE", "----------"];
 
 function buildOptionsObjects(objects, cally) {
   return objects.reduce(function (a, o) {
     const { desc } = o;
-    return [...a, { desc, todo: createMenuInventoryObject(o, cally) }];
+    return [
+      ...a,
+      { desc, todo: createMenuInventoryObject(o, cally), optionExit },
+    ];
   }, []);
 }
 

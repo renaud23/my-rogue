@@ -1,94 +1,142 @@
-import { consumeMove, navigateMap, fillMessage } from "../commons";
+import {
+  consumeMove,
+  navigateMap,
+  fillMessage,
+  getObjectsAt,
+} from "../commons";
+import { optionExit, displayMenu, addOptionsNumbers } from "../menu/tools";
 import { TYPE_OBJECT } from "../objects";
 import { PAD_BUTTON, PLAYER_ACTIONS } from "../../commons";
 import PATTERNS from "../message-patterns";
 import { removeObjectDungeon } from "../objects";
 import { removeObject } from "../player/inventory";
 import activate from "../activate-player";
-import { buildPlayer } from "../menu/tools";
 
-function utiliserKey(state, key, position) {
-  const { player, objects, messages } = state;
-  const { currentLevel, inventory } = player;
-  const { target } = key;
-  const chest = objects[currentLevel].find(function (o) {
-    const { type, position: chestPos } = o;
-    return type === TYPE_OBJECT.chest && position === chestPos;
+function createUseKeyOnObject(key, object) {
+  return function (state) {
+    const { player, messages, objects } = state;
+    const { currentLevel, inventory } = player;
+    const { target } = key;
+    const { type, kind } = object;
+
+    if (type !== TYPE_OBJECT.chest) {
+      return {
+        ...state,
+        messages: [...messages, PATTERNS.nothingAppended],
+        player: { ...player, action: null },
+      };
+    }
+    if (target !== kind) {
+      return {
+        ...state,
+        messages: [...messages, PATTERNS.itsNotAGoodChest],
+        player: { ...player, action: null },
+      };
+    }
+
+    const newObjects = removeObjectDungeon(objects, object, currentLevel);
+    const newInventory = removeObject(inventory, key);
+
+    return {
+      ...state,
+      objects: newObjects,
+      inventory: newInventory,
+      messages: [
+        ...messages,
+        fillMessage(PATTERNS.chestOpened, { chest: object }),
+      ],
+      player: consumeMove({ ...player, action: null }),
+    };
+  };
+}
+
+function getOptions(state, key, position) {
+  const { player } = state;
+  const { currentLevel } = player;
+  const objects = getObjectsAt(state, currentLevel, position);
+  const options = objects.map(function (o) {
+    const { desc } = o;
+    return { desc: `${desc}`, todo: createUseKeyOnObject(key, o) };
   });
 
-  if (!chest) {
-    const message = fillMessage(PATTERNS.nothingToOpen, key);
+  return [...options];
+}
+
+function createMenu(state) {
+  const { player, messages } = state;
+  const { action } = player;
+  const { position, key } = action;
+  const options = getOptions(state, key, position);
+  if (options.length === 0) {
     return {
       ...state,
-      messages: [...messages, message],
       player: { ...player, action: null },
+      messages: [...messages, PATTERNS.nothingAppended],
+      activate,
     };
   }
-  if (chest.id !== target) {
-    const message = PATTERNS.badKey;
-    return {
-      ...state,
-      messages: [...messages, message],
-      player: { ...player, action: null },
-    };
-  }
-
-  const newObjects = removeObjectDungeon(objects, chest, currentLevel);
-  const newInventory = removeObject(inventory, key);
-
   return {
     ...state,
-    objects: newObjects,
-    messages: [...messages, fillMessage(PATTERNS.chestOpened, { chest })],
-    player: consumeMove({ ...player, action: null, inventory: newInventory }),
-    activate,
+    player: {
+      ...player,
+      action: {
+        type: PLAYER_ACTIONS.menu,
+        header: [`Vous voulez utiliser ${key.desc} sur,`],
+        options: addOptionsNumbers([...options, optionExit]),
+        footer: [" ", "Utiliser avec le bouton A.", "Sortir avec le bouton B."],
+        active: 0,
+      },
+    },
+    activate: displayMenu,
+  };
+}
+
+function initializePlayer(state, key) {
+  const { player } = state;
+  const { position } = player;
+  const { desc } = key;
+  return {
+    ...player,
+    action: {
+      type: PLAYER_ACTIONS.navigate,
+      header: [`UTILISER ${desc}`, " "],
+      footer: [" ", "Utiliser avec le bouton A", "Sortir avec le bouton B."],
+      position,
+      color: "blue",
+      active: -1,
+      key,
+    },
   };
 }
 
 function activateNavigate(state, event) {
   const { player } = state;
-  const { action } = player;
-  const { object, position } = action;
   const {
     payload: { button },
   } = event;
   const next = navigateMap(state, event, 1);
   switch (button) {
     case PAD_BUTTON.buttonB:
-      return { ...state, player: { ...player, action: null } };
+      return { ...state, player: { ...player, action: null }, activate };
     case PAD_BUTTON.buttonA:
-      return utiliserKey(next, object, position);
+      return createMenu(next);
     case PAD_BUTTON.up:
     case PAD_BUTTON.down:
     case PAD_BUTTON.left:
     case PAD_BUTTON.right:
     default:
-      return { ...next, activate: activateNavigate };
+      return {
+        ...next,
+        activate: activateNavigate,
+      };
   }
 }
 
 function createTodo(object) {
-  const { desc } = object;
-  return function todo(state) {
-    const { player } = state;
-    const { position } = player;
-
+  return function todo(state, event = { payload: {} }) {
     return {
       ...state,
-      player: buildPlayer({
-        player,
-        type: PLAYER_ACTIONS.navigate,
-        header: ["ACTIONS", "-------"],
-        footer: [
-          " ",
-          `Utiliser ${desc} avec le bouton A.`,
-          "Sortir avec le bouton B.",
-        ],
-        position,
-        color: "blue",
-        active: -1,
-        object,
-      }),
+      player: initializePlayer(state, object),
       activate: activateNavigate,
     };
   };

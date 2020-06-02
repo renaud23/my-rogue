@@ -33,6 +33,16 @@ export const TILES = {
     code: 100,
     char: "@",
   },
+  chest: {
+    code: 200,
+    char: "\u2B20",
+    color: "cyan",
+  },
+  key: {
+    code: 201,
+    char: "\u26B7",
+    color: "cyan",
+  },
 
   ironSight: { code: 666, char: "$" },
   unknow: {

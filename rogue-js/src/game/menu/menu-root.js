@@ -28,14 +28,16 @@ const ROOT_MENU_OPTIONS = [
   },
   { desc: "action", todo: actionTodo },
   { desc: "observer", todo: lookAtTodo },
-  optionExit,
 ];
 
 function activateRootMenu(state, event) {
   const { player } = state;
   return {
     ...state,
-    player: buildPlayer({ player, options: ROOT_MENU_OPTIONS }),
+    player: buildPlayer({
+      player,
+      options: [...ROOT_MENU_OPTIONS, optionExit],
+    }),
     activate: displayMenu,
   };
 }

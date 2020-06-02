@@ -55,16 +55,13 @@ export default {
   ),
   throwObject: mergeParts(yellow("vous posez "), chartreuse("$[object.desc]")),
   inventoryFull: yellow("Votre inventaire est plein."),
-  nothingToOpen: mergeParts(
-    yellow("Il n'y a rien à ouvrir avec "),
-    chartreuse("$[desc]"),
-    yellow(" ici.")
-  ),
-  badKey: yellow("Ce n'est pas la bonne clef."),
+  itsNotAChest: yellow("Ce n'est pas un coffre."),
+  itsNotAGoodChest: yellow("Cette clef n'ouvre pas ce type de coffre."),
   chestOpened: mergeParts(
     yellow("vous ouvrez "),
     chartreuse("$[chest.desc]"),
     yellow(". Il est vide.")
   ),
+  nothingAppended: yellow("Il ne se passe rien."),
   deadEnemy: mergeParts(printPlayer("att"), yellow(" est mort.")),
 };
