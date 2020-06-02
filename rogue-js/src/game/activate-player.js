@@ -74,7 +74,7 @@ function activate(state, event) {
   if (!isTurnFinish(player)) {
     return activatePlayer(state, event);
   }
-  const [nextState, endTurn] = activateGame(state, event);
+  const [nextState, endTurn] = activateGame(state);
   // TODO check status player : dead ?
   if (endTurn) {
     // TODO activate other things if necessary.

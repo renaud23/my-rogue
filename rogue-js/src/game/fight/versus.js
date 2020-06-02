@@ -41,7 +41,6 @@ function computeDamages(attacker, weapon) {
 function versus(attacker, defender, weapon) {
   const AR = computeAR(attacker);
   const DR = computeDR(defender);
-
   const attackMessage = fillMessage(PATTERNS.attack, {
     att: attacker,
     deff: defender,

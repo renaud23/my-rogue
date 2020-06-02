@@ -1,4 +1,4 @@
-import displayMenu, { optionExit } from "./tools";
+import activateAutoPlay from "../activate-auto-play";
 import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../../commons";
 import activate from "../activate-player";
 import navigateMap, { createNavigate } from "../commons/navigate-map";
@@ -17,8 +17,13 @@ function activateChoice(state) {
   const { player } = state;
   const { position: posPlayer, action } = player;
   const { position: targetPos } = action;
-
-  const path = aStarPath(state)(posPlayer, targetPos);
+  const { path } = action;
+  if (path.length) {
+    return activateAutoPlay({
+      ...state,
+      player: { ...player, path, action: null },
+    });
+  }
 
   return { ...state, player: { ...player, action: null }, activate };
 }

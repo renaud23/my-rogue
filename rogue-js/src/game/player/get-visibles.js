@@ -5,7 +5,6 @@ function isVisibleSegment(state, segment) {
   const { dungeon, player } = state;
   const { currentLevel } = player;
   const dw = dungeon.getWidth(currentLevel);
-  // console.log(segment, player.position);
   return segment.reduce(function (a, [x, y], i) {
     if (i === 0 || i === segment.length - 1) {
       return a;
