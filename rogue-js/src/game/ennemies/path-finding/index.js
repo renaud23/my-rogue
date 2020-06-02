@@ -1,2 +1,2 @@
-export * from "./dijkstra";
-export * from "./a-star";
+// export * from "./dijkstra";
+export { default as aStarPath } from "./a-star";

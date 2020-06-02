@@ -5,10 +5,10 @@ function one6sidesDice() {
 }
 
 export function create6sidesDices(how) {
-  return function () {
-    return new Array(how).fill(one6sidesDice()).reduce(function (a, dice) {
-      return a + dice;
-    }, 0);
+  return () => {
+    return new Array(how)
+      .fill(one6sidesDice())
+      .reduce((a, dice) => a + dice, 0);
   };
 }
 

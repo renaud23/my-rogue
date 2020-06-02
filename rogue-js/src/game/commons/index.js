@@ -8,3 +8,4 @@ export { default as getPositions } from "./get-positions-around";
 export * from "./message-parser";
 export * from "./turn-play";
 export * from "./dices";
+export * from "./navigate-map";

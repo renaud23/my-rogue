@@ -1,14 +1,13 @@
 ## à court terme :
 - progression experience et niveau 
-- utiliser clef, ajouter un menu supp et une option par objet de case [+]
 - contenu des coffres
 - donjons plus complexes
 - portes et clés
-- a* à refactor
+- a* à refactor [+]
 - ia rat
 - un autre type d'ennemi
 - keys events listener
-- stack moves
+- stack moves 
 - mort du joueur
 
 ## à moyen terme :

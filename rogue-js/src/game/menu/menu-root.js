@@ -2,6 +2,7 @@ import { buildPlayer, optionExit, displayMenu } from "./tools";
 import { createActivateInventoryMenu } from "./menu-inventory";
 import activateHelp from "../activate-help";
 import activateAction from "../activate-action";
+import activateStackMove from "./stack-move-menu";
 import { PLAYER_ACTIONS } from "../../commons";
 
 function lookAtTodo(state) {
@@ -27,6 +28,7 @@ const ROOT_MENU_OPTIONS = [
     todo: createActivateInventoryMenu(activateRootMenu),
   },
   { desc: "action", todo: actionTodo },
+  { desc: "stack move", todo: activateStackMove },
   { desc: "observer", todo: lookAtTodo },
 ];
 

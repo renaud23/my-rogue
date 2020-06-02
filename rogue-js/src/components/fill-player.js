@@ -1,21 +1,25 @@
 import combine from "./combine-fill";
 import { TILES, PLAYER_ACTIONS } from "../commons";
 
-function fillHelp(tiles, state, rect, tile) {
+function fillHelp(tiles, state, rect, tile, path) {
   const { dungeon, player } = state;
   const { action, currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const { startX, startY, width } = rect;
   const xi = action.position % dungeonWidth;
   const yi = Math.trunc(action.position / dungeonWidth);
-  // if (
-  //   xi >= startX &&
-  //   xi <= startX + width &&
-  //   yi >= startY &&
-  //   yi <= startY + height
-  // ) {
-  tiles[xi - startX + (yi - startY) * width] = tile;
-  // }
+  const pos = xi - startX + (yi - startY) * width;
+
+  if (path) {
+    path.forEach(function (p) {
+      const px = p % dungeonWidth;
+      const py = Math.trunc(p / dungeonWidth);
+      const poss = px - startX + (py - startY) * width;
+      tiles[poss] = { ...tiles[poss], char: ".", color: "chartreuse" };
+    });
+  }
+
+  tiles[pos] = tile;
 
   return tiles;
 }
@@ -34,13 +38,19 @@ function fillAction(tiles, state, rect) {
       case PLAYER_ACTIONS.navigate: {
         const {
           player: {
-            action: { color },
+            action: { color, path },
           },
         } = state;
-        return fillHelp(tiles, state, rect, {
-          ...TILES.ironSight,
-          color,
-        });
+        return fillHelp(
+          tiles,
+          state,
+          rect,
+          {
+            ...TILES.ironSight,
+            color,
+          },
+          path
+        );
       }
       case PLAYER_ACTIONS.shoot: {
         return fillHelp(tiles, state, rect, {
