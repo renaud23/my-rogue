@@ -1,4 +1,5 @@
 import typeObject from "./type-object";
+import { createOpenChestTodo } from "../todo";
 import { randomInt } from "../../commons";
 
 let INDEX = 0;
@@ -39,8 +40,10 @@ function createChest() {
     id: chestId,
     kind,
     takeable: false,
-    todo: [],
   };
+  chest.todo = [
+    { desc: `Ouvrir ${chest.desc}`, todo: createOpenChestTodo(chest) },
+  ];
 
   const key = {
     ...TYPES.chestKey,

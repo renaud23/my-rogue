@@ -12,7 +12,7 @@ import { removeObjectDungeon } from "../objects";
 import { removeObject } from "../player/inventory";
 import activate from "../activate-player";
 
-function createUseKeyOnObject(key, object) {
+export function createUseKeyOnObject(key, object) {
   return function (state) {
     const { player, messages, objects } = state;
     const { currentLevel, inventory } = player;
@@ -40,12 +40,12 @@ function createUseKeyOnObject(key, object) {
     return {
       ...state,
       objects: newObjects,
-      inventory: newInventory,
+
       messages: [
         ...messages,
         fillMessage(PATTERNS.chestOpened, { chest: object }),
       ],
-      player: consumeMove({ ...player, action: null }),
+      player: consumeMove({ ...player, inventory: newInventory, action: null }),
     };
   };
 }
