@@ -39,6 +39,7 @@ function peekMenu(state) {
   const {
     action: { options = [], active, header = [], footer = [] },
   } = player;
+
   const messages = options.reduce(
     function (a, { desc }, i) {
       if (i === active) {
@@ -73,6 +74,31 @@ function peekWeaponMessage(weapon) {
     : ", sans rien pour vous défendre";
 }
 
+function peekNavigate(state) {
+  const { player, objects, ennemies } = state;
+  const { currentLevel, action } = player;
+  const { position } = action;
+
+  const what = [...ennemies[currentLevel], ...objects[currentLevel]].reduce(
+    function (a, o) {
+      if (o.position === position) {
+        return [...a, o.desc];
+      }
+      return a;
+    },
+    []
+  );
+
+  const message = what.reduce(function (a, desc, i) {
+    if (i === 0) {
+      return `Vous apercevez ici, ${desc}`;
+    }
+    return `${a}, ${desc}`;
+  }, "Vous ne distinguez rien de particulier");
+
+  return [`${message}.`];
+}
+
 function peekPosition(state) {
   const { player, dungeon } = state;
   const { position, currentLevel, weapon } = player;
@@ -98,7 +124,7 @@ function peekMessages(state) {
       case PLAYER_ACTIONS.menu:
         return peekMenu(state);
       case PLAYER_ACTIONS.navigate:
-        return peekMenu(state);
+        return peekNavigate(state);
       case PLAYER_ACTIONS.action:
       case PLAYER_ACTIONS.shoot:
         return peekShootMessage(state);

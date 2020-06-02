@@ -90,7 +90,6 @@ function moveIronSight(state, event) {
   const {
     player: { action },
   } = next;
-  const { position } = action;
 
   switch (button) {
     case PAD_BUTTON.buttonB:
@@ -105,41 +104,23 @@ function moveIronSight(state, event) {
       return {
         ...next,
         activate: moveIronSight,
-        player: buildPlayer({
-          player,
-          type: PLAYER_ACTIONS.navigate,
-          header: ["ACTIONS", "-------"],
-          footer: [" ", "Sortir avec le bouton B."],
-          options: getOptions(state, position),
-          position,
-          color: "blue",
-          active: -1,
-        }),
       };
   }
 }
 
-function activateAction(state, event) {
+function initializePlayer(state) {
   const { player } = state;
   const { position } = player;
-  const options = getOptions(state, position);
+  return {
+    ...player,
+    action: { type: PLAYER_ACTIONS.navigate, position, color: "blue" },
+  };
+}
 
+function activateAction(state, event) {
   return {
     ...state,
-    player: buildPlayer({
-      player,
-      type: PLAYER_ACTIONS.navigate,
-      header: ["ACTIONS", "-------"],
-      footer: [
-        " ",
-        "Entrer dans le menu avec le bouton A.",
-        "Sortir avec le bouton B.",
-      ],
-      options,
-      position,
-      color: "blue",
-      active: -1,
-    }),
+    player: initializePlayer(state),
     activate: moveIronSight,
   };
 }
