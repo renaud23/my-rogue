@@ -17,6 +17,11 @@ export function consumeMove(player) {
   return { ...player, turn: { ...turn, moveLeft: moveLeft - 1 } };
 }
 
+export function finishTurn(player) {
+  const { turn } = player;
+  return { ...player, turn: { ...turn, moveLeft: 0 } };
+}
+
 export function isTurnFinish(player) {
   const { turn } = player;
   const { moveLeft } = turn;

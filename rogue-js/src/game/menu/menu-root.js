@@ -1,9 +1,16 @@
 import { buildPlayer, optionExit, displayMenu } from "./tools";
+import { finishTurn } from "../commons";
 import { createActivateInventoryMenu } from "./menu-inventory";
 import activateHelp from "../activate-help";
 import activateAction from "../activate-action";
 import activateStackMove from "./stack-move-menu";
 import { PLAYER_ACTIONS } from "../../commons";
+
+function finishTurnTodo(state) {
+  const { player } = state;
+
+  return { ...state, player: finishTurn(player) };
+}
 
 function lookAtTodo(state) {
   const { player } = state;
@@ -27,9 +34,10 @@ const ROOT_MENU_OPTIONS = [
     desc: "inventaire",
     todo: createActivateInventoryMenu(activateRootMenu),
   },
-  { desc: "action", todo: actionTodo },
-  { desc: "stack move", todo: activateStackMove },
-  { desc: "observer", todo: lookAtTodo },
+  { desc: "Action", todo: actionTodo },
+  { desc: "Aller à", todo: activateStackMove },
+  { desc: "Observer", todo: lookAtTodo },
+  { desc: "Finir le tour", todo: finishTurnTodo },
 ];
 
 function activateRootMenu(state, event) {
