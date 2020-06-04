@@ -1,5 +1,3 @@
-import { useReducer } from "react";
-
 const S = 5; // sum start S.A.L.E (2,1,1,1)
 const THAU = 4;
 
@@ -39,14 +37,23 @@ export function ennemiesXpValue(ennemies) {
   }, 0);
 }
 
-function computeNextLevelXp(stats) {
+export function computeMaxLife(stats) {
+  const { level, endurance } = stats;
+  const maxLife = 10 * (level + endurance + 1);
+  return { ...stats, maxLife, life: maxLife };
+}
+
+export function computeNextLevelXp(stats) {
   const { level, strength, agility, luck, endurance } = stats;
-  return level * (strength + agility + luck + endurance) * THAU;
+  return {
+    ...stats,
+    nextLevelXp: level * (strength + agility + luck + endurance) * THAU,
+  };
 }
 
 function checkLevelPlayer(player, gain) {
   const { stats } = player;
-  const { level, xp, nextLevelXp } = stats;
+  const { level, xp, nextLevelXp, xpPoints } = stats;
   const nextXp = xp + gain;
 
   if (nextXp >= nextLevelXp) {
@@ -54,12 +61,13 @@ function checkLevelPlayer(player, gain) {
       ...stats,
       xp: nextXp - nextLevelXp,
       level: level + 1,
+      xpPoints: xpPoints + 1,
     };
 
     return checkLevelPlayer(
       {
         ...player,
-        stats: { ...nextStats, nextLevelXp: computeNextLevelXp(nextStats) },
+        stats: computeMaxLife(computeNextLevelXp(nextStats)),
       },
       0
     );

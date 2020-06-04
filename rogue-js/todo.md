@@ -1,5 +1,4 @@
 ## à court terme :
-- progression experience et niveau 
 - contenu des coffres
 - donjons plus complexes
 - portes et clés 

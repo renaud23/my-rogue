@@ -1,7 +1,7 @@
 import getVisibles from "./get-visibles";
 import createInventory, { putObject } from "./inventory";
 import { createKnife, createArmageddon } from "../objects";
-import { createStats } from "../fight";
+import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
 
 const DEFAULT_FOV = 8;
 const DEFAULT_NB_MOVE = 2;
@@ -9,6 +9,8 @@ const DEFAULT_NB_MOVE = 2;
 function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
   const currentLevel = 0;
   const position = dungeon.peekEmptyTile(currentLevel);
+  const stats = computeNextLevelXp(computeMaxLife(createStats(2, 1, 1, 1)));
+
   const player = {
     desc: "Fitz",
     position,
@@ -18,13 +20,7 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
     inventory: null,
     weapon: null,
     currentLevel,
-    stats: {
-      ...createStats(2, 1, 1, 1),
-      level: 1,
-      life: 100,
-      xp: 0,
-      nextLevelXp: 5 * 3,
-    },
+    stats: { ...stats, xp: 0, xpPoint: 0 },
     turn: {
       moveLeft: maxMove,
       turnPlay: 0,
