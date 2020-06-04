@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { messagesState } from "../recoil";
+import { dungeonState, messagesState } from "../recoil";
 
 function parse(matchAll, message) {
   if (matchAll.length === 0) {
@@ -49,6 +49,9 @@ function parseMessage(message = "") {
 
 function ConsoleLog() {
   const [messages] = useRecoilState(messagesState);
+  const [dungeon] = useRecoilState(dungeonState);
+  if (!dungeon) return null;
+
   return (
     <pre className="console-log">
       {[...messages]

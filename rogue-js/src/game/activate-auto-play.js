@@ -1,11 +1,6 @@
-import {
-  isEmptyPosition,
-  isTurnFinish,
-  consumeMove,
-  nextTurn,
-} from "./commons";
+import { isEmptyPosition, consumeMove } from "./commons";
 import { getVisibles, updateMemory } from "./player"; // getVisibles(state)
-import activateGame from "./activate-game";
+// import activateGame from "./activate-game";
 import activate from "./activate-player";
 
 // function moveNext(state) {

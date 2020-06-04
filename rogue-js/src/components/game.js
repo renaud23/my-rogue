@@ -17,6 +17,7 @@ import { createPlayer } from "../game/player";
 import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
 import ConsoleLog from "./console-log";
+import PlayerConsole from "./player-log";
 import "./render-game.scss";
 
 function initialize() {
@@ -43,6 +44,7 @@ function Game() {
   return (
     <>
       <div className="game">
+        <PlayerConsole />
         <div className="game-row">
           <RenderDungeon2 viewSize={fov + 1} />
           <ActionConsole />

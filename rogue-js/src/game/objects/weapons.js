@@ -18,6 +18,13 @@ export const WEAPONS_MAP = {
     type: typeObject.weapon,
     getDamages: create6sidesDices(2),
   },
+  armageddon: {
+    code: 1002,
+    desc: "Armageddon",
+    size: 2,
+    type: typeObject.weapon,
+    getDamages: create6sidesDices(18),
+  },
 };
 
 export const WEAPONS_CODE_TO_OBJECT = Object.keys(WEAPONS_MAP).reduce(function (
@@ -47,6 +54,17 @@ export function createSword() {
     ...WEAPONS_MAP.sword,
     takeable: true,
     id: `sword-${INDEX++}`,
+  };
+
+  const todo = [];
+  return { ...sword, todo };
+}
+
+export function createArmageddon() {
+  const sword = {
+    ...WEAPONS_MAP.armageddon,
+    takeable: true,
+    id: `armageddon-${INDEX++}`,
   };
 
   const todo = [];

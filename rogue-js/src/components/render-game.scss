@@ -17,6 +17,22 @@ $backgroundColor:  black ;
 
 .game {
   display: inline-block;
+
+  .player-console{
+    @include preRender();
+    height: 18px;
+    background-color: black;
+    width: 100%;
+
+    .label {
+      margin:0 2px 0 12px;
+      color: gold;
+    }
+    
+    .value{
+      &.blue{color: DodgerBlue;}
+    }
+  }
   .game-row {
     display: flex;
     flex-direction: row;

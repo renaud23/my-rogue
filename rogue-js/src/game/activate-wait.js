@@ -31,6 +31,10 @@ function activateWait(state, event = { payload: {} }) {
   const { payload } = event;
   const { button } = payload;
   switch (button) {
+    case PAD_BUTTON.up:
+    case PAD_BUTTON.down:
+    case PAD_BUTTON.left:
+    case PAD_BUTTON.right:
     case PAD_BUTTON.buttonA:
       return activate({
         ...state,

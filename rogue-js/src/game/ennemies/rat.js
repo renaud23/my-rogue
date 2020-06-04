@@ -7,7 +7,7 @@ import {
 import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
 import { versus } from "../fight";
-import { createStats } from "../fight";
+import { createRandomStats } from "../fight/fighter-stats";
 import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
 import ATTACKS from "./eneny-attacks";
 import { PLAYER_ACTIONS } from "../../commons";
@@ -134,7 +134,7 @@ export function createRat(xpLevel = 1) {
     fov: 8,
     turn: buildTurnPlay(2),
     desc: "un rat",
-    stats: { ...createStats(), level: xpLevel, life: 10 },
+    stats: { ...createRandomStats(xpLevel), level: xpLevel, life: 10 },
     weapon: ATTACKS.nibbles,
   };
 }
