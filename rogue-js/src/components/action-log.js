@@ -43,7 +43,7 @@ function peekMenu(state) {
   const messages = options.reduce(
     function (a, { desc }, i) {
       if (i === active) {
-        return [...a, `${desc} X`];
+        return [...a, { message: `${desc} X`, classnames: "message active" }];
       }
       return [...a, desc];
     },
@@ -142,13 +142,21 @@ function ActionConsole() {
 
   if (!dungeon) return null;
   const messages = peekMessages({ player, dungeon, objects, ennemies });
-  const { action = {} } = player;
-  const { active } = action;
+
   return (
     <pre className="action-console">
       {messages.map(function (m, i) {
+        if (typeof m === "object") {
+          const { classnames, message } = m;
+          return (
+            <div className={classnames} key={i}>
+              {message}
+            </div>
+          );
+        }
+
         return (
-          <div className={`message${i === active ? "active" : ""}`} key={i}>
+          <div className={`message`} key={i}>
             {m}
           </div>
         );

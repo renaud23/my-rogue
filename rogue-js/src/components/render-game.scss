@@ -59,10 +59,15 @@
       padding: 2px 2px;
       font-size: 14px;
       color: LightYellow;
-   
+      .message {
+        &.active {
+          color: black;
+          background-color: LightYellow;
+        }
+      }
+
       font-family: "Comic Sans MS", cursive;
-         overflow-y: auto;
-      
+      overflow-y: auto;
     }
     .game-paddle {
       float: left;
