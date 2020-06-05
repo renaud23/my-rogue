@@ -13,6 +13,32 @@
   margin: 0;
 }
 
+
+@mixin scrollbar(){
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: goldenrod; 
+  }
+  
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: gold; 
+  }
+}
+
+body {
+  background-color: black;
+}
+
 .game {
   display: inline-block;
   background-color: #19070b;
@@ -76,6 +102,7 @@
   }
 
   .console-log {
+    @include scrollbar();
     font-family: "Comic Sans MS", cursive;
     overflow-y: auto;
     font-size: 14px;

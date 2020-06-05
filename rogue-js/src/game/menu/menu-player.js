@@ -1,7 +1,11 @@
 import { optionExit, displayMenu } from "./tools";
 import { PLAYER_ACTIONS } from "../../commons";
+import exPointsMenu from "./menu-xp-points";
 
-const OPTIONS = [optionExit];
+const OPTIONS = [
+  { desc: "Point d'expérience", todo: exPointsMenu },
+  optionExit,
+];
 
 function initializePlayer(player) {
   return {
