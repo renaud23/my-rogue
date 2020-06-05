@@ -53,7 +53,7 @@ export function computeNextLevelXp(stats) {
 
 function checkLevelPlayer(player, gain) {
   const { stats } = player;
-  const { level, xp, nextLevelXp, xpPoints } = stats;
+  const { level, xp, nextLevelXp, xpPoint } = stats;
   const nextXp = xp + gain;
 
   if (nextXp >= nextLevelXp) {
@@ -61,7 +61,7 @@ function checkLevelPlayer(player, gain) {
       ...stats,
       xp: nextXp - nextLevelXp,
       level: level + 1,
-      xpPoints: xpPoints + 1,
+      xpPoint: xpPoint + 1,
     };
 
     return checkLevelPlayer(

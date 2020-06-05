@@ -20,7 +20,7 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
     inventory: undefined,
     weapon: undefined,
     currentLevel,
-    stats: { ...stats, xp: 0, xpPoint: 10 },
+    stats: { ...stats, xp: 0, xpPoint: 0 },
     turn: {
       moveLeft: maxMove,
       turnPlay: 0,
