@@ -4,7 +4,7 @@ export const TILES = {
   ground: { code: 0, char: "_", className: "tile-ground", desc: "le sol" },
   rock: {
     code: 1,
-    char: "\u2588",
+    char: "X",
     className: "tile-rock",
     desc: "un mur de pierre",
   },
@@ -26,8 +26,8 @@ export const TILES = {
   },
   stairsUpDown: {
     code: 35,
-    char: "=",
-    desc: "un escalier montant et descendant",
+    char: "q",
+    desc: "un  escalier montant et descendant",
   },
   ennemy: {
     code: 100,
@@ -35,12 +35,12 @@ export const TILES = {
   },
   chest: {
     code: 200,
-    char: "\u2B20",
+    char: "#",
     color: "cyan",
   },
   key: {
     code: 201,
-    char: "\u26B7",
+    char: "⚷",
     color: "cyan",
   },
 

@@ -46,7 +46,11 @@ export function GlobalRender() {
 function getRow(current, { char, color }) {
   return [
     ...current,
-    <span style={{ color: color || "white" }} key={current.length}>
+    <span
+      className="game-screen-cell"
+      style={{ color: color || "white" }}
+      key={current.length}
+    >
       {char}
     </span>,
   ];
@@ -58,7 +62,12 @@ function render(data, width) {
       if (i % width === width - 1) {
         return {
           current: ``,
-          rows: [...rows, <div key={i}>{getRow(current, tile)}</div>],
+          rows: [
+            ...rows,
+            <div className="game-screen-row" key={i}>
+              {getRow(current, tile)}
+            </div>,
+          ],
         };
       }
       return {

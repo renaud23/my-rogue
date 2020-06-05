@@ -1,5 +1,5 @@
 @mixin preRender {
-  background-color: black;
+  background-color: transparent;
   color: white;
   overflow-y: auto;
   // overflow-x: visible;
@@ -13,56 +13,69 @@
   margin: 0;
 }
 
-$backgroundColor:  black ;
-
 .game {
   display: inline-block;
-
-  .player-console{
+  background-color: #19070b;
+  .player-console {
     @include preRender();
     height: 18px;
-    background-color: black;
+    background-color: transparent;
     width: 100%;
 
     .label {
-      margin:0 2px 0 12px;
+      margin: 0 2px 0 12px;
       color: gold;
     }
-    
-    .value{
-      &.blue{color: DodgerBlue;}
+
+    .value {
+      &.blue {
+        color: DodgerBlue;
+      }
     }
   }
   .game-row {
     display: flex;
     flex-direction: row;
+    background-color: transparent;
     .game-screen {
-      font-size: 12px;
-      line-height: 12px;
+      font-size: 14px;
+      line-height: 14px;
       font-family: Consolas, monaco, monospace;
-      background-color: $backgroundColor;
+      background-color: transparent;
       @include preRender();
       overflow: visible;
+      .game-screen-row {
+        .game-screen-cell {
+          display: inline-block;
+          // width: 8px;
+          // height: 12px;
+        }
+      }
     }
 
     .action-console {
+      // @include preRender();
       width: 350px;
-
-      @include preRender();
+      padding: 2px 2px;
+      font-size: 14px;
+      color: LightYellow;
+   
+      font-family: "Comic Sans MS", cursive;
+         overflow-y: auto;
+      
     }
     .game-paddle {
       float: left;
-      background-color: $backgroundColor;
+      background-color: transparent;
     }
   }
 
- 
-
   .console-log {
-    @include preRender();
-
-    .console-log-prompt{
-      margin-right:3px;
+    font-family: "Comic Sans MS", cursive;
+    overflow-y: auto;
+    font-size: 14px;
+    .console-log-prompt {
+      margin-right: 3px;
     }
 
     height: 150px;
