@@ -20,11 +20,11 @@ function activateChoice(state) {
   if (path.length) {
     return activateAutoPlay({
       ...state,
-      player: { ...player, path, action: null },
+      player: { ...player, path, action: undefined },
     });
   }
 
-  return { ...state, player: { ...player, action: null }, activate };
+  return { ...state, player: { ...player, action: undefined }, activate };
 }
 //path: ,
 
@@ -47,7 +47,7 @@ function navigateFunction(state, event) {
   const next = navigateMap(state, event);
   switch (button) {
     case PAD_BUTTON.buttonB:
-      return { ...state, activate, player: { ...player, action: null } };
+      return { ...state, activate, player: { ...player, action: undefined } };
     case PAD_BUTTON.buttonA:
       return activateChoice(state, event);
     case PAD_BUTTON.up:

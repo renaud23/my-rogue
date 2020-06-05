@@ -51,7 +51,7 @@ function getOptions(state, position) {
 
 function todoExit(state) {
   const { player, ...rest } = state;
-  return { ...rest, player: { ...player, action: null, activate } };
+  return { ...rest, player: { ...player, action: undefined, activate } };
 }
 
 function actionTodo(state) {
@@ -90,7 +90,7 @@ function moveIronSight(state, event) {
 
   switch (button) {
     case PAD_BUTTON.buttonB:
-      return { ...state, activate, player: { ...player, action: null } };
+      return { ...state, activate, player: { ...player, action: undefined } };
     case PAD_BUTTON.buttonA:
       return { ...activateMenuAction(next, event) };
     case PAD_BUTTON.up:

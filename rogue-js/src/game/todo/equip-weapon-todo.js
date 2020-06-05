@@ -31,11 +31,11 @@ function equipWeaponTodo(state) {
     ...player,
     weapon,
     inventory: nextInventory,
-    action: null,
+    action: undefined,
   };
   return {
     ...state,
-    player: done ? consumeMove(nextPlayer) : { ...player, action: null },
+    player: done ? consumeMove(nextPlayer) : { ...player, action: undefined },
   };
 }
 

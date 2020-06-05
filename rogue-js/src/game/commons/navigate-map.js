@@ -88,7 +88,7 @@ export function createNavigate(successCallback, limite) {
 
     switch (button) {
       case PAD_BUTTON.buttonB:
-        return { ...state, activate, player: { ...player, action: null } };
+        return { ...state, activate, player: { ...player, action: undefined } };
       case PAD_BUTTON.buttonA:
         return successCallback(state, event);
       case PAD_BUTTON.up:

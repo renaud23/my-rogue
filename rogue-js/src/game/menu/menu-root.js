@@ -5,6 +5,7 @@ import activateHelp from "../activate-help";
 import activateAction from "../activate-action";
 import activateStackMove from "./stack-move-menu";
 import { PLAYER_ACTIONS } from "../../commons";
+import playerMenu from "./menu-player";
 
 function finishTurnTodo(state) {
   const { player } = state;
@@ -37,6 +38,7 @@ const ROOT_MENU_OPTIONS = [
   { desc: "Action", todo: actionTodo },
   { desc: "Aller à", todo: activateStackMove },
   { desc: "Observer", todo: lookAtTodo },
+  { desc: "Joueur", todo: playerMenu },
   { desc: "Finir le tour", todo: finishTurnTodo },
 ];
 

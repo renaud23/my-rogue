@@ -2,21 +2,21 @@ import { atom } from "recoil";
 
 export const dungeonState = atom({
   key: "dungeonState",
-  default: null,
+  default: undefined,
 });
 
 export const playerState = atom({
   key: "playerState",
   default: {
-    position: null,
-    action: null,
-    fov: null,
+    position: undefined,
+    action: undefined,
+    fov: undefined,
   },
 });
 
 export const activateState = atom({
   key: "activateState",
-  default: null,
+  default: undefined,
 });
 
 export const ennemiesState = atom({

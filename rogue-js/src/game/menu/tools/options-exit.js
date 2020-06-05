@@ -4,6 +4,6 @@ export default {
   desc: "exit",
   todo: function (state) {
     const { player } = state;
-    return { ...state, player: { ...player, action: null }, activate };
+    return { ...state, player: { ...player, action: undefined }, activate };
   },
 };

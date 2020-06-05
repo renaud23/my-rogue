@@ -23,14 +23,14 @@ export function createUseKeyOnObject(key, object) {
       return {
         ...state,
         messages: [...messages, PATTERNS.nothingAppended],
-        player: { ...player, action: null },
+        player: { ...player, action: undefined },
       };
     }
     if (target !== kind) {
       return {
         ...state,
         messages: [...messages, PATTERNS.itsNotAGoodChest],
-        player: { ...player, action: null },
+        player: { ...player, action: undefined },
       };
     }
 
@@ -45,7 +45,11 @@ export function createUseKeyOnObject(key, object) {
         ...messages,
         fillMessage(PATTERNS.chestOpened, { chest: object }),
       ],
-      player: consumeMove({ ...player, inventory: newInventory, action: null }),
+      player: consumeMove({
+        ...player,
+        inventory: newInventory,
+        action: undefined,
+      }),
     };
   };
 }
@@ -70,7 +74,7 @@ function createMenu(state) {
   if (options.length === 0) {
     return {
       ...state,
-      player: { ...player, action: null },
+      player: { ...player, action: undefined },
       messages: [...messages, PATTERNS.nothingAppended],
       activate,
     };
@@ -117,7 +121,7 @@ function activateNavigate(state, event) {
   const next = navigateMap(state, event, 1);
   switch (button) {
     case PAD_BUTTON.buttonB:
-      return { ...state, player: { ...player, action: null }, activate };
+      return { ...state, player: { ...player, action: undefined }, activate };
     case PAD_BUTTON.buttonA:
       return createMenu(next);
     case PAD_BUTTON.up:

@@ -142,12 +142,13 @@ function ActionConsole() {
 
   if (!dungeon) return null;
   const messages = peekMessages({ player, dungeon, objects, ennemies });
-
+  const { action = {} } = player;
+  const { active } = action;
   return (
     <pre className="action-console">
       {messages.map(function (m, i) {
         return (
-          <div className="message" key={i}>
+          <div className={`message${i === active ? "active" : ""}`} key={i}>
             {m}
           </div>
         );

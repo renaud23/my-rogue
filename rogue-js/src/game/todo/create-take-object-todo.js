@@ -30,7 +30,7 @@ function createPrendreObjectTodo(object) {
     // TODO msg inventaire plein
     return {
       ...state,
-      player: { ...player, action: null },
+      player: { ...player, action: undefined },
       messages: [...messages, PATTERNS.inventoryFull],
     };
   };

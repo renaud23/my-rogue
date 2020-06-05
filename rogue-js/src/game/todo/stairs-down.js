@@ -16,7 +16,7 @@ export function goDown(state) {
 
   return {
     ...state,
-    player: consumeMove({ ...nextPlayer, visibles, action: null }),
+    player: consumeMove({ ...nextPlayer, visibles, action: undefined }),
   };
 }
 

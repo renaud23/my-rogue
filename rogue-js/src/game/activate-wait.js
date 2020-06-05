@@ -39,7 +39,7 @@ function activateWait(state, event = { payload: {} }) {
       return activate({
         ...state,
         activate,
-        player: { ...player, action: null },
+        player: { ...player, action: undefined },
       });
     default:
       return {

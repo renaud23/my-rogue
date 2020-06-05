@@ -24,7 +24,7 @@ export function createDisplayMenu(
         return { ...next, activate: display };
       }
       case exitButton:
-        return { ...state, player: { ...player, action: null }, activate };
+        return { ...state, player: { ...player, action: undefined }, activate };
       case activateButton: {
         const next = options[active].todo(state);
         const { activate: cally } = next;

@@ -22,7 +22,7 @@ function throwObjectTodo(state) {
     player: consumeMove({
       ...player,
       inventory: removeObject(inventory, object),
-      action: null,
+      action: undefined,
     }),
   };
 }

@@ -38,7 +38,7 @@ function shootTodo(state) {
     ...state,
     messages: [...messages, ...newMessage],
     ennemies: nextEnnemies,
-    player: consumeMove({ ...nextPlayer, action: null }),
+    player: consumeMove({ ...nextPlayer, action: undefined }),
   };
 }
 

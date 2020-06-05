@@ -1,4 +1,5 @@
 ## à court terme :
+- saignement et object de guérison
 - contenu des coffres
 - donjons plus complexes
 - portes et clés 
