@@ -44,6 +44,8 @@ export const TILES = {
     color: "cyan",
   },
 
+  ammo: { code: 400, char: "|", color: "cyan" },
+
   ironSight: { code: 666, char: "$" },
   unknow: {
     code: -1,

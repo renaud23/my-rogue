@@ -8,6 +8,7 @@ function computeDamages(attacker, weapon) {
 }
 
 function versus(attacker, defender, weapon) {
+  console.log(weapon);
   return [attacker, defender, []];
 }
 

@@ -8,6 +8,8 @@ function getTile(o) {
       return { ...TILES.chest };
     case TYPE_OBJECT.key:
       return { ...TILES.key };
+    case TYPE_OBJECT.ammo:
+      return { ...TILES.ammo };
     default:
       return { ...TILES.simpleObject };
   }

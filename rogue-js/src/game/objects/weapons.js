@@ -1,6 +1,6 @@
 import typeObject from "./type-object";
 import { create6sidesDices } from "../commons/dices";
-import { meleeVersus } from "../fight";
+import { meleeVersus, distanceVersus } from "../fight";
 
 let INDEX = 0;
 
@@ -28,7 +28,7 @@ export const WEAPONS_MAP = {
   },
   woodenBow: {
     code: 1003,
-    desc: "Armageddon",
+    desc: "un arc en bois",
     size: 2,
     type: typeObject.weapon,
     getDamages: create6sidesDices(1),
@@ -51,7 +51,7 @@ export function createKnife() {
     ...WEAPONS_MAP.knife,
     takeable: true,
     id: `knife-${INDEX++}`,
-    versus: meleeVersus,
+    versus: distanceVersus,
   };
 
   const todo = [];
@@ -64,6 +64,19 @@ export function createSword() {
     takeable: true,
     id: `sword-${INDEX++}`,
     versus: meleeVersus,
+  };
+
+  const todo = [];
+  return { ...sword, todo };
+}
+
+export function createBow() {
+  const sword = {
+    ...WEAPONS_MAP.woodenBow,
+    takeable: true,
+    id: `bow-${INDEX++}`,
+    range: 4,
+    versus: distanceVersus,
   };
 
   const todo = [];

@@ -1,6 +1,6 @@
 import getVisibles from "./get-visibles";
 import createInventory, { putObject } from "./inventory";
-import { createKnife, createArmageddon } from "../objects";
+import { createKnife, createArmageddon, createBow } from "../objects";
 import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
 
 const DEFAULT_FOV = 8;
@@ -31,13 +31,14 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
 
   const inventory = createInventory(10);
   const knife = createKnife();
+  const bow = createBow();
   const sword = createArmageddon();
 
   return {
     ...player,
     weapon: sword,
     visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
-    inventory: putObject(inventory, knife),
+    inventory: putObject(putObject(inventory, knife), bow),
   };
 }
 
