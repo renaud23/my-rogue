@@ -28,9 +28,9 @@ function computeDR(o) {
 
 function computeDamages(attacker, weapon) {
   const { stats } = attacker;
-  const { level, luck } = stats;
+  const { level, luck, strength } = stats;
   const { getDamages } = weapon;
-  const damages = (getDamages() + randomInt(luck)) * level;
+  const damages = (getDamages() + randomInt(luck + strength)) * level;
 
   return damages;
 }

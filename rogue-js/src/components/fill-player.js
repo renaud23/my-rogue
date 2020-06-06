@@ -1,5 +1,5 @@
 import combine from "./combine-fill";
-import { TILES, PLAYER_ACTIONS } from "../commons";
+import { TILES, PLAYER_ACTIONS, computeDistance } from "../commons";
 
 function fillHelp(tiles, state, rect, tile, path) {
   const { dungeon, player } = state;
@@ -22,6 +22,40 @@ function fillHelp(tiles, state, rect, tile, path) {
   tiles[pos] = tile;
 
   return tiles;
+}
+
+function fillShoot(tiles, state, rect, tile) {
+  const { dungeon, player } = state;
+  const { action, currentLevel, weapon } = player;
+  const { range = 1 } = weapon;
+  const dungeonWidth = dungeon.getWidth(currentLevel);
+  const { startX, startY, width } = rect;
+  const xi = action.position % dungeonWidth;
+  const yi = Math.trunc(action.position / dungeonWidth);
+  const pos = xi - startX + (yi - startY) * width;
+
+  tiles[pos] = tile;
+
+  return tiles;
+}
+
+function ifInShootRange(state, tilePos) {
+  const { dungeon, player } = state;
+  const { action, currentLevel, weapon, visibles } = player;
+  if (!action) return false;
+  const { type } = action;
+  const { range = 1 } = weapon;
+  const dungeonWidth = dungeon.getWidth(currentLevel);
+
+  const distance = computeDistance(player.position, tilePos, dungeonWidth);
+
+  if (distance <= range * range) {
+    return (
+      true && PLAYER_ACTIONS.shoot === type && visibles.indexOf(tilePos) !== -1
+    );
+  }
+
+  return false;
 }
 
 function fillAction(tiles, state, rect) {
@@ -53,7 +87,7 @@ function fillAction(tiles, state, rect) {
         );
       }
       case PLAYER_ACTIONS.shoot: {
-        return fillHelp(tiles, state, rect, {
+        return fillShoot(tiles, state, rect, {
           ...TILES.ironSight,
           color: "red",
         });
@@ -79,6 +113,9 @@ function fill(tiles, state, rect) {
 
     if (tilePos === position) {
       return TILES.player;
+    }
+    if (ifInShootRange(state, tilePos)) {
+      return { ...tile, bgColor: "rgba(200, 150, 150, 0.5)", color: "gold" };
     }
     if (visibles.indexOf(tilePos) !== -1) {
       return { ...tile, color: tile.color || "Gold" };

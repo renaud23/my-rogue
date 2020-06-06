@@ -6,3 +6,4 @@ export { aggregateObjects } from "./aggregate-objects";
 export { default as TYPE_OBJECT } from "./type-object";
 export * from "./weapons";
 export * from "./simple";
+export * from "./ammo";

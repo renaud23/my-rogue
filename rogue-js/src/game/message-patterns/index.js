@@ -70,4 +70,10 @@ export default {
   nothingAppended: yellow("Il ne se passe rien."),
   deadEnemy: mergeParts(printPlayer("att"), yellow(" est mort.")),
   consumeXpPoint: mergeParts(yellow("vous utilisez un point d'expérience.")),
+
+  noAmmoSelected: mergeParts(
+    yellow("Vous n'avez pas de munitions équipées pour "),
+    chartreuse("$[weapon.desc]"),
+    yellow(".")
+  ),
 };

@@ -35,7 +35,7 @@ function moveIronSight(state, event) {
   const {
     payload: { button },
   } = event;
-  const next = navigateMap(state, event, range);
+  const next = navigateMap(state, event, range, range > 1 ? true : false);
   switch (button) {
     case PAD_BUTTON.buttonB:
       return { ...state, activate, player: { ...player, action: undefined } };

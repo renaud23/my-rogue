@@ -15,6 +15,13 @@ export function pointProjection([x, y], width) {
   return x + width * y;
 }
 
+export function computeDistance(posA, posB, width) {
+  return distanceEucl2(
+    antecedentPoint(posA, width),
+    antecedentPoint(posB, width)
+  );
+}
+
 export const maxMin = (value, max, min) => Math.min(Math.max(value, max), min);
 
 export const randomInt = (limite) =>

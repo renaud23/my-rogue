@@ -1,12 +1,12 @@
 import {
   getSegment,
+  randomInt,
   antecedentPoint,
   distanceEucl2,
   pointProjection,
 } from "../../commons";
 import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
-// import { versus } from "../fight";
 import { createRandomStats } from "../fight/fighter-stats";
 import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
 import ATTACKS from "./eneny-attacks";
@@ -107,7 +107,7 @@ function sleep(state, enemy) {
     if (canBite(state, enemy)) {
       const { weapon } = enemy;
       const { versus } = weapon;
-      const [nextRat, nextPlayer, nm] = versus(enemy, player, weapon);
+      const [nextRat, nextPlayer, nm] = versus(enemy, player, weapon, state);
       return [
         {
           ...state,

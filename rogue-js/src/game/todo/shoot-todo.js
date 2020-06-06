@@ -1,7 +1,7 @@
 import { computeXP } from "../fight";
 import { consumeMove } from "../commons";
 
-function resolveLevel({ level, player, action }) {
+function resolveLevel({ level, player, action, state }) {
   const { weapon, position } = action;
   if (!weapon) {
     return [[], player, []];
@@ -11,7 +11,7 @@ function resolveLevel({ level, player, action }) {
     function ([currLevel, currPlayer, currMsg], enemy) {
       const { position: pe } = enemy;
       if (pe === position) {
-        const [newPlayer, newEnemy, msg] = versus(player, enemy, weapon);
+        const [newPlayer, newEnemy, msg] = versus(player, enemy, weapon, state);
         const [newPlayerXp, xpMsg] = computeXP(newPlayer, newEnemy);
         return [[...currLevel, newEnemy], newPlayerXp, [...msg, ...xpMsg]];
       }
@@ -31,6 +31,7 @@ function shootTodo(state) {
           level,
           player,
           action,
+          state,
         });
         return [[...currEnnemies, nextLevel], nextPlayer, newMsg];
       }

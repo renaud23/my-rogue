@@ -6,11 +6,11 @@ import { createTakeObjectTodo } from "./todo";
 import { navigateMap } from "./commons";
 import displayMenu from "./menu/tools/display-menu";
 
-function optionsDescNumber(options) {
-  return options.map(function ({ desc, ...r }, i) {
-    return { desc: `${i + 1}. ${desc}`, ...r };
-  });
-}
+// function optionsDescNumber(options) {
+//   return options.map(function ({ desc, ...r }, i) {
+//     return { desc: `${i + 1}. ${desc}`, ...r };
+//   });
+// }
 
 function optionsTile(tile) {
   if (tile.todo) {
@@ -46,7 +46,7 @@ function getOptions(state, position) {
   const opt = optionsTile(tile);
   const opo = optionsObjects(objects);
 
-  return optionsDescNumber([...opt, ...opo]);
+  return [...opt, ...opo];
 }
 
 function todoExit(state) {

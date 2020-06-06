@@ -1,5 +1,5 @@
 import { PAD_BUTTON } from "../../commons";
-import { antecedentPoint } from "../../commons";
+import { antecedentPoint, distanceEucl2 } from "../../commons";
 import activate from "../activate-player";
 
 function nextPosition(position, button, width) {
@@ -16,8 +16,28 @@ function nextPosition(position, button, width) {
       return position;
   }
 }
+function checkLimiteCirc(state, next, limite) {
+  if (!limite) {
+    return true;
+  }
+  const { dungeon, player } = state;
+  const { currentLevel } = player;
+  const width = dungeon.getWidth(currentLevel);
+  const height = dungeon.getHeight(currentLevel);
+  const { position: pp } = player;
 
-function checkLimite(state, next, limite) {
+  const distance = Math.sqrt(
+    distanceEucl2(antecedentPoint(next, width), antecedentPoint(pp, width))
+  );
+
+  if (distance <= limite) {
+    return true;
+  }
+
+  return false;
+}
+
+function checkLimiteRect(state, next, limite) {
   if (!limite) {
     return true;
   }
@@ -39,18 +59,25 @@ function checkLimite(state, next, limite) {
   return false;
 }
 
-function movePosition(position, button, state, limite) {
+function checkLimite(state, next, limite, circular = false) {
+  if (circular) {
+    return checkLimiteCirc(state, next, limite);
+  }
+  return checkLimiteRect(state, next, limite);
+}
+
+function movePosition(position, button, state, limite, circular) {
   const { dungeon, player } = state;
   const { visibles, currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
   const next = nextPosition(position, button, width);
-  if (checkLimite(state, next, limite)) {
+  if (checkLimite(state, next, limite, circular)) {
     return visibles.indexOf(next) !== -1 ? next : position;
   }
   return position;
 }
 
-function navigate(state, event, limite) {
+function navigate(state, event, limite, circular = false) {
   const { player } = state;
   const { action } = player;
   if (!action || !action.position) return state;
@@ -69,7 +96,7 @@ function navigate(state, event, limite) {
           ...player,
           action: {
             ...action,
-            position: movePosition(position, button, state, limite),
+            position: movePosition(position, button, state, limite, circular),
           },
         },
       };
@@ -78,13 +105,13 @@ function navigate(state, event, limite) {
   }
 }
 
-export function createNavigate(successCallback, limite) {
+export function createNavigate(successCallback, limite, circular = false) {
   return function navigateFunction(state, event) {
     const { player } = state;
     const {
       payload: { button },
     } = event;
-    const next = navigate(state, event, limite);
+    const next = navigate(state, event, limite, circular);
 
     switch (button) {
       case PAD_BUTTON.buttonB:

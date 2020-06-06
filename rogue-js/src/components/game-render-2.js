@@ -43,12 +43,15 @@ export function GlobalRender() {
   return <pre style={{ fontSize: 8 }}>{rows}</pre>;
 }
 
-function getRow(current, { char, color }) {
+function getRow(current, { char, color, bgColor }) {
   return [
     ...current,
     <span
       className="game-screen-cell"
-      style={{ color: color || "white" }}
+      style={{
+        color: color || "white",
+        backgroundColor: bgColor || "transparent",
+      }}
       key={current.length}
     >
       {char}

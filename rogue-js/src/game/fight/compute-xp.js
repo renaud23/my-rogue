@@ -87,4 +87,18 @@ function computeXP(player, enemy) {
   return [player, []];
 }
 
+// function displayMaxLifeTable(endurance) {
+//   // 10 * (level + endurance + 1)
+//   const table = new Array(10).fill(null).map(function (_, i) {
+//     const stats = { level: i + 1, endurance };
+//     return [i + 1, endurance, computeMaxLife(stats).life];
+//   });
+//   console.log(
+//     table.reduce(function (a, [l, e, v]) {
+//       return [...a, `level ${l} life ${v}`];
+//     }, [])
+//   );
+// }
+// displayMaxLifeTable(1);
+
 export default computeXP;
