@@ -14,19 +14,16 @@ function getLooseMessage(att, deff) {
 function computeAR(o) {
   const { stats } = o;
   const { strength, luck, level } = stats;
-  const effectiveStrength = strength * level * 2;
-  const lucky = randomInt(luck);
-
-  return randomInt(effectiveStrength) + lucky * level;
+  const effectiveStrength = (strength + luck) * 2;
+  return randomInt(effectiveStrength) * level;
 }
 
 function computeDR(o) {
   const { stats } = o;
   const { agility, luck, level } = stats;
-  const effectiveAgility = agility * level * 2;
-  const lucky = randomInt(luck);
+  const effectiveAgility = (agility + luck) * 2;
 
-  return randomInt(effectiveAgility) + lucky * level;
+  return randomInt(effectiveAgility) * level;
 }
 
 function computeDamages(attacker, weapon) {

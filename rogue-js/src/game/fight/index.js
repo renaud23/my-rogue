@@ -1,4 +1,5 @@
-export { default as versus } from "./versus";
+export { default as distanceVersus } from "./distance-versus";
+export { default as meleeVersus } from "./melee-versus";
 export { default as createStats } from "./fighter-stats";
 export {
   computeMaxLife,

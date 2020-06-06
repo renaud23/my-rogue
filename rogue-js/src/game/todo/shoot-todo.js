@@ -1,8 +1,12 @@
-import { versus, computeXP } from "../fight";
+import { computeXP } from "../fight";
 import { consumeMove } from "../commons";
 
 function resolveLevel({ level, player, action }) {
   const { weapon, position } = action;
+  if (!weapon) {
+    return [[], player, []];
+  }
+  const { versus } = weapon;
   return level.reduce(
     function ([currLevel, currPlayer, currMsg], enemy) {
       const { position: pe } = enemy;

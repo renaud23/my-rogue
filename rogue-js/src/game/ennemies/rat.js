@@ -6,7 +6,7 @@ import {
 } from "../../commons";
 import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
-import { versus } from "../fight";
+// import { versus } from "../fight";
 import { createRandomStats } from "../fight/fighter-stats";
 import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
 import ATTACKS from "./eneny-attacks";
@@ -57,10 +57,10 @@ function getVariation(delta) {
   return 1;
 }
 
-function moveToPlayer(state, ennemy) {
+function moveToPlayer(state, enemy) {
   const { dungeon, player } = state;
   const { currentLevel, position: pPos } = player;
-  const { position: ePos } = ennemy;
+  const { position: ePos } = enemy;
   const dw = dungeon.getWidth(currentLevel);
   const [px, py] = antecedentPoint(pPos, dw);
   const [ex, ey] = antecedentPoint(ePos, dw);
@@ -101,12 +101,13 @@ function follow(state, enemy) {
   return [state, { ...enemy, position: nePos, activate: sleep }];
 }
 
-function sleep(state, rat) {
+function sleep(state, enemy) {
   const { player, messages } = state;
-  if (canSeePlayer(state, rat)) {
-    if (canBite(state, rat)) {
-      const { weapon = { getDamages: () => 0 } } = rat;
-      const [nextRat, nextPlayer, nm] = versus(rat, player, weapon);
+  if (canSeePlayer(state, enemy)) {
+    if (canBite(state, enemy)) {
+      const { weapon } = enemy;
+      const { versus } = weapon;
+      const [nextRat, nextPlayer, nm] = versus(enemy, player, weapon);
       return [
         {
           ...state,
@@ -123,9 +124,9 @@ function sleep(state, rat) {
         nextRat,
       ];
     }
-    return follow(state, rat);
+    return follow(state, enemy);
   }
-  return [state, rat];
+  return [state, enemy];
 }
 
 export function createRat(xpLevel = 1) {
