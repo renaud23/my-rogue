@@ -87,7 +87,7 @@ function fill(tiles, state, rect) {
       return { ...tile, color: "MediumBlue" };
     }
 
-    return TILES.unknow;
+    return { ...TILES.unknow, color: "MidnightBlue" };
   });
 }
 

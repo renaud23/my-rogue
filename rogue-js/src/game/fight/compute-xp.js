@@ -72,7 +72,7 @@ function checkLevelPlayer(player, gain, messages = []) {
         stats: computeMaxLife(computeNextLevelXp(nextStats)),
       },
       0,
-      [...messages, fillMessage(PATTERNS.xpProgress, { stats })]
+      [...messages, fillMessage(PATTERNS.xpProgress, { stats: nextStats })]
     );
   }
 
