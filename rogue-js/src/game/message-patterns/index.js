@@ -62,6 +62,11 @@ export default {
     chartreuse("$[chest.desc]"),
     yellow(". Il est vide.")
   ),
+  xpProgress: mergeParts(
+    yellow("Vous atteignez le niveau "),
+    snowBrackets(springGreen("$[stats.level]")),
+    yellow(" !")
+  ),
   nothingAppended: yellow("Il ne se passe rien."),
   deadEnemy: mergeParts(printPlayer("att"), yellow(" est mort.")),
   consumeXpPoint: mergeParts(yellow("vous utilisez un point d'expérience.")),

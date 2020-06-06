@@ -8,7 +8,8 @@ function resolveLevel({ level, player, action }) {
       const { position: pe } = enemy;
       if (pe === position) {
         const [newPlayer, newEnemy, msg] = versus(player, enemy, weapon);
-        return [[...currLevel, newEnemy], computeXP(newPlayer, newEnemy), msg];
+        const [newPlayerXp, xpMsg] = computeXP(newPlayer, newEnemy);
+        return [[...currLevel, newEnemy], newPlayerXp, [...msg, ...xpMsg]];
       }
       return [[...currLevel, enemy], currPlayer, currMsg];
     },
@@ -27,7 +28,6 @@ function shootTodo(state) {
           player,
           action,
         });
-
         return [[...currEnnemies, nextLevel], nextPlayer, newMsg];
       }
       return [[...currEnnemies, level], currPlayer, currMsg];

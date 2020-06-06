@@ -1,3 +1,6 @@
+import { fillMessage } from "../commons";
+import PATTERNS from "../message-patterns";
+
 const S = 5; // sum start S.A.L.E (2,1,1,1)
 const THAU = 4;
 
@@ -51,7 +54,7 @@ export function computeNextLevelXp(stats) {
   };
 }
 
-function checkLevelPlayer(player, gain) {
+function checkLevelPlayer(player, gain, messages = []) {
   const { stats } = player;
   const { level, xp, nextLevelXp, xpPoint } = stats;
   const nextXp = xp + gain;
@@ -63,17 +66,17 @@ function checkLevelPlayer(player, gain) {
       level: level + 1,
       xpPoint: xpPoint + 1,
     };
-
     return checkLevelPlayer(
       {
         ...player,
         stats: computeMaxLife(computeNextLevelXp(nextStats)),
       },
-      0
+      0,
+      [...messages, fillMessage(PATTERNS.xpProgress, { stats })]
     );
   }
 
-  return { ...player, stats: { ...stats, xp: nextXp } };
+  return [{ ...player, stats: { ...stats, xp: nextXp } }, messages];
 }
 
 function computeXP(player, enemy) {
@@ -81,7 +84,7 @@ function computeXP(player, enemy) {
     const gain = enemyXpValue(enemy);
     return checkLevelPlayer(player, gain);
   }
-  return player;
+  return [player, []];
 }
 
 export default computeXP;
