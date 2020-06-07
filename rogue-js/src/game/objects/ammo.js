@@ -1,6 +1,5 @@
 import typeObject from "./type-object";
 import { create6sidesDices } from "../commons/dices";
-import { meleeVersus, distanceVersus } from "../fight";
 
 let INDEX = 0;
 
@@ -31,11 +30,12 @@ export function createArrows(how = 5) {
     originalDesc: AMMO_MAP.woodenArrow.desc,
     desc: `${how} ${AMMO_MAP.woodenArrow.desc}`,
     id: `ammo-${INDEX++}`,
-    how: 5,
+    how,
     max: undefined, //TODO
     takeable: true,
     aggregative: true,
     todo: [],
+    getDamages: () => 2,
   };
   return arrows;
 }

@@ -76,4 +76,12 @@ export default {
     chartreuse("$[weapon.desc]"),
     yellow(".")
   ),
+
+  restAmmo: mergeParts(
+    yellow("Il vous reste "),
+    chartreuse("$[ammo.how]"),
+    yellow(" $[ammo.originalDesc].")
+  ),
+
+  runOutOfAmmo: yellow("Vous n'avez plus de $[ammo.originalDesc]."),
 };

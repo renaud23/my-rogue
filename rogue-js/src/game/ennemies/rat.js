@@ -1,6 +1,5 @@
 import {
   getSegment,
-  randomInt,
   antecedentPoint,
   distanceEucl2,
   pointProjection,
@@ -136,6 +135,7 @@ export function createRat(xpLevel = 1) {
     turn: buildTurnPlay(2),
     desc: "un rat",
     stats: { ...createRandomStats(xpLevel), level: xpLevel, life: 10 },
+    baseClass: { melee: 0.4, distance: 0.2, parade: 0.2 },
     weapon: ATTACKS.nibbles,
   };
 }

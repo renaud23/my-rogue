@@ -7,9 +7,9 @@ import { consumeMove } from "../commons";
 
 function checkInventory(inventory, ammo, nextAmmo) {
   if (ammo) {
-    if (ammo.id === ammo.id) {
-      // TODO msg déjà équiper
-    }
+    // if (ammo.id === ammo.id) {
+    // TODO msg déjà équiper
+    // }
     if (hasEnoughSpaceFor(inventory, Math.max(0, ammo.size - nextAmmo.size))) {
       return [putObject(removeObject(inventory, nextAmmo), ammo), true];
     }

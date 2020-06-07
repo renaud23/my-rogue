@@ -17,14 +17,14 @@ export function createRandomStats(level) {
   }
   return new Array(level - 1).fill().reduce(
     function ({ strength, agility, luck, endurance, level }, _) {
-      const dice = randomInt(8);
+      const dice = randomInt(9);
       if (dice < 3) {
         return { strength: strength + 1, agility, luck, endurance, level };
       }
-      if (dice < 5) {
+      if (dice < 6) {
         return { strength, agility: agility + 1, luck, endurance, level };
       }
-      if (dice < 6) {
+      if (dice < 7) {
         return { strength, agility, luck: luck + 1, endurance, level };
       }
       return { strength, agility, luck, endurance: endurance + 1, level };

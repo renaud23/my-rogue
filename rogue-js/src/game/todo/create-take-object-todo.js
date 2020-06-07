@@ -7,7 +7,7 @@ import { consumeMove } from "../commons";
 
 function takeAndAggregate(object, state) {
   const { player, objects, messages } = state;
-  const { size, code } = object;
+  const { code } = object;
   const { currentLevel, inventory } = player;
   const { objects: invObj } = inventory;
 
@@ -18,7 +18,7 @@ function takeAndAggregate(object, state) {
     const newMsg = [...messages, fillMessage(PATTERNS.takeObject, { object })];
     const newObjects = removeObjectDungeon(objects, object, currentLevel);
     const newInventoryObjects = invObj.map(function (o) {
-      const { id, how } = o;
+      const { id } = o;
       if (id === same.id) {
         return aggregateObjects(same, object);
       }
