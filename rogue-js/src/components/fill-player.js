@@ -132,7 +132,6 @@ import { TILES, PLAYER_ACTIONS, computeDistance } from "../commons";
 // export default combine(fill, fillAction);
 
 function getSpecial(tile, tilePos, state, rect) {
-  const { color } = tile;
   const { player } = state;
   const { visibles, action } = player;
 
@@ -143,7 +142,7 @@ function getSpecial(tile, tilePos, state, rect) {
       rangePositions.indexOf(tilePos) !== -1 &&
       visibles.indexOf(tilePos) !== -1
     ) {
-      return { ...tile, bgColor: "rgba(200,100,100,0.3)" };
+      return { ...tile, bgColor: "rgba(50,140,10,0.4)" };
     }
   }
 
@@ -194,11 +193,19 @@ function isHelp(state, tilePos) {
   return false;
 }
 
+function isInPlayerMemory(state, tilePos) {
+  const { player } = state;
+  const { memory, currentLevel } = player;
+  if (memory && memory[currentLevel] && tilePos in memory[currentLevel]) {
+    return true;
+  }
+
+  return false;
+}
+
 function getCharTile(tile, tilePos, state, rect) {
   const { dungeon, player } = state;
-  const { startX, startY, width } = rect;
-  const { position, visibles, currentLevel, memory } = player;
-  const dungeonWidth = dungeon.getWidth(currentLevel);
+  const { position, visibles } = player;
 
   if (isNavigateOrShootAction(state, tilePos)) {
     return { ...TILES.ironSight, color: "red" };
@@ -215,6 +222,9 @@ function getCharTile(tile, tilePos, state, rect) {
   if (visibles.indexOf(tilePos) !== -1) {
     return { ...tile, color: tile.color || "Gold" };
   }
+  if (isInPlayerMemory(state, tilePos)) {
+    return { ...tile, color: "MediumBlue" };
+  }
 
   return { ...TILES.unknown };
 }
@@ -222,7 +232,7 @@ function getCharTile(tile, tilePos, state, rect) {
 function fill(tiles, state, rect) {
   const { dungeon, player } = state;
   const { startX, startY, width } = rect;
-  const { position, visibles, currentLevel, memory } = player;
+  const { currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
 
   return tiles.map(function (tile, i) {

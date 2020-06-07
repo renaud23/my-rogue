@@ -144,7 +144,7 @@ function ActionConsole() {
   const messages = peekMessages({ player, dungeon, objects, ennemies });
 
   return (
-    <pre className="action-console">
+    <div className="action-console">
       {messages.map(function (m, i) {
         if (typeof m === "object") {
           const { classnames, message } = m;
@@ -161,7 +161,7 @@ function ActionConsole() {
           </div>
         );
       })}
-    </pre>
+    </div>
   );
 }
 

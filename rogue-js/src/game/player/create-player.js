@@ -14,7 +14,7 @@ const DEFAULT_NB_MOVE = 2;
 function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
   const currentLevel = 0;
   const position = dungeon.peekEmptyTile(currentLevel);
-  const stats = computeNextLevelXp(computeMaxLife(createStats(2, 1, 1, 1)));
+  const stats = computeNextLevelXp(computeMaxLife(createStats(1, 2, 1, 1)));
 
   const player = {
     desc: "Fitz",
@@ -41,10 +41,10 @@ function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
 
   return {
     ...player,
-    weapon: bow,
+    weapon: sword,
     ammo: createArrows(),
     visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
-    inventory: putObject(putObject(inventory, knife), sword),
+    inventory: putObject(putObject(inventory, knife), bow),
   };
 }
 

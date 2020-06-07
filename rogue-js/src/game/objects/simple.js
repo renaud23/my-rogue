@@ -5,21 +5,21 @@ import { createMangerTodo } from "./create-simple-todo";
 let INDEX = new Date().getTime();
 
 export const MAP_SIMPLE = {
-  thread: {
+  stone: {
     code: 1,
-    desc: "une pomme",
+    desc: "une pierre",
     size: 1,
     type: typeObject.simple,
   },
-  bread: {
+  silex: {
     code: 2,
-    desc: "un clou",
+    desc: "un silex",
     size: 1,
     type: typeObject.simple,
   },
-  zippo: {
+  wood: {
     code: 3,
-    desc: "un briquet",
+    desc: "du bois mort",
     size: 1,
     type: typeObject.simple,
   },
@@ -27,18 +27,6 @@ export const MAP_SIMPLE = {
     code: 4,
     desc: "des os",
     size: 2,
-    type: typeObject.simple,
-  },
-  stone: {
-    code: 5,
-    desc: "une grosse pierre",
-    size: 2,
-    type: typeObject.simple,
-  },
-  rock: {
-    code: 6,
-    desc: "un cailloux",
-    size: 1,
     type: typeObject.simple,
   },
 };

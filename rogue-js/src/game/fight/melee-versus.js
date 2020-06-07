@@ -13,17 +13,30 @@ function getLooseMessage(att, deff) {
 
 function computeAR(o) {
   const { stats } = o;
-  const { strength, luck, level } = stats;
-  const effectiveStrength = (strength + luck) * 2;
-  return randomInt(effectiveStrength) * level;
+  const { strength, agility, luck, level } = stats;
+
+  const statsRange = strength / (agility + strength);
+  const luckRange = luck / (strength + luck);
+  const baseRange =
+    0.3 + (statsRange * 0.5 + luckRange * 0.2) * Math.random() * 0.7;
+
+  return baseRange;
+  // const effectiveStrength = (strength + luck) * 2;
+  // return randomInt(effectiveStrength) * level;
 }
 
 function computeDR(o) {
   const { stats } = o;
-  const { agility, luck, level } = stats;
-  const effectiveAgility = (agility + luck) * 2;
+  const { agility, strength, luck, level } = stats;
 
-  return randomInt(effectiveAgility) * level;
+  const statsRange = agility / (agility + strength);
+  const luckRange = luck / (agility + luck);
+  const baseRange =
+    0.3 + (statsRange * 0.5 + luckRange * 0.2) * Math.random() * 0.7;
+
+  return baseRange;
+  // const effectiveAgility = (agility + luck) * 2;
+  // return randomInt(effectiveAgility) * level;
 }
 
 function computeDamages(attacker, weapon) {
@@ -43,7 +56,7 @@ function versus(attacker, defender, weapon) {
     deff: defender,
     weapon,
   });
-
+  console.log({ AR, DR, a: attacker.stats, d: defender.stats });
   if (AR >= DR) {
     const damages = computeDamages(attacker, weapon);
     const nextDefender = inflictDamages(defender, damages);

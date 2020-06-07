@@ -1,15 +1,15 @@
 import { peekOne, randomInt, popOne } from "../../commons";
 import { createRandomSimple } from "./simple";
 import createChest from "./create-chest";
-import { createArrows } from "./ammo";
+// import { createArrows } from "./ammo";
 
 const NB_CHEST = 2;
 
-function fillArrows(emptyTiles, level) {
-  return new Array(5).fill(null).map(function (a) {
-    return { ...createArrows(5), level, position: peekOne(emptyTiles) };
-  });
-}
+// function fillArrows(emptyTiles, level) {
+//   return new Array(5).fill(null).map(function (a) {
+//     return { ...createArrows(5), level, position: peekOne(emptyTiles) };
+//   });
+// }
 
 function createLevelObject(state, level) {
   const { dungeon } = state;
@@ -25,12 +25,12 @@ function createLevelObject(state, level) {
       { ...key, position: posKey, level },
     ];
   }, []);
-  const simples = new Array(1 + randomInt(2)).fill(null).map(function () {
+  const simples = new Array(5 + randomInt(10)).fill(null).map(function () {
     const position = peekOne(emptyTiles);
     return { ...createRandomSimple(), position, level };
   });
-  const arrows = fillArrows(emptyTiles, level);
-  return [...chestsAnKeys, ...arrows];
+  // const arrows = fillArrows(emptyTiles, level);
+  return [...chestsAnKeys, ...simples];
 }
 
 function createObjects(state) {

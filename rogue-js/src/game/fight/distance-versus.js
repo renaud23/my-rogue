@@ -7,14 +7,33 @@ function computeDamages(attacker, weapon) {
   return 0;
 }
 
+function sumStats(stats) {
+  const { strength, agility, luck, endurance } = stats;
+  return strength + agility + luck + endurance;
+}
+
 function tryToShoot(attacker, defender, weapon, distance) {
   const { stats } = attacker;
-  const { luck, level, agility } = stats;
+  const { luck, level, agility, strength } = stats;
   const { range } = weapon;
+  const sum = sumStats(stats);
 
-  const DR = 100 - Math.trunc((distance * 100) / Math.pow(range + 1, 2));
-  console.log({ DR, distance, range });
-  // randomInt(agility + luck + 1);
+  const distanceRange = 0.7 + 0.3 * (1 - distance / Math.pow(range + 1, 2));
+  const statsRange = agility / (agility + strength);
+  const luckRange = luck / (agility + luck);
+  const baseRange = 0.3 + statsRange * 0.5 + luckRange * 0.2;
+  const finalRange = distanceRange * baseRange;
+  const dice100 = randomInt(100) / 100;
+  console.log(dice100, {
+    finalRange,
+    luckRange,
+    statsRange,
+    baseRange,
+    distanceRange,
+  });
+  if (dice100 >= finalRange) {
+    return false;
+  }
 
   return true;
 }
