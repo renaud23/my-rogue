@@ -47,7 +47,9 @@ export const TILES = {
   ammo: { code: 400, char: "|", color: "cyan" },
 
   ironSight: { code: 666, char: "$" },
-  unknow: {
+  helpSight: { code: 667, char: "?", color: "chartreuse" },
+  path: { code: 668, char: ".", color: "chartreuse" },
+  unknown: {
     code: -1,
     char: "?",
     className: "tile-unknow",
