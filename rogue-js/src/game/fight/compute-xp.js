@@ -40,9 +40,9 @@ export function ennemiesXpValue(ennemies) {
   }, 0);
 }
 
-export function computeMaxLife(stats) {
+export function computeMaxLife(stats, base = 10) {
   const { level, endurance } = stats;
-  const maxLife = 10 * (level + endurance + 1);
+  const maxLife = base * (level + endurance);
   return { ...stats, maxLife, life: maxLife };
 }
 
