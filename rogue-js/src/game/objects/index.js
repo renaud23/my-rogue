@@ -4,6 +4,7 @@ export { default as removeObjectDungeon } from "./remove-object-dungeon";
 export { default as putObjectDungeon } from "./put-object-dungeon";
 export { aggregateObjects } from "./aggregate-objects";
 export { default as TYPE_OBJECT } from "./type-object";
+export { createCorpse } from "./specials";
 export * from "./weapons";
 export * from "./simple";
 export * from "./ammo";

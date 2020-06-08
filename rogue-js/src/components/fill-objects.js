@@ -4,6 +4,8 @@ import { TYPE_OBJECT } from "../game/objects";
 function getTile(o) {
   const { type } = o;
   switch (type) {
+    case TYPE_OBJECT.corpse:
+      return { ...TILES.corpse };
     case TYPE_OBJECT.chest:
       return { ...TILES.chest };
     case TYPE_OBJECT.key:
@@ -28,7 +30,6 @@ function fillDungeon(
     const { position } = o;
     return visibles.indexOf(position) !== -1 ? [...a, o] : a;
   }, []);
-
   visibleObjects.forEach(function (o) {
     const { position } = o;
     const [x, y] = antecedentPoint(position, dungeonWidth);

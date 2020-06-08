@@ -49,7 +49,7 @@ function getRow(current, { char, color, bgColor }) {
     <span
       className="game-screen-cell"
       style={{
-        color: color || "white",
+        color: color || "snow",
         backgroundColor: bgColor || "transparent",
       }}
       key={current.length}

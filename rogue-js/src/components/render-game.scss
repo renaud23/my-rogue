@@ -64,8 +64,8 @@ body {
     flex-direction: row;
     background-color: transparent;
     .game-screen {
-      font-size: 14px;
-      line-height: 14px;
+      font-size: 12px;
+      line-height: 12px;
       font-family: Consolas, monaco, monospace;
       background-color: transparent;
       @include preRender();
@@ -73,7 +73,7 @@ body {
       .game-screen-row {
         .game-screen-cell {
           display: inline-block;
-          // width: 8px;
+          // width: 12px;
           // height: 12px;
         }
       }

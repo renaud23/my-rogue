@@ -33,6 +33,7 @@ export const TILES = {
     code: 100,
     char: "@",
   },
+  corpse: { code: 101, char: "~", color: "DarkRed" },
   chest: {
     code: 200,
     char: "#",

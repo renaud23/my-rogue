@@ -51,7 +51,7 @@ export function createKnife() {
     ...WEAPONS_MAP.knife,
     takeable: true,
     id: `knife-${INDEX++}`,
-    versus: distanceVersus,
+    versus: meleeVersus,
   };
 
   const todo = [];

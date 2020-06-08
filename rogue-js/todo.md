@@ -1,5 +1,6 @@
 ## à court terme :
 - saignement et object de guérison
+- loot de monstre, clef de coffre sur les cadavres
 - contenu des coffres
 - donjons plus complexes
 - portes et clés 
@@ -9,6 +10,7 @@
 - mort du joueur
 - système d'éclairage
 - projectile et arme à distance
+- niveau des objets
 
 ## à moyen terme :
 - kraft

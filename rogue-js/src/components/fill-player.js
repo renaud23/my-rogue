@@ -1,5 +1,4 @@
-import combine from "./combine-fill";
-import { TILES, PLAYER_ACTIONS, computeDistance } from "../commons";
+import { TILES, PLAYER_ACTIONS } from "../commons";
 
 // function fillHelp(tiles, state, rect, tile, path) {
 //   const { dungeon, player } = state;
@@ -204,7 +203,7 @@ function isInPlayerMemory(state, tilePos) {
 }
 
 function getCharTile(tile, tilePos, state, rect) {
-  const { dungeon, player } = state;
+  const { player } = state;
   const { position, visibles } = player;
 
   if (isNavigateOrShootAction(state, tilePos)) {
@@ -226,7 +225,7 @@ function getCharTile(tile, tilePos, state, rect) {
     return { ...tile, color: "MediumBlue" };
   }
 
-  return { ...TILES.unknown };
+  return { ...TILES.unknown, color: "MidnightBlue" };
 }
 
 function fill(tiles, state, rect) {

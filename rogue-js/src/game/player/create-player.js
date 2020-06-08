@@ -102,7 +102,7 @@ export function createWarrior(dungeon) {
 
 export function createArcher(dungeon) {
   const stats = [1, 2, 1, 1];
-  const baseClass = [0.2, 0.4, 0.3];
+  const baseClass = [0.2, 0.6, 0.3];
   const currentLevel = 0;
   const position = dungeon.peekEmptyTile(currentLevel);
   const player = createBasePlayer(dungeon, stats, baseClass, position);
@@ -121,4 +121,4 @@ export function createArcher(dungeon) {
   };
 }
 
-export default createArcher;
+export default createWarrior;
