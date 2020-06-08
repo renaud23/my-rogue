@@ -1,41 +1,13 @@
-import {
-  getSegment,
-  antecedentPoint,
-  distanceEucl2,
-  pointProjection,
-} from "../../commons";
+import { antecedentPoint, pointProjection } from "../../commons";
+import { TYPE_ENNEMIES } from "./commons/type-ennemies";
+import canSeePlayer from "./commons/can-see-player";
 import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
 import { createRandomStats } from "../fight/fighter-stats";
 import { computeMaxLife } from "../fight";
-import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
+import { isEmptyPosition, getPositions } from "../commons";
 import ATTACKS from "./eneny-attacks";
 import { PLAYER_ACTIONS } from "../../commons";
-
-function canSeePlayer(state, ennemy) {
-  const { dungeon, player } = state;
-  const { currentLevel, position: ppos } = player;
-  const { fov, position: rpos, level } = ennemy;
-  if (level !== currentLevel) return false;
-  const dw = dungeon.getWidth(currentLevel);
-
-  const a = antecedentPoint(rpos, dw);
-  const b = antecedentPoint(ppos, dw);
-  const dist = distanceEucl2(a, b);
-
-  if (dist <= fov * fov) {
-    const segment = getSegment(a, b);
-    const positions = segment.map(([x, y]) => pointProjection([x, y], dw));
-
-    return positions.reduce(function (a, pos, i) {
-      if (i === 0) {
-        return true;
-      }
-      return a && isVisiblePosition(state, level, pos);
-    }, true);
-  }
-  return false;
-}
 
 function canBite(state, enemy) {
   const { player } = state;
@@ -131,6 +103,7 @@ function sleep(state, enemy) {
 
 export function createRat(xpLevel = 1) {
   return {
+    type: TYPE_ENNEMIES.rat,
     activate: sleep,
     fov: 8,
     turn: buildTurnPlay(2),
@@ -141,7 +114,7 @@ export function createRat(xpLevel = 1) {
         level: xpLevel,
         life: 0,
       },
-      5
+      2
     ),
     baseClass: { melee: 0.4, distance: 0.2, parade: 0.2 },
     weapon: ATTACKS.nibbles,

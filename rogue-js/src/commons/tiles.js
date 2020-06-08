@@ -32,6 +32,17 @@ export const TILES = {
   enemy: {
     code: 100,
     char: "@",
+    color: "magenta",
+  },
+  rat: {
+    code: 101,
+    char: "r",
+    color: "brown",
+  },
+  wolf: {
+    code: 101,
+    char: "w",
+    color: "brown",
   },
   corpse: { code: 101, char: "~", color: "#af111c" },
   chest: {

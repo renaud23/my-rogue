@@ -1,42 +1,54 @@
 import { createRat } from "./rat";
+import createWolf from "./wolf";
 import { enemyXpValue, levelForXp } from "../fight/compute-xp";
 import { peekOne, randomInt } from "../../commons";
 let INDEX = 0;
 
-function createLevelRat(state, level, levelMin) {
+function createLevelEnnemies(state, level, how, levelMin, create) {
   const { dungeon } = state;
-  const how = 2 + randomInt(4);
   return new Array(how).fill(null).map(function () {
     const position = peekOne(dungeon.getEmptyTiles(level));
     return {
-      id: `rat-${INDEX++}`,
+      id: `enemy-${INDEX++}`,
       position,
       level,
-      ...createRat(randomInt(2) + Math.max(1, levelMin)),
+      ...create(randomInt(2) + Math.max(1, levelMin)),
     };
   });
 }
 
-export function createRatsDungeon(state) {
+export function createEnnemiesDungeon(state, how, create, xp = 0) {
   const { dungeon } = state;
   const dungeonHeight = dungeon.getDungeonHeight();
-
   const [ennemies] = new Array(dungeonHeight).fill(null).reduce(
     function ([a, sumXp], _, i) {
-      const ennemiesLevel = createLevelRat(state, i, levelForXp(sumXp));
+      const ennemiesLevel = createLevelEnnemies(
+        state,
+        i,
+        how,
+        levelForXp(sumXp),
+        create
+      ); //(state, level, how, levelMin, create)
       const levelXp = ennemiesLevel.reduce(
         (tot, e) => tot + enemyXpValue(e),
         0
       );
       return [[...a, ennemiesLevel], sumXp + levelXp];
     },
-    [[], 0]
+    [[], xp]
   );
   return ennemies;
 }
 
 function create(state) {
-  return [...createRatsDungeon(state)];
+  const rats = createEnnemiesDungeon(state, 1 + randomInt(2), createRat);
+  const wolfs = createEnnemiesDungeon(state, 10 + randomInt(2), createWolf);
+  const { dungeon } = state;
+  const dungeonHeight = dungeon.getDungeonHeight();
+
+  return new Array(dungeonHeight).fill(undefined).map(function (_, i) {
+    return [...rats[i], ...wolfs[i]];
+  });
 }
 
 export default create;
