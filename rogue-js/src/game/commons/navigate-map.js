@@ -16,55 +16,6 @@ function nextPosition(position, button, width) {
       return position;
   }
 }
-// function checkLimiteCirc(state, next, limite) {
-//   if (!limite) {
-//     return true;
-//   }
-//   const { dungeon, player } = state;
-//   const { currentLevel } = player;
-//   const width = dungeon.getWidth(currentLevel);
-//   const height = dungeon.getHeight(currentLevel);
-//   const { position: pp } = player;
-
-//   const distance = Math.sqrt(
-//     distanceEucl2(antecedentPoint(next, width), antecedentPoint(pp, width))
-//   );
-
-//   if (distance <= limite) {
-//     return true;
-//   }
-
-//   return false;
-// }
-
-// function checkLimiteRect(state, next, limite) {
-//   if (!limite) {
-//     return true;
-//   }
-//   const { dungeon, player } = state;
-//   const { currentLevel } = player;
-//   const width = dungeon.getWidth(currentLevel);
-//   const height = dungeon.getHeight(currentLevel);
-//   const { position: pp } = player;
-//   const [nx, ny] = antecedentPoint(next, width);
-//   const [px, py] = antecedentPoint(pp, width);
-//   const minx = Math.max(px - limite, 0);
-//   const maxx = Math.min(px + limite, width - 1);
-//   const miny = Math.max(py - limite, 0);
-//   const maxy = Math.min(py + limite, height - 1);
-//   if (nx >= minx && nx <= maxx && ny >= miny && ny <= maxy) {
-//     return true;
-//   }
-
-//   return false;
-// }
-
-// function checkLimite(state, next, limite, circular = false) {
-//   if (circular) {
-//     return checkLimiteCirc(state, next, limite);
-//   }
-//   return checkLimiteRect(state, next, limite);
-// }
 
 function movePosition(position, button, state, rangePositions) {
   const { dungeon, player } = state;
@@ -79,7 +30,7 @@ function movePosition(position, button, state, rangePositions) {
   return position;
 }
 
-function computeRangePositions(state, limite, circular = false) {
+export function computeRangePositions(state, limite, circular = false) {
   const { dungeon, player } = state;
   const { currentLevel, visibles } = player;
 
@@ -136,7 +87,7 @@ function navigate(state, event, limite, circular = false) {
           action: {
             ...action,
             rangePositions,
-            position: movePosition(position, button, state, rangePositions), //movePosition(position, button, state, limite, circular),
+            position: movePosition(position, button, state, rangePositions),
           },
         },
       };

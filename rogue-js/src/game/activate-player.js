@@ -10,6 +10,7 @@ import activateShoot from "./activate-shoot";
 import * as EVENTS from "./events";
 import { isNeedWait } from "./activate-wait";
 import activateAutoPlay from "./activate-auto-play";
+import activateDirectPlay from "./activate-direct-play";
 
 function isAutoPlay(state) {
   const { player } = state;
@@ -45,6 +46,9 @@ function activateMove(state, action) {
  */
 function activatePlayer(state, event) {
   const { type, payload } = event;
+  if (type === EVENTS.CLICK_TILE_EVENT) {
+    return activateDirectPlay(state, event);
+  }
   if (type === EVENTS.PAD_EVENT) {
     const { button } = payload;
     switch (button) {

@@ -28,7 +28,7 @@ function activateChoice(state) {
 }
 //path: ,
 
-function checkPath(state) {
+export function checkPath(state) {
   const { player } = state;
   const { position, action } = player;
   const { position: target } = action;

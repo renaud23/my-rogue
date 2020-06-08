@@ -17,7 +17,7 @@ function fillEnnemies(tiles, state, rect) {
     const { position } = tile;
     const [x, y] = antecedentPoint(position, dungeonWidth);
     const tilePos = pointProjection([x - startX, y - startY], width);
-    tiles[tilePos] = { ...TILES.ennemy, color: "magenta" };
+    tiles[tilePos] = { ...TILES.enemy, color: "magenta", position };
   });
 
   return tiles;

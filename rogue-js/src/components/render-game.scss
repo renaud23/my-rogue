@@ -13,25 +13,24 @@
   margin: 0;
 }
 
-
-@mixin scrollbar(){
+@mixin scrollbar() {
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   /* Track */
   &::-webkit-scrollbar-track {
-    background: transparent; 
+    background: transparent;
   }
-   
+
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: goldenrod; 
+    background: goldenrod;
   }
-  
+
   /* Handle on hover */
   &::-webkit-scrollbar-thumb:hover {
-    background: gold; 
+    background: gold;
   }
 }
 
@@ -71,10 +70,12 @@ body {
       @include preRender();
       overflow: visible;
       .game-screen-row {
-        .game-screen-cell {
+        .game-screen-tile {
           display: inline-block;
-          // width: 12px;
-          // height: 12px;
+          cursor: pointer;
+          &:hover {
+            background-color: rgba(255, 200, 0, 0.4) !important;
+          }
         }
       }
     }
@@ -84,7 +85,7 @@ body {
       width: 350px;
       padding: 2px 2px;
       font-size: 14px;
-      color: LightYellow;
+      color: yellow;
       .message {
         &.active {
           color: black;
@@ -106,6 +107,7 @@ body {
     font-family: "Comic Sans MS", cursive;
     overflow-y: auto;
     font-size: 14px;
+
     .console-log-prompt {
       margin-right: 3px;
     }

@@ -28,6 +28,12 @@ export function buildPlayer({ player, position, color }) {
   };
 }
 
+export function shoot(state) {
+  return isNeedWait({
+    ...removeDeadEnnemies(shootTodo(state)),
+  });
+}
+
 function moveIronSight(state, event) {
   const { player } = state;
   const { weapon } = player;
@@ -40,10 +46,7 @@ function moveIronSight(state, event) {
     case PAD_BUTTON.buttonB:
       return { ...state, activate, player: { ...player, action: undefined } };
     case PAD_BUTTON.buttonA:
-      return isNeedWait({
-        ...removeDeadEnnemies(shootTodo(next)),
-        activate,
-      });
+      return { ...shoot(next), activate };
     case PAD_BUTTON.up:
     case PAD_BUTTON.down:
     case PAD_BUTTON.left:

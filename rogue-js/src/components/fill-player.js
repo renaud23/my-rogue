@@ -237,15 +237,17 @@ function fill(tiles, state, rect) {
   return tiles.map(function (tile, i) {
     const px = i % width;
     const py = Math.trunc(i / width);
-    const tilePos = startX + px + (startY + py) * dungeonWidth;
+    const { position } = tile;
+    // const tilePos = startX + px + (startY + py) * dungeonWidth;
 
     return {
       ...getSpecial(
-        getCharTile(tile, tilePos, state, rect),
-        tilePos,
+        getCharTile(tile, position, state, rect),
+        position,
         state,
         rect
       ),
+      position,
     };
   });
 }

@@ -29,11 +29,11 @@ export const TILES = {
     char: "q",
     desc: "un  escalier montant et descendant",
   },
-  ennemy: {
+  enemy: {
     code: 100,
     char: "@",
   },
-  corpse: { code: 101, char: "~", color: "DarkRed" },
+  corpse: { code: 101, char: "~", color: "#af111c" },
   chest: {
     code: 200,
     char: "#",

@@ -9,6 +9,39 @@ import {
 } from "../recoil";
 import { getObjectsAt } from "../game/commons";
 
+function observeAt(state, position, ground = false) {
+  const { player, objects, ennemies, dungeon } = state;
+  const { currentLevel } = player;
+  const data = dungeon.getData(currentLevel);
+  const tile = getTile(data[position]);
+
+  const what = [
+    { ...tile, position },
+    ...ennemies[currentLevel],
+    ...objects[currentLevel],
+  ].reduce(function (a, o, i) {
+    if (i === 0 && !ground) {
+      return a;
+    }
+    if (o.position === position) {
+      return [...a, o.desc];
+    }
+    return a;
+  }, []);
+
+  const message = what.reduce(function (a, desc, i) {
+    if (i === 0) {
+      return `Vous apercevez, ${desc}${what.length === 1 ? "." : ""}`;
+    }
+    if (i === what.length - 1) {
+      return `${a} et ${desc}.`;
+    }
+    return `${a}, ${desc}`;
+  }, "Vous n'apercevez rien de spécial.");
+
+  return `${message}`;
+}
+
 function peekEnnemiesMessages(state, level, position) {
   const { ennemies } = state;
   return ennemies[level].reduce(function (a, e) {
@@ -75,39 +108,25 @@ function peekWeaponMessage(weapon) {
 }
 
 function peekNavigate(state) {
-  const { player, objects, ennemies } = state;
-  const { currentLevel, action } = player;
+  const { player } = state;
+  const { action } = player;
   const { position } = action;
 
-  const what = [...ennemies[currentLevel], ...objects[currentLevel]].reduce(
-    function (a, o) {
-      if (o.position === position) {
-        return [...a, o.desc];
-      }
-      return a;
-    },
-    []
-  );
-
-  const message = what.reduce(function (a, desc, i) {
-    if (i === 0) {
-      return `Vous apercevez ici, ${desc}`;
-    }
-    return `${a}, ${desc}`;
-  }, "Vous ne distinguez rien de particulier");
-
-  return [`${message}.`];
+  return [observeAt(state, position, true)];
 }
 
 function peekPosition(state) {
   const { player, dungeon } = state;
   const { position, currentLevel, weapon } = player;
   const data = dungeon.getData(currentLevel);
-  const objects = peekObjectMessages(state, currentLevel, position);
+
   const tile = getTile(data[position]);
   const weaponMsg = peekWeaponMessage(weapon);
 
-  return [`Vous marchez sur ${tile.desc}${weaponMsg}.`, ...objects];
+  return [
+    `Vous marchez sur ${tile.desc}${weaponMsg}.`,
+    observeAt(state, position),
+  ];
 }
 
 function peekShootMessage(state) {
@@ -127,7 +146,7 @@ function peekMessages(state) {
         return peekNavigate(state);
       case PLAYER_ACTIONS.action:
       case PLAYER_ACTIONS.shoot:
-        return peekShootMessage(state);
+        return peekNavigate(state);
       default:
     }
   }

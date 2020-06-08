@@ -7,7 +7,6 @@ import {
   objectsState,
   ennemiesState,
 } from "../recoil";
-// import { isVisiblePosition } from "../game/commons";
 import combine from "./combine-fill";
 import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
@@ -43,17 +42,10 @@ export function GlobalRender() {
   return <pre style={{ fontSize: 8 }}>{rows}</pre>;
 }
 
-function getRow(current, { char, color, bgColor }) {
+function getRow(current, { char, color }) {
   return [
     ...current,
-    <span
-      className="game-screen-cell"
-      style={{
-        color: color || "snow",
-        backgroundColor: bgColor || "transparent",
-      }}
-      key={current.length}
-    >
+    <span style={{ color: color || "white" }} key={current.length}>
       {char}
     </span>,
   ];
@@ -65,12 +57,7 @@ function render(data, width) {
       if (i % width === width - 1) {
         return {
           current: ``,
-          rows: [
-            ...rows,
-            <div className="game-screen-row" key={i}>
-              {getRow(current, tile)}
-            </div>,
-          ],
+          rows: [...rows, <div key={i}>{getRow(current, tile)}</div>],
         };
       }
       return {
@@ -83,82 +70,6 @@ function render(data, width) {
 }
 
 const fillStack = combine(fillDungeon, fillObjects, fillEnnemies, fillPlayer);
-
-function multiply(repeat, how, row, t) {
-  return new Array(repeat).fill(null).reduce(function (a, _) {
-    return [...a, ...row, ...new Array(how).fill(t)];
-  }, []);
-}
-
-function enlarge(tiles, width) {
-  const how = 1;
-  const nWidth = width * how;
-
-  const [nTiles] = tiles.reduce(
-    function ([tl, row], t, i) {
-      if (i % width === width - 1) {
-        return [[...tl, ...multiply(how, how, row, t)], []];
-      }
-      return [tl, [...multiply(1, how, row, t)]];
-    },
-    [[], []]
-  );
-
-  return [nTiles, nWidth];
-}
-
-// function mergeRows(a, b) {
-//   return b.map(function (t, i) {
-//     if (t.char === "_" || t.char === ".") {
-//       return a[i];
-//     }
-//     return t;
-//   });
-// }
-
-// function rowUp(a) {
-//   return a.map(function (t, i) {
-//     if (t.char === "X") {
-//       return { ...t, color: "red" };
-//     }
-//     return t;
-//   });
-// }
-
-// function isometric(tiles, width) {
-//   const nWidth = width * 2;
-//   const [rows] = tiles.reduce(
-//     function ([tas, row], t, i) {
-//       if (i % width === width - 1) {
-//         return [[...tas, [...row, t]], []];
-//       }
-//       return [tas, [...row, t]];
-//     },
-//     [[], []]
-//   );
-//   const doubleRows = rows.map(function (r) {
-//     return [r, r, r];
-//   });
-
-//   const [merged, last] = doubleRows.reduce(
-//     function ([tas, cb, cc], [a, b, c], i) {
-//       if (cb === undefined) {
-//         return [[a], b, c];
-//       }
-//       return [
-//         [...tas, mergeRows(rowUp(cb), a), mergeRows(rowUp(cc), cb)],
-//         b,
-//         c,
-//       ];
-//     },
-//     [[], undefined, undefined]
-//   );
-
-//   const nTiles = [...merged, last].reduce(function (a, row) {
-//     return [...a, ...row];
-//   }, []);
-//   return [nTiles, width];
-// }
 
 function PlayerRender({ viewSize }) {
   const [dungeon] = useRecoilState(dungeonState);
@@ -188,9 +99,7 @@ function PlayerRender({ viewSize }) {
     rect
   );
 
-  const [newTiles, newWidth] = enlarge(tiles, width);
-
-  const rows = render(newTiles, newWidth);
+  const rows = render(tiles, width);
 
   return <pre className="game-screen">{rows}</pre>;
 }

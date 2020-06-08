@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import RenderDungeon2 from "./game-render-2";
+import RenderDungeon2 from "./game-render";
 import {
   dungeonState,
   playerState,

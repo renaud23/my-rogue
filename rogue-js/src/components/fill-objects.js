@@ -35,7 +35,7 @@ function fillDungeon(
     const [x, y] = antecedentPoint(position, dungeonWidth);
     const tilePos = pointProjection([x - startX, y - startY], width);
 
-    tiles[tilePos] = getTile(o);
+    tiles[tilePos] = { ...getTile(o), position };
   });
 
   return tiles;
