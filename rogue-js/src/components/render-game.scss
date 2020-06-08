@@ -3,7 +3,7 @@
   color: white;
   overflow-y: auto;
   // overflow-x: visible;
-
+  
   white-space: pre-wrap; /* css-3 */
   white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
   white-space: -pre-wrap; /* Opera 4-6 */
@@ -65,7 +65,8 @@ body {
     .game-screen {
       font-size: 12px;
       line-height: 12px;
-      font-family: Consolas, monaco, monospace;
+      font-family: Roboto Mono, monospace;
+     
       background-color: transparent;
       @include preRender();
       overflow: visible;
@@ -73,6 +74,8 @@ body {
         .game-screen-tile {
           display: inline-block;
           cursor: pointer;
+          margin: 0;
+          padding: 0;
           &:hover {
             background-color: rgba(255, 200, 0, 0.4) !important;
           }
