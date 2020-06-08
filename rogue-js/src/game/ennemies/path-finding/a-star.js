@@ -17,14 +17,14 @@ const refillPath = (visited) => (last) => {
     : [last];
 };
 
-export default function astarPath(state) {
+export default function astarPath(state, position, isEmpty) {
   const { player, dungeon } = state;
   const { currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
-  const getNeighbors = createGetNeighbors(state);
+  const getNeighbors = createGetNeighbors(state, isEmpty);
 
   return function (from, to) {
-    const visited = {};
+    const visited = { [from]: undefined };
     const costMap = {};
     let frontiere = new Queue();
     costMap[from] = 0;
@@ -38,9 +38,14 @@ export default function astarPath(state) {
       if (current === to) {
         break;
       }
-      const neightbors = getNeighbors(current); //getNeighbors(state)(current);
+      const neightbors = getNeighbors(current);
 
-      neightbors.forEach((n) => {
+      const filt = neightbors.reduce(
+        (a, p) => (p in visited ? a : [...a, p]),
+        []
+      );
+
+      filt.forEach((n) => {
         if (!(n in visited)) {
           const dist =
             distanceEucl(antecedentPoint(n, width), toCoord) + newCost;
@@ -52,6 +57,7 @@ export default function astarPath(state) {
       });
     }
     const [_, ...path] = refillPath(visited)(to);
+
     return path;
   };
 }

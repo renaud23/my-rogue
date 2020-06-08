@@ -1,6 +1,6 @@
 import isEmptyPosition from "./is-empty-position";
 
-function getNeighbors(state) {
+function getNeighbors(state, isEmpty = isEmptyPosition) {
   const { player, dungeon } = state;
   const { position } = player;
   const { currentLevel } = player;
@@ -8,22 +8,16 @@ function getNeighbors(state) {
 
   return function (pos) {
     const neighbors = [];
-    if (
-      isEmptyPosition(state, currentLevel, pos - width) &&
-      pos - width !== position
-    ) {
+    if (isEmpty(state, currentLevel, pos - width)) {
       neighbors.push(pos - width);
     }
-    if (
-      isEmptyPosition(state, currentLevel, pos + width) &&
-      pos + width !== position
-    ) {
+    if (isEmpty(state, currentLevel, pos + width)) {
       neighbors.push(pos + width);
     }
-    if (isEmptyPosition(state, currentLevel, pos - 1) && pos - 1 !== position) {
+    if (isEmpty(state, currentLevel, pos - 1)) {
       neighbors.push(pos - 1);
     }
-    if (isEmptyPosition(state, currentLevel, pos + 1) && pos + 1 !== position) {
+    if (isEmpty(state, currentLevel, pos + 1)) {
       neighbors.push(pos + 1);
     }
     return neighbors;

@@ -3,7 +3,7 @@ import { finishTurn } from "../commons";
 import { createActivateInventoryMenu } from "./menu-inventory";
 import activateHelp from "../activate-help";
 import activateAction from "../activate-action";
-import activateStackMove from "./stack-move-menu";
+import activateStackMove from "./menu-stack-move";
 import { PLAYER_ACTIONS } from "../../commons";
 import playerMenu from "./menu-player";
 

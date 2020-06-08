@@ -1,22 +1,19 @@
 import { TILES } from "../../commons";
 
-function isEnnemy(state, level, position) {
+export function isEnemy(state, level, position) {
   const { ennemies } = state;
   if (!ennemies || ennemies.length === 0) {
     return false;
   }
-  return ennemies[level].reduce(function (a, ennemy) {
-    const { position: ennemyPosition } = ennemy;
+  return ennemies[level].reduce(function (a, enemy) {
+    const { position: enemyPosition } = enemy;
 
-    return a || position === ennemyPosition;
+    return a || position === enemyPosition;
   }, false);
 }
 
-function isEmpty(state, level, position) {
+function isEmptyGround(state, level, position) {
   const { dungeon } = state;
-  if (isEnnemy(state, level, position)) {
-    return false;
-  }
 
   const data = dungeon.getData(level);
   switch (data[position]) {
@@ -31,4 +28,12 @@ function isEmpty(state, level, position) {
   }
 }
 
-export default isEmpty;
+export default function (state, level, position) {
+  if (
+    isEnemy(state, level, position) ||
+    !isEmptyGround(state, level, position)
+  ) {
+    return false;
+  }
+  return true;
+}
