@@ -1,24 +1,13 @@
 import { antecedentPoint, pointProjection } from "../../commons";
 import { TYPE_ENNEMIES } from "./commons/type-ennemies";
 import canSeePlayer from "./commons/can-see-player";
-import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
 import { createRandomStats } from "../fight/fighter-stats";
 import { computeMaxLife } from "../fight";
 import { isEmptyPosition, getPositions } from "../commons";
 import ATTACKS from "./enemy-attacks";
-import { PLAYER_ACTIONS } from "../../commons";
 import canBite from "./commons/can-bite";
-
-// function canBite(state, enemy) {
-//   const { player } = state;
-//   const { position: pp } = player;
-//   const { position } = enemy;
-//   const vois = getPositions(state, position, 1);
-//   return vois.reduce(function (a, pos) {
-//     return a || pos === pp;
-//   }, false);
-// }
+import attack from "./commons/attack";
 
 function getVariation(delta) {
   if (delta === 0) {
@@ -62,8 +51,6 @@ function follow(state, enemy) {
   const { currentLevel, position: pPos } = player;
   const { position: ePos } = enemy;
   const dw = dungeon.getWidth(currentLevel);
-
-  //
   const [nx, ny] = moveToPlayer(state, enemy);
   const nePos = nx + ny * dw;
 
@@ -75,27 +62,9 @@ function follow(state, enemy) {
 }
 
 function sleep(state, enemy) {
-  const { player, messages } = state;
   if (canSeePlayer(state, enemy)) {
     if (canBite(state, enemy)) {
-      const { weapon } = enemy;
-      const { versus } = weapon;
-      const [nextRat, nextPlayer, nm] = versus(enemy, player, weapon, state);
-      return [
-        {
-          ...state,
-          activate: activateWait,
-          player: {
-            ...nextPlayer,
-            action: {
-              type: PLAYER_ACTIONS.menu,
-              header: ["Appuyer sur le bouton A"],
-            },
-          },
-          messages: [...messages, ...nm],
-        },
-        nextRat,
-      ];
+      return attack(state, enemy);
     }
     return follow(state, enemy);
   }
