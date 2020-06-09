@@ -9,7 +9,7 @@ const ATTACKS = {
   },
   bite: {
     desc: "morsure",
-    getDamages: () => one4SidesDice() + 1,
+    getDamages: one6SidesDice,
     versus: meleeVersus,
   },
 };

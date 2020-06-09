@@ -112,7 +112,13 @@ function peekNavigate(state) {
   const { action } = player;
   const { position } = action;
 
-  return [observeAt(state, position, true)];
+  return [
+    "Déplacer le curseur",
+    "-------------------",
+    observeAt(state, position, true),
+    "Valider avec le bouton A.",
+    "Sortir avec le bouton B.",
+  ];
 }
 
 function peekPosition(state) {
@@ -130,7 +136,17 @@ function peekPosition(state) {
 }
 
 function peekShootMessage(state) {
-  return ["Shoot action, todo !"];
+  const { player } = state;
+  const { action } = player;
+  const { position } = action;
+  return [
+    "Défendez vous !",
+    "---------------",
+    observeAt(state, position),
+    " ",
+    "Tirer avec le bouton A.",
+    "Sortir avec le bouton B.",
+  ];
 }
 
 function peekMessages(state) {
@@ -143,10 +159,10 @@ function peekMessages(state) {
       case PLAYER_ACTIONS.menu:
         return peekMenu(state);
       case PLAYER_ACTIONS.navigate:
-        return peekNavigate(state);
       case PLAYER_ACTIONS.action:
-      case PLAYER_ACTIONS.shoot:
         return peekNavigate(state);
+      case PLAYER_ACTIONS.shoot:
+        return peekShootMessage(state);
       default:
     }
   }

@@ -1,27 +1,24 @@
-import {
-  getSegment,
-  antecedentPoint,
-  distanceEucl2,
-  pointProjection,
-} from "../../commons";
-import activateWait from "../activate-wait";
 import { buildTurnPlay } from "../commons";
 import { createRandomStats } from "../fight/fighter-stats";
 import { computeMaxLife } from "../fight";
 import { isVisiblePosition, isEmptyPosition, getPositions } from "../commons";
-import ATTACKS from "./eneny-attacks";
-import { PLAYER_ACTIONS } from "../../commons";
+import ATTACKS from "./enemy-attacks";
+
 import { aStarPath } from "./path-finding";
 import { TYPE_ENNEMIES } from "./commons/type-ennemies";
 import canSeePlayer from "./commons/can-see-player";
 import canBite from "./commons/can-bite";
+import attack from "./commons/attack";
 
 function computePath(state, enemy) {
   const { player } = state;
   const { position: playerPos } = player;
   const { position: enemyPos } = enemy;
   const [_, position, path] = aStarPath(state)(enemyPos, playerPos);
-  return [state, { ...enemy, position, path: path.length ? path : undefined }];
+  return [
+    state,
+    { ...enemy, position, path: path && path.length ? path : undefined },
+  ];
 }
 
 function consumePath(state, enemy) {
@@ -42,7 +39,8 @@ function activate(state, enemy) {
     const { position: playerPos } = player;
     const { position: enemyPos, path } = enemy;
     if (canBite(state, enemy)) {
-      return [state, { ...enemy, path: undefined }];
+      const [nextState, nextEnemy] = attack(state, enemy);
+      return [nextState, { ...nextEnemy, path: undefined }];
     }
     if (isPath(enemy)) {
       return consumePath(state, enemy);
@@ -60,8 +58,10 @@ function createWolf(level) {
     type: TYPE_ENNEMIES.wolf,
     activate: activate,
     fov: 6,
-    turn: buildTurnPlay(2),
+    turn: buildTurnPlay(3),
     desc: "un loup",
+    attack: 0,
+    attackLimite: 2,
     stats: computeMaxLife(
       {
         ...createRandomStats(level),
@@ -70,8 +70,8 @@ function createWolf(level) {
       },
       5
     ),
-    baseClass: { melee: 0.5, distance: 0, parade: 0.2 },
-    weapon: ATTACKS.nibbles,
+    baseClass: { melee: 0.5, distance: 0, parade: 0.5 },
+    weapon: ATTACKS.bite,
   };
 }
 

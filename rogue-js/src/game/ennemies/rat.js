@@ -6,18 +6,19 @@ import { buildTurnPlay } from "../commons";
 import { createRandomStats } from "../fight/fighter-stats";
 import { computeMaxLife } from "../fight";
 import { isEmptyPosition, getPositions } from "../commons";
-import ATTACKS from "./eneny-attacks";
+import ATTACKS from "./enemy-attacks";
 import { PLAYER_ACTIONS } from "../../commons";
+import canBite from "./commons/can-bite";
 
-function canBite(state, enemy) {
-  const { player } = state;
-  const { position: pp } = player;
-  const { position } = enemy;
-  const vois = getPositions(state, position, 1);
-  return vois.reduce(function (a, pos) {
-    return a || pos === pp;
-  }, false);
-}
+// function canBite(state, enemy) {
+//   const { player } = state;
+//   const { position: pp } = player;
+//   const { position } = enemy;
+//   const vois = getPositions(state, position, 1);
+//   return vois.reduce(function (a, pos) {
+//     return a || pos === pp;
+//   }, false);
+// }
 
 function getVariation(delta) {
   if (delta === 0) {
@@ -120,18 +121,3 @@ export function createRat(xpLevel = 1) {
     weapon: ATTACKS.nibbles,
   };
 }
-
-/*
-
-if seePlayer
-  path = []
-  lastPos = posPlayer
-  return moveTo(lastPos)
-if lastPos !== null
-  path = A*(lastPos)
-  lastPos = undefined
-  return consume(path)
-if path not empty
-  return consume(path)
-return sleep
-*/

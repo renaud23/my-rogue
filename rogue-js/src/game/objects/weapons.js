@@ -1,5 +1,9 @@
 import typeObject from "./type-object";
-import { create6sidesDices, one4SidesDice } from "../commons/dices";
+import {
+  create6sidesDices,
+  one6SidesDice,
+  one4SidesDice,
+} from "../commons/dices";
 import { meleeVersus, distanceVersus } from "../fight";
 
 let INDEX = 0;
@@ -10,14 +14,14 @@ export const WEAPONS_MAP = {
     desc: "un couteau",
     size: 1,
     type: typeObject.weapon,
-    getDamages: create6sidesDices(1),
+    getDamages: one4SidesDice,
   },
   sword: {
     code: 1001,
     desc: "une épée",
     size: 2,
     type: typeObject.weapon,
-    getDamages: create6sidesDices(2),
+    getDamages: one6SidesDice,
   },
   armageddon: {
     code: 1002,
