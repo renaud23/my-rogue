@@ -1,53 +1,72 @@
 import { randomInt } from "../../commons";
 
-function split(rect, iteration, curr = 0) {
-  const [x, y, width, height] = rect;
-  const lim = 0.3;
-  if (curr < iteration) {
-    if (randomInt(2) === 0) {
-      const wi = Math.trunc(
-        lim * width + (1 - 2 * lim) * width * Math.random()
-      );
-      return [
-        rect,
-        split([x, y, wi, height], iteration, curr + 1),
-        split([x + wi, y, width - wi, height], iteration, curr + 1),
-      ];
-    }
-
-    const hi = Math.trunc(
-      lim * height + (1 - 2 * lim) * height * Math.random()
-    );
+function splitHor(rect, limite, already = false) {
+  const [x, y, w, h] = rect;
+  if (w >= 2 * limite) {
+    const wi = Math.trunc(limite + Math.random() * (w - 2 * limite));
     return [
       rect,
-      split([x, y, width, hi], iteration, curr + 1),
-      split([x, y + hi, width, height - hi], iteration, curr + 1),
+      split([x, y, wi, h], limite),
+      split([x + wi, y, w - wi, h], limite),
     ];
   }
+  if (!already) {
+    return splitVer(rect, limite, true);
+  }
+  return [rect];
+}
+function splitVer(rect, limite, already = false) {
+  const [x, y, w, h] = rect;
+  if (h >= 2 * limite) {
+    const hi = Math.trunc(limite + Math.random() * (h - 2 * limite));
 
+    return [
+      rect,
+      split([x, y, w, hi], limite),
+      split([x, y + hi, w, h - hi], limite),
+    ];
+  }
+  if (!already) {
+    return splitHor(rect, limite, true);
+  }
   return [rect];
 }
 
-function printRoom(rect, room) {
-  const w = rect[2];
-
-  const [rows] = room.reduce(
-    function ([r, curr], t, i) {
-      if (i % w === w - 1) {
-        return [[...r, `${curr}${t}`], ""];
-      }
-      return [r, `${curr}${t}`];
-    },
-    [[], ""]
-  );
-  console.log(rect);
-  rows.forEach(function (row, i) {
-    console.log(row, i);
-  });
+function split(rect, limite) {
+  if (randomInt(2) === 0) {
+    return splitHor(rect, limite);
+  }
+  return splitVer(rect, limite);
 }
 
+// function printRoom(rect, room) {
+//   const w = rect[2];
+
+//   const [rows] = room.reduce(
+//     function ([r, curr], t, i) {
+//       if (i % w === w - 1) {
+//         return [[...r, `${curr}${t}`], ""];
+//       }
+//       return [r, `${curr}${t}`];
+//     },
+//     [[], ""]
+//   );
+//   console.log(rect);
+//   rows.forEach(function (row, i) {
+//     console.log(row, i);
+//   });
+// }
+
 function carveRoom(rect) {
-  const room = new Array(rect[2] * rect[3]).fill(1);
+  const [x, y, w, h] = rect;
+  const room = new Array(w * h).fill(1).map(function (_, i) {
+    const xi = i % w;
+    const yi = Math.trunc(i / w);
+    if (xi > 0 && xi < w - 1 && yi > 0 && yi < h - 1) {
+      return " ";
+    }
+    return 1;
+  });
   return [rect, room];
 }
 
@@ -59,12 +78,11 @@ function isInRect(x, y, rect) {
   return false;
 }
 
-function mergeRooms(left, right, i) {
+function mergeRooms(left, right) {
   const [rectLeft, roomLeft] = left;
   const [rectRight, roomRight] = right;
   const [xl, yl, wl, hl] = rectLeft;
   const [xr, yr, wr, hr] = rectRight;
-
   const minX = Math.min(xl, xr);
   const minY = Math.min(yl, yr);
   const maxX = Math.max(xl + wl, xr + wr);
@@ -79,37 +97,28 @@ function mergeRooms(left, right, i) {
     if (isInRect(px, py, rectLeft)) {
       return roomLeft[px - xl + (py - yl) * wl];
     }
-
     return roomRight[px - xr + (py - yr) * wr];
   });
 
   return [[minX, minY, width, height], room];
 }
 
-function crawlTree([rect, left, right], i = 0) {
-  const [x, y, w, h] = rect;
-
+function crawlTree([rect, left, right]) {
   if (!left && !right) {
-    return [carveRoom(rect)];
+    return carveRoom(rect);
   }
-  const [childLeft] = crawlTree(left, i + 1);
-  const [childRight] = crawlTree(right, i + 1);
-  const merged = mergeRooms(childLeft, childRight);
+  const childLeft = crawlTree(left);
+  const childRight = crawlTree(right);
 
-  return [merged];
+  return mergeRooms(childLeft, childRight);
 }
 
 function createFactory(width = 30, height = 30) {
-  const tree = split([0, 0, width, height], 4);
+  const limite = Math.trunc(Math.min(width, height) * 0.2);
+  const tree = split([0, 0, width, height], limite);
+  const [rect, room] = crawlTree(tree);
 
-  const what = crawlTree(tree);
-  console.log(what);
-
-  const tab = new Array(width * height).fill(0);
-
-  // rooms.reduce(function(){},[])
-
-  return tab;
+  return room;
 }
 
 export default createFactory;
