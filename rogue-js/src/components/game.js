@@ -13,7 +13,7 @@ import { createObjectDungeon } from "../game/objects";
 import { activate as cally } from "../game";
 import Pad from "./pad";
 import { createDungeon } from "../game/dungeon";
-import { createPlayer } from "../game/player";
+import { createPlayer, updatePlayerView } from "../game/player";
 import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
 import ConsoleLog from "./console-log";
@@ -28,8 +28,14 @@ function initialize() {
   const messages = [
     "<red>Un cri déchire la nuit. Son echo sinistre vous plonge dans la torpeur.</red> (tu flippes comme une tarlouze)",
   ];
-
-  return { dungeon, player, objects, ennemies, messages, callback: cally };
+  const state = updatePlayerView({
+    dungeon,
+    player,
+    objects,
+    ennemies,
+    messages,
+  });
+  return [state, cally];
 }
 
 function Game() {
@@ -55,19 +61,12 @@ function Game() {
         <ConsoleLog />
         <button
           onClick={function () {
-            const {
-              dungeon: dung,
-              player,
-              ennemies,
-              objects,
-              messages,
-              callback,
-            } = initialize();
-            setDungeon(dung);
-            setPlayer(player);
-            setEnnemies(ennemies);
-            setObjects(objects);
-            setMessages(messages);
+            const [state, callback] = initialize();
+            setDungeon(state.dungeon);
+            setPlayer(state.player);
+            setEnnemies(state.ennemies);
+            setObjects(state.objects);
+            setMessages(state.messages);
             setActivate({ cally: callback });
           }}
         >

@@ -95,7 +95,7 @@ export function createWarrior(dungeon) {
     ...player,
     weapon: sword,
     ammo: undefined,
-    visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
+    visibles: [], //getVisibles({ player, dungeon, ennemies: [], objects: [] }),
     inventory: putObject(inventory, knife),
   };
 }

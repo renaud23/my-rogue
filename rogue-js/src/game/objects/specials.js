@@ -1,6 +1,5 @@
 import typeObject from "./type-object";
-import { create6sidesDices, one4SidesDice } from "../commons/dices";
-import { meleeVersus, distanceVersus } from "../fight";
+import createSplitDoor from "../todo/create-split-door";
 
 let INDEX = 0;
 
@@ -25,19 +24,16 @@ export const SPECIAL_MAP = {
   },
 };
 
-// export const SPECIALS_CODE_TO_OBJECT = Object.keys(SPECIAL_MAP).reduce(
-//   function (a, o) {
-//     const { code } = o;
-//     return { ...a, [code]: o };
-//   },
-//   {}
-// );
-
 export function createCorpse(enemy) {
   const { position, level } = enemy;
-  return { ...SPECIAL_MAP.corpse, position, level };
+  return { ...SPECIAL_MAP.corpse, position, level, todo: [] };
 }
 
 export function createDoor(position, level) {
-  return { ...SPECIAL_MAP.door, position, level };
+  const door = { ...SPECIAL_MAP.door, position, level, id: `door-${INDEX++}` };
+
+  return {
+    ...door,
+    todo: [{ desc: "Ouvrir la porte", todo: createSplitDoor(door) }],
+  };
 }

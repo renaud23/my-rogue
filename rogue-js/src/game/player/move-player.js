@@ -41,8 +41,6 @@ function movePlayer(direction, state) {
 }
 
 export default function (direction, state) {
-  const { dungeon } = state;
-
   const player = movePlayer(direction, state);
-  return { ...player, visibles: getVisibles({ ...state, player }) };
+  return { ...player };
 }

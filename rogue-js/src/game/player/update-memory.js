@@ -16,7 +16,7 @@ function update(state) {
     { ...memory }
   );
 
-  return { ...player, memory: nextMemory };
+  return { ...state, player: { ...player, memory: nextMemory } };
 }
 
 export default update;

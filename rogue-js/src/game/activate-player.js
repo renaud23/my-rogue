@@ -1,4 +1,4 @@
-import { movePlayer, updateMemory } from "./player";
+import { movePlayer, updatePlayerView } from "./player";
 import { isTurnFinish, nextTurn, appendMessages, fillMessage } from "./commons";
 import PATTERNS from "./message-patterns";
 import { PAD_BUTTON, DIRECTION } from "../commons";
@@ -35,8 +35,7 @@ function witchDirection(button) {
 
 function activateMove(state, action) {
   const newPlayer = movePlayer(witchDirection(action.payload.button), state);
-  const playerMemory = updateMemory({ ...state, player: newPlayer });
-  return { ...state, activate, player: playerMemory };
+  return updatePlayerView({ ...state, activate, player: newPlayer });
 }
 
 /**

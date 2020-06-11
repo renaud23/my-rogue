@@ -1,5 +1,5 @@
 import { isEmptyPosition, consumeMove } from "./commons";
-import { getVisibles, updateMemory } from "./player";
+import { updatePlayerView } from "./player";
 import activate from "./activate-player";
 
 function autoPlay(state) {
@@ -14,11 +14,7 @@ function autoPlay(state) {
         position: nextPos,
         path: restPath,
       });
-      const visibles = getVisibles({ ...state, player: nextPlayer });
-      return activate({
-        ...state,
-        player: updateMemory({ ...state, player: { ...nextPlayer, visibles } }),
-      });
+      return activate(updatePlayerView({ ...state, player: nextPlayer }));
     }
   }
 
