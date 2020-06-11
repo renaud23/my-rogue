@@ -42,7 +42,6 @@ function createLevelObject(state, level) {
     return { ...createRandomSimple(), position, level };
   });
   // const arrows = fillArrows(emptyTiles, level);
-
   return [...doors, ...chestsAnKeys, ...simples];
 }
 

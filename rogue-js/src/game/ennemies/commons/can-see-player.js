@@ -25,6 +25,7 @@ function canSeePlayer(state, enemy) {
       if (i === 0) {
         return true;
       }
+
       return a && isVisiblePosition(state, level, pos);
     }, true);
   }

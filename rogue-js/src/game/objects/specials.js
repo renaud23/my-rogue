@@ -15,7 +15,7 @@ export const SPECIAL_MAP = {
   },
   door: {
     code: 2001,
-    opened: true,
+    opened: false,
     locked: false,
     originalDesc: "une porte",
     desc: "une porte",

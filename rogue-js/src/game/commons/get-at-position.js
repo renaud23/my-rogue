@@ -1,5 +1,9 @@
 export function getObjectsAt(state, level, position) {
   const { objects } = state;
+  if (level >= objects.length) {
+    return [];
+  }
+
   return objects[level].filter(({ position: p }) => p === position);
 }
 

@@ -1,4 +1,6 @@
 import { TILES } from "../../commons";
+import { TYPE_OBJECT } from "../objects";
+import { getObjectsAt } from "./get-at-position";
 
 export function isEnemy(state, level, position) {
   const { ennemies } = state;
@@ -28,8 +30,21 @@ function isEmptyGround(state, level, position) {
   }
 }
 
+function obstructByObject(state, level, position) {
+  return getObjectsAt(state, level, position).reduce(function (a, o) {
+    const { type } = o;
+    switch (type) {
+      case TYPE_OBJECT.door:
+        return !o.opened;
+      default:
+        return a;
+    }
+  }, false);
+}
+
 export default function (state, level, position) {
   if (
+    obstructByObject(state, level, position) ||
     isEnemy(state, level, position) ||
     !isEmptyGround(state, level, position)
   ) {
