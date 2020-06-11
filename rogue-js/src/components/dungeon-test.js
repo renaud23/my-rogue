@@ -1,5 +1,11 @@
 import React from "react";
-import createDungeon from "../game/dungeon/factory";
+import createDungeon from "../game/factory/factory";
+function getTileChar(tile) {
+  if (tile === 0) {
+    return "_";
+  }
+  return "X";
+}
 
 function DungeonTest() {
   const size = 60;
@@ -11,9 +17,9 @@ function DungeonTest() {
         return [
           [
             ...rows,
-            <div key={rows.length} style={{ color: "white" }}>{`${current.join(
-              ""
-            )}${tile}`}</div>,
+            <div key={rows.length} style={{ color: "white" }}>{`${current
+              .map(getTileChar)
+              .join("")}${getTileChar(tile)}`}</div>,
           ],
           [],
         ];

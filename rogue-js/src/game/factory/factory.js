@@ -1,4 +1,13 @@
 import { randomInt } from "../../commons";
+import carveCorridor from "./carve-corridor";
+
+function isInRect(x, y, rect) {
+  const [rx, ry, w, h] = rect;
+  if (x >= rx && x < rx + w && y >= ry && y < ry + h) {
+    return true;
+  }
+  return false;
+}
 
 function splitHor(rect, limite, already = false) {
   const [x, y, w, h] = rect;
@@ -59,28 +68,28 @@ function split(rect, limite) {
 
 function carveRoom(rect) {
   const [x, y, w, h] = rect;
+  const width = Math.trunc(0.4 * w * (1 + Math.random()));
+  const height = Math.trunc(0.4 * h * (1 + Math.random()));
+  const xi = Math.trunc((w - width) / 2);
+  const yi = Math.trunc((h - height) / 2);
+  const zone = [xi, yi, width, height];
+
   const room = new Array(w * h).fill(1).map(function (_, i) {
-    const xi = i % w;
-    const yi = Math.trunc(i / w);
-    if (xi > 0 && xi < w - 1 && yi > 0 && yi < h - 1) {
-      return " ";
+    const px = i % w;
+    const py = Math.trunc(i / w);
+
+    if (isInRect(px, py, zone)) {
+      return 0;
     }
+
     return 1;
   });
-  return [rect, room];
+  return [rect, [room, [[x + xi, y + yi, width, height]]]];
 }
 
-function isInRect(x, y, rect) {
-  const [rx, ry, w, h] = rect;
-  if (x >= rx && x < rx + w && y >= ry && y < ry + h) {
-    return true;
-  }
-  return false;
-}
-
-function mergeRooms(left, right) {
-  const [rectLeft, roomLeft] = left;
-  const [rectRight, roomRight] = right;
+function mergeRooms(rect, left, right) {
+  const [rectLeft, [roomLeft, zonesLeft]] = left;
+  const [rectRight, [roomRight, zonesRight]] = right;
   const [xl, yl, wl, hl] = rectLeft;
   const [xr, yr, wr, hr] = rectRight;
   const minX = Math.min(xl, xr);
@@ -100,7 +109,12 @@ function mergeRooms(left, right) {
     return roomRight[px - xr + (py - yr) * wr];
   });
 
-  return [[minX, minY, width, height], room];
+  const joinedRoom = carveCorridor(rect, room, left, right);
+
+  return [
+    [minX, minY, width, height],
+    [joinedRoom, [...zonesLeft, ...zonesRight]],
+  ];
 }
 
 function crawlTree([rect, left, right]) {
@@ -110,13 +124,13 @@ function crawlTree([rect, left, right]) {
   const childLeft = crawlTree(left);
   const childRight = crawlTree(right);
 
-  return mergeRooms(childLeft, childRight);
+  return mergeRooms(rect, childLeft, childRight);
 }
 
 function createFactory(width = 30, height = 30) {
   const limite = Math.trunc(Math.min(width, height) * 0.2);
   const tree = split([0, 0, width, height], limite);
-  const [rect, room] = crawlTree(tree);
+  const [rect, [room, zones]] = crawlTree(tree);
 
   return room;
 }
