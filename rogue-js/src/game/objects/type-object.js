@@ -7,4 +7,5 @@ export default {
   chest: "object/chest",
   corpse: "object/corpse",
   key: "object/key",
+  door: "object/door",
 };

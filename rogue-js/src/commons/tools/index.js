@@ -10,3 +10,7 @@ export function popOne(sac) {
 export function peekOne(sac) {
   return sac[randomInt(sac.length)];
 }
+
+export function popThisOne(sac, one) {
+  return sac.splice(sac.indexOf(one), 1);
+}

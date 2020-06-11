@@ -2,6 +2,7 @@ import createCave from "./cave";
 import createFactory from "./factory";
 import { TILES, popOne, peekOne } from "../../commons";
 import { createRandomSimple } from "../objects";
+import computeTileKind from "./compute-tile-kind";
 
 function getStairsUp(cave) {
   return { tile: TILES.stairsUp, position: popOne(cave.emptyTiles) };
@@ -23,7 +24,7 @@ function createLevel(num, width, height) {
   if (num % 2 === 1) {
     return createCave(width, height);
   } else {
-    return createFactory(width, height);
+    return computeTileKind(createFactory(width, height));
   }
 }
 
@@ -62,6 +63,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getHeight: (current) => levels[current].height,
     getData: (current) => levels[current].data,
     getStairs: (current) => levels[current].stairs,
+    getDoors: (current) => levels[current].doors || [],
     getEmptyTiles: (current) => [...levels[current].emptyTiles],
     peekEmptyTile: (current) => popOne(levels[current].emptyTiles),
     getDungeonHeight: () => nb,

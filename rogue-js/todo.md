@@ -1,5 +1,5 @@
 ## à court terme :
-- saignement et object de guérison
+- saignements et object de guérison
 - loot de monstre, clef de coffre sur les cadavres
 - contenu des coffres
 - donjons plus complexes
@@ -13,5 +13,5 @@
 ## à moyen terme :
 - kraft
 - arbre de compétences
-- classe d'ennemi et de joueur
+- classe d'ennemi 
 - moteur de tuile

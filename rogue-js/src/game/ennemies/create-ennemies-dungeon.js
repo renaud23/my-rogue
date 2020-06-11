@@ -41,8 +41,8 @@ export function createEnnemiesDungeon(state, how, create, xp = 0) {
 }
 
 function create(state) {
-  const rats = createEnnemiesDungeon(state, 1 + randomInt(2), createRat);
-  const wolfs = createEnnemiesDungeon(state, 10 + randomInt(2), createWolf);
+  const rats = createEnnemiesDungeon(state, 6 + randomInt(2), createRat);
+  const wolfs = createEnnemiesDungeon(state, 3 + randomInt(2), createWolf);
   const { dungeon } = state;
   const dungeonHeight = dungeon.getDungeonHeight();
 

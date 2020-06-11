@@ -13,6 +13,16 @@ export const SPECIAL_MAP = {
     aggregative: false,
     type: typeObject.corpse,
   },
+  door: {
+    code: 2001,
+    opened: true,
+    locked: false,
+    originalDesc: "une porte",
+    desc: "une porte",
+    takeable: false,
+    aggregative: false,
+    type: typeObject.door,
+  },
 };
 
 // export const SPECIALS_CODE_TO_OBJECT = Object.keys(SPECIAL_MAP).reduce(
@@ -26,4 +36,8 @@ export const SPECIAL_MAP = {
 export function createCorpse(enemy) {
   const { position, level } = enemy;
   return { ...SPECIAL_MAP.corpse, position, level };
+}
+
+export function createDoor(position, level) {
+  return { ...SPECIAL_MAP.door, position, level };
 }

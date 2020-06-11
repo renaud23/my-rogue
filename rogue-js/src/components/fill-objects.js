@@ -4,6 +4,8 @@ import { TYPE_OBJECT } from "../game/objects";
 function getTile(o) {
   const { type } = o;
   switch (type) {
+    case TYPE_OBJECT.door:
+      return { ...TILES.door };
     case TYPE_OBJECT.corpse:
       return { ...TILES.corpse };
     case TYPE_OBJECT.chest:
