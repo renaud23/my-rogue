@@ -55,7 +55,8 @@ export const TILES = {
     char: "⚷",
     color: "cyan",
   },
-  door: { code: 202, char: "X", color: "brown" },
+  doorClosed: { code: 202, char: "X", color: "brown" },
+  doorOpened: { code: 203, char: "L", color: "brown" },
 
   ammo: { code: 400, char: "|", color: "cyan" },
 

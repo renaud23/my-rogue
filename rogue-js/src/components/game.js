@@ -21,7 +21,7 @@ import PlayerConsole from "./player-log";
 import "./render-game.scss";
 
 function initialize() {
-  const dungeon = createDungeon(10, 40, 40);
+  const dungeon = createDungeon(10, 20, 20);
   const player = createPlayer(dungeon, 8);
   const objects = createObjectDungeon({ dungeon });
   const ennemies = createEnnemiesDungeon({ dungeon });

@@ -29,11 +29,23 @@ export function createCorpse(enemy) {
   return { ...SPECIAL_MAP.corpse, position, level, todo: [] };
 }
 
-export function createDoor(position, level) {
-  const door = { ...SPECIAL_MAP.door, position, level, id: `door-${INDEX++}` };
+export function createDoor(position, level, opened = false) {
+  const door = {
+    ...SPECIAL_MAP.door,
+    position,
+    opened,
+    desc: `Une porte ${opened ? "ouverte" : "fermée"}`,
+    level,
+    id: `door-${INDEX++}`,
+  };
 
   return {
     ...door,
-    todo: [{ desc: "Ouvrir la porte", todo: createSplitDoor(door) }],
+    todo: [
+      {
+        desc: `${opened ? "Fermer" : "Ouvrir"} la porte`,
+        todo: createSplitDoor(door),
+      },
+    ],
   };
 }

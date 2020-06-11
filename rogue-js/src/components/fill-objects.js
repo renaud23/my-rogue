@@ -5,7 +5,8 @@ function getTile(o) {
   const { type } = o;
   switch (type) {
     case TYPE_OBJECT.door:
-      return { ...TILES.door };
+      const { opened } = o;
+      return opened ? { ...TILES.doorOpened } : { ...TILES.doorClosed };
     case TYPE_OBJECT.corpse:
       return { ...TILES.corpse };
     case TYPE_OBJECT.chest:

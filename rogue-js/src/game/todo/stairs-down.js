@@ -12,7 +12,7 @@ export function goDown(state) {
     currentLevel: nextLevel,
     position: stairs.up.position,
   };
-  const visibles = getVisibles({ dungeon, player: nextPlayer });
+  const visibles = getVisibles({ ...state, player: nextPlayer });
 
   return {
     ...state,
