@@ -18,7 +18,6 @@ import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
 import ConsoleLog from "./console-log";
 import PlayerConsole from "./player-log";
-import DungeonTest from "./dungeon-test";
 import "./render-game.scss";
 
 function initialize() {
@@ -74,7 +73,6 @@ function Game() {
         >
           renew
         </button>
-        <DungeonTest />
       </div>
     </>
   );

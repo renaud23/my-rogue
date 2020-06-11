@@ -1,4 +1,5 @@
 import createCave from "./cave";
+import createFactory from "./factory";
 import { TILES, popOne, peekOne } from "../../commons";
 import { createRandomSimple } from "../objects";
 
@@ -18,11 +19,20 @@ function fillObject(cave) {
   return { ...cave, objects: [...simples] };
 }
 
+function createLevel(num, width, height) {
+  if (num % 2 === 1) {
+    return createCave(width, height);
+  } else {
+    return createFactory(width, height);
+  }
+}
+
 function createCaves(nb, width, height) {
   return new Array(nb)
     .fill({})
     .map(function (_, i) {
-      const cave = createCave(width, height);
+      const cave = createLevel(i, width, height);
+
       if (i === 0) {
         return { ...cave, stairs: { up: getStairsUp(cave) } };
       }

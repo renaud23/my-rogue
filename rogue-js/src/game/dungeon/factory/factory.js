@@ -1,13 +1,8 @@
-import { randomInt } from "../../commons";
+import { randomInt } from "../../../commons";
+import { isInRect } from "./utils";
 import carveCorridor from "./carve-corridor";
-
-function isInRect(x, y, rect) {
-  const [rx, ry, w, h] = rect;
-  if (x >= rx && x < rx + w && y >= ry && y < ry + h) {
-    return true;
-  }
-  return false;
-}
+import findEmptyTiles from "./find-empty-tiles";
+import carveRoom from "./carve-room";
 
 function splitHor(rect, limite, already = false) {
   const [x, y, w, h] = rect;
@@ -24,6 +19,7 @@ function splitHor(rect, limite, already = false) {
   }
   return [rect];
 }
+
 function splitVer(rect, limite, already = false) {
   const [x, y, w, h] = rect;
   if (h >= 2 * limite) {
@@ -46,45 +42,6 @@ function split(rect, limite) {
     return splitHor(rect, limite);
   }
   return splitVer(rect, limite);
-}
-
-// function printRoom(rect, room) {
-//   const w = rect[2];
-
-//   const [rows] = room.reduce(
-//     function ([r, curr], t, i) {
-//       if (i % w === w - 1) {
-//         return [[...r, `${curr}${t}`], ""];
-//       }
-//       return [r, `${curr}${t}`];
-//     },
-//     [[], ""]
-//   );
-//   console.log(rect);
-//   rows.forEach(function (row, i) {
-//     console.log(row, i);
-//   });
-// }
-
-function carveRoom(rect) {
-  const [x, y, w, h] = rect;
-  const width = Math.trunc(0.4 * w * (1 + Math.random()));
-  const height = Math.trunc(0.4 * h * (1 + Math.random()));
-  const xi = Math.trunc((w - width) / 2);
-  const yi = Math.trunc((h - height) / 2);
-  const zone = [xi, yi, width, height];
-
-  const room = new Array(w * h).fill(1).map(function (_, i) {
-    const px = i % w;
-    const py = Math.trunc(i / w);
-
-    if (isInRect(px, py, zone)) {
-      return 0;
-    }
-
-    return 1;
-  });
-  return [rect, [room, [[x + xi, y + yi, width, height]]]];
 }
 
 function mergeRooms(rect, left, right) {
@@ -132,7 +89,7 @@ function createFactory(width = 30, height = 30) {
   const tree = split([0, 0, width, height], limite);
   const [rect, [room, zones]] = crawlTree(tree);
 
-  return room;
+  return { data: room, width, height, emptyTiles: findEmptyTiles(room) };
 }
 
 export default createFactory;

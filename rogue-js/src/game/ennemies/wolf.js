@@ -68,7 +68,7 @@ function createWolf(level) {
       },
       5
     ),
-    baseClass: { melee: 0.5, distance: 0, parade: 0.5 },
+    baseClass: { melee: 0.4, distance: 0, parade: 0.3 },
     weapon: ATTACKS.bite,
   };
 }

@@ -82,7 +82,7 @@ function createBasePlayer(
 
 export function createWarrior(dungeon) {
   const stats = [2, 1, 1, 1];
-  const baseClass = [0.4, 0.2, 0.3];
+  const baseClass = [0.4, 0.2, 0.3]; // [melee|distance|parade]
   const currentLevel = 0;
   const position = dungeon.peekEmptyTile(currentLevel);
   const player = createBasePlayer(dungeon, stats, baseClass, position);

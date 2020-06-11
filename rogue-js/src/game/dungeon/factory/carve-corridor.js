@@ -1,9 +1,5 @@
-import { randomInt, distanceEucl2 } from "../../commons";
-
-function getMiddle(rect) {
-  const [x, y, w, h] = rect;
-  return [Math.trunc(x + w / 2), Math.trunc(y + h / 2)];
-}
+import { randomInt, distanceEucl2 } from "../../../commons";
+import { getMiddle } from "./utils";
 
 function findNearest(lefts, rights) {
   const [nearest] = lefts.reduce(
