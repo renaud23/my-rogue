@@ -1,6 +1,5 @@
 import { optionExit, displayMenu } from "./tools";
 import { PLAYER_ACTIONS } from "../../commons";
-import { fillMessage } from "../commons";
 import PATTERNS from "../message-patterns";
 
 function consumePoint(state, w) {

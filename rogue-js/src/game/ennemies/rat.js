@@ -4,7 +4,7 @@ import canSeePlayer from "./commons/can-see-player";
 import { buildTurnPlay } from "../commons";
 import { createRandomStats } from "../fight/fighter-stats";
 import { computeMaxLife } from "../fight";
-import { isEmptyPosition, getPositions } from "../commons";
+import { isEmptyPosition } from "../commons";
 import ATTACKS from "./enemy-attacks";
 import canBite from "./commons/can-bite";
 import attack from "./commons/attack";

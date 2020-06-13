@@ -29,7 +29,6 @@ function activateEnnemies(state) {
   const { ennemies, player } = state;
   const { currentLevel } = player;
   const level = ennemies[currentLevel];
-
   const nextEnemyToPlay = level.find(function (e) {
     return !isTurnFinish(e);
   });

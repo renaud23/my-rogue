@@ -5,7 +5,7 @@ import { aStarPath } from "./ennemies/path-finding";
 
 function activateShoot(state, enemy, position) {
   const { player } = state;
-  const { weapon, position: posPlayer } = player;
+  const { weapon } = player;
   const { range = 1 } = weapon;
   const posInRange = computeRangePositions(state, range, range > 1);
   if (posInRange.indexOf(position) !== -1) {
@@ -31,7 +31,7 @@ function activateDirectPlay(state, event) {
   const { payload } = event;
   const { position } = payload;
   const { player } = state;
-  const { currentLevel, weapon, position: posPlayer } = player;
+  const { currentLevel } = player;
 
   const [enemy] = getEnnemiesAt(state, currentLevel, position);
   if (enemy) {

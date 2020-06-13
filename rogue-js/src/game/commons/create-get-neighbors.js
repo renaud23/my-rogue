@@ -2,7 +2,6 @@ import isEmptyPosition from "./is-empty-position";
 
 function getNeighbors(state, isEmpty = isEmptyPosition) {
   const { player, dungeon } = state;
-  const { position } = player;
   const { currentLevel } = player;
   const width = dungeon.getWidth(currentLevel);
 
