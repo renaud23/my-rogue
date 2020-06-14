@@ -1,14 +1,14 @@
 import * as todo from "../game/todo";
 
 export const TILES = {
-  ground: { code: 0, char: "_", className: "tile-ground", desc: "le sol" },
+  ground: { code: 0, char: ".", className: "tile-ground", desc: "le sol" },
   rock: {
     code: 1,
     char: "█",
     className: "tile-rock",
     desc: "un mur de pierre",
   },
-  simpleObject: { code: 2, char: ".", color: "green" },
+  simpleObject: { code: 2, char: "x", color: "green" },
   player: { code: 10, char: "O", className: "tile-player", desc: "vous" },
   stairsUp: {
     code: 33,
@@ -43,6 +43,11 @@ export const TILES = {
     code: 101,
     char: "w",
     color: "brown",
+  },
+  bowman: {
+    code: 102,
+    char: "D",
+    color: "blue",
   },
   corpse: { code: 101, char: "~", color: "#af111c" },
   chest: {

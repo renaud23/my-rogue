@@ -7,6 +7,8 @@ function getTile(type) {
       return TILES.rat;
     case TYPE_ENNEMIES.wolf:
       return TILES.wolf;
+    case TYPE_ENNEMIES.bowman:
+      return TILES.bowman;
     default:
       return TILES.enemy;
   }
