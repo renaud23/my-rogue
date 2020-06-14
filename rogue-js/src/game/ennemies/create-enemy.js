@@ -1,6 +1,7 @@
 import { createRat } from "./enemy/enemy-rat";
 import { levelForXp } from "../fight/table-xp";
 import createWolf from "./enemy/enemy-wolf";
+import createBowman from "./enemy/enemy-bowman";
 import { randomInt } from "../../commons";
 
 function randomise(...tables) {
@@ -12,7 +13,7 @@ function randomise(...tables) {
 function createEnemy(sumXp) {
   const level = Math.max(1, levelForXp(sumXp));
   if (level < 3) {
-    return createRat(level);
+    return createBowman(level); //createRat(level);
   }
   if (level < 6) {
     return randomise([createRat, level], [createWolf, level - 1]);

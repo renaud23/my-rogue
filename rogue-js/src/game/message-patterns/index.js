@@ -72,16 +72,21 @@ export default {
   consumeXpPoint: mergeParts(yellow("vous utilisez un point d'expérience.")),
 
   noAmmoSelected: mergeParts(
-    yellow("Vous n'avez pas de munitions équipées pour "),
+    snowBrackets(springGreen("$[desc]")),
+    yellow(" n'a pas de munitions équipées pour "),
     chartreuse("$[weapon.desc]"),
     yellow(".")
   ),
 
   restAmmo: mergeParts(
-    yellow("Il vous reste "),
+    snowBrackets(springGreen("$[desc]")),
+    yellow(" possède encore "),
     chartreuse("$[ammo.how]"),
     yellow(" $[ammo.originalDesc].")
   ),
 
-  runOutOfAmmo: yellow("Vous n'avez plus de $[ammo.originalDesc]."),
+  runOutOfAmmo: mergeParts(
+    snowBrackets(springGreen("$[desc]")),
+    yellow("n'a plus de $[ammo.originalDesc].")
+  ),
 };

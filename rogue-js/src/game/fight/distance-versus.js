@@ -40,19 +40,19 @@ function tryToShoot(attacker, defender, weapon, distance) {
   return true;
 }
 
-function consumeAmmo(player) {
-  const { ammo } = player;
+function consumeAmmo(attacker) {
+  const { ammo } = attacker;
   const { how } = ammo;
-  if (how > 1) {
+  if (how > 0) {
     const nextAmmo = { ...ammo, how: how - 1 };
     return [
-      { ...player, ammo: nextAmmo },
-      fillMessage(PATTERNS.restAmmo, { ammo: nextAmmo }),
+      { ...attacker, ammo: nextAmmo },
+      fillMessage(PATTERNS.restAmmo, { desc: attacker.desc, ammo: nextAmmo }),
     ];
   }
   return [
-    { ...player, ammo: undefined },
-    fillMessage(PATTERNS.runOutOfAmmo, { ammo }),
+    { ...attacker, ammo: undefined },
+    fillMessage(PATTERNS.runOutOfAmmo, { desc: attacker.desc, ammo }),
   ];
 }
 
@@ -65,7 +65,7 @@ function versus(attacker, defender, weapon, state) {
     return [
       attacker,
       defender,
-      [fillMessage(PATTERNS.noAmmoSelected, { weapon })],
+      [fillMessage(PATTERNS.noAmmoSelected, { desc: attacker.desc, weapon })],
     ];
   }
   const distance = computeDistance(

@@ -5,7 +5,7 @@ import { randomInt } from "../../commons";
 let INDEX = 0;
 
 function fillLevel(state, level, sumXp) {
-  const nb = 3 + randomInt(5);
+  const nb = 13 + randomInt(5);
   const { dungeon } = state;
 
   return new Array(nb).fill(undefined).reduce(
