@@ -1,6 +1,6 @@
-import { createRat } from "./rat";
+import { createRat } from "./enemy/enemy-rat";
 import { levelForXp } from "../fight/table-xp";
-import createWolf from "./wolf";
+import createWolf from "./enemy/enemy-wolf";
 import { randomInt } from "../../commons";
 
 function randomise(...tables) {

@@ -26,8 +26,6 @@ function doIt(state, enemy) {
     },
     nextEnemy,
   ];
-
-  return [state, enemy];
 }
 
 function attack(state, enemy) {

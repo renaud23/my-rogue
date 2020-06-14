@@ -1,7 +1,6 @@
 import { DIRECTION } from "../../commons";
 import { isEmptyPosition } from "../commons";
 import { consumeMove } from "../commons";
-import getVisibles from "./get-visibles";
 
 function movePlayer(direction, state) {
   const { player, dungeon } = state;

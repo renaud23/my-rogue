@@ -87,7 +87,7 @@ function crawlTree([rect, left, right]) {
 function createFactory(width = 30, height = 30) {
   const limite = Math.trunc(Math.min(width, height) * 0.4);
   const tree = split([0, 0, width, height], limite);
-  const [rect, [room, zones]] = crawlTree(tree);
+  const [_, [room, zones]] = crawlTree(tree);
 
   return { data: room, width, height, emptyTiles: findEmptyTiles(room) };
 }

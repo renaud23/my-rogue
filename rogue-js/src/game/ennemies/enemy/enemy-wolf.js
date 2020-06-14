@@ -1,12 +1,12 @@
-import { buildTurnPlay } from "../commons";
-import { createRandomStats } from "../fight/fighter-stats";
-import { computeMaxLife } from "../fight";
-import ATTACKS from "./enemy-attacks";
-import { aStarPath } from "./path-finding";
-import { TYPE_ENNEMIES } from "./commons/type-ennemies";
-import canSeePlayer from "./commons/can-see-player";
-import canBite from "./commons/can-bite";
-import attack from "./commons/attack";
+import { buildTurnPlay } from "../../commons";
+import { createRandomStats } from "../../fight/fighter-stats";
+import { computeMaxLife } from "../../fight";
+import ATTACKS from "../enemy-attacks";
+import { aStarPath } from "../path-finding";
+import { TYPE_ENNEMIES } from "../commons/type-ennemies";
+import canSeePlayer from "../commons/can-see-player";
+import canBite from "../commons/can-bite";
+import attack from "../commons/attack";
 
 function computePath(state, enemy) {
   const { player } = state;

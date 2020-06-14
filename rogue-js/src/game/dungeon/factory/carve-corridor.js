@@ -1,4 +1,4 @@
-import { randomInt, distanceEucl2 } from "../../../commons";
+import { distanceEucl2 } from "../../../commons";
 import { getMiddle } from "./utils";
 
 function findNearest(lefts, rights) {

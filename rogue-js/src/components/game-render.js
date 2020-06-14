@@ -11,39 +11,10 @@ import {
   activateState,
 } from "../recoil";
 import combine from "./combine-fill";
-import { TILES, getTile } from "../commons";
 import fillDungeon from "./fill-dungeon";
 import fillPlayer from "./fill-player";
 import fillObjects from "./fill-objects";
 import fillEnnemies from "./fill-ennemies";
-
-// export function GlobalRender() {
-//   const [dungeon] = useRecoilState(dungeonState);
-//   const [player] = useRecoilState(playerState);
-//   const [ennemies] = useRecoilState(ennemiesState);
-
-//   if (!dungeon) return null;
-//   const { currentLevel } = player;
-//   const width = dungeon.getWidth(currentLevel);
-//   const data = dungeon.getData(currentLevel);
-//   const ennemiesPos = ennemies[currentLevel].map(({ position }) => position);
-//   const stack = [...data];
-
-//   const rows = render(
-//     stack.map((c, i) => {
-//       if (i === player.position) {
-//         return { ...TILES.player, color: "red" };
-//       }
-//       if (ennemiesPos.indexOf(i) !== -1) {
-//         return { ...TILES.ennemy, color: "magenta" };
-//       }
-//       return { ...getTile(c), color: "blue" };
-//     }),
-//     width
-//   );
-
-//   return <pre style={{ fontSize: 8 }}>{rows}</pre>;
-// }
 
 function Tile({ char, color, bgColor, position }) {
   const setDungeon = useSetRecoilState(dungeonState);
@@ -174,16 +145,16 @@ function PlayerRender({ viewSize }) {
   const [ennemies] = useRecoilState(ennemiesState);
   const [objects] = useRecoilState(objectsState);
 
-  const onClickTileCallback = useRecoilCallback(async function ({
-    getPromise,
-  }) {
-    const [dungeon, player, ennemies, objects] = Promise.all([
-      getPromise(dungeonState),
-      getPromise(playerState),
-      getPromise(ennemiesState),
-      getPromise(objectsState),
-    ]);
-  });
+  // const onClickTileCallback = useRecoilCallback(async function ({
+  //   getPromise,
+  // }) {
+  //   const [dungeon, player, ennemies, objects] = Promise.all([
+  //     getPromise(dungeonState),
+  //     getPromise(playerState),
+  //     getPromise(ennemiesState),
+  //     getPromise(objectsState),
+  //   ]);
+  // });
 
   if (!dungeon) return null;
 
@@ -214,8 +185,7 @@ function PlayerRender({ viewSize }) {
     newTiles.map(function (t) {
       return { ...t, visible: isVisible(player, t) };
     }),
-    newWidth,
-    onClickTileCallback
+    newWidth
   );
 
   return <pre className="game-screen">{rows}</pre>;

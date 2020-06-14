@@ -1,13 +1,13 @@
-import { antecedentPoint, pointProjection } from "../../commons";
-import { TYPE_ENNEMIES } from "./commons/type-ennemies";
-import canSeePlayer from "./commons/can-see-player";
-import { buildTurnPlay } from "../commons";
-import { createRandomStats } from "../fight/fighter-stats";
-import { computeMaxLife } from "../fight";
-import { isEmptyPosition } from "../commons";
-import ATTACKS from "./enemy-attacks";
-import canBite from "./commons/can-bite";
-import attack from "./commons/attack";
+import { antecedentPoint, pointProjection } from "../../../commons";
+import { TYPE_ENNEMIES } from "../commons/type-ennemies";
+import canSeePlayer from "../commons/can-see-player";
+import { buildTurnPlay } from "../../commons";
+import { createRandomStats } from "../../fight/fighter-stats";
+import { computeMaxLife } from "../../fight";
+import { isEmptyPosition } from "../../commons";
+import ATTACKS from "../enemy-attacks";
+import canBite from "../commons/can-bite";
+import attack from "../commons/attack";
 
 function getVariation(delta) {
   if (delta === 0) {

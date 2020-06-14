@@ -7,16 +7,17 @@ let INDEX = 0;
 function fillLevel(state, level, sumXp) {
   const nb = 3 + randomInt(5);
   const { dungeon } = state;
-  const position = dungeon.peekEmptyTile(level);
+
   return new Array(nb).fill(undefined).reduce(
     function ([ennemies, currXp]) {
+      const position = dungeon.peekEmptyTile(level);
       const enemy = {
         ...createEnemy(currXp),
         id: `enemy-${INDEX++}`,
         position,
         level,
       };
-      // console.log(level, enemy.desc, enemy.stats);
+      // console.log(level, enemy.desc, enemy.position, enemy.level);
       return [[...ennemies, enemy], currXp + enemyXpValue(enemy)];
     },
     [[], sumXp]
