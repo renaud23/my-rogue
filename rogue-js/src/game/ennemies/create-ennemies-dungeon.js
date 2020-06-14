@@ -16,7 +16,7 @@ function fillLevel(state, level, sumXp) {
         position,
         level,
       };
-      console.log(level, enemy.desc, enemy.stats);
+      // console.log(level, enemy.desc, enemy.stats);
       return [[...ennemies, enemy], currXp + enemyXpValue(enemy)];
     },
     [[], sumXp]
