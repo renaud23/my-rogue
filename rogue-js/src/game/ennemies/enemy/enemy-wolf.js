@@ -2,34 +2,11 @@ import { buildTurnPlay } from "../../commons";
 import { createRandomStats } from "../../fight/fighter-stats";
 import { computeMaxLife } from "../../fight";
 import ATTACKS from "../enemy-attacks";
-import { aStarPath } from "../path-finding";
 import { TYPE_ENNEMIES } from "../commons/type-ennemies";
 import canSeePlayer from "../commons/can-see-player";
 import canBite from "../commons/can-bite";
 import attack from "../commons/attack";
-
-function computePath(state, enemy) {
-  const { player } = state;
-  const { position: playerPos } = player;
-  const { position: enemyPos } = enemy;
-  const [_, position, path] = aStarPath(state)(enemyPos, playerPos);
-  return [
-    state,
-    { ...enemy, position, path: path && path.length ? path : undefined },
-  ];
-}
-
-function consumePath(state, enemy) {
-  const { player } = state;
-  const { path } = player;
-  const [position, rest] = path;
-
-  return [state, { ...enemy, position, path: rest.length ? rest : undefined }];
-}
-
-function isPath(enemy) {
-  return enemy.path;
-}
+import { computePath, consumePath, isPath } from "./commons-path";
 
 function activate(state, enemy) {
   if (canSeePlayer(state, enemy)) {

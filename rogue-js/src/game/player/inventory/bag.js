@@ -1,6 +1,6 @@
-function createInventory(max = 10) {
+function createInventory(max = 10, ...objects) {
   return {
-    objects: [],
+    objects: [...objects],
     size: 0,
     max,
   };

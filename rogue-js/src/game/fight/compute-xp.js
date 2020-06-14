@@ -1,5 +1,5 @@
 import { fillMessage } from "../commons";
-import TABLE_LEVEL_XP, { computeNextLevelXp, enemyXpValue } from "./table-xp";
+import { computeNextLevelXp, enemyXpValue } from "./table-xp";
 import PATTERNS from "../message-patterns";
 
 function isDead(o) {

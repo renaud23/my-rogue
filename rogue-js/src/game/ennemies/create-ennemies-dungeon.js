@@ -1,4 +1,4 @@
-import { enemyXpValue, levelForXp } from "../fight";
+import { enemyXpValue } from "../fight";
 import createEnemy from "./create-enemy";
 import { randomInt } from "../../commons";
 

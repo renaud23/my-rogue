@@ -1,40 +1,57 @@
-import { aStarPath } from "../path-finding";
 import canSeePlayer from "../commons/can-see-player";
-import canShoot from "../commons/can-shoot";
+import canTarget from "../commons/can-target";
+import canBite from "../commons/can-bite";
 import attack from "../commons/attack";
+import { TYPE_OBJECT } from "../../objects";
+import { removeObject } from "../../player/inventory";
+import { computePath, consumePath, isPath } from "./commons-path";
 
-function computePath(state, enemy) {
-  const { player } = state;
-  const { position: playerPos } = player;
-  const { position: enemyPos } = enemy;
-  const [_, position, path] = aStarPath(state)(enemyPos, playerPos);
-  return [
-    state,
-    { ...enemy, position, path: path && path.length ? path : undefined },
-  ];
+function canAttack(state, enemy) {
+  const { weapon, ammo } = enemy;
+  const { type } = weapon;
+  if (type === TYPE_OBJECT.distanceWeapon && ammo) {
+    return canTarget(state, enemy);
+  }
+  if (type === TYPE_OBJECT.meleeWeapon) {
+    return canBite(state, enemy);
+  }
+
+  return false;
 }
 
-function consumePath(state, enemy) {
-  const { player } = state;
-  const { path } = player;
-  const [position, rest] = path;
-
-  return [state, { ...enemy, position, path: rest.length ? rest : undefined }];
+function needSwapWeapon(state, enemy) {
+  const { weapon, ammo } = enemy;
+  const { type } = weapon;
+  if (type === TYPE_OBJECT.distanceWeapon && !ammo) {
+    return true;
+  }
+  return false;
 }
 
-function isPath(enemy) {
-  return enemy.path;
+function swapWeapon(state, enemy) {
+  const { inventory, weapon } = enemy;
+  const { objects } = inventory;
+  const newWeapon = objects.find(function (o) {
+    const { type } = o;
+    return type === TYPE_OBJECT.meleeWeapon;
+  });
+  if (newWeapon) {
+    const newInventory = removeObject(inventory, weapon);
+    return [state, { ...enemy, weapon: newWeapon, inventory: newInventory }];
+  }
+  return [state, enemy];
 }
 
 function activate(state, enemy) {
   if (canSeePlayer(state, enemy)) {
-    const { player } = state;
-    const { position: playerPos } = player;
-    const { position: enemyPos, path } = enemy;
-    if (canShoot(state, enemy)) {
+    if (canAttack(state, enemy)) {
       const [nextState, nextEnemy] = attack(state, enemy);
       return [nextState, { ...nextEnemy, path: undefined }];
     }
+    if (needSwapWeapon(state, enemy)) {
+      return swapWeapon(state, enemy);
+    }
+
     if (isPath(enemy)) {
       return consumePath(state, enemy);
     }

@@ -1,6 +1,8 @@
 export default {
   simple: "object/simple",
-  weapon: "object/weapon",
+  meleeWeapon: "object/melee-weapon",
+  distanceWeapon: "object/distance-bow",
+
   ammo: "object/ammo",
   ammunition: "object/ammunition",
   armor: "object/armor",

@@ -1,10 +1,10 @@
 import { buildTurnPlay } from "../../commons";
 import { createRandomStats } from "../../fight/fighter-stats";
 import { computeMaxLife } from "../../fight";
-import ATTACKS from "../enemy-attacks";
 import { TYPE_ENNEMIES } from "../commons/type-ennemies";
 import activate from "./activate-distance";
-import { createArrows, createBow } from "../../objects";
+import { createArrows, createBow, createKnife } from "../../objects";
+import createInventory from "../../player/inventory";
 
 function createBowman(level) {
   return {
@@ -23,9 +23,10 @@ function createBowman(level) {
       },
       5
     ),
-    baseClass: { melee: 0.2, distance: 0.4, parade: 0.3 },
+    baseClass: { melee: 0.2, distance: 0.3, parade: 0.3 },
     weapon: createBow(),
-    ammo: createArrows(5),
+    ammo: createArrows(3),
+    inventory: createInventory(1, createKnife()),
   };
 }
 
