@@ -2,16 +2,16 @@ import { TILES } from "../../commons";
 import { TYPE_OBJECT } from "../objects";
 import { getObjectsAt } from "./get-at-position";
 
-function obstructByObject(state, level, position) {
+function notObstructByObject(state, level, position) {
   return getObjectsAt(state, level, position).reduce(function (a, o) {
     const { type } = o;
     switch (type) {
       case TYPE_OBJECT.door:
-        return !o.opened;
+        return a && o.opened;
       default:
         return a;
     }
-  }, false);
+  }, true);
 }
 
 function obstructByDungeon(state, level, position) {
@@ -31,7 +31,7 @@ function obstructByDungeon(state, level, position) {
 function isVisible(state, level, position) {
   return (
     !obstructByDungeon(state, level, position) &&
-    !obstructByObject(state, level, position)
+    notObstructByObject(state, level, position)
   );
 }
 

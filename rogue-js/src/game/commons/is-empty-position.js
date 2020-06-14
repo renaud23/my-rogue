@@ -30,21 +30,21 @@ function isEmptyGround(state, level, position) {
   }
 }
 
-function obstructByObject(state, level, position) {
+function notObstructByObject(state, level, position) {
   return getObjectsAt(state, level, position).reduce(function (a, o) {
     const { type } = o;
     switch (type) {
       case TYPE_OBJECT.door:
-        return !o.opened;
+        return a && o.opened;
       default:
         return a;
     }
-  }, false);
+  }, true);
 }
 
 export default function (state, level, position) {
   if (
-    obstructByObject(state, level, position) ||
+    !notObstructByObject(state, level, position) ||
     isEnemy(state, level, position) ||
     !isEmptyGround(state, level, position)
   ) {
