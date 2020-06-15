@@ -10,4 +10,6 @@ export default {
   corpse: "object/corpse",
   key: "object/key",
   door: "object/door",
+  stairsUp: "object/stairs-up",
+  stairsDown: "object/stairs-down",
 };

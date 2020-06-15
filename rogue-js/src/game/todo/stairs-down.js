@@ -20,4 +20,4 @@ export function goDown(state) {
   };
 }
 
-export default [{ desc: "Descendre l'escalier", todo: goDown }];
+export default goDown;

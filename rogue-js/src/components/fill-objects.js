@@ -15,6 +15,10 @@ function getTile(o) {
       return { ...TILES.key };
     case TYPE_OBJECT.ammo:
       return { ...TILES.ammo };
+    case TYPE_OBJECT.stairsUp:
+      return { ...TILES.stairsUp };
+    case TYPE_OBJECT.stairsDown:
+      return { ...TILES.stairsDown };
     default:
       return { ...TILES.simpleObject };
   }

@@ -1,5 +1,6 @@
 import typeObject from "./type-object";
 import createSplitDoor from "../todo/create-split-door";
+import { stairsUpTodo, stairsDownTodo } from "../todo";
 
 let INDEX = 0;
 
@@ -21,6 +22,25 @@ export const SPECIAL_MAP = {
     takeable: false,
     aggregative: false,
     type: typeObject.door,
+  },
+
+  stairsUp: {
+    code: 2002,
+    desc: "des escaliers montants",
+    takeable: false,
+    aggregative: false,
+    opened: false,
+    locked: false,
+    type: typeObject.stairsUp,
+  },
+  stairsDown: {
+    code: 2003,
+    desc: "des escaliers descendants",
+    takeable: false,
+    aggregative: false,
+    opened: false,
+    locked: false,
+    type: typeObject.stairsDown,
   },
 };
 
@@ -47,5 +67,23 @@ export function createDoor(position, level, opened = false) {
         todo: createSplitDoor(door),
       },
     ],
+  };
+}
+
+export function createStairsUp(position, level) {
+  return {
+    ...SPECIAL_MAP.stairsUp,
+    position,
+    level,
+    todo: [{ desc: "Monter l'escalier", todo: stairsUpTodo }],
+  };
+}
+
+export function createStairsDown(position, level) {
+  return {
+    ...SPECIAL_MAP.stairsDown,
+    position,
+    level,
+    todo: [{ desc: "Descendre l'escalier", todo: stairsDownTodo }],
   };
 }

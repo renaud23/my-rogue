@@ -1,5 +1,5 @@
 import { randomInt } from "../../commons";
-import { createDoor } from "./specials";
+import { createDoor, createStairsUp, createStairsDown } from "./specials";
 import { createRandomSimple } from "./simple";
 import createChest from "./create-chest";
 import { popOne, peekOne } from "../commons";
@@ -26,7 +26,17 @@ function createDoors(doors, level, empties) {
   });
 }
 
-function createStairs() {}
+function createStairs(dungeon, level) {
+  return Object.entries(dungeon.getStairs(level)).map(function ([
+    kind,
+    { position },
+  ]) {
+    if (kind === "up") {
+      return createStairsUp(position, level);
+    }
+    return createStairsDown(position, level);
+  });
+}
 
 function createSimples(empties, level) {
   return new Array(5 + randomInt(10)).fill(null).map(function () {
@@ -37,11 +47,13 @@ function createSimples(empties, level) {
 
 function createLevelObject(state, level, empties) {
   const { dungeon } = state;
+
   const doors = createDoors(dungeon.getDoors(level), level, empties);
   const chestsAnKeys = createChestAndKey(level, empties);
   const simples = createSimples(empties, level);
+  const stairs = createStairs(dungeon, level);
   // const arrows = fillArrows(emptyTiles, level);
-  return [...doors, ...chestsAnKeys, ...simples];
+  return [...stairs, ...doors, ...chestsAnKeys, ...simples];
 }
 
 function createObjects(state, empties) {

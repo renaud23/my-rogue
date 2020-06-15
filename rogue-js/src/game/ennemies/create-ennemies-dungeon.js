@@ -4,11 +4,11 @@ import { randomInt } from "../../commons";
 import { popOne } from "../commons";
 
 let INDEX = 0;
+const DENSITY = 1 / 40; // 1 per 30 empty tiles
 
 function fillLevel(state, level, sumXp, empties) {
-  const nb = 3 + randomInt(5);
-  const { dungeon } = state;
-
+  const nb = Math.round(empties[level].length * DENSITY);
+  // const nb = 3 + randomInt(5);
   return new Array(nb).fill(undefined).reduce(
     function ([ennemies, currXp]) {
       const position = popOne(empties, level);

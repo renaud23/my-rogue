@@ -20,4 +20,4 @@ export function goUp(state) {
   };
 }
 
-export default [{ desc: "Monter l'escalier", todo: goUp }];
+export default goUp;
