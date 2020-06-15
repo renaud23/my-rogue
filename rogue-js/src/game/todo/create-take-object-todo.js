@@ -4,6 +4,7 @@ import { removeObjectDungeon, aggregateObjects } from "../objects";
 import { fillMessage } from "../commons";
 import PATTERNS from "../message-patterns";
 import { consumeMove } from "../commons";
+import { computeDesc } from "../commons";
 
 function takeAndAggregate(object, state) {
   const { player, objects, messages } = state;
@@ -15,7 +16,10 @@ function takeAndAggregate(object, state) {
     return o.code === code;
   });
   if (same) {
-    const newMsg = [...messages, fillMessage(PATTERNS.takeObject, { object })];
+    const newMsg = [
+      ...messages,
+      fillMessage(PATTERNS.takeObject, { desc: computeDesc(object) }),
+    ];
     const newObjects = removeObjectDungeon(objects, object, currentLevel);
     const newInventoryObjects = invObj.map(function (o) {
       const { id } = o;
@@ -43,7 +47,10 @@ function takeSingle(object, state) {
   const { player, objects, messages } = state;
   const { currentLevel, inventory } = player;
   const newObjects = removeObjectDungeon(objects, object, currentLevel);
-  const newMsg = [...messages, fillMessage(PATTERNS.takeObject, { object })];
+  const newMsg = [
+    ...messages,
+    fillMessage(PATTERNS.takeObject, { desc: computeDesc(object) }),
+  ];
   return cleanPlayerAction({
     ...state,
     objects: newObjects,

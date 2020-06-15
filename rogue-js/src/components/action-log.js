@@ -1,6 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { PLAYER_ACTIONS, getTile, TILES } from "../commons";
+import { computeDesc } from "../game/commons";
 import {
   dungeonState,
   playerState,
@@ -24,7 +25,7 @@ function observeAt(state, position, ground = false) {
       return a;
     }
     if (o.position === position) {
-      return [...a, o.desc];
+      return [...a, computeDesc(o)];
     }
     return a;
   }, []);
@@ -54,17 +55,12 @@ function peekEnnemiesMessages(state, level, position) {
 }
 
 function peekObjectMessages(state, level, position) {
-  return getObjectsAt(state, level, position).reduce(function (
-    [a],
-    { desc },
-    i
-  ) {
+  return getObjectsAt(state, level, position).reduce(function ([a], o, i) {
     if (i === 0) {
-      return [`Posé à vos pieds, vous apercevez, ${desc}`];
+      return [`Posé à vos pieds, vous apercevez, ${computeDesc(o)}`];
     }
-    return [`${a}, ${desc}`];
-  },
-  []);
+    return [`${a}, ${computeDesc(o)}`];
+  }, []);
 }
 
 function peekMenu(state) {

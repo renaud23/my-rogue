@@ -6,44 +6,48 @@ import {
   createUseKeyTodo,
 } from "../todo";
 import { TYPE_OBJECT } from "../objects";
+import { computeDesc } from "../../game/commons";
 
 function underligne(word) {
   return new Array(word.length).fill("-").join("");
 }
 
 function createOptions(object, cally) {
-  const { type, desc } = object;
+  const { type, todo } = object;
   switch (type) {
     case TYPE_OBJECT.meleeWeapon:
     case TYPE_OBJECT.distanceWeapon:
       return [
-        ...object.todo,
-        { desc: `équiper ${desc}`, todo: equipWeaponTodo },
-        { desc: `poser ${desc}`, todo: throwObjectTodo },
+        ...todo,
+        { desc: `équiper ${computeDesc(object)}`, todo: equipWeaponTodo },
+        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
         { desc: "retour", todo: cally },
         optionExit,
       ];
     case TYPE_OBJECT.ammo:
       return [
-        ...object.todo,
-        { desc: `équiper ${desc}`, todo: equipAmmoTodo },
-        { desc: `poser ${desc}`, todo: throwObjectTodo },
+        ...todo,
+        { desc: `équiper ${computeDesc(object)}`, todo: equipAmmoTodo },
+        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
         { desc: "retour", todo: cally },
         optionExit,
       ];
     case TYPE_OBJECT.key:
       return [
-        ...object.todo,
-        { desc: `utiliser ${desc}`, todo: createUseKeyTodo(object) },
-        { desc: `poser ${desc}`, todo: throwObjectTodo },
+        ...todo,
+        {
+          desc: `utiliser ${computeDesc(object)}`,
+          todo: createUseKeyTodo(object),
+        },
+        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
         { desc: "retour", todo: cally },
         optionExit,
       ];
 
     default:
       return [
-        ...object.todo,
-        { desc: `poser ${desc}`, todo: throwObjectTodo },
+        ...todo,
+        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
         optionExit,
       ];
   }
@@ -52,12 +56,13 @@ function createOptions(object, cally) {
 function createObjectMenu(object, cally) {
   return function (state, event) {
     const { player } = state;
+    const desc = computeDesc(object);
     return {
       ...state,
       player: buildPlayer({
         player,
         options: createOptions(object, cally),
-        header: [object.desc, underligne(object.desc)],
+        header: [desc, underligne(desc)],
         object,
       }),
       activate: displayMenu,

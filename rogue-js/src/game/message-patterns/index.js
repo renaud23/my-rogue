@@ -50,11 +50,8 @@ export default {
     yellow("Tour suivant : "),
     mediumOrchid("$[turn.turnPlay]")
   ),
-  takeObject: mergeParts(
-    yellow("vous ramassez "),
-    chartreuse("$[object.desc]")
-  ),
-  throwObject: mergeParts(yellow("vous posez "), chartreuse("$[object.desc]")),
+  takeObject: mergeParts(yellow("vous ramassez "), chartreuse("$[desc]")),
+  throwObject: mergeParts(yellow("vous posez "), chartreuse("$[desc]")),
   inventoryFull: yellow("Votre inventaire est plein."),
   itsNotAChest: yellow("Ce n'est pas un coffre."),
   itsNotAGoodChest: yellow("Cette clef n'ouvre pas ce type de coffre."),

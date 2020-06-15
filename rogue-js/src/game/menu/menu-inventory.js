@@ -2,6 +2,7 @@ import activate from "../activate-player";
 import { buildPlayer, displayMenu, optionExit } from "./tools";
 import { getObjects } from "../player/inventory";
 import createMenuInventoryObject from "./create-menu-inventory-object";
+import { computeDesc } from "../commons";
 
 function buildEndingOptions(backActivate) {
   return [{ desc: "retour", todo: backActivate }];
@@ -10,10 +11,13 @@ const INVENTAIRE_HEADER = ["INVENTAIRE", "----------"];
 
 function buildOptionsObjects(objects, cally) {
   return objects.reduce(function (a, o) {
-    const { desc } = o;
     return [
       ...a,
-      { desc, todo: createMenuInventoryObject(o, cally), optionExit },
+      {
+        desc: computeDesc(o),
+        todo: createMenuInventoryObject(o, cally),
+        optionExit,
+      },
     ];
   }, []);
 }

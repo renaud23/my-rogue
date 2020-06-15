@@ -10,3 +10,8 @@ export * from "./message-parser";
 export * from "./turn-play";
 export * from "./dices";
 export * from "./navigate-map";
+
+export function computeDesc(o) {
+  const { desc } = o;
+  return typeof desc === "function" ? desc(o) : desc;
+}

@@ -5,12 +5,7 @@ import activate from "./activate-player";
 import { createTakeObjectTodo } from "./todo";
 import { navigateMap } from "./commons";
 import displayMenu from "./menu/tools/display-menu";
-
-// function optionsDescNumber(options) {
-//   return options.map(function ({ desc, ...r }, i) {
-//     return { desc: `${i + 1}. ${desc}`, ...r };
-//   });
-// }
+import { computeDesc } from "./commons";
 
 function optionsTile(tile) {
   if (tile.todo) {
@@ -29,7 +24,10 @@ function optionsObjects(objects) {
     const { takeable, todo } = o;
     const todos = [...a, ...todo];
     return takeable
-      ? [...todos, { desc: `prendre ${o.desc}`, todo: createTakeObjectTodo(o) }]
+      ? [
+          ...todos,
+          { desc: `prendre ${computeDesc(o)}`, todo: createTakeObjectTodo(o) },
+        ]
       : todos;
   }, []);
 

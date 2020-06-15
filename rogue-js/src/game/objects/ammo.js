@@ -28,7 +28,7 @@ export function createArrows(how = 5) {
   const arrows = {
     ...AMMO_MAP.woodenArrow,
     originalDesc: AMMO_MAP.woodenArrow.desc,
-    desc: `${how} ${AMMO_MAP.woodenArrow.desc}`,
+    desc: (o) => `${o.how} ${o.originalDesc}`,
     id: `ammo-${INDEX++}`,
     how,
     max: undefined, //TODO
