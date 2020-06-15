@@ -14,7 +14,8 @@ function underligne(word) {
 function createOptions(object, cally) {
   const { type, desc } = object;
   switch (type) {
-    case TYPE_OBJECT.weapon:
+    case TYPE_OBJECT.meleeWeapon:
+    case TYPE_OBJECT.distanceWeapon:
       return [
         ...object.todo,
         { desc: `équiper ${desc}`, todo: equipWeaponTodo },

@@ -13,7 +13,7 @@ function randomise(...tables) {
 function createEnemy(sumXp) {
   const level = Math.max(1, levelForXp(sumXp));
   if (level < 3) {
-    return createRat(level);
+    return createBowman(level);
   }
   if (level < 5) {
     return randomise(

@@ -8,7 +8,7 @@ export const TILES = {
     className: "tile-rock",
     desc: "un mur de pierre",
   },
-  simpleObject: { code: 2, char: "x", color: "green" },
+  simpleObject: { code: 2, char: "-", color: "green" },
   player: { code: 10, char: "O", className: "tile-player", desc: "vous" },
   stairsUp: {
     code: 33,

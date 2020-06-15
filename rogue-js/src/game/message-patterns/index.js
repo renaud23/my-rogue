@@ -1,6 +1,7 @@
 const colorPart = (color) => (text) => `<${color}>${text}</${color}>`;
 const yellow = colorPart("yellow");
 const red = colorPart("red");
+const orange = colorPart("orange");
 const mediumOrchid = colorPart("MediumOrchid");
 const springGreen = colorPart("SpringGreen");
 const chartreuse = colorPart("Chartreuse");
@@ -63,9 +64,9 @@ export default {
     yellow(". Il est vide.")
   ),
   xpProgress: mergeParts(
-    yellow("Vous atteignez le niveau "),
+    orange("Vous atteignez le niveau "),
     snowBrackets(springGreen("$[stats.level]")),
-    yellow(" !")
+    orange(" !")
   ),
   nothingAppended: yellow("Il ne se passe rien."),
   deadEnemy: mergeParts(printPlayer("att"), yellow(" est mort.")),

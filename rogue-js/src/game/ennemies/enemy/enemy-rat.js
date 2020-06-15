@@ -88,5 +88,6 @@ export function createRat(xpLevel = 1) {
     ),
     baseClass: { melee: 0.4, distance: 0.2, parade: 0.2 },
     weapon: ATTACKS.nibbles,
+    loot: () => [],
   };
 }

@@ -3,8 +3,9 @@
 - densité des ennemis
 - loot de monstre, clef de coffre sur les cadavres
 - contenu des coffres
-- donjons plus complexes
+- donjons plus complexes +
 - loot cadavres d'archers
+- ouvrir les portes en cliquant dessus.
 - keys events listener 
 - mort du joueur
 - système d'éclairage

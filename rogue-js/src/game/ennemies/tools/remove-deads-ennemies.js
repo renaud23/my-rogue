@@ -25,7 +25,12 @@ function transformDeads(state, deads) {
     const { objects } = ns;
     const { level } = dead;
     const newLevel = [...objects];
-    newLevel[level] = [...objects[level], createCorpse(dead)];
+
+    newLevel[level] = [
+      ...objects[level],
+      createCorpse(dead),
+      ...dead.loot(dead),
+    ];
 
     return { ...ns, objects: newLevel };
   }, state);
