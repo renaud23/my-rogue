@@ -1,63 +1,21 @@
 import getVisibles from "./get-visibles";
 import createInventory, { putObject } from "./inventory";
-import {
-  createKnife,
-  createSword,
-  createArmageddon,
-  createBow,
-  createArrows,
-} from "../objects";
+import { createKnife, createSword, createBow, createArrows } from "../objects";
+import { popOne } from "../commons";
 import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
 
 const DEFAULT_FOV = 8;
 const DEFAULT_NB_MOVE = 2;
 
-// function createPlayer(dungeon, fov = DEFAULT_FOV, maxMove = DEFAULT_NB_MOVE) {
-//   const currentLevel = 0;
-//   const position = dungeon.peekEmptyTile(currentLevel);
-//   const stats = computeNextLevelXp(computeMaxLife(createStats(2, 1, 1, 1)));
-
-//   const player = {
-//     desc: "Fitz",
-//     position,
-//     fov,
-//     memory: [],
-//     action: undefined,
-//     inventory: undefined,
-//     weapon: undefined,
-//     ammo: undefined,
-//     currentLevel,
-//     stats: { ...stats, xp: 0, xpPoint: 0 },
-//     baseClass: { melee: 0.5, distance: 0.3, parade: 0.3 },
-//     turn: {
-//       moveLeft: maxMove,
-//       turnPlay: 0,
-//       maxMove: maxMove,
-//     },
-//   };
-
-//   const inventory = createInventory(10);
-//   const knife = createKnife();
-//   const bow = createBow();
-//   const sword = createArmageddon();
-
-//   return {
-//     ...player,
-//     weapon: sword,
-//     ammo: createArrows(),
-//     visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
-//     inventory: putObject(putObject(inventory, knife), bow),
-//   };
-// }
-
 function createBasePlayer(
   dungeon,
+  empties,
   [s, a, l, e],
   [melee, distance, parade],
-  position,
   fov = DEFAULT_FOV,
   maxMove = DEFAULT_NB_MOVE
 ) {
+  const position = popOne(empties, 0);
   const stats = computeNextLevelXp(computeMaxLife(createStats(s, a, l, e)));
 
   return {
@@ -80,12 +38,11 @@ function createBasePlayer(
   };
 }
 
-export function createWarrior(dungeon) {
+export function createWarrior(dungeon, empties) {
   const stats = [2, 1, 1, 1];
   const baseClass = [0.4, 0.2, 0.3]; // [melee|distance|parade]
-  const currentLevel = 0;
-  const position = dungeon.peekEmptyTile(currentLevel);
-  const player = createBasePlayer(dungeon, stats, baseClass, position);
+
+  const player = createBasePlayer(dungeon, empties, stats, baseClass);
 
   const inventory = createInventory(10);
   const knife = createKnife();
@@ -100,12 +57,12 @@ export function createWarrior(dungeon) {
   };
 }
 
-export function createArcher(dungeon) {
+export function createArcher(dungeon, empties) {
   const stats = [1, 2, 1, 1];
   const baseClass = [0.2, 0.6, 0.3];
   const currentLevel = 0;
   const position = dungeon.peekEmptyTile(currentLevel);
-  const player = createBasePlayer(dungeon, stats, baseClass, position);
+  const player = createBasePlayer(dungeon, empties, stats, baseClass);
 
   const inventory = createInventory(10);
   const knife = createKnife();

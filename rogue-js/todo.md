@@ -1,9 +1,10 @@
 ## à court terme :
 - saignements et object de guérison
+- densité des ennemis
 - loot de monstre, clef de coffre sur les cadavres
 - contenu des coffres
 - donjons plus complexes
-- portes et clés 
+- loot cadavres d'archers
 - keys events listener 
 - mort du joueur
 - système d'éclairage

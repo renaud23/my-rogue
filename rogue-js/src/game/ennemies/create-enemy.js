@@ -16,10 +16,14 @@ function createEnemy(sumXp) {
     return createRat(level);
   }
   if (level < 5) {
-    return randomise([createRat, level], [createWolf, level - 1]);
+    return randomise(
+      [createRat, level],
+      [createWolf, level - 1],
+      [createBowman, level - 2]
+    );
   }
   if (level < 7) {
-    return randomise([createWolf, level], [createBowman, level - 1]);
+    return randomise([createWolf, level], [createBowman, level]);
   }
 
   return createWolf(level);

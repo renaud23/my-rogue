@@ -22,12 +22,11 @@ import "./render-game.scss";
 
 function initialize() {
   const dungeon = createDungeon(10, 30, 30);
-  const player = createPlayer(dungeon, 8);
-  const objects = createObjectDungeon({ dungeon });
-  const ennemies = createEnnemiesDungeon({ dungeon });
-  const messages = [
-    "<red>Un cri déchire la nuit. Son echo sinistre vous plonge dans la torpeur.</red> (tu flippes comme une tarlouze)",
-  ];
+  const empties = dungeon.getEmptyTiles(); // with side effect
+  const player = createPlayer(dungeon, empties);
+  const objects = createObjectDungeon({ dungeon, player }, empties);
+  const ennemies = createEnnemiesDungeon({ dungeon, player, objects }, empties);
+  const messages = ["<red>Un cri déchire la nuit.</red>"];
   const state = updatePlayerView({
     dungeon,
     player,

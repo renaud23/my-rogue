@@ -1,21 +1,15 @@
-import { peekOne, randomInt, popOne, popThisOne } from "../../commons";
-import { createRandomSimple } from "./simple";
+import { randomInt } from "../../commons";
 import { createDoor } from "./specials";
+import { createRandomSimple } from "./simple";
 import createChest from "./create-chest";
-// import { createArrows } from "./ammo";
+import { popOne, peekOne } from "../commons";
 
 const NB_CHEST = 2;
 
-// function fillArrows(emptyTiles, level) {
-//   return new Array(5).fill(null).map(function (a) {
-//     return { ...createArrows(5), level, position: peekOne(emptyTiles) };
-//   });
-// }
-
-function createChestAndKey(emptyTiles, level) {
+function createChestAndKey(level, empties) {
   return new Array(NB_CHEST).fill(null).reduce(function (a) {
-    const posChest = popOne(emptyTiles);
-    const posKey = peekOne(emptyTiles);
+    const posChest = popOne(empties, level);
+    const posKey = peekOne(empties, level);
     const [chest, key] = createChest();
     return [
       ...a,
@@ -25,34 +19,39 @@ function createChestAndKey(emptyTiles, level) {
   }, []);
 }
 
-function createDoors(emptyTiles, doors, level) {
+function createDoors(doors, level, empties) {
   return doors.map(function (position) {
-    popThisOne(emptyTiles, position);
+    popOne(empties, level);
     return createDoor(position, level);
   });
 }
 
-function createLevelObject(state, level) {
-  const { dungeon } = state;
-  const emptyTiles = dungeon.getEmptyTiles(level);
-  const doors = createDoors(emptyTiles, dungeon.getDoors(level), level);
-  const chestsAnKeys = createChestAndKey(emptyTiles, level);
-  const simples = new Array(5 + randomInt(10)).fill(null).map(function () {
-    const position = peekOne(emptyTiles);
+function createStairs() {}
+
+function createSimples(empties, level) {
+  return new Array(5 + randomInt(10)).fill(null).map(function () {
+    const position = peekOne(empties, level);
     return { ...createRandomSimple(), position, level };
   });
+}
+
+function createLevelObject(state, level, empties) {
+  const { dungeon } = state;
+  const doors = createDoors(dungeon.getDoors(level), level, empties);
+  const chestsAnKeys = createChestAndKey(level, empties);
+  const simples = createSimples(empties, level);
   // const arrows = fillArrows(emptyTiles, level);
   return [...doors, ...chestsAnKeys, ...simples];
 }
 
-function createObjects(state) {
+function createObjects(state, empties) {
   const { dungeon } = state;
   const dungeonHeight = dungeon.getDungeonHeight();
 
   const objects = new Array(dungeonHeight)
     .fill(null)
     .reduce(function (a, _, level) {
-      return [...a, createLevelObject(state, level)];
+      return [...a, createLevelObject(state, level, empties)];
     }, []);
 
   return objects;
