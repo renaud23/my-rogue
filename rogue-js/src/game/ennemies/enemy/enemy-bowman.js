@@ -36,7 +36,7 @@ function createBowman(level) {
         { ...weapon, position, level },
         { ...knife, position, level },
       ];
-      if (ammo) {
+      if (ammo && ammo.how) {
         return [...loot, { ...ammo, position, level }];
       }
       return loot;
