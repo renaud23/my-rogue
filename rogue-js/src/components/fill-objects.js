@@ -7,18 +7,21 @@ function getTile(o) {
     case TYPE_OBJECT.door:
       const { opened } = o;
       return opened ? { ...TILES.doorOpened } : { ...TILES.doorClosed };
-    case TYPE_OBJECT.corpse:
-      return { ...TILES.corpse };
+
     case TYPE_OBJECT.chest:
       return { ...TILES.chest };
     case TYPE_OBJECT.key:
       return { ...TILES.key };
+    case TYPE_OBJECT.potion:
+      return { ...TILES.potion };
     case TYPE_OBJECT.ammo:
       return { ...TILES.ammo };
     case TYPE_OBJECT.stairsUp:
       return { ...TILES.stairsUp };
     case TYPE_OBJECT.stairsDown:
       return { ...TILES.stairsDown };
+    case TYPE_OBJECT.corpse:
+      return { ...TILES.corpse };
     default:
       return { ...TILES.simpleObject };
   }

@@ -4,10 +4,9 @@ import { fillMessage, computeDesc } from "../commons";
 import { consumeMove } from "../commons";
 import PATTERNS from "../message-patterns";
 
-function throwObjectTodo(state) {
+function throwObjectTodo(state, object) {
   const { player, objects, messages } = state;
-  const { inventory, currentLevel, position, action } = player;
-  const { object } = action;
+  const { inventory, currentLevel, position } = player;
 
   const newObjects = putObjectDungeon(
     objects,

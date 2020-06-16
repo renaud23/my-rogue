@@ -2,7 +2,7 @@ import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
 import { getObjectsAt } from "./commons";
 import { buildPlayer } from "./menu/tools";
 import activate from "./activate-player";
-import { createTakeObjectTodo } from "./todo";
+import { takeObjectTodo } from "./todo";
 import { navigateMap } from "./commons";
 import displayMenu from "./menu/tools/display-menu";
 import { computeDesc } from "./commons";
@@ -22,11 +22,20 @@ function optionsTile(tile) {
 function optionsObjects(objects) {
   const options = objects.reduce(function (a, o) {
     const { takeable, todo } = o;
-    const todos = [...a, ...todo];
+    const todos = [
+      ...a,
+      ...todo.map(function (t) {
+        return { ...t, args: o };
+      }),
+    ];
     return takeable
       ? [
           ...todos,
-          { desc: `prendre ${computeDesc(o)}`, todo: createTakeObjectTodo(o) },
+          {
+            desc: `Prendre ${computeDesc(o)}.`,
+            todo: takeObjectTodo,
+            args: o,
+          },
         ]
       : todos;
   }, []);

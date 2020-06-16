@@ -62,24 +62,22 @@ function takeSingle(object, state) {
   });
 }
 
-function createPrendreObjectTodo(object) {
-  return function (state) {
-    const { player, messages } = state;
-    const { size, aggregative } = object;
-    const { inventory } = player;
+function takeObjectTodo(state, object) {
+  const { player, messages } = state;
+  const { size, aggregative } = object;
+  const { inventory } = player;
 
-    if (hasEnoughSpaceFor(inventory, size)) {
-      if (aggregative) {
-        return takeAndAggregate(object, state);
-      }
-      return takeSingle(object, state);
+  if (hasEnoughSpaceFor(inventory, size)) {
+    if (aggregative) {
+      return takeAndAggregate(object, state);
     }
-    return {
-      ...state,
-      player: { ...player, action: undefined },
-      messages: [...messages, PATTERNS.inventoryFull],
-    };
+    return takeSingle(object, state);
+  }
+  return {
+    ...state,
+    player: { ...player, action: undefined },
+    messages: [...messages, PATTERNS.inventoryFull],
   };
 }
 
-export default createPrendreObjectTodo;
+export default takeObjectTodo;

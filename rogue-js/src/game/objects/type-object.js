@@ -6,6 +6,9 @@ export default {
   ammo: "object/ammo",
   ammunition: "object/ammunition",
   armor: "object/armor",
+
+  potion: "object/potion",
+
   chest: "object/chest",
   corpse: "object/corpse",
   key: "object/key",

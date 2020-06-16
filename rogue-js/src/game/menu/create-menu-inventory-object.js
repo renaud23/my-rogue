@@ -19,16 +19,32 @@ function createOptions(object, cally) {
     case TYPE_OBJECT.distanceWeapon:
       return [
         ...todo,
-        { desc: `équiper ${computeDesc(object)}`, todo: equipWeaponTodo },
-        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
+        {
+          desc: `équiper ${computeDesc(object)}`,
+          todo: equipWeaponTodo,
+          args: object,
+        },
+        {
+          desc: `poser ${computeDesc(object)}`,
+          todo: throwObjectTodo,
+          args: object,
+        },
         { desc: "retour", todo: cally },
         optionExit,
       ];
     case TYPE_OBJECT.ammo:
       return [
         ...todo,
-        { desc: `équiper ${computeDesc(object)}`, todo: equipAmmoTodo },
-        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
+        {
+          desc: `équiper ${computeDesc(object)}`,
+          todo: equipAmmoTodo,
+          args: object,
+        },
+        {
+          desc: `poser ${computeDesc(object)}`,
+          todo: throwObjectTodo,
+          args: object,
+        },
         { desc: "retour", todo: cally },
         optionExit,
       ];
@@ -38,8 +54,13 @@ function createOptions(object, cally) {
         {
           desc: `utiliser ${computeDesc(object)}`,
           todo: createUseKeyTodo(object),
+          args: object,
         },
-        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
+        {
+          desc: `poser ${computeDesc(object)}`,
+          todo: throwObjectTodo,
+          args: object,
+        },
         { desc: "retour", todo: cally },
         optionExit,
       ];
@@ -47,7 +68,11 @@ function createOptions(object, cally) {
     default:
       return [
         ...todo,
-        { desc: `poser ${computeDesc(object)}`, todo: throwObjectTodo },
+        {
+          desc: `poser ${computeDesc(object)}`,
+          todo: throwObjectTodo,
+          args: object,
+        },
         optionExit,
       ];
   }

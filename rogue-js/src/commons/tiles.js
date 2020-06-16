@@ -64,6 +64,7 @@ export const TILES = {
   doorOpened: { code: 203, char: "L", color: "brown" },
 
   ammo: { code: 400, char: "|", color: "cyan" },
+  potion: { code: 401, char: "⚱", color: "chartreuse" },
 
   ironSight: { code: 666, char: "$" },
   helpSight: { code: 667, char: "?", color: "chartreuse" },

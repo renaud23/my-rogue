@@ -29,6 +29,22 @@ export const MAP_SIMPLE = {
     size: 2,
     type: typeObject.simple,
   },
+
+  healingPotion: {
+    code: 5,
+    how: 0.2,
+    desc: ({ how }) => `une potion de soin (${Math.trunc(how * 100)}%)`,
+    size: 3,
+    type: typeObject.potion,
+    todo: [
+      {
+        desc: "Consommer la potion.",
+        todo: function (state, object) {
+          return state;
+        },
+      },
+    ],
+  },
 };
 const SIMPLES = Object.values(MAP_SIMPLE);
 const MAP_CODE_TO_OBJECT = SIMPLES.reduce(function (a, o) {
@@ -40,13 +56,13 @@ export function createDestroyInInventory(state) {
   return state;
 }
 
-export const createDestroyInDungeon = (object) => (state) => {
-  const { player, dungeon } = state;
-  const { currentLevel } = player;
-  // SIDE effect to remove
-  dungeon.removeObject(currentLevel, object);
-  return state;
-};
+// export const createDestroyInDungeon = (object) => (state) => {
+//   const { player, dungeon } = state;
+//   const { currentLevel } = player;
+//   // SIDE effect to remove
+//   dungeon.removeObject(currentLevel, object);
+//   return state;
+// };
 
 export function createSimple(code, { ...args }) {
   if (code in MAP_CODE_TO_OBJECT) {
@@ -55,11 +71,11 @@ export function createSimple(code, { ...args }) {
     const simple = {
       id: INDEX++,
       ...model,
+      todo,
       takeable: true,
       ...args,
     };
-    simple.todo = [...todo, createMangerTodo(simple)];
-    simple.destroy = createDestroyInDungeon(simple);
+    // simple.destroy = createDestroyInDungeon(simple);
 
     return simple;
   }

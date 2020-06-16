@@ -26,7 +26,8 @@ export function createDisplayMenu(
       case exitButton:
         return { ...state, player: { ...player, action: undefined }, activate };
       case activateButton: {
-        const next = options[active].todo(state);
+        const { todo, args } = options[active];
+        const next = todo(state, args);
         const { activate: cally } = next;
 
         return isNeedWait({ ...next, activate: cally || activate });
