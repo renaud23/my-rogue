@@ -15,10 +15,10 @@ function computeDamages(attacker) {
   return weapon.getDamages() * ammo.getDamages();
 }
 
-function sumStats(stats) {
-  const { strength, agility, luck, endurance } = stats;
-  return strength + agility + luck + endurance;
-}
+// function sumStats(stats) {
+//   const { strength, agility, luck, endurance } = stats;
+//   return strength + agility + luck + endurance;
+// }
 
 function tryToShoot(attacker, defender, weapon, distance) {
   const { stats, baseClass } = attacker;

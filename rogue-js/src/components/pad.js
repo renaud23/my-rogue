@@ -6,6 +6,7 @@ import {
   ennemiesState,
   activateState,
   messagesState,
+  miscellaneousState,
 } from "../recoil";
 import { useRecoilState } from "recoil";
 import { padEvent } from "../game";
@@ -19,10 +20,13 @@ function Pad() {
   const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
   const [activate, setActivate] = useRecoilState(activateState);
   const [messages, setMessages] = useRecoilState(messagesState);
+  const [miscellaneous, setMiscellaneousState] = useRecoilState(
+    miscellaneousState
+  );
 
   const on = function (button) {
     const what = activate.cally(
-      { dungeon, player, objects, ennemies, messages },
+      { dungeon, player, objects, ennemies, messages, miscellaneous },
       padEvent(button)
     );
     setActivate({ cally: what.activate });
@@ -31,6 +35,7 @@ function Pad() {
     setObjects(what.objects);
     setEnnemies(what.ennemies);
     setMessages(what.messages);
+    setMiscellaneousState(what.miscellaneous);
   };
 
   if (!dungeon) return null;

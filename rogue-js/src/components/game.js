@@ -1,5 +1,5 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import React, { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import RenderDungeon2 from "./game-render";
 import {
   dungeonState,
@@ -8,6 +8,7 @@ import {
   ennemiesState,
   objectsState,
   messagesState,
+  miscellaneousState,
 } from "../recoil";
 import { createObjectDungeon } from "../game/objects";
 import { activate as cally } from "../game";
@@ -20,7 +21,15 @@ import ConsoleLog from "./console-log";
 import PlayerConsole from "./player-log";
 import "./render-game.scss";
 
-function initialize() {
+// let loop = undefined;
+// function startLoop(miscellaneous, setMiscellaneousState) {
+//   return window.setInterval(function () {}, 100);
+// }
+
+function initialize(setMiscellaneousState) {
+  // if (loop) {
+  //   window.clearInterval(loop);
+  // }
   const dungeon = createDungeon(10, 30, 30);
   const empties = dungeon.getEmptyTiles(); // with side effect
   const player = createPlayer(dungeon, empties);
@@ -34,17 +43,39 @@ function initialize() {
     ennemies,
     messages,
   });
+
   return [state, cally];
 }
 
 function Game() {
-  const setDungeon = useRecoilState(dungeonState)[1];
+  const setDungeon = useSetRecoilState(dungeonState);
   const [player, setPlayer] = useRecoilState(playerState);
-  const setActivate = useRecoilState(activateState)[1];
-  const setEnnemies = useRecoilState(ennemiesState)[1];
-  const setObjects = useRecoilState(objectsState)[1];
-  const setMessages = useRecoilState(messagesState)[1];
+  const setActivate = useSetRecoilState(activateState);
+  const setEnnemies = useSetRecoilState(ennemiesState);
+  const setObjects = useSetRecoilState(objectsState);
+  const setMessages = useSetRecoilState(messagesState);
+  const [miscellaneous, setMiscellaneousState] = useRecoilState(
+    miscellaneousState
+  );
+
   const { fov } = player;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { effects } = miscellaneous;
+      const [eff, change] = effects.reduce(
+        function (a) {
+          // TODO activate effects
+          return a;
+        },
+        [effects, false]
+      );
+      if (change) {
+        setMiscellaneousState({ ...miscellaneous, effects: eff });
+      }
+    }, 300);
+    return () => clearInterval(interval);
+  }, [miscellaneous, setMiscellaneousState]);
 
   return (
     <>
@@ -60,13 +91,14 @@ function Game() {
         <ConsoleLog />
         <button
           onClick={function () {
-            const [state, callback] = initialize();
+            const [state, callback] = initialize(setMiscellaneousState);
             setDungeon(state.dungeon);
             setPlayer(state.player);
             setEnnemies(state.ennemies);
             setObjects(state.objects);
             setMessages(state.messages);
             setActivate({ cally: callback });
+            setMiscellaneousState({ effects: [] });
           }}
         >
           renew

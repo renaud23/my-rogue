@@ -33,3 +33,8 @@ export const messagesState = atom({
   key: "messagesState",
   default: [],
 });
+
+export const miscellaneousState = atom({
+  key: "miscellaneousState",
+  default: { effects: [] },
+});

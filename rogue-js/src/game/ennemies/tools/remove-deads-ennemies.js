@@ -1,6 +1,7 @@
 import { fillMessage } from "../../commons";
 import { createCorpse } from "../../objects";
 import PATTERNS from "../../message-patterns";
+import { createBloodEffect } from "../../effects";
 
 function removeDeadsLevel(level) {
   return level.reduce(
@@ -22,8 +23,9 @@ function removeDeadsLevel(level) {
 
 function transformDeads(state, deads) {
   return deads.reduce(function (ns, dead) {
-    const { objects } = ns;
-    const { level } = dead;
+    const { objects, miscellaneous } = ns;
+    const { effects } = miscellaneous;
+    const { level, position } = dead;
     const newLevel = [...objects];
 
     newLevel[level] = [
@@ -32,7 +34,14 @@ function transformDeads(state, deads) {
       ...dead.loot(dead),
     ];
 
-    return { ...ns, objects: newLevel };
+    return {
+      ...ns,
+      objects: newLevel,
+      miscellaneous: {
+        ...miscellaneous,
+        effects: [...effects, createBloodEffect(position, level)],
+      },
+    };
   }, state);
 }
 

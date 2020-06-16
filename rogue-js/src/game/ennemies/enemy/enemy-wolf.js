@@ -10,9 +10,6 @@ import { computePath, consumePath, isPath } from "./commons-path";
 
 function activate(state, enemy) {
   if (canSeePlayer(state, enemy)) {
-    const { player } = state;
-    const { position: playerPos } = player;
-    const { position: enemyPos, path } = enemy;
     if (canBite(state, enemy)) {
       const [nextState, nextEnemy] = attack(state, enemy);
       return [nextState, { ...nextEnemy, path: undefined }];

@@ -9,12 +9,14 @@ import {
   messagesState,
   ennemiesState,
   activateState,
+  miscellaneousState,
 } from "../recoil";
 import combine from "./combine-fill";
 import fillDungeon from "./fill-dungeon";
 import fillPlayer from "./fill-player";
 import fillObjects from "./fill-objects";
 import fillEnnemies from "./fill-ennemies";
+import fillEffects from "./fill-effects";
 
 function Tile({ char, color, bgColor, position }) {
   const setDungeon = useSetRecoilState(dungeonState);
@@ -23,6 +25,7 @@ function Tile({ char, color, bgColor, position }) {
   const setObjects = useSetRecoilState(objectsState);
   const setMessages = useSetRecoilState(messagesState);
   const setActivate = useSetRecoilState(activateState);
+  const setMiscellaneousState = useSetRecoilState(miscellaneousState);
 
   const onClickTileCallback = useRecoilCallback(async function ({
     getPromise,
@@ -35,6 +38,7 @@ function Tile({ char, color, bgColor, position }) {
       objects,
       messages,
       activate,
+      miscellaneous,
     ] = await Promise.all([
       getPromise(dungeonState),
       getPromise(playerState),
@@ -42,11 +46,12 @@ function Tile({ char, color, bgColor, position }) {
       getPromise(objectsState),
       getPromise(messagesState),
       getPromise(activateState),
+      getPromise(miscellaneousState),
     ]);
 
     if (position !== undefined) {
       const next = activate.cally(
-        { dungeon, player, objects, ennemies, messages },
+        { dungeon, player, objects, ennemies, messages, miscellaneous },
         tileClick(position)
       );
       setActivate({ cally: next.activate });
@@ -55,6 +60,7 @@ function Tile({ char, color, bgColor, position }) {
       setObjects(next.objects);
       setEnnemies(next.ennemies);
       setMessages(next.messages);
+      setMiscellaneousState(next.miscellaneous);
     }
   });
   return (
@@ -108,7 +114,13 @@ function render(data, width) {
   ).rows;
 }
 
-const fillStack = combine(fillDungeon, fillObjects, fillEnnemies, fillPlayer);
+const fillStack = combine(
+  fillDungeon,
+  fillObjects,
+  fillEnnemies,
+  fillPlayer,
+  fillEffects
+);
 
 function multiply(repeat, how, row, t) {
   return new Array(repeat).fill(null).reduce(function (a, _) {
@@ -144,17 +156,7 @@ function PlayerRender({ viewSize }) {
   const [player] = useRecoilState(playerState);
   const [ennemies] = useRecoilState(ennemiesState);
   const [objects] = useRecoilState(objectsState);
-
-  // const onClickTileCallback = useRecoilCallback(async function ({
-  //   getPromise,
-  // }) {
-  //   const [dungeon, player, ennemies, objects] = Promise.all([
-  //     getPromise(dungeonState),
-  //     getPromise(playerState),
-  //     getPromise(ennemiesState),
-  //     getPromise(objectsState),
-  //   ]);
-  // });
+  const [miscellaneous] = useRecoilState(miscellaneousState);
 
   if (!dungeon) return null;
 
@@ -175,7 +177,7 @@ function PlayerRender({ viewSize }) {
 
   const tiles = fillStack(
     Array(width * width).fill(-1),
-    { dungeon, player, ennemies, objects },
+    { dungeon, player, ennemies, objects, miscellaneous },
     rect
   );
 
