@@ -72,7 +72,7 @@ function actionTodo(state) {
   };
 }
 
-function activateMenuAction(state, event) {
+export function activateMenuAction(state, event) {
   return {
     ...actionTodo(state),
     activate: displayMenu,

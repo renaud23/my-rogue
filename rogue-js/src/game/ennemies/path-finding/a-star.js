@@ -38,7 +38,7 @@ export default function astarPath(state, position, isEmpty) {
       if (current === to) {
         break;
       }
-      const neightbors = getNeighbors(current);
+      const neightbors = getNeighbors(current, to);
 
       const filt = neightbors.reduce(
         (a, p) => (p in visited ? a : [...a, p]),

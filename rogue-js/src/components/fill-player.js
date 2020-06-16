@@ -99,17 +99,8 @@ function getCharTile(tile, tilePos, state, rect) {
 }
 
 function fill(tiles, state, rect) {
-  const { dungeon, player } = state;
-  const { startX, startY, width } = rect;
-  const { currentLevel } = player;
-  const dungeonWidth = dungeon.getWidth(currentLevel);
-
-  return tiles.map(function (tile, i) {
-    const px = i % width;
-    const py = Math.trunc(i / width);
+  return tiles.map(function (tile) {
     const { position } = tile;
-    // const tilePos = startX + px + (startY + py) * dungeonWidth;
-
     return {
       ...getSpecial(
         getCharTile(tile, position, state, rect),

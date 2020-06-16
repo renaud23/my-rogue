@@ -1,31 +1,20 @@
 module.exports = {
+  extends: ["airbnb", "prettier"],
+  plugins: ["prettier"],
+  rules: {},
   env: {
-    browser: true,
-    es2020: true,
+    jest: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended"],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+  settings: {
+    "import/resolver": {
+      node: {
+        paths: ["src"],
+      },
     },
-    ecmaVersion: 11,
-    sourceType: "module",
   },
-  plugins: ["react"],
-  rules: {
-    "no-unused-vars": [
-      "error",
-      { vars: "all", args: "after-used", ignoreRestSiblings: false },
-    ],
-    "prefer-destructuring": [
-      "error",
-      {
-        array: true,
-        object: true,
-      },
-      {
-        enforceForRenamedProperties: false,
-      },
-    ],
+  globals: {
+    fetch: true,
+    window: true,
+    document: true,
   },
 };
