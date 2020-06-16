@@ -1,7 +1,8 @@
 import { BLOOD_EFFECT } from "../game/effects";
 
 function fillBloodEffect(tile, state, effect) {
-  return { ...tile, bgColor: "rgba(255, 0, 0, 0.4)" };
+  const { char = tile.char } = effect;
+  return { ...tile, char, bgColor: "rgba(255, 0, 0, 0.4)" };
 }
 
 function fillEffect(tile, state, effect) {

@@ -64,16 +64,19 @@ function Game() {
     const interval = setInterval(() => {
       const { effects } = miscellaneous;
       const [eff, change] = effects.reduce(
-        function (a) {
-          // TODO activate effects
-          return a;
+        function ([next, status], effect) {
+          if (effect.activate) {
+            const [nextEffect, isChange] = effect.activate(effect);
+            return [[...next, nextEffect], status || isChange];
+          }
+          return [next, status];
         },
-        [effects, false]
+        [[], false]
       );
       if (change) {
         setMiscellaneousState({ ...miscellaneous, effects: eff });
       }
-    }, 300);
+    }, 100);
     return () => clearInterval(interval);
   }, [miscellaneous, setMiscellaneousState]);
 
