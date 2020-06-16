@@ -39,7 +39,7 @@ function moveTo(state, target) {
   const { player } = state;
   const { position, visibles } = player;
   if (visibles.indexOf(target) !== -1) {
-    const path = aStarPath(state)(position, target);
+    const [_, ...path] = aStarPath(state)(position, target);
     if (path.length) {
       return activate({ ...state, player: { ...player, path } });
     }

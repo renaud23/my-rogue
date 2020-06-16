@@ -72,7 +72,7 @@ function activatePlayer(state, event) {
   return { ...state, activate };
 }
 
-/* ********* */
+/* * * * * * * * * * */
 
 /**
  * Main loop
