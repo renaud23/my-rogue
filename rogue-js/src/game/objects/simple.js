@@ -1,6 +1,7 @@
 import typeObject from "./type-object";
+import activate from "../activate-player";
 import { randomInt } from "../../commons";
-import { createMangerTodo } from "./create-simple-todo";
+import consumeHealingPotion from "../todo/consume-healing-potion";
 
 let INDEX = new Date().getTime();
 
@@ -39,9 +40,7 @@ export const MAP_SIMPLE = {
     todo: [
       {
         desc: "Consommer la potion.",
-        todo: function (state, object) {
-          return state;
-        },
+        todo: consumeHealingPotion,
       },
     ],
   },
@@ -50,19 +49,6 @@ const SIMPLES = Object.values(MAP_SIMPLE);
 const MAP_CODE_TO_OBJECT = SIMPLES.reduce(function (a, o) {
   return { ...a, [o.code]: o };
 }, {});
-
-export function createDestroyInInventory(state) {
-  // TODO
-  return state;
-}
-
-// export const createDestroyInDungeon = (object) => (state) => {
-//   const { player, dungeon } = state;
-//   const { currentLevel } = player;
-//   // SIDE effect to remove
-//   dungeon.removeObject(currentLevel, object);
-//   return state;
-// };
 
 export function createSimple(code, { ...args }) {
   if (code in MAP_CODE_TO_OBJECT) {
@@ -83,7 +69,8 @@ export function createSimple(code, { ...args }) {
 }
 
 export function createRandomSimple({ ...args } = {}) {
-  return createSimple(SIMPLES[randomInt(SIMPLES.length)].code, { ...args });
+  return createSimple(MAP_SIMPLE.healingPotion.code, { ...args });
+  // return createSimple(SIMPLES[randomInt(SIMPLES.length)].code, { ...args });
 }
 
 export default SIMPLES;

@@ -42,16 +42,17 @@ export function createWarrior(dungeon, empties) {
   const stats = [2, 1, 1, 1];
   const baseClass = [0.4, 0.2, 0.3]; // [melee|distance|parade]
   const player = createBasePlayer(dungeon, empties, stats, baseClass);
-  const inventory = createInventory(10);
+
   const knife = createKnife();
   const sword = createSword();
+  const inventory = createInventory(10, knife);
 
   return {
     ...player,
     weapon: sword,
     ammo: undefined,
-    visibles: [], //getVisibles({ player, dungeon, ennemies: [], objects: [] }),
-    inventory: putObject(inventory, knife),
+    visibles: [],
+    inventory,
   };
 }
 
@@ -59,17 +60,18 @@ export function createArcher(dungeon, empties) {
   const stats = [1, 2, 1, 1];
   const baseClass = [0.2, 0.6, 0.3];
   const player = createBasePlayer(dungeon, empties, stats, baseClass);
-  const inventory = createInventory(10);
+
   const knife = createKnife();
   const bow = createBow();
   const arrows = createArrows(20);
+  const inventory = createInventory(10, knife);
 
   return {
     ...player,
     weapon: bow,
     ammo: arrows,
     visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
-    inventory: putObject(inventory, knife),
+    inventory,
   };
 }
 

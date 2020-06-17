@@ -67,7 +67,7 @@ function createOptions(object, cally) {
 
     default:
       return [
-        ...todo,
+        ...todo.map((td) => ({ ...td, args: object })),
         {
           desc: `poser ${computeDesc(object)}`,
           todo: throwObjectTodo,

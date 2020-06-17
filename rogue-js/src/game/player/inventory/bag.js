@@ -1,39 +1,41 @@
-function createInventory(max = 10, ...objects) {
+function createInventory(maxSize = 10, ...objects) {
   return {
-    objects: [...objects],
-    size: 0,
-    max,
+    objects: objects.reduce(function (mapObjects, o) {
+      const { id } = o;
+      return { ...mapObjects, [id]: o };
+    }, {}),
+    maxSize,
   };
 }
 
-export function putObject(bag, object) {
-  const { objects, size, max } = bag;
-  if (size + object.size < max) {
-    return { objects: [...objects, object], size: size + object.size, max };
-  }
-  return bag;
+export function putObject(inventory, object) {
+  const { objects } = inventory;
+  const { id } = objects;
+  return { ...inventory, objects: { ...objects, [id]: object } };
 }
 
-export function removeObject(bag, object) {
-  const { objects } = bag;
-  const next = objects.reduce(function (a, o) {
-    if (o.id === object.id) {
-      return a;
-    }
-    return [...a, o];
-  }, []);
-
-  return { ...bag, objects: next };
+export function removeObject(inventory, object) {
+  const { objects } = inventory;
+  const { id } = object;
+  const next = { ...objects };
+  delete next[id];
+  return { ...inventory, objects: next };
 }
 
-export function getObjects({ objects } = { objects: null }) {
-  return objects;
+export function getObjects(inventory) {
+  const { objects } = inventory;
+  return Object.values(objects);
+}
+
+function computeSize(inventory) {
+  return getObjects(inventory).reduce(function (how, o) {
+    return how + o.size;
+  }, 0);
 }
 
 export function hasEnoughSpaceFor(inventory, required) {
-  const { size, max } = inventory;
-
-  return size + required <= max;
+  const { maxSize } = inventory;
+  return computeSize(inventory) + required <= maxSize;
 }
 
 export default createInventory;

@@ -57,7 +57,11 @@ function takeSingle(object, state) {
     messages: newMsg,
     player: {
       ...consumeMove(player),
-      inventory: putObject(inventory, object),
+      inventory: putObject(inventory, {
+        ...object,
+        level: undefined,
+        position: undefined,
+      }),
     },
   });
 }

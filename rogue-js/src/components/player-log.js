@@ -17,6 +17,7 @@ function ActionConsole() {
     xp,
     nextLevelXp,
     life,
+    maxLife,
   } = stats;
   const how = Math.trunc((xp / nextLevelXp) * 100);
   return (
@@ -39,7 +40,7 @@ function ActionConsole() {
       </span>
       <span className="bloc">
         <span className="label">vie :</span>
-        <span className="value">{life}</span>
+        <span className="value">{`${life}/${maxLife}`}</span>
       </span>
     </pre>
   );
