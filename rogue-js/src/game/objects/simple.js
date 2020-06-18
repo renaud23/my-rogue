@@ -1,9 +1,8 @@
 import typeObject from "./type-object";
-import activate from "../activate-player";
 import { randomInt } from "../../commons";
 import consumeHealingPotion from "../todo/consume-healing-potion";
 
-let INDEX = new Date().getTime();
+let INDEX = 1;
 
 export const MAP_SIMPLE = {
   stone: {
@@ -35,7 +34,7 @@ export const MAP_SIMPLE = {
     code: 5,
     how: 0.2,
     desc: ({ how }) => `une potion de soin (${Math.trunc(how * 100)}%)`,
-    size: 3,
+    size: 1,
     type: typeObject.potion,
     todo: [
       {
@@ -55,7 +54,7 @@ export function createSimple(code, { ...args }) {
     const model = MAP_CODE_TO_OBJECT[code];
     const todo = model.todo ? [...model.todo] : [];
     const simple = {
-      id: INDEX++,
+      id: `simple-${INDEX++}`,
       ...model,
       todo,
       takeable: true,
@@ -69,8 +68,7 @@ export function createSimple(code, { ...args }) {
 }
 
 export function createRandomSimple({ ...args } = {}) {
-  return createSimple(MAP_SIMPLE.healingPotion.code, { ...args });
-  // return createSimple(SIMPLES[randomInt(SIMPLES.length)].code, { ...args });
+  return createSimple(SIMPLES[randomInt(SIMPLES.length)].code, { ...args });
 }
 
 export default SIMPLES;

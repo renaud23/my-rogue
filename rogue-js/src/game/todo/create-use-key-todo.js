@@ -1,19 +1,13 @@
-import {
-  consumeMove,
-  navigateMap,
-  fillMessage,
-  getObjectsAt,
-} from "../commons";
+import { consumeMove, navigateMap, fillMessage } from "../commons";
 import { optionExit, displayMenu, addOptionsNumbers } from "../menu/tools";
 import { TYPE_OBJECT } from "../objects";
 import { PAD_BUTTON, PLAYER_ACTIONS } from "../../commons";
 import PATTERNS from "../message-patterns";
-import { removeObjectDungeon } from "../objects";
-import { removeObject } from "../player/inventory";
 import activate from "../activate-player";
+import { getObjectsAt } from "../objects/dungeon-objects";
 
 export function createUseKeyOnObject(key, object) {
-  return function (state) {
+  return function (state, key) {
     const { player, messages, objects } = state;
     const { currentLevel, inventory } = player;
     const { target } = key;
@@ -34,12 +28,11 @@ export function createUseKeyOnObject(key, object) {
       };
     }
 
-    const newObjects = removeObjectDungeon(objects, object, currentLevel);
-    const newInventory = removeObject(inventory, key);
+    // const newObjects = removeObjectDungeon(objects, object, currentLevel);
+    // const newInventory = removeObject(inventory, key);
 
     return {
       ...state,
-      objects: newObjects,
 
       messages: [
         ...messages,
@@ -47,7 +40,7 @@ export function createUseKeyOnObject(key, object) {
       ],
       player: consumeMove({
         ...player,
-        inventory: newInventory,
+
         action: undefined,
       }),
     };
@@ -55,9 +48,10 @@ export function createUseKeyOnObject(key, object) {
 }
 
 function getOptions(state, key, position) {
-  const { player } = state;
+  const { player, objects: dungeonObjects } = state;
   const { currentLevel } = player;
-  const objects = getObjectsAt(state, currentLevel, position);
+  const objects = getObjectsAt(dungeonObjects, currentLevel, position);
+
   const options = objects.map(function (o) {
     const { desc } = o;
     return { desc: `${desc}`, todo: createUseKeyOnObject(key, o) };

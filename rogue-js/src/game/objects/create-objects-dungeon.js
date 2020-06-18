@@ -4,6 +4,8 @@ import { createRandomSimple } from "./simple";
 import createChest from "./create-chest";
 import { popOne, peekOne } from "../commons";
 
+import createDungeonObjects from "./dungeon-objects";
+
 const NB_CHEST = 2;
 
 function createChestAndKey(level, empties) {
@@ -65,8 +67,9 @@ function createObjects(state, empties) {
     .reduce(function (a, _, level) {
       return [...a, createLevelObject(state, level, empties)];
     }, []);
+  return createDungeonObjects(...objects.reduce((a, l) => [...a, ...l], []));
 
-  return objects;
+  // return objects;
 }
 
 export default createObjects;

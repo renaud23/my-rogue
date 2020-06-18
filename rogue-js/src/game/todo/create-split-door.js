@@ -1,27 +1,19 @@
 import activate from "../activate-player";
 import { updatePlayerView } from "../player";
 import { createDoor } from "../objects/specials";
-
-function splitDoor(level, door) {
-  const { id, opened, level: lv, position } = door;
-  return level.map(function (d) {
-    if (id === d.id) {
-      return { ...createDoor(position, lv, !opened) };
-    }
-    return d;
-  });
-}
+import { replaceObject } from "../objects/dungeon-objects";
 
 function create(door) {
   return function (state) {
     const { player, objects } = state;
-    const { currentLevel } = player;
-    const newObjects = objects.map(function (l, i) {
-      if (currentLevel === i) {
-        return splitDoor(l, door);
-      }
-      return l;
-    });
+    const { position, level, opened } = door;
+
+    const newObjects = replaceObject(
+      objects,
+      door,
+      createDoor(position, level, !opened)
+    );
+
     return activate(
       updatePlayerView({
         ...state,

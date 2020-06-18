@@ -10,7 +10,7 @@ function createInventory(maxSize = 10, ...objects) {
 
 export function putObject(inventory, object) {
   const { objects } = inventory;
-  const { id } = objects;
+  const { id } = object;
   return { ...inventory, objects: { ...objects, [id]: object } };
 }
 
@@ -36,6 +36,15 @@ function computeSize(inventory) {
 export function hasEnoughSpaceFor(inventory, required) {
   const { maxSize } = inventory;
   return computeSize(inventory) + required <= maxSize;
+}
+
+export function isInInventory(inventory, object) {
+  if (object) {
+    const { objects } = inventory;
+    const { id } = object;
+    return id in objects;
+  }
+  return false;
 }
 
 export default createInventory;

@@ -1,5 +1,6 @@
 import activate from "./activate-player";
-import { getEnnemiesAt, getObjectsAt, computeRangePositions } from "./commons";
+import { getEnnemiesAt, computeRangePositions } from "./commons";
+import { getObjectsAt } from "./objects/dungeon-objects";
 import { shoot, buildPlayer } from "./activate-shoot";
 import { aStarPath } from "./ennemies/path-finding";
 import { activateMenuAction } from "./activate-action";
@@ -50,14 +51,14 @@ function moveTo(state, target) {
 function activateDirectPlay(state, event) {
   const { payload } = event;
   const { position } = payload;
-  const { player } = state;
+  const { player, objects: dungeonObjects } = state;
   const { currentLevel } = player;
 
   const [enemy] = getEnnemiesAt(state, currentLevel, position);
   if (enemy) {
     return activateShoot(state, enemy, position);
   }
-  const objects = getObjectsAt(state, currentLevel, position);
+  const objects = getObjectsAt(dungeonObjects, currentLevel, position);
   if (objects.length) {
     return activateObjects(state, objects, position);
   }

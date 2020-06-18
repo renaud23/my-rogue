@@ -1,4 +1,5 @@
 import { TILES, antecedentPoint, pointProjection } from "../commons";
+import { getObjects } from "../game/objects/dungeon-objects";
 import { TYPE_OBJECT } from "../game/objects";
 
 function getTile(o) {
@@ -34,7 +35,7 @@ function fillDungeon(
 ) {
   const { startX, startY, width } = rect;
   const { currentLevel, visibles } = player;
-  const objects = dungeonObjects[currentLevel];
+  const objects = getObjects(dungeonObjects, currentLevel);
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const visibleObjects = objects.reduce(function (a, o) {
     const { position } = o;

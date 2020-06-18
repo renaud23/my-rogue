@@ -2,6 +2,7 @@ import { fillMessage } from "../../commons";
 import { createCorpse } from "../../objects";
 import PATTERNS from "../../message-patterns";
 import { createBloodEffect } from "../../effects";
+import { putObjects } from "../../objects/dungeon-objects";
 
 function removeDeadsLevel(level) {
   return level.reduce(
@@ -26,13 +27,17 @@ function transformDeads(state, deads) {
     const { objects, miscellaneous } = ns;
     const { effects } = miscellaneous;
     const { level, position } = dead;
-    const newLevel = [...objects];
-
-    newLevel[level] = [
-      ...objects[level],
+    const newLevel = putObjects(
+      objects,
       createCorpse(dead),
-      ...dead.loot(dead),
-    ];
+      ...dead.loot(dead)
+    );
+
+    // newLevel[level] = [
+    //   ...objects[level],
+    //   createCorpse(dead),
+    //   ...dead.loot(dead),
+    // ];
 
     return {
       ...ns,

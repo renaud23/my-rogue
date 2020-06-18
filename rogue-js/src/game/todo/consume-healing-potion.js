@@ -1,5 +1,5 @@
 import activate from "../activate-player";
-import { removeObject } from "../objects";
+import { removeObjectFromState } from "../objects";
 
 function computeStatsHealing(stats, potion) {
   const { life, maxLife } = stats;
@@ -8,10 +8,9 @@ function computeStatsHealing(stats, potion) {
 }
 
 function consumePotion(state, potion) {
-  const next = removeObject(state, potion);
+  const next = removeObjectFromState(state, potion);
   const { player } = next;
   const { stats } = player;
-
   return {
     ...next,
     player: {
