@@ -2,18 +2,15 @@ import {
   removeObject,
   putObject,
   hasEnoughSpaceFor,
+  replaceObject,
 } from "../player/inventory";
 import { consumeMove } from "../commons";
 
 function checkInventory(inventory, ammo, nextAmmo) {
   if (ammo) {
-    // if (ammo.id === ammo.id) {
-    // TODO msg déjà équiper
-    // }
     if (hasEnoughSpaceFor(inventory, Math.max(0, ammo.size - nextAmmo.size))) {
-      return [putObject(removeObject(inventory, nextAmmo), ammo), true];
+      return [replaceObject(inventory, nextAmmo, ammo), true];
     }
-    // todo msg pas possible de ranger currentWeapon
     return [inventory, false];
   }
   return [removeObject(inventory, nextAmmo), true];

@@ -65,7 +65,7 @@ export function openChest(state, chest, key) {
 }
 
 function useKey(state, event) {
-  const { player, objects, messages } = state;
+  const { player, objects } = state;
   const { action, currentLevel } = player;
   const { position, key } = action;
   const chest = getObjectsAt(objects, currentLevel, position).find(function (

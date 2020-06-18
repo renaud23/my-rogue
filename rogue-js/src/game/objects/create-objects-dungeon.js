@@ -49,7 +49,7 @@ function createSimples(empties, level) {
 }
 
 function fillArrows(level, empties) {
-  return new Array(20).fill(null).map(function () {
+  return new Array(2).fill(null).map(function () {
     const position = peekOne(empties, level);
     return { ...createArrows(5), level, position };
   });
