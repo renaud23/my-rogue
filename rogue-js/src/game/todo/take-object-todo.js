@@ -1,60 +1,56 @@
 import { cleanPlayerAction } from "../commons";
 import { putObject, hasEnoughSpaceFor } from "../player/inventory";
 import { aggregateObjects } from "../objects";
-import { removeObjects } from "../objects/dungeon-objects";
+import { removeObjects as removeFromDungeon } from "../objects/dungeon-objects";
 import { fillMessage } from "../commons";
 import PATTERNS from "../message-patterns";
+import { lookAtInventory, replaceObject } from "../player/inventory";
 import { consumeMove } from "../commons";
 import { computeDesc } from "../commons";
 
-function takeAndAggregate(object, state) {
+function lookForMerge(inventory, object) {
+  const { code } = object;
+  const same = lookAtInventory(inventory, function (o) {
+    return o.code === code;
+  });
+
+  if (same) {
+    return replaceObject(inventory, same, aggregateObjects(same, object));
+  }
+  return putObject(inventory, object);
+}
+
+function takeAndAggregate(state, object) {
   const { player, objects, messages } = state;
   const { code } = object;
   const { currentLevel, inventory } = player;
-  const { objects: invObj } = inventory;
 
-  const same = invObj.find(function (o) {
-    return o.code === code;
+  const nextObjects = removeFromDungeon(objects, object);
+  const nextInventory = lookForMerge(inventory, object);
+
+  const nextMessages = [
+    ...messages,
+    fillMessage(PATTERNS.takeObject, { desc: computeDesc(object) }),
+  ];
+
+  return cleanPlayerAction({
+    ...state,
+    messages: nextMessages,
+    objects: nextObjects,
+    player: { ...player, inventory: nextInventory },
   });
-  if (same) {
-    const newMsg = [
-      ...messages,
-      fillMessage(PATTERNS.takeObject, { desc: computeDesc(object) }),
-    ];
-    // const newObjects = removeObjectDungeon(objects, object, currentLevel);
-    const newInventoryObjects = invObj.map(function (o) {
-      const { id } = o;
-      if (id === same.id) {
-        return aggregateObjects(same, object);
-      }
-      return o;
-    });
-
-    return cleanPlayerAction({
-      ...state,
-      objects: removeObjects(objects, object),
-      messages: newMsg,
-      player: {
-        ...consumeMove(player),
-        inventory: { ...inventory, objects: newInventoryObjects },
-      },
-    });
-  }
-
-  return takeSingle(object, state);
 }
 
-function takeSingle(object, state) {
+function takeSingle(state, object) {
   const { player, objects, messages } = state;
-  const { currentLevel, inventory } = player;
-  // const newObjects = removeObjectDungeon(objects, object, currentLevel);
+  const { inventory } = player;
   const newMsg = [
     ...messages,
     fillMessage(PATTERNS.takeObject, { desc: computeDesc(object) }),
   ];
   return cleanPlayerAction({
     ...state,
-    objects: removeObjects(objects, object),
+    objects: removeFromDungeon(objects, object),
     messages: newMsg,
     player: {
       ...consumeMove(player),
@@ -74,9 +70,9 @@ function takeObjectTodo(state, object) {
 
   if (hasEnoughSpaceFor(inventory, size)) {
     if (aggregative) {
-      return takeAndAggregate(object, state);
+      return takeAndAggregate(state, object);
     }
-    return takeSingle(object, state);
+    return takeSingle(state, object);
   }
   return {
     ...state,
