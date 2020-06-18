@@ -70,9 +70,9 @@ export function createArcher(dungeon, empties) {
     ...player,
     weapon: bow,
     ammo: arrows,
-    visibles: getVisibles({ player, dungeon, ennemies: [], objects: [] }),
+    visibles: [],
     inventory,
   };
 }
 
-export default createWarrior;
+export default createArcher;

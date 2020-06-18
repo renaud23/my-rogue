@@ -53,13 +53,20 @@ export default {
   takeObject: mergeParts(yellow("vous ramassez "), chartreuse("$[desc]")),
   throwObject: mergeParts(yellow("vous posez "), chartreuse("$[desc]")),
   inventoryFull: yellow("Votre inventaire est plein."),
-  itsNotAChest: yellow("Ce n'est pas un coffre."),
-  itsNotAGoodChest: yellow("Cette clef n'ouvre pas ce type de coffre."),
+
+  thereIsNoChest: orange("Il n'y a pas de coffre ici."),
+  notGoodChest: orange("Cette clef n'ouvre pas ce coffre."),
+  needAKey: mergeParts(
+    orange("Vous n'avez pas de clef pour "),
+    chartreuse("$[chest.desc]"),
+    orange(".")
+  ),
   chestOpened: mergeParts(
     yellow("vous ouvrez "),
     chartreuse("$[chest.desc]"),
-    yellow(". Il est vide.")
+    yellow(".")
   ),
+
   xpProgress: mergeParts(
     orange("Vous atteignez le niveau "),
     snowBrackets(springGreen("$[stats.level]")),

@@ -1,3 +1,5 @@
+import { putObjects } from "../../objects/dungeon-objects";
+
 function createInventory(maxSize = 10, ...objects) {
   return {
     objects: objects.reduce(function (mapObjects, o) {
@@ -10,7 +12,7 @@ function createInventory(maxSize = 10, ...objects) {
 
 export function putObject(inventory, object) {
   const { objects } = inventory;
-  const { id } = objects;
+  const { id } = object;
   return { ...inventory, objects: { ...objects, [id]: object } };
 }
 
@@ -36,6 +38,24 @@ function computeSize(inventory) {
 export function hasEnoughSpaceFor(inventory, required) {
   const { maxSize } = inventory;
   return computeSize(inventory) + required <= maxSize;
+}
+
+export function isInInventory(inventory, object) {
+  if (object) {
+    const { objects } = inventory;
+    const { id } = object;
+    return id in objects;
+  }
+  return false;
+}
+
+export function lookAtInventory(inventory, predicate) {
+  const { objects } = inventory;
+  return Object.values(objects).find(predicate);
+}
+
+export function replaceObject(inventory, witch, by) {
+  return putObject(removeObject(inventory, witch), by);
 }
 
 export default createInventory;

@@ -1,6 +1,6 @@
 import { TILES } from "../../commons";
 import { TYPE_OBJECT } from "../objects";
-import { getObjectsAt } from "./get-at-position";
+import { getObjectsAt } from "../objects/dungeon-objects";
 
 export function isEnemy(state, level, position) {
   const { ennemies } = state;
@@ -31,7 +31,8 @@ function isEmptyGround(state, level, position) {
 }
 
 function notObstructByObject(state, level, position) {
-  return getObjectsAt(state, level, position).reduce(function (a, o) {
+  const { objects } = state;
+  return getObjectsAt(objects, level, position).reduce(function (a, o) {
     const { type } = o;
     switch (type) {
       case TYPE_OBJECT.door:

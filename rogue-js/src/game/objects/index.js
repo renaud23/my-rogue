@@ -1,11 +1,9 @@
 export { default as simpleObjects } from "./simple";
 export { default as createObjectDungeon } from "./create-objects-dungeon";
-export { default as putObjectDungeon } from "./put-object-dungeon";
-export { default as removeObject } from "./remove-object/remove-object";
+export { default as removeObjectFromState } from "./remove-object-from-state";
 export { aggregateObjects } from "./aggregate-objects";
 export { default as TYPE_OBJECT } from "./type-object";
 export { createCorpse, createStairsUp, createStairsDown } from "./specials";
-export { default as removeObjectDungeon } from "./remove-object/remove-object-dungeon";
 export * from "./weapons";
 export * from "./simple";
 export * from "./ammo";

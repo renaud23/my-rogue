@@ -8,7 +8,7 @@ import {
   objectsState,
   ennemiesState,
 } from "../recoil";
-import { getObjectsAt } from "../game/commons";
+import { getObjectsAt, getObjects } from "../game/objects/dungeon-objects";
 
 function observeAt(state, position, ground = false) {
   const { player, objects, ennemies, dungeon } = state;
@@ -19,7 +19,7 @@ function observeAt(state, position, ground = false) {
   const what = [
     { ...tile, position },
     ...ennemies[currentLevel],
-    ...objects[currentLevel],
+    ...getObjects(objects, currentLevel),
   ].reduce(function (a, o, i) {
     if (i === 0 && !ground) {
       return a;
@@ -55,7 +55,8 @@ function peekEnnemiesMessages(state, level, position) {
 }
 
 function peekObjectMessages(state, level, position) {
-  return getObjectsAt(state, level, position).reduce(function ([a], o, i) {
+  const { objects } = state;
+  return getObjectsAt(objects, level, position).reduce(function ([a], o, i) {
     if (i === 0) {
       return [`Posé à vos pieds, vous apercevez, ${computeDesc(o)}`];
     }

@@ -1,5 +1,5 @@
 import typeObject from "./type-object";
-import createSplitDoor from "../todo/create-split-door";
+import { splitDoor } from "../todo";
 import { stairsUpTodo, stairsDownTodo } from "../todo";
 
 let INDEX = 0;
@@ -64,7 +64,7 @@ export function createDoor(position, level, opened = false) {
     todo: [
       {
         desc: `${opened ? "Fermer" : "Ouvrir"} la porte`,
-        todo: createSplitDoor(door),
+        todo: splitDoor,
       },
     ],
   };
@@ -73,6 +73,7 @@ export function createDoor(position, level, opened = false) {
 export function createStairsUp(position, level) {
   return {
     ...SPECIAL_MAP.stairsUp,
+    id: `stairs-up-${INDEX++}`,
     position,
     level,
     todo: [{ desc: "Monter l'escalier", todo: stairsUpTodo }],
@@ -82,6 +83,7 @@ export function createStairsUp(position, level) {
 export function createStairsDown(position, level) {
   return {
     ...SPECIAL_MAP.stairsDown,
+    id: `stairs-down-${INDEX++}`,
     position,
     level,
     todo: [{ desc: "Descendre l'escalier", todo: stairsDownTodo }],

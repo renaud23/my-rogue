@@ -3,7 +3,7 @@ import {
   equipWeaponTodo,
   equipAmmoTodo,
   throwObjectTodo,
-  createUseKeyTodo,
+  useKeyTodo,
 } from "../todo";
 import { TYPE_OBJECT } from "../objects";
 import { computeDesc } from "../../game/commons";
@@ -53,7 +53,7 @@ function createOptions(object, cally) {
         ...todo,
         {
           desc: `utiliser ${computeDesc(object)}`,
-          todo: createUseKeyTodo(object),
+          todo: useKeyTodo,
           args: object,
         },
         {

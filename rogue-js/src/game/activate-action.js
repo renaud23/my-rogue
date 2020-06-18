@@ -1,5 +1,5 @@
 import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
-import { getObjectsAt } from "./commons";
+import { getObjectsAt } from "./objects/dungeon-objects";
 import { buildPlayer } from "./menu/tools";
 import activate from "./activate-player";
 import { takeObjectTodo } from "./todo";
@@ -44,12 +44,12 @@ function optionsObjects(objects) {
 }
 
 function getOptions(state, position) {
-  const { player, dungeon } = state;
+  const { player, dungeon, objects: dungeonsObjects } = state;
   const { currentLevel } = player;
   const data = dungeon.getData(currentLevel);
   const tile = getTile(data[position]);
 
-  const objects = getObjectsAt(state, currentLevel, position);
+  const objects = getObjectsAt(dungeonsObjects, currentLevel, position);
   const opt = optionsTile(tile);
   const opo = optionsObjects(objects);
 

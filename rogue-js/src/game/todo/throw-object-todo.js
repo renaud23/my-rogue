@@ -1,5 +1,5 @@
 import { removeObject } from "../player/inventory";
-import { putObjectDungeon } from "../objects";
+import { putObjects } from "../objects/dungeon-objects";
 import { fillMessage, computeDesc } from "../commons";
 import { consumeMove } from "../commons";
 import PATTERNS from "../message-patterns";
@@ -8,11 +8,11 @@ function throwObjectTodo(state, object) {
   const { player, objects, messages } = state;
   const { inventory, currentLevel, position } = player;
 
-  const newObjects = putObjectDungeon(
-    objects,
-    { ...object, position },
-    currentLevel
-  );
+  const newObjects = putObjects(objects, {
+    ...object,
+    position,
+    level: currentLevel,
+  });
 
   return {
     ...state,

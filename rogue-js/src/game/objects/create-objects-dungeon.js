@@ -4,6 +4,9 @@ import { createRandomSimple } from "./simple";
 import createChest from "./create-chest";
 import { popOne, peekOne } from "../commons";
 
+import createDungeonObjects from "./dungeon-objects";
+import { createArrows } from "./ammo";
+
 const NB_CHEST = 2;
 
 function createChestAndKey(level, empties) {
@@ -45,15 +48,21 @@ function createSimples(empties, level) {
   });
 }
 
+function fillArrows(level, empties) {
+  return new Array(2).fill(null).map(function () {
+    const position = peekOne(empties, level);
+    return { ...createArrows(5), level, position };
+  });
+}
+
 function createLevelObject(state, level, empties) {
   const { dungeon } = state;
-
   const doors = createDoors(dungeon.getDoors(level), level, empties);
   const chestsAnKeys = createChestAndKey(level, empties);
   const simples = createSimples(empties, level);
   const stairs = createStairs(dungeon, level);
-  // const arrows = fillArrows(emptyTiles, level);
-  return [...stairs, ...doors, ...chestsAnKeys, ...simples];
+  const arrows = fillArrows(level, empties);
+  return [...stairs, ...doors, ...chestsAnKeys, ...simples, ...arrows];
 }
 
 function createObjects(state, empties) {
@@ -65,8 +74,9 @@ function createObjects(state, empties) {
     .reduce(function (a, _, level) {
       return [...a, createLevelObject(state, level, empties)];
     }, []);
+  return createDungeonObjects(...objects.reduce((a, l) => [...a, ...l], []));
 
-  return objects;
+  // return objects;
 }
 
 export default createObjects;

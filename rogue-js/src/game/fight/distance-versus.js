@@ -11,7 +11,6 @@ import PATTERNS from "../message-patterns";
 
 function computeDamages(attacker) {
   const { weapon, ammo } = attacker;
-
   return weapon.getDamages() * ammo.getDamages();
 }
 
