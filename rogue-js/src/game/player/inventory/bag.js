@@ -47,4 +47,9 @@ export function isInInventory(inventory, object) {
   return false;
 }
 
+export function lookAtInventory(inventory, predicate) {
+  const { objects } = inventory;
+  return Object.values(objects).find(predicate);
+}
+
 export default createInventory;

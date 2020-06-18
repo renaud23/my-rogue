@@ -5,6 +5,6 @@ export { default as equipWeaponTodo } from "./equip-weapon-todo";
 export { default as throwObjectTodo } from "./throw-object-todo";
 export { default as useKeyTodo } from "./use-key-todo";
 export { default as shootTodo } from "./shoot-todo";
-export { default as createOpenChestTodo } from "./create-open-chest-todo";
+export { default as openChestTodo } from "./open-chest-todo";
 export { default as equipAmmoTodo } from "./equip-ammo-todo";
 export { default as splitDoor } from "./split-door";

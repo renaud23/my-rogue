@@ -44,7 +44,7 @@ function notAGoodChest(state) {
   };
 }
 
-function openChest(state, chest, key) {
+export function openChest(state, chest, key) {
   const { player, messages, objects } = state;
   const { inventory } = player;
   const nextInventory = putObjects(
