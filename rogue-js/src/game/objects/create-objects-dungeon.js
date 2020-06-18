@@ -6,7 +6,7 @@ import { popOne, peekOne } from "../commons";
 
 import createDungeonObjects from "./dungeon-objects";
 
-const NB_CHEST = 2;
+const NB_CHEST = 20;
 
 function createChestAndKey(level, empties) {
   return new Array(NB_CHEST).fill(null).reduce(function (a) {

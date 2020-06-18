@@ -1,6 +1,6 @@
 import { optionExit, displayMenu, addOptionsNumbers } from "../menu/tools";
 import { PLAYER_ACTIONS } from "../../commons";
-import { createUseKeyOnObject } from "./create-use-key-todo";
+import { useKeyTodo } from "../todo";
 import { TYPE_OBJECT } from "../objects";
 
 function getOptions(state, chest) {
@@ -10,7 +10,7 @@ function getOptions(state, chest) {
   return objects.reduce(function (a, o) {
     const { type, desc } = o;
     if (type === TYPE_OBJECT.key) {
-      return [...a, { desc, todo: createUseKeyOnObject(o, chest) }];
+      return [...a, { desc, todo: useKeyTodo }];
     }
     return a;
   }, []);

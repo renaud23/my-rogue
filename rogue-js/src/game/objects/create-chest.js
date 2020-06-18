@@ -41,6 +41,10 @@ function createChest() {
     kind,
     takeable: false,
   };
+  chest.loot = function (chest) {
+    // TODO loot
+    return [];
+  };
   chest.todo = [
     { desc: `Ouvrir ${chest.desc}`, todo: createOpenChestTodo(chest) },
   ];

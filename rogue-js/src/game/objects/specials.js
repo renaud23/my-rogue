@@ -1,5 +1,5 @@
 import typeObject from "./type-object";
-import createSplitDoor from "../todo/create-split-door";
+import { splitDoor } from "../todo";
 import { stairsUpTodo, stairsDownTodo } from "../todo";
 
 let INDEX = 0;
@@ -64,7 +64,7 @@ export function createDoor(position, level, opened = false) {
     todo: [
       {
         desc: `${opened ? "Fermer" : "Ouvrir"} la porte`,
-        todo: createSplitDoor(door),
+        todo: splitDoor,
       },
     ],
   };
