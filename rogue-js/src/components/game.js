@@ -19,21 +19,18 @@ import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
 import ConsoleLog from "./console-log";
 import PlayerConsole from "./player-log";
+import createEmpties from "../game/commons/empty-tiles-tools";
 import "./render-game.scss";
 
-// let loop = undefined;
-// function startLoop(miscellaneous, setMiscellaneousState) {
-//   return window.setInterval(function () {}, 100);
-// }
-
 function initialize(setMiscellaneousState) {
-  // if (loop) {
-  //   window.clearInterval(loop);
-  // }
   const dungeon = createDungeon(10, 30, 30);
   const empties = dungeon.getEmptyTiles(); // with side effect
+
   const player = createPlayer(dungeon, empties);
-  const objects = createObjectDungeon({ dungeon, player }, empties);
+  const objects = createObjectDungeon(
+    { dungeon, player },
+    createEmpties(empties)
+  );
   const ennemies = createEnnemiesDungeon({ dungeon, player, objects }, empties);
   const messages = ["<red>Un cri déchire la nuit.</red>"];
   const state = updatePlayerView({

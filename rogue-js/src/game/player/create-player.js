@@ -63,7 +63,7 @@ export function createArcher(dungeon, empties) {
 
   const knife = createKnife();
   const bow = createBow();
-  const arrows = createArrows(20);
+  const arrows = createArrows(8);
   const inventory = createInventory(10, knife);
 
   return {

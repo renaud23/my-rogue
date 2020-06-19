@@ -1,5 +1,3 @@
-import { removeObject } from "../player/inventory";
-
 function putInMapLevel(mapLevel, object) {
   const { level } = object;
   const current = mapLevel[level] || [];
@@ -40,7 +38,7 @@ function putInMapId(mapId, object) {
 
 /** */
 
-export function createDungeonObjects(...objects) {
+export function createDungeonObjects(objects) {
   return objects.reduce(
     function ({ mapId, mapLevel }, object) {
       return {
