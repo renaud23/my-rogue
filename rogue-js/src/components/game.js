@@ -24,13 +24,10 @@ import "./render-game.scss";
 
 function initialize(setMiscellaneousState) {
   const dungeon = createDungeon(10, 30, 30);
-  const empties = dungeon.getEmptyTiles(); // with side effect
+  const empties = createEmpties(dungeon.getEmptyTiles()); // with side effect
 
   const player = createPlayer(dungeon, empties);
-  const objects = createObjectDungeon(
-    { dungeon, player },
-    createEmpties(empties)
-  );
+  const objects = createObjectDungeon({ dungeon, player }, empties);
   const ennemies = createEnnemiesDungeon({ dungeon, player, objects }, empties);
   const messages = ["<red>Un cri déchire la nuit.</red>"];
   const state = updatePlayerView({

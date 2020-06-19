@@ -1,5 +1,4 @@
-import getVisibles from "./get-visibles";
-import createInventory, { putObject } from "./inventory";
+import createInventory from "./inventory";
 import { createKnife, createSword, createBow, createArrows } from "../objects";
 import { popOne } from "../commons";
 import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
@@ -15,7 +14,7 @@ function createBasePlayer(
   fov = DEFAULT_FOV,
   maxMove = DEFAULT_NB_MOVE
 ) {
-  const position = popOne(empties, 0);
+  const position = empties.popOne(0);
   const stats = computeNextLevelXp(computeMaxLife(createStats(s, a, l, e)));
 
   return {

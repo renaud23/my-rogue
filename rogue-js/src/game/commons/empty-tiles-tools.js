@@ -28,5 +28,8 @@ export default function createEmpties(empties) {
         newEmpties[level].splice(witch, 1);
       }
     },
+    count: function (level) {
+      return newEmpties[level].length;
+    },
   };
 }
