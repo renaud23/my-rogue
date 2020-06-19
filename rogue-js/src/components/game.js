@@ -63,7 +63,7 @@ function Game() {
             const [nextEffect, isChange] = effect.activate(effect);
             return [[...next, nextEffect], status || isChange];
           }
-          return [next, status];
+          return [[...next, effect], status];
         },
         [[], false]
       );
