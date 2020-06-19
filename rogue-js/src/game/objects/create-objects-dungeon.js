@@ -8,61 +8,12 @@ import { createArrows } from "./ammo";
 
 const NB_CHEST = 2;
 
-// function createChestAndKey(level, empties) {
-//   return new Array(NB_CHEST).fill(null).reduce(function (a) {
-//     const posChest = popOne(empties, level);
-//     const posKey = peekOne(empties, level);
-//     const [chest, key] = createChest();
-//     return [
-//       ...a,
-//       { ...chest, position: posChest, level },
-//       { ...key, position: posKey, level },
-//     ];
-//   }, []);
-// }
-
-// function createDoors(doors, level, empties) {
-//   return doors.map(function (position) {
-//     popOne(empties, level);
-//     return createDoor(position, level);
-//   });
-// }
-
-// function createStairs(dungeon, level) {
-//   return Object.entries(dungeon.getStairs(level)).map(function ([
-//     kind,
-//     { position },
-//   ]) {
-//     if (kind === "up") {
-//       return createStairsUp(position, level);
-//     }
-//     return createStairsDown(position, level);
-//   });
-// }
-
-// function createSimples(empties, level) {
-//   return new Array(5 + randomInt(10)).fill(null).map(function () {
-//     const position = peekOne(empties, level);
-//     return { ...createRandomSimple(), position, level };
-//   });
-// }
-
-// function fillArrows(level, empties) {
-//   return new Array(2).fill(null).map(function () {
-//     const position = peekOne(empties, level);
-//     return { ...createArrows(5), level, position };
-//   });
-// }
-
-// function createLevelObject(state, level, empties) {
-//   const { dungeon } = state;
-//   const doors = createDoors(dungeon.getDoors(level), level, empties);
-//   const chestsAnKeys = createChestAndKey(level, empties);
-//   const simples = createSimples(empties, level);
-//   const stairs = createStairs(dungeon, level);
-//   const arrows = fillArrows(level, empties);
-//   return [...stairs, ...doors, ...chestsAnKeys, ...simples, ...arrows];
-// }
+function fillArrows(state, level, empties) {
+  return new Array(2).fill(null).map(function () {
+    const position = empties.peekOne(level);
+    return { ...createArrows(5), level, position };
+  });
+}
 
 function createChestAndKey(state, level, empties) {
   return new Array(NB_CHEST).fill(null).reduce(function (a) {
@@ -118,6 +69,7 @@ function fillDungeonLevels(state, empties) {
         ...fillWithDoors(state, level, empties),
         ...createChestAndKey(state, level, empties),
         ...fillWithSimples(state, level, empties),
+        ...fillArrows(state, level, empties),
       ];
     }, []);
 
