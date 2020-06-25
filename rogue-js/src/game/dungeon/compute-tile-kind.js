@@ -1,4 +1,6 @@
-const MATRICE = [1, 2, 4, 8, 0, 16, 32, 64, 128];
+import { getWallCode } from "../commons/dungeon-tiles";
+
+const DOORS_CODES = [0b000101101, 0b101101000, 0b110000110, 0b011000011];
 
 function mergeKinds(kinds, key, pos) {
   return key in kinds
@@ -6,39 +8,56 @@ function mergeKinds(kinds, key, pos) {
     : { ...kinds, [key]: [pos] };
 }
 
-function compute(dungeon) {
-  const { width, data } = dungeon;
-  const kinds = data.reduce(function (a, tile, i) {
-    if (tile === 1) {
-      return mergeKinds(a, "wall", i);
-    }
+function buildWalls(kinds) {
+  const { walls } = kinds;
+  const next = walls.reduce(function (a, [pos, val]) {
+    return { ...a, [pos]: val };
+  }, {});
 
-    const tileValue = new Array(9).fill(0).reduce(function (value, _, j) {
-      if (tile === 0) {
+  return { ...kinds, walls: next };
+}
+
+function compute(dungeon) {
+  const { width, height, data } = dungeon;
+  const kinds = data.reduce(
+    function (a, tile, i) {
+      const x = i % width;
+      const y = Math.trunc(i / width);
+      if (x === 0 || y === 0 || x === width - 1 || y === height - 1) {
+        return mergeKinds(a, "border-map", i);
+      }
+
+      const tileValue = new Array(9).fill(0).reduce(function (value, _, j) {
         const xi = j % 3;
         const yi = Math.trunc(j / 3);
         const pi = i + xi - 1 + (yi - 1) * width;
-        if (data[pi] === 0) {
-          return value + MATRICE[xi + yi * 3];
+
+        if (data[pi] === 1) {
+          return value + Math.pow(2, 8 - j);
         }
+
+        return value;
+      }, 0);
+
+      const wallCode = getWallCode(tileValue);
+      if (wallCode) {
+        return mergeKinds(a, "walls", [i, wallCode]);
       }
 
-      return value;
-    }, 0);
+      // if (WALL_CODES.indexOf(tileValue) !== -1) {
+      //   return mergeKinds(a, "walls", [i, tileValue]);
+      // }
 
-    if (
-      tileValue === 71 ||
-      tileValue === 57 ||
-      tileValue === 226 ||
-      tileValue === 156
-    ) {
-      return mergeKinds(a, "doors", i);
-    }
+      if (DOORS_CODES.indexOf(tileValue) !== -1) {
+        return mergeKinds(a, "doors", i);
+      }
 
-    return a;
-  }, {});
+      return a;
+    },
+    { doors: [] }
+  );
 
-  return { ...dungeon, ...kinds };
+  return { ...dungeon, ...buildWalls(kinds) };
 }
 
 export default compute;

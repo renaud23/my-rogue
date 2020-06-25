@@ -72,7 +72,7 @@ export const TILES = {
   unknown: {
     code: -1,
     char: "?",
-    className: "tile-unknow",
+    className: "tile-unknown",
     desc: "rien de visible",
   },
 };
@@ -87,6 +87,6 @@ export const CODE_TO_TILE = Object.entries(TILES).reduce(function (
 
 export function getTile(code) {
   return code in CODE_TO_TILE
-    ? CODE_TO_TILE[code]
+    ? { ...CODE_TO_TILE[code], code }
     : { className: "tile-nop-:(", char: "." };
 }

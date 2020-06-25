@@ -17,6 +17,7 @@ import fillPlayer from "./fill-player";
 import fillObjects from "./fill-objects";
 import fillEnnemies from "./fill-ennemies";
 import fillEffects from "./fill-effects";
+import CanvasRender from "./canvas-render";
 
 function Tile({ char, color, bgColor, position }) {
   const setDungeon = useSetRecoilState(dungeonState);
@@ -179,18 +180,28 @@ function PlayerRender({ viewSize }) {
     Array(width * width).fill(-1),
     { dungeon, player, ennemies, objects, miscellaneous },
     rect
+  ).map(function (tile, i) {
+    const x = i % width;
+    const y = Math.trunc(i / width);
+
+    return { ...tile, x, y };
+  });
+
+  // const [newTiles, newWidth] = enlarge(tiles, width);
+
+  // const rows = render(
+  //   newTiles.map(function (t) {
+  //     return { ...t, visible: isVisible(player, t) };
+  //   }),
+  //   newWidth
+  // );
+
+  return (
+    <>
+      {/* <pre className="game-screen">{rows}</pre> */}
+      <CanvasRender tiles={tiles} />
+    </>
   );
-
-  const [newTiles, newWidth] = enlarge(tiles, width);
-
-  const rows = render(
-    newTiles.map(function (t) {
-      return { ...t, visible: isVisible(player, t) };
-    }),
-    newWidth
-  );
-
-  return <pre className="game-screen">{rows}</pre>;
 }
-
+//<CanvasRender height={250} width={250} />
 export default PlayerRender;

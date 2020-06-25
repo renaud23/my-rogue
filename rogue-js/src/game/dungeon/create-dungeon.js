@@ -18,11 +18,11 @@ function getStairsDown(cave) {
 }
 
 function createLevel(num, width, height) {
-  if (num % 2 === 1) {
-    return createCave(width, height);
-  } else {
-    return computeTileKind(createFactory(width, height));
-  }
+  // if (num % 2 === 1) {
+  //   return createCave(width, height);
+  // } else {
+  return computeTileKind(createFactory(width, height));
+  // }
 }
 
 function createCaves(nb, width, height) {
@@ -53,6 +53,10 @@ const getEmptyTiles = (levels) => (level) => {
   });
 };
 
+const getWalls = (levels) => (level) => {
+  return levels[level].walls || {};
+};
+
 function createDungeon(nb = 10, width = 30, height = 30) {
   const levels = createCaves(nb, width, height);
   return {
@@ -62,7 +66,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getStairs: (current) => levels[current].stairs,
     getDoors: (current) => levels[current].doors || [],
     getEmptyTiles: getEmptyTiles(levels),
-    // peekEmptyTile: (current) => popOne(levels[current].emptyTiles),
+    getWalls: getWalls(levels),
     getDungeonHeight: () => nb,
   };
 }

@@ -20,6 +20,7 @@ import ActionConsole from "./action-log";
 import ConsoleLog from "./console-log";
 import PlayerConsole from "./player-log";
 import createEmpties from "../game/commons/empty-tiles-tools";
+import CanvasRender from "./canvas-render";
 import "./render-game.scss";
 
 function initialize(setMiscellaneousState) {
@@ -79,7 +80,7 @@ function Game() {
       <div className="game">
         <PlayerConsole />
         <div className="game-row">
-          <RenderDungeon2 viewSize={fov + 1} />
+          <CanvasRender viewSize={fov + 1} />
           <ActionConsole />
           <div className="game-paddle">
             <Pad />
