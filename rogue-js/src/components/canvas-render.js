@@ -53,7 +53,7 @@ function computeRect({ player, dungeon }, viewSize) {
   };
 }
 
-function CanvasRenderer({ viewSize, width = 256, height = 256 }) {
+function CanvasRenderer({ viewSize, width = 17 * 16, height = 17 * 16 }) {
   const canvas = useRef(null);
   const [offscreen, setOffscreen] = useState(null);
   const [texture, setTexture] = useState(null);

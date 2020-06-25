@@ -44,17 +44,13 @@ function compute(dungeon) {
         return mergeKinds(a, "walls", [i, wallCode]);
       }
 
-      // if (WALL_CODES.indexOf(tileValue) !== -1) {
-      //   return mergeKinds(a, "walls", [i, tileValue]);
-      // }
-
       if (DOORS_CODES.indexOf(tileValue) !== -1) {
         return mergeKinds(a, "doors", i);
       }
 
       return a;
     },
-    { doors: [] }
+    { doors: [], walls: [] }
   );
 
   return { ...dungeon, ...buildWalls(kinds) };

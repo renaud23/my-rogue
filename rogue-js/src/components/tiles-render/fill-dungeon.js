@@ -15,20 +15,8 @@ function fill(state, offscreen, texture, rect, size = 8) {
 
     if (isVisibleForPlayer(player, pos) || isInPlayerMemory(player, pos)) {
       const groundWall = getWallsText(wall_maps[pos]);
-
       const groundTex = getGroundTex();
 
-      offscreen.drawTexture(
-        texture,
-        groundTex.x,
-        groundTex.y,
-        groundTex.width,
-        groundTex.height,
-        xi * size,
-        yi * size,
-        size,
-        size
-      );
       if (groundWall) {
         offscreen.drawTexture(
           texture,
@@ -36,6 +24,18 @@ function fill(state, offscreen, texture, rect, size = 8) {
           groundWall.y,
           groundWall.width,
           groundWall.height,
+          xi * size,
+          yi * size,
+          size,
+          size
+        );
+      } else {
+        offscreen.drawTexture(
+          texture,
+          groundTex.x,
+          groundTex.y,
+          groundTex.width,
+          groundTex.height,
           xi * size,
           yi * size,
           size,
