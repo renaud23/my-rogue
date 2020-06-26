@@ -19,26 +19,23 @@ const TYPES = {
   },
 };
 
-const CHEST_KIND = [
-  "en bois",
-  "en or",
-  "en verre",
-  "en os",
-  "en argent",
-  "en fer",
-  "sombre",
-  "rouge",
-  "en ébène",
-];
+export const CHEST_KIND = {
+  red: "Un coffre rouge",
+  green: "Un coffre vert",
+  blue: "Un coffre bleu",
+};
+
+const KEY_KIND = ["Une clef rouge", "Une clef verte", "Une clef bleue"];
 
 function createChest() {
   const chestId = `chest-id-${INDEX++}`;
-  const kind = CHEST_KIND[randomInt(CHEST_KIND.length)];
+  const kinds = Object.values(CHEST_KIND);
+  const kind = randomInt(kinds.length);
   const chest = {
     ...TYPES.chest,
-    desc: `un coffre ${kind}`,
+    desc: kinds[kind],
     id: chestId,
-    kind,
+    kind: kinds[kind],
     takeable: false,
   };
   chest.loot = function (chest) {
@@ -50,8 +47,8 @@ function createChest() {
   const key = {
     ...TYPES.chestKey,
     id: `chest-key-id-${INDEX++}`,
-    desc: `une clef ${kind}`,
-    target: kind,
+    desc: KEY_KIND[kind],
+    target: kinds[kind],
     takeable: true,
     todo: [],
   };

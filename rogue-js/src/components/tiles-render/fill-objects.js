@@ -9,7 +9,6 @@ function fill(state, offscreen, texture, rect, size = 8) {
   const { x, y, width, height } = rect;
   getObjects(objects, currentLevel).forEach(function (object) {
     const { position } = object;
-
     if (isVisibleForPlayer(player, position)) {
       const tex = getObjectTex(object);
       const xi = (position % dungeonWidth) - x;

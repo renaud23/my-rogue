@@ -7,3 +7,4 @@ export { createCorpse, createStairsUp, createStairsDown } from "./specials";
 export * from "./weapons";
 export * from "./simple";
 export * from "./ammo";
+export { CHEST_KIND } from "./create-chest";
