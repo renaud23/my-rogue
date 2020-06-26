@@ -1,23 +1,22 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { maxMin } from "../commons/tools";
-import getCoords from "./tiles-render/texture-mapping";
+import { tileClick } from "../game";
 import createOffscreen, { createTexture } from "./render/rendering";
-import combine from "./combine-fill";
 import {
   dungeonState,
   playerState,
   objectsState,
-  messagesState,
   ennemiesState,
   activateState,
   miscellaneousState,
+  messagesState,
 } from "../recoil";
 import fillDungeon from "./tiles-render/fill-dungeon";
 import fillPlayer from "./tiles-render/fill-player";
 import fillHud from "./tiles-render/fill-hud";
 import fillEnnemies from "./tiles-render/fill-ennemies";
 import fillObjects from "./tiles-render/fill-objects";
-import { useRecoilState, useRecoilCallback, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 const render = [
   fillDungeon,
@@ -53,43 +52,124 @@ function computeRect({ player, dungeon }, viewSize) {
   };
 }
 
-function CanvasRenderer({ viewSize, width = 17 * 16, height = 17 * 16 }) {
+function computeClickPos({ player, dungeon }, [cx, cy], rect) {
+  const { currentLevel } = player;
+  const dungeonWidth = dungeon.getWidth(currentLevel);
+  const { x, y } = rect;
+  return x + cx + +(y + cy) * dungeonWidth;
+}
+
+function CanvasRenderer({ viewSize, tileSize = 32, size = 17 * tileSize }) {
   const canvas = useRef(null);
+  const [mousePos, setMousePos] = useState(undefined);
   const [offscreen, setOffscreen] = useState(null);
   const [texture, setTexture] = useState(null);
+  const [rect, setRect] = useState(undefined);
+  const [state, setState] = useState(undefined);
 
-  const [dungeon] = useRecoilState(dungeonState);
-  const [player] = useRecoilState(playerState);
-  const [ennemies] = useRecoilState(ennemiesState);
-  const [objects] = useRecoilState(objectsState);
+  const [dungeon, setDungeon] = useRecoilState(dungeonState);
+  const [player, setPlayer] = useRecoilState(playerState);
+  const [ennemies, setEnnemies] = useRecoilState(ennemiesState);
+  const [objects, setObjects] = useRecoilState(objectsState);
+  const [activate, setActivate] = useRecoilState(activateState);
+  const [miscellaneous, setMiscellaneous] = useRecoilState(miscellaneousState);
+  const [messages, setMessages] = useRecoilState(messagesState);
 
   useEffect(
     function () {
-      if (canvas.current) {
+      if (canvas.current && size) {
         setTexture(createTexture(`${window.location.origin}/texture.png`));
-        setOffscreen(createOffscreen(canvas.current, width, height));
+        setOffscreen(createOffscreen(canvas.current, size, size));
       }
     },
-    [canvas.current]
+    [canvas, size]
   );
 
   useEffect(
     function () {
-      if (offscreen && texture && dungeon) {
+      setState({ dungeon, player, ennemies, objects, miscellaneous, messages });
+    },
+    [dungeon, player, ennemies, objects, miscellaneous, messages]
+  );
+
+  const cally = useCallback(
+    function (clickPos) {
+      const position = computeClickPos(state, clickPos, rect);
+      if (position) {
+        const next = activate.cally(state, tileClick(position));
+        setActivate({ cally: next.activate });
+        setDungeon(next.dungeon);
+        setPlayer(next.player);
+        setObjects(next.objects);
+        setEnnemies(next.ennemies);
+        setMessages(next.messages);
+        setMiscellaneous(next.miscellaneous);
+      }
+    },
+    [
+      state,
+      rect,
+      activate,
+      setActivate,
+      setDungeon,
+      setEnnemies,
+      setMessages,
+      setMiscellaneous,
+      setObjects,
+      setPlayer,
+    ]
+  );
+
+  useEffect(
+    function () {
+      if (state && state.dungeon) {
+        setRect(computeRect(state, viewSize));
+      }
+    },
+    [state, viewSize]
+  );
+
+  useEffect(
+    function () {
+      if (offscreen && texture && state.dungeon && rect) {
         offscreen.clear();
-        const state = { dungeon, player, ennemies, objects };
-        render(state, offscreen, texture, computeRect(state, viewSize), 16);
+        render(state, offscreen, texture, rect, tileSize);
+        if (mousePos) {
+          const [x, y] = mousePos;
+
+          offscreen.fillRect(
+            "rgba(50,50,0,0.3)",
+            x * tileSize,
+            y * tileSize,
+            tileSize,
+            tileSize
+          );
+        }
         offscreen.render();
       }
     },
-    [dungeon, player]
+    [state, rect, offscreen, texture, tileSize, mousePos]
   );
 
+  if (!size) return null;
   return (
     <>
       <canvas
-        style={{ width: `${width}px`, height: `${height}px` }}
+        style={{ width: `${size}px`, height: `${size}px` }}
         className="game-canvas"
+        onClick={function (e) {
+          const x = Math.trunc((e.pageX - e.target.offsetLeft) / tileSize);
+          const y = Math.trunc((e.pageY - e.target.offsetTop) / tileSize);
+          cally([x, y]);
+        }}
+        onMouseMove={function (e) {
+          const x = Math.trunc((e.pageX - e.target.offsetLeft) / tileSize);
+          const y = Math.trunc((e.pageY - e.target.offsetTop) / tileSize);
+          setMousePos([x, y]);
+        }}
+        onMouseOut={function (e) {
+          setMousePos(undefined);
+        }}
         ref={canvas}
         tabIndex="0"
       />
