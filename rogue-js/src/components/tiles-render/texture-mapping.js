@@ -2,29 +2,29 @@ import { WALL_CODES } from "../../game/commons/dungeon-tiles";
 import { TYPE_OBJECT, CHEST_KIND } from "../../game/objects";
 
 export function getWallsText(code) {
-  const base = { width: 16, height: 16 };
+  const base = { width: 32, height: 32 };
   switch (code) {
     case WALL_CODES.NORTH_OR_SOUTH:
-      return { ...base, x: 18, y: 129 };
+      return { ...base, x: 34, y: 129 };
     case WALL_CODES.WEST:
       return { ...base, x: 1, y: 129 };
     case WALL_CODES.EAST:
-      return { ...base, x: 35, y: 129 };
+      return { ...base, x: 67, y: 129 };
     case WALL_CODES.CORNER_WEST:
-      return { ...base, x: 1, y: 146 };
+      return { ...base, x: 1, y: 162 };
     case WALL_CODES.CORNER_EAST:
-      return { ...base, x: 35, y: 146 };
+      return { ...base, x: 67, y: 162 };
     case WALL_CODES.PILAR_WEST:
-      return { ...base, x: 1, y: 163 };
+      return { ...base, x: 1, y: 195 };
     case WALL_CODES.PILAR_EAST:
-      return { ...base, x: 35, y: 163 };
+      return { ...base, x: 67, y: 195 };
     default:
       return undefined;
   }
 }
 
 export function getGroundTex() {
-  return { x: 0, y: 64, width: 16, height: 16 };
+  return { x: 67, y: 228, width: 32, height: 32 };
 }
 
 export function getPlayerTex() {
@@ -72,9 +72,21 @@ function getKey(key) {
 function getDoorTex(door) {
   const { opened } = door;
   if (opened) {
-    return { x: 18, y: 146, width: 16, height: 16 };
+    return { x: 34, y: 162, width: 32, height: 32 };
   }
-  return { x: 18, y: 163, width: 16, height: 16 };
+  return { x: 34, y: 195, width: 32, height: 32 };
+}
+
+export function getStairsTex(stairs) {
+  const { type } = stairs;
+  if (type === TYPE_OBJECT.stairsUp) {
+    return { x: 1, y: 228, width: 32, height: 32 };
+  }
+  return { x: 34, y: 228, width: 32, height: 32 };
+}
+
+export function getSimpleTex(simple) {
+  return { x: 212, y: 65, width: 32, height: 32 };
 }
 
 export function getObjectTex(object) {
@@ -86,6 +98,11 @@ export function getObjectTex(object) {
       return getKey(object);
     case TYPE_OBJECT.door:
       return getDoorTex(object);
+    case TYPE_OBJECT.stairsDown:
+    case TYPE_OBJECT.stairsUp:
+      return getStairsTex(object);
+    case TYPE_OBJECT.simple:
+      return getSimpleTex(object);
     default:
       return { x: 66, y: 34, width: 16, height: 16 };
   }

@@ -29,8 +29,6 @@ export const SPECIAL_MAP = {
     desc: "des escaliers montants",
     takeable: false,
     aggregative: false,
-    opened: false,
-    locked: false,
     type: typeObject.stairsUp,
   },
   stairsDown: {
@@ -38,8 +36,6 @@ export const SPECIAL_MAP = {
     desc: "des escaliers descendants",
     takeable: false,
     aggregative: false,
-    opened: false,
-    locked: false,
     type: typeObject.stairsDown,
   },
 };

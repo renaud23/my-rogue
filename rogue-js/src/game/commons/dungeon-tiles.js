@@ -1,37 +1,3 @@
-// export const WALL_CODES = {
-//   NORTH: 1,
-//   SOUTH: 2,
-//   EAST: 3,
-//   WEST: 4,
-//   SOUTH_WEST: 5,
-//   SOUTH_EAST: 6,
-//   NORTH_EAST: 7,
-//   NORTH_WEST: 8,
-// };
-
-// const NORTH_PATTERNS = [0b111111000, 0b111111100, 0b111111001];
-// const SOUTH_PATTERNS = [0b000111111, 0b100111111, 0b001111111];
-// const EAST_PATTERNS = [
-//   0b011011011,
-//   0b111011011,
-//   0b011011111,
-//   0b000011011,
-//   0b011011000,
-// ];
-// const WEST_PATTERNS = [
-//   0b110110110,
-//   0b111110110,
-//   0b110110111,
-//   0b000110110,
-//   0b110110000,
-//   0b111111110,
-//   0b110111111,
-// ];
-// const SOUTH_WEST_PATTERNS = [0b0111111110];
-// const SOUTH_EAST_PATTERNS = [0b1101111110];
-// const NORTH_WEST_PATTERNS = [0b1111111100];
-// const NORTH_EAST_PATTERNS = [0b1111110110];
-
 function mergeIt(patterns, code) {
   return patterns.reduce(function (a, p) {
     return { ...a, [p]: code };
@@ -58,6 +24,8 @@ const NORTH_OR_SOUTH_PATTERNS = [
   0b100111111,
   0b110110000,
   0b011011000,
+  0b011011001,
+  0b111110000,
 ];
 const WEST_PATTERNS = [0b110110110, 0b111110110, 0b111111110, 0b110110111];
 const EAST_PATTERNS = [0b011011011, 0b111011011, 0b111111011, 0b011011111];
