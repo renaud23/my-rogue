@@ -1,5 +1,6 @@
 import { WALL_CODES } from "../../game/commons/dungeon-tiles";
 import { TYPE_OBJECT, CHEST_KIND } from "../../game/objects";
+import { TYPE_ENNEMIES } from "../../game/ennemies/commons/type-ennemies";
 
 export function getWallsText(code) {
   const base = { width: 32, height: 32 };
@@ -31,8 +32,14 @@ export function getPlayerTex() {
   return { x: 49, y: 1, width: 32, height: 32 };
 }
 
-export function getEnemyTex() {
-  return { x: 82, y: 1, width: 32, height: 32 };
+export function getEnemyTex(enemy) {
+  const { type } = enemy;
+  switch (type) {
+    case TYPE_ENNEMIES.rat:
+      return { x: 113, y: 1, width: 32, height: 32 };
+    default:
+      return { x: 82, y: 1, width: 32, height: 32 };
+  }
 }
 
 export function getIronSightTex() {
@@ -40,6 +47,10 @@ export function getIronSightTex() {
 }
 
 /** */
+
+export function getPotionTex() {
+  return { x: 113, y: 131, width: 32, height: 32 };
+}
 
 function getChest(chest) {
   const { kind } = chest;
@@ -86,7 +97,15 @@ export function getStairsTex(stairs) {
 }
 
 export function getSimpleTex(simple) {
-  return { x: 212, y: 65, width: 32, height: 32 };
+  const { code } = simple;
+  switch (code) {
+    default:
+      return { x: 212, y: 65, width: 32, height: 32 };
+  }
+}
+
+export function getCorpseTex() {
+  return { x: 212, y: 98, width: 32, height: 32 };
 }
 
 export function getObjectTex(object) {
@@ -103,6 +122,10 @@ export function getObjectTex(object) {
       return getStairsTex(object);
     case TYPE_OBJECT.simple:
       return getSimpleTex(object);
+    case TYPE_OBJECT.corpse:
+      return getCorpseTex();
+    case TYPE_OBJECT.potion:
+      return getPotionTex();
     default:
       return { x: 66, y: 34, width: 16, height: 16 };
   }

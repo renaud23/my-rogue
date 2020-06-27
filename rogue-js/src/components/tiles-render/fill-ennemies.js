@@ -10,7 +10,7 @@ function fill(state, offscreen, texture, rect, size = 8) {
   ennemiesLevel.forEach(function (enemy) {
     const { position, type } = enemy;
 
-    const tex = getEnemyTex(type);
+    const tex = getEnemyTex(enemy);
     const xi = (position % dungeonWidth) - rect.x;
     const yi = Math.trunc(position / dungeonWidth) - rect.y;
     if (isVisibleForPlayer(player, position)) {

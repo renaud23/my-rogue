@@ -4,7 +4,7 @@ import { popOne } from "../commons";
 import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
 
 const DEFAULT_FOV = 8;
-const DEFAULT_NB_MOVE = 2000;
+const DEFAULT_NB_MOVE = 2;
 
 function createBasePlayer(
   dungeon,
