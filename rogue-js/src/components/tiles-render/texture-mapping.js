@@ -2,26 +2,37 @@ import { WALL_CODES } from "../../game/commons/dungeon-tiles";
 import { TYPE_OBJECT, CHEST_KIND } from "../../game/objects";
 import { TYPE_ENNEMIES } from "../../game/ennemies/commons/type-ennemies";
 
+const ON_CENTER = 0b000010000;
+const ON_SOUTH = 0b000000010;
+
 export function getWallsText(code) {
   const base = { width: 32, height: 32 };
-  switch (code) {
-    case WALL_CODES.NORTH_OR_SOUTH:
-      return { ...base, x: 34, y: 129 };
-    case WALL_CODES.WEST:
-      return { ...base, x: 1, y: 129 };
-    case WALL_CODES.EAST:
-      return { ...base, x: 67, y: 129 };
-    case WALL_CODES.CORNER_WEST:
-      return { ...base, x: 1, y: 162 };
-    case WALL_CODES.CORNER_EAST:
-      return { ...base, x: 67, y: 162 };
-    case WALL_CODES.PILAR_WEST:
-      return { ...base, x: 1, y: 195 };
-    case WALL_CODES.PILAR_EAST:
-      return { ...base, x: 67, y: 195 };
-    default:
-      return undefined;
+  if (code === 0) {
+    return undefined;
   }
+  // switch (code) {
+  //   // case WALL_CODES.NORTH_OR_SOUTH:
+  //   //   return { ...base, x: 34, y: 129 };
+  //   case WALL_CODES.WEST:
+  //     return { ...base, x: 1, y: 129 };
+  //   case WALL_CODES.EAST:
+  //     return { ...base, x: 67, y: 129 }; // 1 261
+  //   case WALL_CODES.CORNER_WEST:
+  //     return { ...base, x: 1, y: 162 };
+  //   case WALL_CODES.CORNER_EAST:
+  //     return { ...base, x: 67, y: 162 };
+  //   case WALL_CODES.PILAR_WEST:
+  //     return { ...base, x: 1, y: 195 };
+  //   case WALL_CODES.PILAR_EAST:
+  //     return { ...base, x: 67, y: 195 };
+  //   default:
+  //     return { ...base, x: 34, y: 129 };
+  // }
+  if ((code & ON_SOUTH) === ON_SOUTH && (code & ON_CENTER) === ON_CENTER) {
+    return { ...base, x: 1, y: 261 };
+  }
+
+  return { ...base, x: 34, y: 129 };
 }
 
 export function getGroundTex() {

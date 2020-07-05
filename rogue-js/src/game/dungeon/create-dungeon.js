@@ -52,7 +52,7 @@ function getStairsDown(cave) {
 
 function createLevel(width, height) {
   const level = computeEmptyTiles(createDungeonWithMaze(width, height));
-  return level;
+  return computeTileKind(level);
 }
 
 function createCaves(nb, width, height) {
@@ -84,7 +84,7 @@ const getEmptyTiles = (levels) => (level) => {
 };
 
 const getWalls = (levels) => (level) => {
-  return levels[level].walls || {};
+  return levels[level].wallCodes || {};
 };
 
 function createDungeon(nb = 10, width = 30, height = 30) {
@@ -98,7 +98,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
       return levels[current].doors || [];
     },
     getEmptyTiles: getEmptyTiles(levels),
-    getWalls: getWalls(levels),
+    getWallCodes: getWalls(levels),
     getDungeonHeight: () => nb,
   };
 }
