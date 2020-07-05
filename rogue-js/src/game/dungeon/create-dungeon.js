@@ -1,8 +1,41 @@
-import createCave from "./cave";
-import createFactory from "./factory";
+import createDungeonWithMaze from "./dungeon-maze";
 import { TILES } from "../../commons";
 import computeTileKind from "./compute-tile-kind";
+import computeEmptyTiles from "./compute-empty-tiles";
 import { randomInt } from "../../commons";
+
+function getVal(pos, state) {
+  const { emptyTiles, doors } = state;
+
+  if (doors.indexOf(pos) !== -1) {
+    return "D";
+  }
+  if (emptyTiles.indexOf(pos) !== -1) {
+    return ".";
+  }
+  return "X";
+}
+
+export function print(state) {
+  const { data, width, doors } = state;
+  const [rows] = data.reduce(
+    function ([rows, current], code, i) {
+      if (i % width === width - 1) {
+        return [
+          [...rows, `${current}${getVal(i, state)} ${Math.trunc(i / width)}`],
+          "",
+        ];
+      }
+
+      return [rows, `${current}${getVal(i, state)}`];
+    },
+    [[], ""]
+  );
+  console.log({ doors });
+  rows.forEach(function (row) {
+    console.log(row);
+  });
+}
 
 function popOne(cave) {
   const { emptyTiles } = cave;
@@ -17,17 +50,14 @@ function getStairsDown(cave) {
   return { tile: TILES.stairsDown, position: popOne(cave) };
 }
 
-function createLevel(num, width, height) {
-  // if (num % 2 === 1) {
-  //   return createCave(width, height);
-  // } else {
-  return computeTileKind(createFactory(width, height));
-  // }
+function createLevel(width, height) {
+  const level = computeEmptyTiles(createDungeonWithMaze(width, height));
+  return level;
 }
 
 function createCaves(nb, width, height) {
   return new Array(nb).fill({}).map(function (_, i) {
-    const cave = createLevel(i, width, height);
+    const cave = createLevel(width, height);
 
     if (i === 0) {
       return { ...cave, stairs: { up: getStairsUp(cave) } };
@@ -64,7 +94,9 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getHeight: (current) => levels[current].height,
     getData: (current) => levels[current].data,
     getStairs: (current) => levels[current].stairs,
-    getDoors: (current) => levels[current].doors || [],
+    getDoors: (current) => {
+      return levels[current].doors || [];
+    },
     getEmptyTiles: getEmptyTiles(levels),
     getWalls: getWalls(levels),
     getDungeonHeight: () => nb,

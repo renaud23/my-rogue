@@ -24,7 +24,7 @@ import CanvasRender from "./canvas-render";
 import "./render-game.scss";
 
 function initialize(setMiscellaneousState) {
-  const dungeon = createDungeon(10, 30, 30);
+  const dungeon = createDungeon(1, 30, 30);
   const empties = createEmpties(dungeon.getEmptyTiles()); // with side effect
 
   const player = createPlayer(dungeon, empties);
@@ -80,7 +80,7 @@ function Game() {
       <div className="game">
         <PlayerConsole />
         <div className="game-row">
-          <CanvasRender viewSize={fov + 1} tileSize={32} />
+          <CanvasRender viewSize={fov + 1} tileSize={16} />
           <ActionConsole />
           <div className="game-paddle">
             <Pad />

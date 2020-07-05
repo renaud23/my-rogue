@@ -10,7 +10,11 @@ function fill(state, offscreen, texture, rect, size = 8) {
   const xi = (position % dungeonWidth) - rect.x;
   const yi = Math.trunc(position / dungeonWidth) - rect.y;
   const tex = getPlayerTex();
-
+  // console.log(
+  //   "player",
+  //   position % dungeonWidth,
+  //   Math.trunc(position / dungeonWidth)
+  // );
   offscreen.drawTexture(
     texture,
     tex.x,

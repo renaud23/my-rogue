@@ -1,7 +1,5 @@
 import { getWallCode } from "../commons/dungeon-tiles";
 
-const DOORS_CODES = [0b000101101, 0b101101000, 0b110000110, 0b011000011];
-
 function mergeKinds(kinds, key, pos) {
   return key in kinds
     ? { ...kinds, [key]: [...kinds[key], pos] }
@@ -42,10 +40,6 @@ function compute(dungeon) {
       const wallCode = getWallCode(tileValue);
       if (wallCode) {
         return mergeKinds(a, "walls", [i, wallCode]);
-      }
-
-      if (DOORS_CODES.indexOf(tileValue) !== -1) {
-        return mergeKinds(a, "doors", i);
       }
 
       return a;

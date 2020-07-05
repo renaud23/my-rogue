@@ -12,36 +12,48 @@ function fill(state, offscreen, texture, rect, size = 8) {
     const xi = i % width;
     const yi = Math.trunc(i / width);
     const pos = x + xi + (y + yi) * dungeonWidth;
+    const isWall = data[pos] === 1;
 
     if (isVisibleForPlayer(player, pos) || isInPlayerMemory(player, pos)) {
-      const groundWall = getWallsText(wall_maps[pos]);
-      const groundTex = getGroundTex();
+      offscreen.drawTexture(
+        texture,
+        isWall ? 34 : 67,
+        isWall ? 129 : 228,
+        32,
+        32,
+        xi * size,
+        yi * size,
+        size,
+        size
+      );
 
-      if (groundWall) {
-        offscreen.drawTexture(
-          texture,
-          groundWall.x,
-          groundWall.y,
-          groundWall.width,
-          groundWall.height,
-          xi * size,
-          yi * size,
-          size,
-          size
-        );
-      } else {
-        offscreen.drawTexture(
-          texture,
-          groundTex.x,
-          groundTex.y,
-          groundTex.width,
-          groundTex.height,
-          xi * size,
-          yi * size,
-          size,
-          size
-        );
-      }
+      // const groundWall = getWallsText(wall_maps[pos]);
+      // const groundTex = getGroundTex();
+      // if (groundWall) {
+      //   offscreen.drawTexture(
+      //     texture,
+      //     groundWall.x,
+      //     groundWall.y,
+      //     groundWall.width,
+      //     groundWall.height,
+      //     xi * size,
+      //     yi * size,
+      //     size,
+      //     size
+      //   );
+      // } else {
+      //   offscreen.drawTexture(
+      //     texture,
+      //     groundTex.x,
+      //     groundTex.y,
+      //     groundTex.width,
+      //     groundTex.height,
+      //     xi * size,
+      //     yi * size,
+      //     size,
+      //     size
+      //   );
+      // }
     }
   });
 }

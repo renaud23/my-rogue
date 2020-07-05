@@ -51,6 +51,7 @@ function fillWithSimples(state, level, empties) {
 
 function fillWithDoors(state, level, empties) {
   const { dungeon } = state;
+  // console.log(dungeon.getDoors(level));
   return dungeon.getDoors(level).map(function (position) {
     empties.removePosition(level, position);
     return createDoor(position, level);
