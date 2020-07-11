@@ -5,36 +5,6 @@ import PATTERNS from "../message-patterns";
 import activate from "../activate-player";
 import { openChest } from "./use-key-todo";
 
-// function getOptions(state, chest) {
-//   const { player } = state;
-//   const { inventory } = player;
-//   const { objects } = inventory;
-//   return objects.reduce(function (a, o) {
-//     const { type, desc } = o;
-//     if (type === TYPE_OBJECT.key) {
-//       return [...a, { desc, todo: useKeyTodo }];
-//     }
-//     return a;
-//   }, []);
-// }
-
-// function initPlayer(state, chest) {
-//   const { player } = state;
-//   const options = getOptions(state, chest);
-//   const { desc } = chest;
-//   return {
-//     ...player,
-//     action: {
-//       type: PLAYER_ACTIONS.menu,
-//       header: [`vous voulez ouvrir ${desc} avec,`],
-//       options: addOptionsNumbers([...options, optionExit]),
-//       footer: [" ", "Utiliser avec le bouton A.", "Sortir avec le bouton B."],
-//       active: 0,
-//       chest,
-//     },
-//   };
-// }
-
 function youNeedAKey(state, chest) {
   const { player, messages } = state;
   return {

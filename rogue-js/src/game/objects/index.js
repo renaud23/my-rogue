@@ -1,4 +1,5 @@
 export { default as simpleObjects } from "./simple";
+export { default as createDoor } from "./create-door";
 export { default as createObjectDungeon } from "./create-objects-dungeon";
 export { default as removeObjectFromState } from "./remove-object-from-state";
 export { aggregateObjects } from "./aggregate-objects";

@@ -14,7 +14,7 @@ function createBasePlayer(
   fov = DEFAULT_FOV,
   maxMove = DEFAULT_NB_MOVE
 ) {
-  const position = empties.popOne(0);
+  const position = dungeon.getStartPos();
   const stats = computeNextLevelXp(computeMaxLife(createStats(s, a, l, e)));
 
   return {
@@ -74,4 +74,4 @@ export function createArcher(dungeon, empties) {
   };
 }
 
-export default createArcher;
+export default createWarrior;

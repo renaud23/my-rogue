@@ -6,13 +6,13 @@ let INDEX = 0;
 
 const TYPES = {
   chest: {
-    code: 2000,
+    code: "chest",
     desc: "un coffre",
     size: 0,
     type: typeObject.chest,
   },
   chestKey: {
-    code: 2001,
+    code: "chest-key",
     desc: "une de cle de coffre",
     size: 1,
     type: typeObject.key,

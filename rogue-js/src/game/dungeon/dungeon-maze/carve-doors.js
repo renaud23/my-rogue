@@ -3,7 +3,8 @@ import { TILES, randomInt, isInBound, getNeighbors } from "./common";
 function filledRooms(rooms, data, width) {
   return data.map(function (value, i) {
     const nv = rooms.reduce(function (a, room, j) {
-      if (room.indexOf(i) !== -1) {
+      const { positions } = room;
+      if (positions.indexOf(i) !== -1) {
         return j + 10;
       }
       return a;
@@ -55,7 +56,8 @@ function getConnectorsNear(pos, connectors, width) {
 }
 
 function openRoom(room, connectors, data, width) {
-  const conns = room.reduce(function (a, pos) {
+  const { positions } = room;
+  const conns = positions.reduce(function (a, pos) {
     return [...a, ...getConnectorsNear(pos, connectors, width)];
   }, []);
   if (conns.length) {
@@ -86,24 +88,38 @@ function openDoors(
   data,
   width,
   height,
-  precedentDoors = []
+  precedentDoors = [],
+  roomsWithDoors = []
 ) {
   const [room, ...leftRooms] = rooms;
   const [next, leftConns, doors] = openRoom(room, connectors, data, width);
+  const nextRoom = { ...room, doors };
   if (!leftRooms.length) {
-    return [next, [...precedentDoors, ...doors]];
+    return [next, [...precedentDoors, ...doors], [...roomsWithDoors, nextRoom]];
   }
-  return openDoors(leftRooms, leftConns, next, width, height, [
-    ...precedentDoors,
-    ...doors,
-  ]);
+
+  return openDoors(
+    leftRooms,
+    leftConns,
+    next,
+    width,
+    height,
+    [...precedentDoors, ...doors],
+    [...roomsWithDoors, nextRoom]
+  );
 }
 
 function carve(rooms, data, width, height) {
   const filled = filledRooms(rooms, data, width);
   const connectors = findConnectors(filled, width, height);
-  const [next, doors] = openDoors(rooms, connectors, data, width, height);
-  return { data: next, doors };
+  const [next, doors, roomsDoors] = openDoors(
+    rooms,
+    connectors,
+    data,
+    width,
+    height
+  );
+  return { data: next, doors, rooms: roomsDoors };
 }
 
 export default carve;

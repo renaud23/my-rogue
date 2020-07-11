@@ -1,6 +1,7 @@
 import typeObject from "./type-object";
 import { splitDoor } from "../todo";
 import { stairsUpTodo, stairsDownTodo } from "../todo";
+import createLevelDoors from "../dungeon/create-level-doors";
 
 let INDEX = 0;
 
@@ -17,6 +18,7 @@ export const SPECIAL_MAP = {
     code: 2001,
     opened: false,
     locked: false,
+    lockedCode: undefined,
     originalDesc: "une porte",
     desc: "une porte",
     takeable: false,

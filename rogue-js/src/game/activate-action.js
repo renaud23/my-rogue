@@ -5,7 +5,7 @@ import activate from "./activate-player";
 import { takeObjectTodo } from "./todo";
 import { navigateMap } from "./commons";
 import displayMenu from "./menu/tools/display-menu";
-import { computeDesc } from "./commons";
+import { computeDesc, computeTodoDesc } from "./commons";
 
 function optionsTile(tile) {
   if (tile.todo) {
@@ -24,8 +24,8 @@ function optionsObjects(objects) {
     const { takeable, todo } = o;
     const todos = [
       ...a,
-      ...todo.map(function (t) {
-        return { ...t, args: o };
+      ...todo.map(function (td) {
+        return { ...td, desc: computeTodoDesc(td, o), args: o };
       }),
     ];
     return takeable

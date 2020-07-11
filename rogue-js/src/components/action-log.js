@@ -71,7 +71,9 @@ function peekMenu(state) {
   } = player;
 
   const messages = options.reduce(
-    function (a, { desc }, i) {
+    function (a, o, i) {
+      const { desc } = o;
+
       if (i === active) {
         return [...a, { message: `${desc} X`, classnames: "message active" }];
       }

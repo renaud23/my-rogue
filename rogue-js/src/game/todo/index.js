@@ -8,3 +8,4 @@ export { default as shootTodo } from "./shoot-todo";
 export { default as openChestTodo } from "./open-chest-todo";
 export { default as equipAmmoTodo } from "./equip-ammo-todo";
 export { default as splitDoor } from "./split-door";
+export { default as openDoorTodo } from "./open-door-todo";

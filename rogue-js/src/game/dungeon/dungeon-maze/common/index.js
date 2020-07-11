@@ -52,7 +52,8 @@ export function getNeighbors(position, width) {
 
 export function randomRoomPos(rooms) {
   const room = rooms[randomInt(rooms.length)];
-  return room[randomInt(room.length)];
+  const { positions } = room;
+  return positions[randomInt(positions.length)];
 }
 
 export function arrayToMap(arr) {
@@ -62,3 +63,5 @@ export function arrayToMap(arr) {
 }
 
 export { default as TILES } from "./tiles";
+
+export { printDungeon } from "./print";

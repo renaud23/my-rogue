@@ -10,12 +10,16 @@ function createDungeon(width, height) {
     width,
     height
   );
-
   const { data: withMaze } = carveCorridors(data, width, height);
-  const { data: withDoors, doors } = carveDoors(rooms, withMaze, width, height);
+  const { data: withDoors, doors, rooms: roomsDoors } = carveDoors(
+    rooms,
+    withMaze,
+    width,
+    height
+  );
   const { data: refilled } = refillCorridors(rooms, withDoors, width, height);
-
-  return { width, height, data: refilled, doors, rooms };
+  const dungeon = { width, height, data: refilled, doors, rooms: roomsDoors };
+  return dungeon;
 }
 
 export default createDungeon;
