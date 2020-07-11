@@ -92,6 +92,11 @@ export function removeObjects(dungeonObjects, ...objects) {
   );
 }
 
+export function applyToObject(dungeonObjects, object, apply) {
+  const newObject = apply(object);
+  return replaceObject(dungeonObjects, object, newObject);
+}
+
 export function isInDungeon(dungeonObjects, object) {
   if (object) {
     const { id } = object;

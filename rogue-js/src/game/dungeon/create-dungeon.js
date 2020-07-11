@@ -107,10 +107,7 @@ function createCaves(nb, width, height) {
       return createLastFloor(width, height);
     }
 
-    return {
-      ...cave,
-      stairs: createFloor(width, height),
-    };
+    return createFloor(width, height);
   });
 }
 

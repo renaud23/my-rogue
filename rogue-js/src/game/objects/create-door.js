@@ -18,18 +18,26 @@ const TYPES = {
   },
 };
 
+function doorDesc(door) {
+  const { opened } = door;
+  if (opened) {
+    return "Fermer la porte.";
+  }
+  return "Ouvrir la porte.";
+}
+
 function create(position, level, locked = false) {
   return [
     {
       ...TYPES.door,
       desc: `Une porte`,
-      id: `door-${INDEX_DOOR}`,
+      id: `door-${level}-${INDEX_DOOR++}`,
       takeable: false,
       level,
       position,
       locked,
       opened: false,
-      todo: [{ desc: () => "Ouvrir la porte.", todo: openDoorTodo }],
+      todo: [{ desc: doorDesc, todo: openDoorTodo }],
     },
     undefined,
   ];

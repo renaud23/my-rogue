@@ -50,18 +50,6 @@ function fillWithSimples(state, level, empties) {
   });
 }
 
-function computeStartLevelPosition(state, level) {
-  const { dungeon, player } = state;
-
-  if (level === 0) {
-    const { position } = player;
-    return position;
-  }
-  const { down } = dungeon.getStairs(level);
-  const { position } = down;
-  return position;
-}
-
 function fillWithDoors(state, level) {
   const { dungeon } = state;
 

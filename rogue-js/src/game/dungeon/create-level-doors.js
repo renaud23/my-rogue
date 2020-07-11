@@ -15,7 +15,6 @@ function createDoorsRoom(room, level, locked = false) {
 
 function create(dungeon, level) {
   const { rooms, regions } = dungeon;
-  const { start } = regions;
   const { zones } = regions;
   const levelDoors = zones.reduce(function (a, zone) {
     const { roomIndex } = zone;
