@@ -1,33 +1,40 @@
-import { TYPE_OBJECT } from "../objects";
-import { lookAtInventory } from "../player/inventory";
-import { fillMessage } from "../commons";
+import { TYPE_OBJECT, canOpen } from "../objects";
+import { filterInventory } from "../player/inventory";
 import PATTERNS from "../message-patterns";
-import activate from "../activate-player";
-import { openChest } from "./use-key-todo";
+import { computeDesc } from "../commons";
+import { removeObjects } from "../objects/dungeon-objects";
+import { fillMessage, appendMessages, cleanPlayerAction } from "../commons";
 
-// function youNeedAKey(state, chest) {
-//   const { player, messages } = state;
-//   return {
-//     ...state,
-//     player: { ...player, action: undefined },
-//     messages: [...messages, fillMessage(PATTERNS.needAKey, { chest })],
-//     activate,
-//   };
-// }
+export function unlockChest(state, key, chest) {
+  const { objects } = state;
+  const nextObjects = removeObjects(objects, chest);
+  const message = fillMessage(PATTERNS.keyOpenThis, {
+    key: computeDesc(key),
+    object: computeDesc(chest),
+  });
+  return appendMessages(
+    cleanPlayerAction({ ...state, objects: nextObjects }),
+    message
+  );
+}
+
+function lookForKey(state, chest) {
+  const { player } = state;
+  const { inventory } = player;
+  return filterInventory(inventory, function (o) {
+    const { type } = o;
+    return type === TYPE_OBJECT.key;
+  }).reduce(function (a, key) {
+    return canOpen(key, chest) ? key : a;
+  }, undefined);
+}
 
 function tryToOpenChest(state, chest) {
-  const { player } = state;
-  // const { kind } = chest;
-  // const { inventory } = player;
-  // const key = lookAtInventory(inventory, function (o) {
-  //   const { target, type } = o;
-  //   return type === TYPE_OBJECT.key && target === kind;
-  // });
-  // if (!key) {
-  //   return youNeedAKey(state, chest);
-  // }
-  // return openChest(state, chest, key);
-  return { ...state, player: { ...player, action: undefined } };
+  const key = lookForKey(state, chest);
+  if (key) {
+    return unlockChest(state, key, chest);
+  }
+  return cleanPlayerAction(state);
 }
 
 export default tryToOpenChest;

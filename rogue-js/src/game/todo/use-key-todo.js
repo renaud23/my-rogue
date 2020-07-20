@@ -3,6 +3,7 @@ import { canOpen, TYPE_OBJECT } from "../objects";
 import { getObjectsAt } from "../objects/dungeon-objects";
 import { PLAYER_ACTIONS } from "../../commons";
 import { unlockDoor } from "./open-door-todo";
+import { unlockChest } from "./open-chest-todo";
 import PATTERNS from "../message-patterns";
 import { appendMessages, cleanPlayerAction } from "../commons";
 
@@ -31,8 +32,12 @@ function useKey(state, event) {
   );
 
   if (objectToOpen) {
-    if (TYPE_OBJECT.door === objectToOpen.type) {
+    const { type } = objectToOpen;
+    if (TYPE_OBJECT.door === type) {
       return unlockDoor(state, key, objectToOpen);
+    }
+    if (TYPE_OBJECT.chest === type) {
+      return unlockChest(state, key, objectToOpen);
     }
   }
   // Nothing to open with this key

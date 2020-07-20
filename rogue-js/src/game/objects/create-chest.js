@@ -35,6 +35,7 @@ function createChest() {
     ...TYPES.chest,
     desc: kinds[kind],
     id: chestId,
+    lockId: chestId,
     kind: kinds[kind],
     takeable: false,
   };
@@ -48,7 +49,7 @@ function createChest() {
     ...TYPES.chestKey,
     id: `chest-key-id-${INDEX++}`,
     desc: KEY_KIND[kind],
-    target: kinds[kind],
+    targets: [chestId],
     takeable: true,
     todo: [],
   };
