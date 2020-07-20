@@ -6,11 +6,11 @@ let INDEX = 0;
 const DENSITY = 1 / 50;
 
 function fillLevel(state, level, sumXp, empties) {
-  const nb = Math.round(empties[level].length * DENSITY);
+  const nb = Math.round(empties.count(level) * DENSITY);
 
   return new Array(nb).fill(undefined).reduce(
     function ([ennemies, currXp]) {
-      const position = popOne(empties, level);
+      const position = empties.popOne(level);
       const enemy = {
         ...createEnemy(currXp),
         id: `enemy-${INDEX++}`,

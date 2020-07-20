@@ -15,3 +15,11 @@ export function computeDesc(o) {
   const { desc } = o;
   return typeof desc === "function" ? desc(o) : desc;
 }
+
+export function computeTodoDesc(td, o) {
+  const { desc } = td;
+  if (typeof desc === "function") {
+    return desc(o);
+  }
+  return desc;
+}

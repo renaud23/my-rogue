@@ -29,7 +29,7 @@ function fill(tiles, state, rect) {
       const { position } = effect;
       return { ...a, [position]: effect };
     }, {});
-
+  // console.log(mapEffect);
   const next = tiles.map(function (tile) {
     const { position } = tile;
     if (position in mapEffect) {

@@ -1,11 +1,10 @@
-import getVisibles from "./get-visibles";
-import createInventory, { putObject } from "./inventory";
+import createInventory from "./inventory";
 import { createKnife, createSword, createBow, createArrows } from "../objects";
 import { popOne } from "../commons";
 import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
 
 const DEFAULT_FOV = 8;
-const DEFAULT_NB_MOVE = 2;
+const DEFAULT_NB_MOVE = 2000;
 
 function createBasePlayer(
   dungeon,
@@ -15,7 +14,7 @@ function createBasePlayer(
   fov = DEFAULT_FOV,
   maxMove = DEFAULT_NB_MOVE
 ) {
-  const position = popOne(empties, 0);
+  const position = dungeon.getStartPos();
   const stats = computeNextLevelXp(computeMaxLife(createStats(s, a, l, e)));
 
   return {
@@ -63,7 +62,7 @@ export function createArcher(dungeon, empties) {
 
   const knife = createKnife();
   const bow = createBow();
-  const arrows = createArrows(20);
+  const arrows = createArrows(8);
   const inventory = createInventory(10, knife);
 
   return {
@@ -75,4 +74,4 @@ export function createArcher(dungeon, empties) {
   };
 }
 
-export default createArcher;
+export default createWarrior;

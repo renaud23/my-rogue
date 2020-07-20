@@ -60,8 +60,8 @@ function carveCircle(rect) {
 }
 
 export default function (rect) {
-  if (Math.random() > 0.75) {
-    return carveCircle(rect);
-  }
+  // if (Math.random() > 0.75) {
+  //   return carveCircle(rect);
+  // }
   return carveRect(rect);
 }

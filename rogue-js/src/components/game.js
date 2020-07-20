@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import RenderDungeon2 from "./game-render";
 import {
   dungeonState,
   playerState,
@@ -19,19 +18,14 @@ import { createEnnemiesDungeon } from "../game/ennemies";
 import ActionConsole from "./action-log";
 import ConsoleLog from "./console-log";
 import PlayerConsole from "./player-log";
+import createEmpties from "../game/commons/empty-tiles-tools";
+import CanvasRender from "./canvas-render";
 import "./render-game.scss";
 
-// let loop = undefined;
-// function startLoop(miscellaneous, setMiscellaneousState) {
-//   return window.setInterval(function () {}, 100);
-// }
-
 function initialize(setMiscellaneousState) {
-  // if (loop) {
-  //   window.clearInterval(loop);
-  // }
   const dungeon = createDungeon(10, 30, 30);
-  const empties = dungeon.getEmptyTiles(); // with side effect
+  const empties = createEmpties(dungeon.getEmptyTiles()); // with side effect
+
   const player = createPlayer(dungeon, empties);
   const objects = createObjectDungeon({ dungeon, player }, empties);
   const ennemies = createEnnemiesDungeon({ dungeon, player, objects }, empties);
@@ -69,7 +63,7 @@ function Game() {
             const [nextEffect, isChange] = effect.activate(effect);
             return [[...next, nextEffect], status || isChange];
           }
-          return [next, status];
+          return [[...next, effect], status];
         },
         [[], false]
       );
@@ -85,7 +79,7 @@ function Game() {
       <div className="game">
         <PlayerConsole />
         <div className="game-row">
-          <RenderDungeon2 viewSize={fov + 1} />
+          <CanvasRender viewSize={fov + 1} tileSize={16} />
           <ActionConsole />
           <div className="game-paddle">
             <Pad />

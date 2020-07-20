@@ -1,6 +1,7 @@
 import typeObject from "./type-object";
 import { splitDoor } from "../todo";
 import { stairsUpTodo, stairsDownTodo } from "../todo";
+import createLevelDoors from "../dungeon/create-level-doors";
 
 let INDEX = 0;
 
@@ -17,6 +18,7 @@ export const SPECIAL_MAP = {
     code: 2001,
     opened: false,
     locked: false,
+    lockedCode: undefined,
     originalDesc: "une porte",
     desc: "une porte",
     takeable: false,
@@ -29,8 +31,6 @@ export const SPECIAL_MAP = {
     desc: "des escaliers montants",
     takeable: false,
     aggregative: false,
-    opened: false,
-    locked: false,
     type: typeObject.stairsUp,
   },
   stairsDown: {
@@ -38,8 +38,6 @@ export const SPECIAL_MAP = {
     desc: "des escaliers descendants",
     takeable: false,
     aggregative: false,
-    opened: false,
-    locked: false,
     type: typeObject.stairsDown,
   },
 };
