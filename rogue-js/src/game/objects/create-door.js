@@ -28,18 +28,14 @@ function doorDesc(door) {
 }
 
 export const DOOR_KINDS = [
-  "bois pourri",
-  "bois",
-  "bois sculpté",
+  "chêne",
+  "acajou",
   "cuivre",
   "étain",
   "bronze",
-  "fer rouillé",
   "fer",
   "argent",
-  "argent massif",
   "or",
-  "or massif",
 ];
 
 export function generateDoorKind(index = 0) {
@@ -60,45 +56,28 @@ export function createDoor(
     level,
     position,
     locked,
+    doorId: INDEX_DOOR,
     kind,
     opened: false,
     todo: [{ desc: doorDesc, todo: openDoorTodo }],
   };
 }
 
-export function createKey(position, level, target) {
+export function createKey(
+  position,
+  level,
+  doors = [{ id: "-1", kind: "pass" }]
+) {
+  const targets = doors.map(({ doorId }) => doorId);
+  const kind = doors[0].kind;
   return {
     ...TYPES.keyDoor,
-    desc: ({ target }) => `Une clef en ${target}`,
+    desc: ({ kind }) => `Une clef en ${kind}`,
     id: `door-key-${level}-${INDEX_DOOR++}`,
     position,
     level,
-    target,
+    kind,
+    targets,
     todo: [],
   };
 }
-
-export function linkDoorsKey(key, ...doors) {
-  return [key, ...doors];
-}
-
-// export function createDoor(position, level, opened = false) {
-//   const door = {
-//     ...SPECIAL_MAP.door,
-//     position,
-//     opened,
-//     desc: `Une porte ${opened ? "ouverte" : "fermée"}`,
-//     level,
-//     id: `door-${INDEX++}`,
-//   };
-
-//   return {
-//     ...door,
-//     todo: [
-//       {
-//         desc: `${opened ? "Fermer" : "Ouvrir"} la porte`,
-//         todo: splitDoor,
-//       },
-//     ],
-//   };
-// }

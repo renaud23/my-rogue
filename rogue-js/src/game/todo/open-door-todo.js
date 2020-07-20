@@ -30,7 +30,7 @@ function openOrClose(state, door) {
 function unlockDoor(state, door) {
   const { objects, player } = state;
   const newObjects = applyToObject(objects, door, function (d) {
-    return { ...d, locked: false };
+    return { ...d, locked: false, opened: true };
   });
 
   return {
@@ -44,19 +44,19 @@ function unlockDoor(state, door) {
 function tryToUnlock(state, door) {
   const { player } = state;
   const { inventory } = player;
-  const { kind } = door;
-  const keys = filterInventory(inventory, function (o) {
+  const { doorId } = door;
+  const good = filterInventory(inventory, function (o) {
     const { type } = o;
-    if (type === TYPE_OBJECT.key) {
-      const { target } = o;
-      return target === kind;
-    }
-    return false;
-  });
+    return type === TYPE_OBJECT.key;
+  }).reduce(function (a, key) {
+    const { targets } = key;
+    return a || targets.indexOf(doorId) !== -1;
+  }, false);
 
-  if (keys.length) {
+  if (good) {
     return unlockDoor(state, door);
   }
+
   return {
     ...state,
     activate,

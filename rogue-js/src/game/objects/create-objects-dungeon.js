@@ -1,8 +1,7 @@
 import { randomInt } from "../../commons";
-import { createDoor, createStairsUp, createStairsDown } from "./specials";
+import { createStairsUp, createStairsDown } from "./specials";
 import { createRandomSimple } from "./simple";
 import createChest from "./create-chest";
-import { popOne, peekOne } from "../commons";
 import createDungeonObjects from "./dungeon-objects";
 import { createArrows } from "./ammo";
 import createLevelDoors from "../dungeon/create-level-doors";

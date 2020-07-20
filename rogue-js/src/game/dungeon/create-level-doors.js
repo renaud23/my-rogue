@@ -1,5 +1,6 @@
 import { createDoor, generateDoorKind, createKey } from "../objects";
 import { randomInt } from "../../commons";
+
 function createDoorsRoom(room, level, kind, locked) {
   const { doors: doorsPos } = room;
   return doorsPos.reduce(function (doors, pos) {
@@ -12,10 +13,10 @@ function createDoorsRoom(room, level, kind, locked) {
   }, []);
 }
 
-function createKeys(doorsKindMap, dungeon, level) {
-  const { rooms, regions } = dungeon;
+function createKeys(doorsMap, dungeon, level) {
+  const { regions } = dungeon;
   const { zones } = regions;
-  return Object.entries(doorsKindMap).reduce(function (a, [zoneIndex, kind]) {
+  return Object.entries(doorsMap).reduce(function (a, [zoneIndex, doors]) {
     let zone = zones[0];
     if (zoneIndex > 2) {
       zone = zones[zoneIndex - 1];
@@ -23,7 +24,7 @@ function createKeys(doorsKindMap, dungeon, level) {
     const { positions } = zone;
     return [
       ...a,
-      createKey(positions[randomInt(positions.length - 1)], level, kind),
+      createKey(positions[randomInt(positions.length - 1)], level, doors),
     ];
     return a;
   }, []);
@@ -32,7 +33,7 @@ function createKeys(doorsKindMap, dungeon, level) {
 function create(dungeon, level) {
   const { rooms, regions } = dungeon;
   const { zones } = regions;
-  const doorsKindMap = {};
+  const doorsMap = {};
   const levelDoors = zones.reduce(function (a, zone, zoneIndex) {
     const { roomIndex } = zone;
     if (zoneIndex === 0 && roomIndex >= 0) {
@@ -43,14 +44,14 @@ function create(dungeon, level) {
     if (zoneIndex > 1 && roomIndex >= 0) {
       const kind = generateDoorKind(zoneIndex - 1);
       const doors = createDoorsRoom(rooms[roomIndex], level, kind, true);
-      doorsKindMap[zoneIndex] = kind;
+      doorsMap[zoneIndex] = doors;
 
       return [...a, ...doors];
     }
 
     return a;
   }, []);
-  const keys = createKeys(doorsKindMap, dungeon, level);
+  const keys = createKeys(doorsMap, dungeon, level);
   return [levelDoors, keys];
 }
 
