@@ -6,7 +6,7 @@ function fill(state, offscreen, texture, rect, size = 8) {
   const { dungeon, player, objects } = state;
   const { currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
-  const { x, y, width, height } = rect;
+  const { x, y } = rect;
   getObjects(objects, currentLevel).forEach(function (object) {
     const { position } = object;
     if (isVisibleForPlayer(player, position)) {
@@ -27,43 +27,6 @@ function fill(state, offscreen, texture, rect, size = 8) {
       );
     }
   });
-
-  //   new Array(width * height).fill(0).forEach(function (_, i) {
-  //     const xi = i % width;
-  //     const yi = Math.trunc(i / width);
-  //     const pos = x + xi + (y + yi) * dungeonWidth;
-
-  //     if (isVisibleForPlayer(player, pos) || isInPlayerMemory(player, pos)) {
-  //       const groundWall = getWallsText(wall_maps[pos]);
-
-  //       const groundTex = getGroundTex();
-
-  //       offscreen.drawTexture(
-  //         texture,
-  //         groundTex.x,
-  //         groundTex.y,
-  //         groundTex.width,
-  //         groundTex.height,
-  //         xi * size,
-  //         yi * size,
-  //         size,
-  //         size
-  //       );
-  //       if (groundWall) {
-  //         offscreen.drawTexture(
-  //           texture,
-  //           groundWall.x,
-  //           groundWall.y,
-  //           groundWall.width,
-  //           groundWall.height,
-  //           xi * size,
-  //           yi * size,
-  //           size,
-  //           size
-  //         );
-  //       }
-  //     }
-  //   });
 }
 
 export default fill;

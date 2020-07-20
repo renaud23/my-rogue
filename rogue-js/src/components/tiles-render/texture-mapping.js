@@ -79,6 +79,7 @@ function getChest(chest) {
 
 function getKey(key) {
   const { target } = key;
+
   switch (target) {
     case CHEST_KIND.red:
       return { x: 113, y: 98, width: 32, height: 32 };
@@ -87,7 +88,7 @@ function getKey(key) {
     case CHEST_KIND.blue:
       return { x: 179, y: 98, width: 32, height: 32 };
     default:
-      return { x: 113, y: 65, width: 32, height: 32 };
+      return { x: 113, y: 98, width: 32, height: 32 };
   }
 }
 

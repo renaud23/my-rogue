@@ -54,6 +54,16 @@ export function lookAtInventory(inventory, predicate) {
   return Object.values(objects).find(predicate);
 }
 
+export function filterInventory(inventory, predicate) {
+  const { objects } = inventory;
+  return Object.values(objects).reduce(function (a, o) {
+    if (predicate(o)) {
+      return [...a, o];
+    }
+    return a;
+  }, []);
+}
+
 export function replaceObject(inventory, witch, by) {
   return putObject(removeObject(inventory, witch), by);
 }
