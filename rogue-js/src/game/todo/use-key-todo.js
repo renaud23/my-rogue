@@ -1,15 +1,10 @@
 import { createNavigate } from "../commons";
-import { TYPE_OBJECT } from "../objects";
+import { canOpen, TYPE_OBJECT } from "../objects";
+import { getObjectsAt } from "../objects/dungeon-objects";
 import { PLAYER_ACTIONS } from "../../commons";
+import { unlockDoor } from "./open-door-todo";
 import PATTERNS from "../message-patterns";
-import activate from "../activate-player";
-import { fillMessage } from "../commons";
-import {
-  getObjectsAt,
-  putObjects,
-  removeObjects as removeFromDungeon,
-} from "../objects/dungeon-objects";
-import { removeObject as removeFRomInventory } from "../player/inventory";
+import { appendMessages, cleanPlayerAction } from "../commons";
 
 function initializePlayer(player, key) {
   const { position } = player;
@@ -18,49 +13,9 @@ function initializePlayer(player, key) {
     action: {
       type: PLAYER_ACTIONS.navigate,
       position,
-      color: "blue",
       active: -1,
       key,
     },
-  };
-}
-function noChestHere(state) {
-  const { player, messages } = state;
-  return {
-    ...state,
-    player: { ...player, action: undefined },
-    messages: [...messages, PATTERNS.thereIsNoChest],
-    activate,
-  };
-}
-
-function notAGoodChest(state) {
-  const { player, messages } = state;
-  return {
-    ...state,
-    player: { ...player, action: undefined },
-    messages: [...messages, PATTERNS.notGoodChest],
-    activate,
-  };
-}
-
-export function openChest(state, chest, key) {
-  const { player, messages, objects } = state;
-  const { inventory } = player;
-  const nextInventory = putObjects(
-    removeFRomInventory(inventory, key),
-    ...chest.loot()
-  );
-  return {
-    ...state,
-    objects: removeFromDungeon(objects, chest),
-    player: {
-      ...player,
-      inventory: nextInventory,
-      action: undefined,
-    },
-    messages: [...messages, fillMessage(PATTERNS.chestOpened, { chest })],
-    activate,
   };
 }
 
@@ -68,21 +23,20 @@ function useKey(state, event) {
   const { player, objects } = state;
   const { action, currentLevel } = player;
   const { position, key } = action;
-  const chest = getObjectsAt(objects, currentLevel, position).find(function (
-    object
-  ) {
-    const { type } = object;
-    return type === TYPE_OBJECT.chest;
-  });
 
-  if (!chest) {
-    return noChestHere(state);
-  }
-  if (chest.kind !== key.target) {
-    return notAGoodChest(state);
-  }
+  const objectToOpen = getObjectsAt(objects, currentLevel, position).find(
+    function (o) {
+      return canOpen(key, o);
+    }
+  );
 
-  return openChest(state, chest, key);
+  if (objectToOpen) {
+    if (TYPE_OBJECT.door === objectToOpen.type) {
+      return unlockDoor(state, key, objectToOpen);
+    }
+  }
+  // Nothing to open with this key
+  return appendMessages(cleanPlayerAction(state), PATTERNS.nothingToOpen);
 }
 
 function navigate(state, key) {

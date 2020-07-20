@@ -1,6 +1,8 @@
+import activate from "../activate-player";
+
 function cleanPlayerAction(state) {
   const { player } = state;
-  return { ...state, player: { ...player, action: undefined } };
+  return { ...state, activate, player: { ...player, action: undefined } };
 }
 
 export default cleanPlayerAction;

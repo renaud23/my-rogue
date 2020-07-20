@@ -1,5 +1,12 @@
 export { default as simpleObjects } from "./simple";
-export { createKey, createDoor, generateDoorKind } from "./create-door";
+export {
+  createKey,
+  createDoor,
+  generateDoorKind,
+  canOpen,
+  unlockedAndOpenDoor,
+  switchDoor,
+} from "./create-door";
 export { default as createObjectDungeon } from "./create-objects-dungeon";
 export { default as removeObjectFromState } from "./remove-object-from-state";
 export { aggregateObjects } from "./aggregate-objects";

@@ -50,6 +50,11 @@ export function createDungeonObjects(objects) {
   );
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param {*} level
+ */
 export function getObjects(dungeonObjects, level) {
   const { mapLevel } = dungeonObjects;
   if (level in mapLevel) {
@@ -58,6 +63,12 @@ export function getObjects(dungeonObjects, level) {
   return [];
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param {*} level
+ * @param {*} position
+ */
 export function getObjectsAt(dungeonObjects, level, position) {
   return getObjects(dungeonObjects, level).reduce(function (stack, o) {
     const { position: posObject } = o;
@@ -68,6 +79,11 @@ export function getObjectsAt(dungeonObjects, level, position) {
   }, []);
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param  {...any} objects
+ */
 export function putObjects(dungeonObjects, ...objects) {
   return objects.reduce(
     function ({ mapId, mapLevel }, object) {
@@ -80,6 +96,11 @@ export function putObjects(dungeonObjects, ...objects) {
   );
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param  {...any} objects
+ */
 export function removeObjects(dungeonObjects, ...objects) {
   return objects.reduce(
     function ({ mapId, mapLevel }, object) {
@@ -92,11 +113,22 @@ export function removeObjects(dungeonObjects, ...objects) {
   );
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param {*} object
+ * @param {*} apply
+ */
 export function applyToObject(dungeonObjects, object, apply) {
   const newObject = apply(object);
   return replaceObject(dungeonObjects, object, newObject);
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param {*} object
+ */
 export function isInDungeon(dungeonObjects, object) {
   if (object) {
     const { id } = object;
@@ -106,6 +138,12 @@ export function isInDungeon(dungeonObjects, object) {
   return false;
 }
 
+/**
+ *
+ * @param {*} dungeonObjects
+ * @param {*} witch
+ * @param {*} by
+ */
 export function replaceObject(dungeonObjects, witch, by) {
   return putObjects(removeObjects(dungeonObjects, witch), by);
 }

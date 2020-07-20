@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import RenderDungeon2 from "./game-render";
 import {
   dungeonState,
   playerState,

@@ -38,11 +38,6 @@ export function print(state) {
   });
 }
 
-function popOne(cave) {
-  const { emptyTiles } = cave;
-  return emptyTiles.splice(randomInt(emptyTiles.length), 1)[0];
-}
-
 function getStairsUp(position) {
   return { tile: TILES.stairsUp, position };
 }
@@ -98,7 +93,6 @@ function createLastFloor(width, height) {
 
 function createCaves(nb, width, height) {
   return new Array(nb).fill({}).map(function (_, i) {
-    const cave = createLevel(width, height);
     if (i === 0) {
       return createFirstFloor(width, height);
     }

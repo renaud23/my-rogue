@@ -45,10 +45,7 @@ export function fillMessage(message, params) {
  * @param {*} state
  * @param {*} message
  */
-export function appendMessages(state, message) {
-  if (!message) {
-    return state;
-  }
+export function appendMessages(state, ...newMessages) {
   const { messages } = state;
-  return { ...state, messages: [...messages, message] };
+  return { ...state, messages: [...messages, ...newMessages] };
 }

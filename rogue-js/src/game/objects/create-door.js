@@ -56,7 +56,7 @@ export function createDoor(
     level,
     position,
     locked,
-    doorId: INDEX_DOOR,
+    lockId: `door-${level}-${INDEX_DOOR++}`,
     kind,
     opened: false,
     todo: [{ desc: doorDesc, todo: openDoorTodo }],
@@ -68,7 +68,7 @@ export function createKey(
   level,
   doors = [{ id: "-1", kind: "pass" }]
 ) {
-  const targets = doors.map(({ doorId }) => doorId);
+  const targets = doors.map(({ lockId }) => lockId);
   const kind = doors[0].kind;
   return {
     ...TYPES.keyDoor,
@@ -80,4 +80,19 @@ export function createKey(
     targets,
     todo: [],
   };
+}
+
+export function canOpen(key, door) {
+  const { targets = [] } = key;
+  const { lockId } = door;
+  return targets.indexOf(lockId) !== -1;
+}
+
+export function unlockedAndOpenDoor(door) {
+  return { ...door, opened: true, locked: false };
+}
+
+export function switchDoor(door) {
+  const { opened } = door;
+  return { ...door, opened: !opened };
 }

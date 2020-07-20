@@ -3,6 +3,10 @@ import { filterInventory } from "../player/inventory";
 import { applyToObject } from "../objects/dungeon-objects";
 import { TYPE_OBJECT } from "../objects";
 import { updatePlayerView } from "../player";
+import { canOpen, unlockedAndOpenDoor, switchDoor } from "../objects";
+import PATTERNS from "../message-patterns";
+import { computeDesc } from "../commons";
+import { fillMessage, appendMessages, cleanPlayerAction } from "../commons";
 
 /**
  *
@@ -12,11 +16,7 @@ import { updatePlayerView } from "../player";
 function openOrClose(state, door) {
   const { objects, player } = state;
   const newObjects = applyToObject(objects, door, function (d) {
-    const { opened } = d;
-    if (opened) {
-      return { ...d, opened: false };
-    }
-    return { ...d, opened: true };
+    return switchDoor(d);
   });
 
   return {
@@ -27,41 +27,37 @@ function openOrClose(state, door) {
   };
 }
 
-function unlockDoor(state, door) {
-  const { objects, player } = state;
+export function unlockDoor(state, key, door) {
+  const { objects } = state;
   const newObjects = applyToObject(objects, door, function (d) {
-    return { ...d, locked: false, opened: true };
+    return unlockedAndOpenDoor(d);
+  });
+  const message = fillMessage(PATTERNS.keyOpenThis, {
+    key: computeDesc(key),
+    object: computeDesc(door),
   });
 
-  return {
-    ...state,
-    objects: newObjects,
-    activate,
-    player: { ...player, activate, action: undefined },
-  };
+  return appendMessages(
+    cleanPlayerAction({ ...state, objects: newObjects }),
+    message
+  );
 }
 
 function tryToUnlock(state, door) {
   const { player } = state;
   const { inventory } = player;
-  const { doorId } = door;
-  const good = filterInventory(inventory, function (o) {
+  const key = filterInventory(inventory, function (o) {
     const { type } = o;
     return type === TYPE_OBJECT.key;
   }).reduce(function (a, key) {
-    const { targets } = key;
-    return a || targets.indexOf(doorId) !== -1;
-  }, false);
+    return canOpen(key, door) ? key : a;
+  }, undefined);
 
-  if (good) {
-    return unlockDoor(state, door);
+  if (key) {
+    return unlockDoor(state, key, door);
   }
 
-  return {
-    ...state,
-    activate,
-    player: { ...player, activate, action: undefined },
-  };
+  return cleanPlayerAction(state);
 }
 
 /**
