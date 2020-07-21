@@ -1,5 +1,5 @@
 import { TYPE_OBJECT, canOpen } from "../objects";
-import { filterInventory } from "../player/inventory";
+import { getKeys } from "../player/inventory";
 import PATTERNS from "../message-patterns";
 import { computeDesc } from "../commons";
 import { removeObjects } from "../objects/dungeon-objects";
@@ -21,10 +21,7 @@ export function unlockChest(state, key, chest) {
 function lookForKey(state, chest) {
   const { player } = state;
   const { inventory } = player;
-  return filterInventory(inventory, function (o) {
-    const { type } = o;
-    return type === TYPE_OBJECT.key;
-  }).reduce(function (a, key) {
+  return getKeys(inventory).reduce(function (a, key) {
     return canOpen(key, chest) ? key : a;
   }, undefined);
 }

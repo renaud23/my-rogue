@@ -2,6 +2,7 @@ import { putObjects } from "../../objects/dungeon-objects";
 
 function createInventory(maxSize = 10, ...objects) {
   return {
+    keys: [],
     objects: objects.reduce(function (mapObjects, o) {
       const { id } = o;
       return { ...mapObjects, [id]: o };
@@ -10,10 +11,30 @@ function createInventory(maxSize = 10, ...objects) {
   };
 }
 
+export function putKeys(inventory, ...newKeys) {
+  const { keys } = inventory;
+  return { ...inventory, keys: newKeys.concat(keys) };
+}
+
+export function removeKeys(inventory, ...newKeys) {
+  const { keys } = inventory;
+  const nextKeys = newKeys.reduce(function (a, k) {
+    return a.filter(function ({ id }) {
+      return id !== k.id;
+    });
+  }, keys);
+  return { ...inventory, keys: nextKeys };
+}
+
 export function putObject(inventory, object) {
   const { objects } = inventory;
   const { id } = object;
   return { ...inventory, objects: { ...objects, [id]: object } };
+}
+
+export function getKeys(inventory) {
+  const { keys } = inventory;
+  return [...keys];
 }
 
 export function removeObject(inventory, object) {

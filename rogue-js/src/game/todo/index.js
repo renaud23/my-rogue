@@ -9,3 +9,4 @@ export { default as openChestTodo } from "./open-chest-todo";
 export { default as equipAmmoTodo } from "./equip-ammo-todo";
 export { default as splitDoor } from "./split-door";
 export { default as openDoorTodo } from "./open-door-todo";
+export { default as takeKeyTodo } from "./take-key-todo";

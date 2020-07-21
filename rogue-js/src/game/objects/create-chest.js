@@ -14,7 +14,7 @@ const TYPES = {
   chestKey: {
     code: "chest-key",
     desc: "une de cle de coffre",
-    size: 1,
+    size: 0,
     type: typeObject.key,
   },
 };

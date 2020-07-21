@@ -2,10 +2,10 @@ import { PAD_BUTTON, PLAYER_ACTIONS, getTile } from "../commons";
 import { getObjectsAt } from "./objects/dungeon-objects";
 import { buildPlayer } from "./menu/tools";
 import activate from "./activate-player";
-import { takeObjectTodo } from "./todo";
-import { navigateMap } from "./commons";
+import { takeObjectTodo, takeKeyTodo } from "./todo";
+import { TYPE_OBJECT } from "./objects";
 import displayMenu from "./menu/tools/display-menu";
-import { computeDesc, computeTodoDesc } from "./commons";
+import { computeDesc, computeTodoDesc, navigateMap } from "./commons";
 
 function optionsTile(tile) {
   if (tile.todo) {
@@ -19,25 +19,41 @@ function optionsTile(tile) {
   return [];
 }
 
+function getTakeableTodo(object) {
+  const { type } = object;
+  switch (type) {
+    case TYPE_OBJECT.key:
+      return takeKeyTodo;
+    default:
+      return takeObjectTodo;
+  }
+}
+
+function appendTakeable(object, toDoes) {
+  const { takeable, type } = object;
+  if (takeable) {
+    return [
+      ...toDoes,
+      {
+        desc: `Prendre ${computeDesc(object)}.`,
+        todo: getTakeableTodo(object),
+        args: object,
+      },
+    ];
+  }
+  return toDoes;
+}
+
 function optionsObjects(objects) {
   const options = objects.reduce(function (a, o) {
-    const { takeable, todo } = o;
-    const todos = [
+    const { todo } = o;
+    const toDoes = [
       ...a,
       ...todo.map(function (td) {
         return { ...td, desc: computeTodoDesc(td, o), args: o };
       }),
     ];
-    return takeable
-      ? [
-          ...todos,
-          {
-            desc: `Prendre ${computeDesc(o)}.`,
-            todo: takeObjectTodo,
-            args: o,
-          },
-        ]
-      : todos;
+    return appendTakeable(o, toDoes);
   }, []);
 
   return [...options];

@@ -1,5 +1,5 @@
 import activate from "../activate-player";
-import { filterInventory } from "../player/inventory";
+import { filterInventory, getKeys } from "../player/inventory";
 import { applyToObject } from "../objects/dungeon-objects";
 import { TYPE_OBJECT } from "../objects";
 import { updatePlayerView } from "../player";
@@ -46,10 +46,7 @@ export function unlockDoor(state, key, door) {
 function tryToUnlock(state, door) {
   const { player } = state;
   const { inventory } = player;
-  const key = filterInventory(inventory, function (o) {
-    const { type } = o;
-    return type === TYPE_OBJECT.key;
-  }).reduce(function (a, key) {
+  const key = getKeys(inventory).reduce(function (a, key) {
     return canOpen(key, door) ? key : a;
   }, undefined);
 
