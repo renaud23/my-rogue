@@ -23,8 +23,8 @@ import CanvasRender from "./canvas-render";
 import "./render-game.scss";
 
 function initialize(setMiscellaneousState) {
-  const dungeon = createDungeon(10, 30, 30);
-  const empties = createEmpties(dungeon.getEmptyTiles()); // with side effect
+  const dungeon = createDungeon(10, 40, 40);
+  const empties = createEmpties(dungeon); // with side effect
 
   const player = createPlayer(dungeon, empties);
   const objects = createObjectDungeon({ dungeon, player }, empties);

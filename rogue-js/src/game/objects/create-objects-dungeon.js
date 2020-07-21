@@ -6,7 +6,7 @@ import createDungeonObjects from "./dungeon-objects";
 import { createArrows } from "./ammo";
 import createLevelDoors from "../dungeon/create-level-doors";
 
-const NB_CHEST = 5;
+const NB_CHEST = 3;
 
 function fillArrows(state, level, empties) {
   return new Array(2).fill(null).map(function () {

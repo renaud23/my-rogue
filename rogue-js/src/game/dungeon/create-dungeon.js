@@ -2,8 +2,6 @@ import { findRegions, randomRoomPos } from "./dungeon-maze";
 import createDungeonWithMaze from "./dungeon-maze";
 import { TILES } from "../../commons";
 import computeTileKind from "./compute-tile-kind";
-import computeEmptyTiles from "./compute-empty-tiles";
-import { randomInt } from "../../commons";
 
 function getVal(pos, state) {
   const { emptyTiles, doors } = state;
@@ -17,7 +15,7 @@ function getVal(pos, state) {
   return "X";
 }
 
-export function print(state) {
+function print(state) {
   const { data, width, doors } = state;
   const [rows] = data.reduce(
     function ([rows, current], code, i) {
@@ -47,7 +45,7 @@ function getStairsDown(position) {
 }
 
 function createLevel(width, height) {
-  const level = computeEmptyTiles(createDungeonWithMaze(width, height));
+  const level = createDungeonWithMaze(width, height);
   const { rooms } = level;
   return findRegions(computeTileKind(level), randomRoomPos(rooms));
 }
@@ -107,10 +105,10 @@ function createCaves(nb, width, height) {
 
 const getEmptyTiles = (levels) => (level) => {
   if (level !== undefined) {
-    return [...levels[level].emptyTiles];
+    return [...levels[level].empties];
   }
   return levels.map(function (level) {
-    return [...level.emptyTiles];
+    return [...level.empties];
   });
 };
 
@@ -132,6 +130,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
       return levels[current].doors || [];
     },
     getEmptyTiles: getEmptyTiles(levels),
+    getLevels: () => levels,
     getWallCodes: getWalls(levels),
     getDungeonHeight: () => nb,
   };

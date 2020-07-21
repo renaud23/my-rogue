@@ -9,7 +9,17 @@ export function peekOne(empties, level) {
   return empties[level][randomInt(empties[level].length - 1)];
 }
 
-export default function createEmpties(empties) {
+function filterDoors(level) {
+  const { empties, doors } = level;
+  return empties.filter(function (pos) {
+    return doors.indexOf(pos) === -1;
+  });
+}
+
+export default function createEmpties(dungeon) {
+  const empties = dungeon.getLevels().map(function (level) {
+    return filterDoors(level);
+  });
   const newEmpties = empties.map(function (level) {
     return [...level];
   });
