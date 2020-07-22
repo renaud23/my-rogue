@@ -1,6 +1,8 @@
 import typeObject from "./type-object";
 import { openChestTodo } from "../todo";
 import { randomInt } from "../../commons";
+import createKey from "./create-key";
+import { computeDesc } from "../commons";
 
 let INDEX = 0;
 
@@ -11,48 +13,51 @@ const TYPES = {
     size: 0,
     type: typeObject.chest,
   },
-  chestKey: {
-    code: "chest-key",
-    desc: "une de cle de coffre",
-    size: 0,
-    type: typeObject.key,
-  },
 };
 
-export const CHEST_KIND = {
-  red: "Un coffre rouge",
-  green: "Un coffre vert",
-  blue: "Un coffre bleu",
-};
+const CHEST_KIND_LIST = [
+  { desc: "rouge", id: "red" },
+  { desc: "vert", id: "green" },
+  { desc: "bleue", id: "blue" },
+];
+export const CHEST_KIND = CHEST_KIND_LIST.reduce(function (a, k) {
+  const { id } = k;
+  return { ...a, [id]: k };
+}, {});
 
-const KEY_KIND = ["Une clef rouge", "Une clef verte", "Une clef bleue"];
+const KEY_KIND_LIST = [
+  { desc: "rouge", id: "red" },
+  { desc: "verte", id: "green" },
+  { desc: "bleue", id: "blue" },
+];
+export const KEY_KIND = KEY_KIND_LIST.reduce(function (a, k) {
+  const { id } = k;
+  return { ...a, [id]: k };
+}, {});
 
-function createChest() {
+function createChest(level, posChest, posKey) {
   const chestId = `chest-id-${INDEX++}`;
-  const kinds = Object.values(CHEST_KIND);
-  const kind = randomInt(kinds.length);
+  const kind = KEY_KIND_LIST[randomInt(KEY_KIND_LIST.length)];
   const chest = {
     ...TYPES.chest,
-    desc: kinds[kind],
+    desc: ({ kind }) => `une porte ${kind.desc}`,
     id: chestId,
     lockId: chestId,
-    kind: kinds[kind],
+    kind,
     takeable: false,
+    position: posChest,
   };
   chest.loot = function (chest) {
     // TODO loot
     return [];
   };
-  chest.todo = [{ desc: `Ouvrir ${chest.desc}`, todo: openChestTodo }];
-
-  const key = {
-    ...TYPES.chestKey,
-    id: `chest-key-id-${INDEX++}`,
-    desc: KEY_KIND[kind],
-    targets: [chestId],
-    takeable: true,
-    todo: [],
-  };
+  chest.todo = [{ desc: `Ouvrir ${computeDesc(chest)}`, todo: openChestTodo }];
+  const key = createKey(
+    level,
+    posKey,
+    [chest],
+    ({ kind }) => `une clef de coffre ${kind.desc}`
+  );
 
   return [chest, key];
 }

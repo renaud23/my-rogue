@@ -19,7 +19,7 @@ function createChestAndKey(state, level, empties) {
   return new Array(NB_CHEST).fill(null).reduce(function (a) {
     const posChest = empties.popOne(level);
     const posKey = empties.peekOne(level);
-    const [chest, key] = createChest();
+    const [chest, key] = createChest(level, posChest, posKey);
     return [
       ...a,
       { ...chest, position: posChest, level },

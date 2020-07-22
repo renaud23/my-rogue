@@ -1,5 +1,5 @@
 import { WALL_CODES } from "../../game/commons/dungeon-tiles";
-import { TYPE_OBJECT, CHEST_KIND } from "../../game/objects";
+import { TYPE_OBJECT, CHEST_KIND, DOOR_KIND } from "../../game/objects";
 import { TYPE_ENNEMIES } from "../../game/ennemies/commons/type-ennemies";
 
 const ON_CENTER = 0b000010000;
@@ -10,26 +10,8 @@ export function getWallsText(code) {
   if (code === 0) {
     return undefined;
   }
-  // switch (code) {
-  //   // case WALL_CODES.NORTH_OR_SOUTH:
-  //   //   return { ...base, x: 34, y: 129 };
-  //   case WALL_CODES.WEST:
-  //     return { ...base, x: 1, y: 129 };
-  //   case WALL_CODES.EAST:
-  //     return { ...base, x: 67, y: 129 }; // 1 261
-  //   case WALL_CODES.CORNER_WEST:
-  //     return { ...base, x: 1, y: 162 };
-  //   case WALL_CODES.CORNER_EAST:
-  //     return { ...base, x: 67, y: 162 };
-  //   case WALL_CODES.PILAR_WEST:
-  //     return { ...base, x: 1, y: 195 };
-  //   case WALL_CODES.PILAR_EAST:
-  //     return { ...base, x: 67, y: 195 };
-  //   default:
-  //     return { ...base, x: 34, y: 129 };
-  // }
   if ((code & ON_SOUTH) === ON_SOUTH && (code & ON_CENTER) === ON_CENTER) {
-    return { ...base, x: 1, y: 261 };
+    return { ...base, x: 34, y: 195 };
   }
 
   return { ...base, x: 34, y: 129 };
@@ -78,15 +60,27 @@ function getChest(chest) {
 }
 
 function getKey(key) {
-  const { target } = key;
-
-  switch (target) {
+  const { kind } = key;
+  const { id } = kind;
+  switch (id) {
     case CHEST_KIND.red:
       return { x: 113, y: 98, width: 32, height: 32 };
     case CHEST_KIND.green:
       return { x: 146, y: 98, width: 32, height: 32 };
     case CHEST_KIND.blue:
       return { x: 179, y: 98, width: 32, height: 32 };
+    case DOOR_KIND.wood:
+      return { x: 1, y: 294, width: 32, height: 32 };
+    case DOOR_KIND.ebony:
+      return { x: 34, y: 294, width: 32, height: 32 };
+    case DOOR_KIND.bronze:
+      return { x: 67, y: 294, width: 32, height: 32 };
+    case DOOR_KIND.iron:
+      return { x: 99, y: 294, width: 32, height: 32 };
+    case DOOR_KIND.silver:
+      return { x: 132, y: 294, width: 32, height: 32 };
+    case DOOR_KIND.gold:
+      return { x: 165, y: 294, width: 32, height: 32 };
     default:
       return { x: 113, y: 98, width: 32, height: 32 };
   }
@@ -94,10 +88,28 @@ function getKey(key) {
 
 function getDoorTex(door) {
   const { opened } = door;
+  const base = { y: 261, width: 32, height: 32 };
   if (opened) {
-    return { x: 34, y: 162, width: 32, height: 32 };
+    return { ...base, x: 199 };
   }
-  return { x: 34, y: 195, width: 32, height: 32 };
+  const { kind } = door;
+  const { id } = kind;
+  switch (id) {
+    case DOOR_KIND.wood:
+      return { ...base, x: 1 };
+    case DOOR_KIND.ebony:
+      return { ...base, x: 34 };
+    case DOOR_KIND.bronze:
+      return { ...base, x: 67 };
+    case DOOR_KIND.iron:
+      return { ...base, x: 99 };
+    case DOOR_KIND.silver:
+      return { ...base, x: 132 };
+    case DOOR_KIND.gold:
+      return { ...base, x: 165 };
+    default:
+      return { ...base, x: 500 };
+  }
 }
 
 export function getStairsTex(stairs) {

@@ -30,7 +30,7 @@ function getTakeableTodo(object) {
 }
 
 function appendTakeable(object, toDoes) {
-  const { takeable, type } = object;
+  const { takeable } = object;
   if (takeable) {
     return [
       ...toDoes,

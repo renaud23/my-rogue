@@ -26,14 +26,21 @@ function createKeys(doorsMap, dungeon, level) {
       ...a,
       createKey(positions[randomInt(positions.length - 1)], level, doors),
     ];
-    return a;
   }, []);
+}
+
+function createRandomDoors(room, level, zoneIndex) {
+  const dice = randomInt(10);
+  if (dice > 1) {
+    return createDoorsRoom(room, level, generateDoorKind(zoneIndex - 1), true);
+  }
+  return createDoorsRoom(room, level, generateDoorKind(0), false);
 }
 
 function create(dungeon, level) {
   const { rooms, regions } = dungeon;
   const { zones } = regions;
-  const doorsMap = {};
+  const lockedDoorsMap = {};
   const levelDoors = zones.reduce(function (a, zone, zoneIndex) {
     const { roomIndex } = zone;
     if (zoneIndex === 0 && roomIndex >= 0) {
@@ -42,16 +49,17 @@ function create(dungeon, level) {
       return [...a, ...doors];
     }
     if (zoneIndex > 1 && roomIndex >= 0) {
-      const kind = generateDoorKind(zoneIndex - 1);
-      const doors = createDoorsRoom(rooms[roomIndex], level, kind, true);
-      doorsMap[zoneIndex] = doors;
+      const doors = createRandomDoors(rooms[roomIndex], level, zoneIndex);
+      if (doors[0].locked) {
+        lockedDoorsMap[zoneIndex] = doors;
+      }
 
       return [...a, ...doors];
     }
 
     return a;
   }, []);
-  const keys = createKeys(doorsMap, dungeon, level);
+  const keys = createKeys(lockedDoorsMap, dungeon, level);
   return [levelDoors, keys];
 }
 

@@ -1,4 +1,4 @@
-import { TYPE_OBJECT, canOpen } from "../objects";
+import { canOpen } from "../objects";
 import { getKeys } from "../player/inventory";
 import PATTERNS from "../message-patterns";
 import { computeDesc } from "../commons";

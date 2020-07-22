@@ -3,6 +3,19 @@ import typeObject from "./type-object";
 
 let INDEX_DOOR = 1;
 
+const DOOR_KINDS_LIST = [
+  { desc: "bois", id: "wood" },
+  { desc: "ébène", id: "ebony" },
+  { desc: "bronze", id: "bronze" },
+  { desc: "fer", id: "iron" },
+  { desc: "argent", id: "silver" },
+  { desc: "or", id: "gold" },
+];
+export const DOOR_KIND = DOOR_KINDS_LIST.reduce(function (a, k) {
+  const { id } = k;
+  return { ...a, [id]: id };
+}, {});
+
 const TYPES = {
   door: {
     code: "door",
@@ -27,30 +40,19 @@ function doorDesc(door) {
   return `Ouvrir ${desc(door)}`;
 }
 
-export const DOOR_KINDS = [
-  "chêne",
-  "acajou",
-  "cuivre",
-  "étain",
-  "bronze",
-  "fer",
-  "argent",
-  "or",
-];
-
 export function generateDoorKind(index = 0) {
-  return DOOR_KINDS[Math.min(index, DOOR_KINDS.length - 1)];
+  return DOOR_KINDS_LIST[Math.min(index, DOOR_KINDS_LIST.length - 1)];
 }
 
 export function createDoor(
   position,
   level,
-  kind = DOOR_KINDS[0],
+  kind = DOOR_KINDS_LIST[0],
   locked = false
 ) {
   return {
     ...TYPES.door,
-    desc: ({ kind }) => `une porte en ${kind}`,
+    desc: ({ kind }) => `une porte en ${kind.desc}`,
     id: `door-${level}-${INDEX_DOOR++}`,
     takeable: false,
     level,
@@ -60,25 +62,6 @@ export function createDoor(
     kind,
     opened: false,
     todo: [{ desc: doorDesc, todo: openDoorTodo }],
-  };
-}
-
-export function createKey(
-  position,
-  level,
-  doors = [{ id: "-1", kind: "pass" }]
-) {
-  const targets = doors.map(({ lockId }) => lockId);
-  const kind = doors[0].kind;
-  return {
-    ...TYPES.keyDoor,
-    desc: ({ kind }) => `Une clef en ${kind}`,
-    id: `door-key-${level}-${INDEX_DOOR++}`,
-    position,
-    level,
-    kind,
-    targets,
-    todo: [],
   };
 }
 
