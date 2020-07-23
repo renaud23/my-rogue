@@ -54,7 +54,7 @@ function tryToUnlock(state, door) {
     return unlockDoor(state, key, door);
   }
 
-  return cleanPlayerAction(state);
+  return appendMessages(cleanPlayerAction(state), PATTERNS.nothingToOpen);
 }
 
 /**

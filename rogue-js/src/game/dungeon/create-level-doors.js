@@ -24,7 +24,12 @@ function createKeys(doorsMap, dungeon, level) {
     const { positions } = zone;
     return [
       ...a,
-      createKey(positions[randomInt(positions.length - 1)], level, doors),
+      createKey(
+        positions[randomInt(positions.length - 1)],
+        level,
+        doors,
+        ({ kind }) => `une clef de porte ${kind.desc}`
+      ),
     ];
   }, []);
 }

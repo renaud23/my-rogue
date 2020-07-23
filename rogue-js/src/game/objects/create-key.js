@@ -11,7 +11,7 @@ const PROTO = {
 
 function create(position, level, targets, desc = "une clef") {
   const { kind } = targets[0];
-  const lockedId = targets.map(({ lockedId }) => lockedId);
+  const lockedId = targets.map(({ lockId }) => lockId);
   return {
     ...PROTO,
     id: `KEY-${INDEX++}`,
