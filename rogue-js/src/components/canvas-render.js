@@ -158,9 +158,11 @@ function CanvasRenderer({ viewSize, tileSize = 16, size = 19 * tileSize }) {
         style={{ width: `${size}px`, height: `${size}px` }}
         className="game-canvas"
         onClick={function (e) {
-          const x = Math.trunc((e.pageX - e.target.offsetLeft) / tileSize);
-          const y = Math.trunc((e.pageY - e.target.offsetTop) / tileSize);
-          cally([x, y]);
+          if (dungeon) {
+            const x = Math.trunc((e.pageX - e.target.offsetLeft) / tileSize);
+            const y = Math.trunc((e.pageY - e.target.offsetTop) / tileSize);
+            cally([x, y]);
+          }
         }}
         onMouseMove={function (e) {
           const x = Math.trunc((e.pageX - e.target.offsetLeft) / tileSize);
