@@ -5,7 +5,6 @@ function fill(state, offscreen, texture, rect, size = 8) {
   const { dungeon, player } = state;
   const { currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
-  const wallCodes = dungeon.getWallCodes(currentLevel);
   const tilesInfo = dungeon.getTilesInfo(currentLevel);
 
   const { x, y, width, height } = rect;

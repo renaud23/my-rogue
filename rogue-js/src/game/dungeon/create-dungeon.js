@@ -156,7 +156,6 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     },
     getEmptyTiles: getEmptyTiles(levels),
     getLevels: () => levels,
-    getWallCodes: getWalls(levels),
     getTilesInfo: (level) => levels[level].tilesInfo,
     getDungeonHeight: () => nb,
   };

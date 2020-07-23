@@ -24,8 +24,8 @@ import "./render-game.scss";
 
 function initialize(setMiscellaneousState) {
   const dungeon = createDungeon(10, 40, 40);
-  const empties = createEmpties(dungeon); // with side effect
 
+  const empties = createEmpties(dungeon);
   const player = createPlayer(dungeon, empties);
   const objects = createObjectDungeon({ dungeon, player }, empties);
   const ennemies = createEnnemiesDungeon({ dungeon, player, objects }, empties);
