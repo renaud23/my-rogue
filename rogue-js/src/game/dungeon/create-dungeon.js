@@ -1,7 +1,8 @@
-import { findRegions, randomRoomPos } from "./dungeon-maze";
+import { findRegions, getCoords } from "./dungeon-maze";
 import createDungeonWithMaze from "./dungeon-maze";
 import { TILES } from "../../commons";
-import computeTileKind from "./compute-tile-kind";
+import { computeWallCode } from "./compute-tile-kind";
+import { affectDungeonBiome, BIOMES } from "./dungeon-biomes";
 
 function getVal(pos, state) {
   const { emptyTiles, doors } = state;
@@ -44,10 +45,31 @@ function getStairsDown(position) {
   return { tile: TILES.stairsDown, position };
 }
 
+function createTilesInfo(level) {
+  const { data, regions } = level;
+  const { zones } = regions;
+  const wallCodes = computeWallCode(level);
+  const biomeCodes = zones.reduce(function (a, zone) {
+    const { positions, biome } = zone;
+    return a.map(function (value, i) {
+      return positions.indexOf(i) !== -1 ? biome : value;
+    });
+  }, new Array(data.length).fill(-1));
+  const tilesInfo = data.map(function (value, i) {
+    return { value, wallCode: wallCodes[i], biome: biomeCodes[i] };
+  });
+
+  return { ...level, tilesInfo };
+}
+
+function createDungeonTilesInfo(dungeon) {
+  return dungeon.map(function (level) {
+    return createTilesInfo(level);
+  });
+}
+
 function createLevel(width, height) {
-  const level = createDungeonWithMaze(width, height);
-  const { rooms } = level;
-  return findRegions(computeTileKind(level), randomRoomPos(rooms));
+  return createTilesInfo(findRegions(createDungeonWithMaze(width, height)));
 }
 
 function diffRandomPos(level, pos) {
@@ -117,7 +139,10 @@ const getWalls = (levels) => (level) => {
 };
 
 function createDungeon(nb = 10, width = 30, height = 30) {
-  const levels = createCaves(nb, width, height);
+  const levels = createDungeonTilesInfo(
+    affectDungeonBiome(createCaves(nb, width, height))
+  );
+
   return {
     getStartPos: () => levels[0].regions.start,
     getRegions: (level) => levels[level].regions,
@@ -132,6 +157,7 @@ function createDungeon(nb = 10, width = 30, height = 30) {
     getEmptyTiles: getEmptyTiles(levels),
     getLevels: () => levels,
     getWallCodes: getWalls(levels),
+    getTilesInfo: (level) => levels[level].tilesInfo,
     getDungeonHeight: () => nb,
   };
 }

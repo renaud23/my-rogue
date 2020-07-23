@@ -6,6 +6,8 @@ function fill(state, offscreen, texture, rect, size = 8) {
   const { currentLevel } = player;
   const dungeonWidth = dungeon.getWidth(currentLevel);
   const wallCodes = dungeon.getWallCodes(currentLevel);
+  const tilesInfo = dungeon.getTilesInfo(currentLevel);
+
   const { x, y, width, height } = rect;
 
   new Array(width * height).fill(0).forEach(function (_, i) {
@@ -14,8 +16,9 @@ function fill(state, offscreen, texture, rect, size = 8) {
     const pos = x + xi + (y + yi) * dungeonWidth;
 
     if (isVisibleForPlayer(player, pos) || isInPlayerMemory(player, pos)) {
-      const groundWall = getWallsText(wallCodes[pos]);
-      const groundTex = getGroundTex();
+      const { wallCode, biome } = tilesInfo[pos];
+      const groundWall = getWallsText(wallCode, biome);
+      const groundTex = getGroundTex(biome);
       if (groundWall) {
         offscreen.drawTexture(
           texture,

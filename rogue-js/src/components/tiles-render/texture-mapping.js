@@ -1,11 +1,11 @@
-import { WALL_CODES } from "../../game/commons/dungeon-tiles";
+import { BIOMES } from "../../game";
 import { TYPE_OBJECT, CHEST_KIND, DOOR_KIND } from "../../game/objects";
 import { TYPE_ENNEMIES } from "../../game/ennemies/commons/type-ennemies";
 
 const ON_CENTER = 0b000010000;
 const ON_SOUTH = 0b000000010;
 
-export function getWallsText(code) {
+export function getWallsText(code, biome) {
   const base = { width: 32, height: 32 };
   if (code === 0) {
     return undefined;
@@ -17,7 +17,10 @@ export function getWallsText(code) {
   return { ...base, x: 34, y: 129 };
 }
 
-export function getGroundTex() {
+export function getGroundTex(biome) {
+  if (biome === BIOMES.corridor) {
+    return { x: 100, y: 228, width: 32, height: 32 };
+  }
   return { x: 67, y: 228, width: 32, height: 32 };
 }
 

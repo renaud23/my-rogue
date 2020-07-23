@@ -55,11 +55,9 @@ import carveFullWall from "./dungeon-maze/carve-full-wall";
 // }
 // N 8 S 4 W 2 E 1
 
-function compute(level) {
-  const { data, ...rest } = level;
-  const { width, height } = rest;
-  // const { data: cleaned } = carveFullWall(data, width, height);
-  const wallCodes = data.map(function (a, i) {
+export function computeWallCode(level) {
+  const { data, width, height } = level;
+  return data.map(function (a, i) {
     if (isInBound(i, width, height)) {
       if (a === 0) {
         return a;
@@ -84,8 +82,12 @@ function compute(level) {
     }
     return a;
   });
+}
 
-  return { data, wallCodes, ...rest };
+function compute(level) {
+  const wallCodes = computeWallCode(level);
+
+  return { ...level, wallCodes };
 }
 
 export default compute;
