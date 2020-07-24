@@ -58,8 +58,8 @@ function computeClickPos({ player, dungeon }, [cx, cy], rect) {
   const { x, y } = rect;
   return x + cx + +(y + cy) * dungeonWidth;
 }
-
-function CanvasRenderer({ viewSize, tileSize = 16, size = 19 * tileSize }) {
+// ({ viewSize, tileSize = 16, size = 19 * tileSize })
+function CanvasRenderer({ viewSize, tileSize = 16, size = 11 * tileSize }) {
   const canvas = useRef(null);
   const [mousePos, setMousePos] = useState(undefined);
   const [offscreen, setOffscreen] = useState(null);

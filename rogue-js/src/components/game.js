@@ -79,7 +79,7 @@ function Game() {
       <div className="game">
         <PlayerConsole />
         <div className="game-row">
-          <CanvasRender viewSize={fov + 1} tileSize={16} />
+          <CanvasRender viewSize={fov + 1} tileSize={32} />
           <ActionConsole />
           <div className="game-paddle">
             <Pad />

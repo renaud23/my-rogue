@@ -8,8 +8,6 @@ let INDEX = 0;
 
 const TYPES = {
   chest: {
-    code: "chest",
-    desc: "un coffre",
     size: 0,
     type: typeObject.chest,
   },
@@ -22,7 +20,7 @@ const CHEST_KIND_LIST = [
 ];
 export const CHEST_KIND = CHEST_KIND_LIST.reduce(function (a, k) {
   const { id } = k;
-  return { ...a, [id]: k };
+  return { ...a, [id]: id };
 }, {});
 
 const KEY_KIND_LIST = [
@@ -37,10 +35,11 @@ export const KEY_KIND = KEY_KIND_LIST.reduce(function (a, k) {
 
 function createChest(level, posChest, posKey) {
   const chestId = `chest-id-${INDEX++}`;
-  const kind = KEY_KIND_LIST[randomInt(KEY_KIND_LIST.length)];
+  const index = randomInt(KEY_KIND_LIST.length);
+  const kind = CHEST_KIND_LIST[index];
   const chest = {
     ...TYPES.chest,
-    desc: ({ kind }) => `une porte ${kind.desc}`,
+    desc: ({ kind }) => `un coffre ${kind.desc}`,
     id: chestId,
     lockId: chestId,
     kind,
@@ -58,7 +57,6 @@ function createChest(level, posChest, posKey) {
     [chest],
     ({ kind }) => `une clef de coffre ${kind.desc}`
   );
-
   return [chest, key];
 }
 

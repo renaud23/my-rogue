@@ -3,7 +3,7 @@ import { createKnife, createSword, createBow, createArrows } from "../objects";
 import { popOne } from "../commons";
 import { createStats, computeNextLevelXp, computeMaxLife } from "../fight";
 
-const DEFAULT_FOV = 6;
+const DEFAULT_FOV = 4;
 const DEFAULT_NB_MOVE = 2000;
 
 function createBasePlayer(

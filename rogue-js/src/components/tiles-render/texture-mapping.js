@@ -1,5 +1,10 @@
 import { BIOMES } from "../../game";
-import { TYPE_OBJECT, CHEST_KIND, DOOR_KIND } from "../../game/objects";
+import {
+  TYPE_OBJECT,
+  CHEST_KIND,
+  DOOR_KIND,
+  WEAPON_LIST_CODE,
+} from "../../game/objects";
 import { TYPE_ENNEMIES } from "../../game/ennemies/commons/type-ennemies";
 
 const ON_CENTER = 0b000010000;
@@ -25,16 +30,16 @@ export function getGroundTex(biome) {
 }
 
 export function getPlayerTex() {
-  return { x: 49, y: 1, width: 32, height: 32 };
+  return { x: 1, y: 327, width: 32, height: 32 };
 }
 
 export function getEnemyTex(enemy) {
   const { type } = enemy;
   switch (type) {
     case TYPE_ENNEMIES.rat:
-      return { x: 113, y: 1, width: 32, height: 32 };
+      return { x: 67, y: 327, width: 32, height: 32 };
     default:
-      return { x: 82, y: 1, width: 32, height: 32 };
+      return { x: 34, y: 327, width: 32, height: 32 };
   }
 }
 
@@ -50,7 +55,8 @@ export function getPotionTex() {
 
 function getChest(chest) {
   const { kind } = chest;
-  switch (kind) {
+  const { id } = kind;
+  switch (id) {
     case CHEST_KIND.red:
       return { x: 113, y: 65, width: 32, height: 32 };
     case CHEST_KIND.green:
@@ -79,11 +85,11 @@ function getKey(key) {
     case DOOR_KIND.bronze:
       return { x: 67, y: 294, width: 32, height: 32 };
     case DOOR_KIND.iron:
-      return { x: 99, y: 294, width: 32, height: 32 };
+      return { x: 100, y: 294, width: 32, height: 32 };
     case DOOR_KIND.silver:
-      return { x: 132, y: 294, width: 32, height: 32 };
+      return { x: 133, y: 294, width: 32, height: 32 };
     case DOOR_KIND.gold:
-      return { x: 165, y: 294, width: 32, height: 32 };
+      return { x: 166, y: 294, width: 32, height: 32 };
     default:
       return { x: 113, y: 98, width: 32, height: 32 };
   }
@@ -105,11 +111,11 @@ function getDoorTex(door) {
     case DOOR_KIND.bronze:
       return { ...base, x: 67 };
     case DOOR_KIND.iron:
-      return { ...base, x: 99 };
+      return { ...base, x: 100 };
     case DOOR_KIND.silver:
-      return { ...base, x: 132 };
+      return { ...base, x: 133 };
     case DOOR_KIND.gold:
-      return { ...base, x: 165 };
+      return { ...base, x: 166 };
     default:
       return { ...base, x: 500 };
   }
@@ -135,9 +141,24 @@ export function getCorpseTex() {
   return { x: 212, y: 98, width: 32, height: 32 };
 }
 
+function getWeaponText(weapon) {
+  const { code } = weapon;
+  switch (code) {
+    case WEAPON_LIST_CODE.sword:
+      return { x: 34, y: 479, width: 32, height: 32 };
+    case WEAPON_LIST_CODE.knife:
+    case WEAPON_LIST_CODE.bow:
+    default:
+      return { x: 1, y: 479, width: 32, height: 32 };
+  }
+}
+
 export function getObjectTex(object) {
   const { type } = object;
   switch (type) {
+    case TYPE_OBJECT.meleeWeapon:
+    case TYPE_OBJECT.distanceWeapon:
+      return getWeaponText(object);
     case TYPE_OBJECT.chest:
       return getChest(object);
     case TYPE_OBJECT.key:

@@ -39,6 +39,14 @@ export const WEAPONS_MAP = {
   },
 };
 
+export const WEAPON_LIST_CODE = Object.entries(WEAPONS_MAP).reduce(function (
+  a,
+  [k, { code }]
+) {
+  return { ...a, [k]: code };
+},
+{});
+
 export const WEAPONS_CODE_TO_OBJECT = Object.keys(WEAPONS_MAP).reduce(function (
   a,
   o
